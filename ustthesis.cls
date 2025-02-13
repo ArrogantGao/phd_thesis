@@ -1783,6 +1783,11 @@ scholarly research.}
     \newpage
 
 % End of Page 1
+    \newpage
+    \abstract
+    \input{00III_abstract.tex}
+    \endabstract
+
 \ifThesis
     \authorise
 

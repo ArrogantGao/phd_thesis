@@ -11,7 +11,7 @@
 % Fast algorithms are thus highly desirable for simulating the Coulomb systems.
 % For isotropic Coulomb systems, deterministic algorithms with complexity of $\mathcal O(N)$ or $\mathcal O(N\log N)$ have been developed, which usually fall into one of the two categories: fast multipole methods (FMM)~\cite{greengard1987fast,cheng1999fast,ying2004kernel} and fast Fourier transform (FFT) based Ewald-splitting methods~\cite{hockney2021computer,darden1993particle,essmann1995smooth}.
 
-Quasi two dimensional (quasi-2D) Coulomb systems~\cite{mazars2011long}, which are macroscopic in two dimensions but with atomic-size thickness in the other, have caught much attention in many areas of science and engineering. 
+Quasi two dimensional (quasi-2D) Coulomb systems~\cite{mazars2011long}, which are macroscopic in two dimensions but with atomic-size thickness in the other, have caught much attention in studies of magnetic and liquid crystal films, super-capacitors, crystal phase transitions, dusty plasmas, ion channels, superconductive materials and quantum devices~\cite{kawamoto2002history, hille2001ionic, teng2003microscopic, Messina2017PRL, mazars2011long, saito2016highly, liu20192d}. 
 Typically, such systems possess a nano-sized longitudinal thickness in the $z$ direction, achieved through confinement, bulk-like and modeled as periodic in the transverse $xy$ directions, hence endowed with an  inherent multi-scale nature.
 Due to the confinement effect, such systems can exhibit various interesting behaviors for future nanotechnologies;
 prototype examples include graphene~\cite{novoselov2004electric}, metal dichalcogenide monolayers~\cite{kumar2012tunable}, and colloidal monolayers~\cite{mangold2003phase}.
@@ -21,14 +21,22 @@ To study the behavior of quasi-2D Coulomb systems, molecular dynamics (MD) simul
 By tracking the positions and velocities of all particles, MD can provide a detailed description of the system's static and dynamic properties.
 In MD simulations, the system is modeled as a collection of particles, which interact with each other through potential functions and the time evolution of the system is determined by the Newton's laws of motion.
 Thus, time cost of MD simulations is dominated by the calculation of the derivatives of the potential energy with respect to the particle positions, i.e. the force between particles.
-Unlike the short-range interaction such as the Lennard-Jones potential, the Coulomb interaction is long-range and scales as $\mathcal O(N^2)$ in the naive pair-wise implementation.
+For the short-range potential such as the Lennard-Jones potential, the computational cost scales as $\mathcal O(N)$ with the number of particles $N$ based on the neighbor list algorithm and the real space truncation.
+For long-range interactions such as the Coulomb interaction, the potential energy can be generally expressed as the lattice kernel summations in the form of
+\begin{equation}\label{eq::phi12}
+	\phi(\V x) = \sum_{\V{m}} \sum_{j = 1}^{N} \rho_j K(\V{x} - \V{y}_j + \V{m} \circ \V{L})\;,
+\end{equation}
+where~$\V{x}, \V{y}_j \in \mathbb{R}^d$ are $d$-dimensional vectors in a rectangular box $\Omega$ with $\V{L}$ the vector of its edge lengths, $\rho_j$ refers to the density or weight, $\V{m} \in \mathbb{Z}^{d^\prime} \otimes \{0\}^{d-d^\prime}$ exerts periodicity in the first $d^{\prime}$ directions (with $d^{\prime}\leq d$), ``$\circ$'' represents the Hadamard product, and~$K(\V{x})$ is the kernel function whose form depends on the interested physical problem. 
+If~$d^\prime = d$, the system is called fully-periodic, $d^\prime=0$, it is in a free-space, otherwise it is called partially-periodic. 
+For such long-range interactions, the computational cost scales as $\mathcal O(N^2)$ in the naive pair-wise implementation, which greatly limits the size of the system that can be studied.
 
 
-For fully-periodic or free-space Coulomb systems, various algorithms have been developed, such as the fast multipole methods (FMM)~\cite{greengard1987fast,cheng1999fast,ying2004kernel}, fast Fourier transform (FFT) based Ewald-splitting methods~\cite{hockney2021computer,darden1993particle,essmann1995smooth} and the recently proposed random batch Ewald (RBE) method~\cite{jin2021random, liang2022superscalability,liang2024JCP}.
+\section{Significance}
+
+To reduce the computational cost of evaluating the kernel summations in Eq.~\eqref{eq::phi12}, various algorithms have been developed for fully-periodic or free-space Coulomb systems, such as the fast multipole methods (FMM)~\cite{greengard1987fast,cheng1999fast,ying2004kernel}, fast Fourier transform (FFT) based Ewald-splitting methods~\cite{hockney2021computer,darden1993particle,essmann1995smooth} and the recently proposed random batch Ewald (RBE) method~\cite{jin2021random, liang2022superscalability,liang2024JCP}.
 These fast algorithms have been successfully applied to large-scale simulations of Coulomb systems under various ensembles and reaching complexity of $\mathcal O(N\log N)$ or even $\mathcal O(N)$.
 
-
-However, for quasi-2D systems, the reduced symmetry gives rise to new phenomena, but also brings formidable challenges in both theory and computation.
+However, different from the fully-periodic or free-space systems, quasi-2D systems possess a reduced symmetry, which gives rise to new phenomena, but also brings formidable challenges in both theory and computation.
 The first challenge comes from the involved \emph{long-range} interaction kernels, including but not limited to Coulomb and dipolar kernels in electrostatics, Oseen and Rotne-Prager-Yamakawa kernels in hydrodynamics and the static exchange-correlation kernels in density functional theory calculations. 
 % For fully-periodic or free-space systems, $\mathcal O(N)$ fast algorithms have been developed; but the field is still under developing for partially-periodic systems.
 The anisotropy of such systems poses extra challenges for simulations:
@@ -40,7 +48,7 @@ Moreover, to eliminate the finite size effect, millions of free particles need t
 The cumulative impact of these considerations poses significant challenges for numerical simulations for quasi-2D systems. 
 
 To address these issues associated with the particle-based simulation of quasi-2D systems, a variety of numerical methods have been developed.
-Most of them fall into two categories: 
+Most of them also fall into two categories: 
 (1) Fourier spectral methods~\cite{lindbo2012fast,nestler2015fast,doi:10.1021/acs.jctc.3c01124, maxian2021fast}, where particles are first smeared onto grids, and subsequently the underlying PDE is solved in Fourier domain where fast Fourier transform (FFT) can be used for acceleration; 
 (2) adaptive tree-based methods, where fast multipole method (FMM)~\cite{greengard1987fast} or tree code~\cite{Barnes1986Nature} orginally proposed for free-space systems can be extended to quasi-2D systems by careful extension to match the partially-periodic boundary conditions~\cite{yan2018flexibly,liang2020harmonic}. 
 Alternative methods have also been proposed, such as the Lekner summation-based MMM2D method~\cite{arnold2002novel}, multilevel summation methods~\cite{doi:10.1021/ct5009075,greengard2023dual}, and correction-based approaches such as Ewald3DC~\cite{yeh1999ewald} and EwaldELC~\cite{arnold2002electrostatics}, which first solve a fully-periodic system and then add the partially-periodic correction terms. 
@@ -54,5 +62,28 @@ Second, the periodization of FMM needs to encompass more near-field contribution
 Finally, it is worth noting that most of the aforementioned issues will become more serious when $L_z\ll \min\{L_x, L_y\}$, in which case the Ewald series summation will converge much slower~\cite{arnold2002electrostatics}, and the zero-padding issue of FFT-based methods also becomes worse~\cite{maxian2021fast}.
 Thus, efficient and accurate simulation of quasi-2D systems is still an open problem and a great challenge.
 
+In this thesis, a new class of fast summation methods for quasi-2D Coulomb systems are introduced, which combines the Ewald splitting technique and the random batch sampling method.
+These methods are able to achieve $\mathcal{O}(N\log N)$ complexity and are able to handle strongly confined quasi-2D systems with large aspect ratios and sharp dielectric interfaces.
+Rigorous error estimates and complexity analysis are provided, further validated by numerical tests.
+
 \section{Thesis Outlines}
 
+The content of this thesis is organized as follows.
+
+In Chapter~\ref{chp_preliminaries}, we introduce the physical model and mathematical notations for dielectric confined quasi-2D Coulomb systems, and provide a concise overview of the Ewald summation formula for fully-periodic and doubly-periodic Coulomb systems.
+We will also revisit the random batch sampling method for fully-periodic Coulomb systems, which is the basis of the methods proposed in this thesis.
+
+In Chapter~\ref{chp_soewald2d}, we first introduce the kernel approximation technique called the sum-of-exponential (SOE) approximation, which approximates an arbitrary kernel function by a linear combination of exponential functions.
+Then, based on the SOE approximation, we propose an algorithm named the sum-of-exponential Ewald2D method, which utilizes the SOE approximation and the random batch sampling method to accelerate the Ewald2D summation for quasi-2D Coulomb systems without dielectric confinements.
+Numerical results are provided to validate the accuracy and efficiency of the proposed method.
+
+In Chapter~\ref{chp_rbe2d}, we first introduce the image charge method, which is a popular approach for treating the dielectric confinements in quasi-2D systems.
+Additionally, a rigorous error analysis will be provided for the combination of the image charge method and the Ewald summation formula.
+Then based on the error analysis, we propose a new algorithm named the random batch Ewald2D method, which is able to handle the quasi-2D Coulomb systems with dielectric confinements and is scalable to large-scale simulations on modern supercomputers.
+
+
+In Chapter~\ref{chp_quasiewald}, we focus on the so-called negatively dielectirc confined quasi-2D systems, where the dielectric constant of the confinement can be negative, which leads to divergence in the previous methods.
+We propose a new algorithm named the quasi-Ewald method, where we introduce a new type of splitting technique, called the quasi-Ewald splitting, to handle the divergence issue.
+With the proposed method, we observe spontaneous symmetry breaking (SSB) phenomena in symmetrically charged binary particle systems under such negative dielectric confined systems.
+
+In Chapter~\ref{chp_conclusion}, we provide a conclusion for this thesis, where we summarize the advantages and disadvantages of the proposed methods, and discuss the potential applications of the proposed methods as well as the future work.

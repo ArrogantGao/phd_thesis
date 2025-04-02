@@ -21,6 +21,6 @@ main.pdf
 *.run.xml
 *.fls
 *.fdb_latexmk
+*.toc
 
-
-000_thesis.pdf
+main.pdf

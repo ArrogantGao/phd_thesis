@@ -24,6 +24,114 @@
 \usepackage{pdflscape}
 \DeclareMathOperator*{\argmax}{argmax}      % for argmax
 
+\usepackage{lipsum}
+\usepackage{amsfonts}
+\usepackage{amsfonts,amssymb,amsmath,mathrsfs}
+\usepackage{graphicx}
+\usepackage{epstopdf}
+%\usepackage{algorithmic}
+\usepackage{bm}
+
+\ifpdf
+  \DeclareGraphicsExtensions{.eps,.pdf,.png,.jpg}
+\else
+  \DeclareGraphicsExtensions{.eps}
+\fi
+
+\def\b{\boldsymbol}
+\def\bs{\bm{\sigma}}
+\def\e{\epsilon}
+\def\z{\zeta}
+\def\Z{\mathbb{Z}}
+\def\R{\mathbb{R}}
+\def\E{\mathbb{E}}
+\def\bbP{\mathbb{P}}
+\def\bfP{\mathbf{P}}
+\def\bfX{\mathbf{X}}
+\def\cL{\mathcal{L}}
+\def\cO{\mathcal{O}}
+\def\cH{\mathcal{H}}
+\def\Ld{\Lambda}
+\def\calk{\mathcal{K}}
+\def\Ai{\mathrm{\AA}}
+\DeclareMathOperator{\supp}{supp}
+\DeclareMathOperator{\dist}{dist}
+\DeclareMathOperator{\var}{var}
+\DeclareMathOperator{\tr}{tr}
+\DeclareMathOperator{\loc}{loc}
+\DeclareMathOperator{\kl}{KL}
+\DeclareMathOperator{\erf}{erf}
+\DeclareMathOperator{\erfc}{erfc}
+\def\Image{\mathrm{Im}}
+
+\usepackage{geometry}
+\geometry{left=3.5cm,right=3.5cm,top=3cm,bottom=4cm}
+
+\usepackage{colortbl}
+\usepackage{xcolor}
+\newcommand{\todo}[1] {\textit{todo}:{\color{red}#1}}
+\newcommand{\rev}[1] {{\color{blue}#1}}
+\newcommand{\revtwo}[1] {{\color{orange}#1}}
+% a new command rm to remove the content
+\usepackage{soul}
+\newcommand{\rem}[1] {{\color{red}{\st{#1}}}}
+\usepackage{bm}
+\newcommand\Wtilde{\stackrel{\sim}{\smash{\mathcal{W}}\rule{0pt}{1.1ex}}}
+
+\usepackage{algorithm}
+\usepackage{algorithmicx}
+\usepackage{algpseudocode}
+
+%% The amssymb package provides various useful mathematical symbols
+%\usepackage{amssymb}
+%\usepackage{pifont}
+%\usepackage[nointegrals]{wasysym}
+%\usepackage{amsfonts,amssymb,amsbsy,latexsym,amsmath,tabulary,graphicx,times,caption,fancyhdr}
+%\usepackage[utf8]{inputenc}
+%\usepackage{url,multirow,morefloats,floatflt,cancel,tfrupee}
+%\usepackage{mathrsfs}
+%\usepackage{graphicx}
+\urlstyle{rm}
+%macros from Aleks
+\newcommand{\V}[1]{\boldsymbol{#1}} %# vector
+\newcommand{\M}[1]{\boldsymbol{#1}} %# matrix
+\newcommand{\Set}[1]{\mathbb{#1}} %# set
+\newcommand{\D}[1]{\Delta#1} %# \D{t} for time step size
+\renewcommand{\d}[1]{\delta#1} %# \d{t} for small increment
+\newcommand{\norm}[1]{\left\Vert #1\right\Vert } % norm
+\newcommand{\abs}[1]{\left|#1\right|} %abs
+
+\newcommand{\grad}{\M{\nabla}} %gradient
+\newcommand{\av}[1]{\left\langle #1\right\rangle } %take average
+\makeatletter
+\newcommand{\Biggg}{\bBigg@{3.5}}
+
+\newcommand{\sM}[1]{\M{\mathcal{#1}}} %matrix in mathcal font
+\newcommand{\dprime}{\prime\prime} % double prime
+\global\long\def\i{\iota}
+\renewcommand{\i}{\iota} %i for imaginary unit
+%\renewcommand{\i}{\mathsf i} %i for imaginary unit
+\newcommand{\follows}{\quad\Rightarrow\quad} %=>
+%\usepackage{amsthm}
+\newcommand{\eqd}{\overset{d}{=}} %=^d
+\newcommand{\te}{\text}
+%\newtheorem{theorem}{Theorem}
+%\newtheorem{lemma}{Lemma}
+%\newtheorem{remark}{Remark}
+%\newtheorem{proof}{Proof}
+\newcommand{\tcr}[1]{\textcolor{red}{Note: #1}}
+\newcommand{\tcb}[1]{\textcolor{blue}{#1}}
+\newcommand{\xz}[1]{\textcolor{violet}{#1}}
+
+% Add a serial/Oxford comma by default.
+\newcommand{\creflastconjunction}{, and~}
+
+% Used for creating new theorem and remark environments
+% \newsiamremark{remark}{Remark}
+% \newsiamremark{hypothesis}{Hypothesis}
+% \crefname{hypothesis}{Hypothesis}{Hypotheses}
+% \newsiamthm{claim}{Claim}
+
 % \usepackage{latexsym}
     % Use the "latexsym" package when encountering the following error:
     %   ! LaTeX Error: Command \??? not provided in base LaTeX2e.
@@ -36,7 +144,7 @@
 %                                                                       %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\title{Fast Algorithms for Modeling and Simulating Quasi-2D Coulomb Systems}  % Title of the thesis.
+\title{Fast Algorithms for Simulating Quasi-2D Coulomb Systems}  % Title of the thesis.
 \author{GAO, Xuanzhao}     % Author of the thesis.
 \degree{\PhD}             % Degree for which the thesis is. Options: \AM \MSc \MPhil \PhD
 \stage{\Thesis}              % Stage of PhD document; use \Thesis for all other degree. Options: \PQE \Proposal \Thesis
@@ -161,27 +269,27 @@
 
 \chapter{Introduction}
 \label{chp_intro}
-\input{01_introduction.tex}
+\input{introduction.tex}
 \newpage
 
 \chapter{The Sum-of-Exponentials Ewald2D Method}
 \label{chp_soewald2d}
-\input{02_soewald2d.tex}
+\input{soewald2d.tex}
 \newpage
 
 \chapter{The Random Batch Ewald2D Method}
 \label{chp_rbe2d}
-\input{03_rbe2d.tex}
+\input{rbe2d.tex}
 \newpage
 
 \chapter{The Quasi-Ewald Method}
 \label{chp_quasiewald}
-\input{04_quasiewald.tex}
+\input{quasiewald.tex}
 \newpage
 
 \chapter{Conclusions and Future Work}
 \label{chp_conclusion}
-\input{05_conclusion.tex}
+\input{conclusion.tex}
 \newpage
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

@@ -1,0 +1,1578 @@
+% 
+%% Copyright 2007-2025 Elsevier Ltd
+%% 
+%% This file is part of the 'Elsarticle Bundle'.
+%% ---------------------------------------------
+%% 
+%% It may be distributed under the conditions of the LaTeX Project Public
+%% License, either version 1.3 of this license or (at your option) any
+%% later version.  The latest version of this license is in
+%%    http://www.latex-project.org/lppl.txt
+%% and version 1.3 or later is part of all distributions of LaTeX
+%% version 1999/12/01 or later.
+%% 
+%% The list of all files belonging to the 'Elsarticle Bundle' is
+%% given in the file `manifest.txt'.
+%% 
+%% Template article for Elsevier's document class `elsarticle'
+%% with numbered style bibliographic references
+%% SP 2008/03/01
+%% $Id: elsarticle-template-num.tex 272 2025-01-09 17:36:26Z rishi $
+%%
+\documentclass[preprint,12pt]{elsarticle}
+
+%% Use the option review to obtain double line spacing
+%% \documentclass[authoryear,preprint,review,12pt]{elsarticle}
+
+%% Use the options 1p,twocolumn; 3p; 3p,twocolumn; 5p; or 5p,twocolumn
+%% for a journal layout:
+%% \documentclass[final,1p,times]{elsarticle}
+%% \documentclass[final,1p,times,twocolumn]{elsarticle}
+%% \documentclass[final,3p,times]{elsarticle}
+%% \documentclass[final,3p,times,twocolumn]{elsarticle}
+%% \documentclass[final,5p,times]{elsarticle}
+%% \documentclass[final,5p,times,twocolumn]{elsarticle}
+
+%% For including figures, graphicx.sty has been loaded in
+%% elsarticle.cls. If you prefer to use the old commands
+%% please give \usepackage{epsfig}
+
+%% The amssymb package provides various useful mathematical symbols
+\usepackage{amssymb}
+%% The amsmath package provides various useful equation environments. 
+\usepackage{tikz}
+\usetikzlibrary{3d}
+\usetikzlibrary {decorations.pathreplacing}
+\usepackage{mlmath}
+\usepackage{amsmath}
+\usepackage{mathrsfs}
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+\usepackage{hyperref}
+\newcommand{\mrm}[1]{\mathrm{#1}} % redefine mathrm
+\newcommand{\V}[1]{\boldsymbol{#1}} %# vector 
+\newcommand{\grad}{{\nabla}} %gradient
+%% The amsthm package provides extended theorem environments
+%% \usepackage{amsthm}
+
+\newcommand{\rev}[1]{\textcolor{blue}{#1}}
+
+\newcommand{\xz}[1]{\textcolor{orange}{[XZ: #1]}}
+\newcommand{\yq}[1]{\textcolor{red}{[YQ: #1]}}
+
+%% The lineno packages adds line numbers. Start line numbering with
+%% \begin{linenumbers}, end it with \end{linenumbers}. Or switch it on
+%% for the whole article with \linenumbers.
+%% \usepackage{lineno}
+
+\journal{Physica D: Nonlinear Phenomena}
+\usepackage{lineno}
+\begin{document}
+\linenumbers
+\begin{frontmatter}
+
+%% Title, authors and addresses
+
+%% use the tnoteref command within \title for footnotes;
+%% use the tnotetext command for theassociated footnote;
+%% use the fnref command within \author or \affiliation for footnotes;
+%% use the fntext command for theassociated footnote;
+%% use the corref command within \author for corresponding author footnotes;
+%% use the cortext command for theassociated footnote;
+%% use the ead command for the email address,
+%% and the form \ead[url] for the home page:
+%% \title{Title\tnoteref{label1}}
+%% \tnotetext[label1]{}
+%% \author{Name\corref{cor1}\fnref{label2}}
+%% \ead{email address}
+%% \ead[url]{home page}
+%% \fntext[label2]{}
+%% \cortext[cor1]{}
+%% \affiliation{organization={},
+%%             addressline={},
+%%             city={},
+%%             postcode={},
+%%             state={},
+%%             country={}}
+%% \fntext[label3]{}
+
+\title{Efficient Particle-based Simulations of Coulomb Systems under Dielectric  Nanoconfinement}
+
+%% use optional labels to link authors explicitly to addresses:
+%% \author[label1,label2]{}
+%% \affiliation[label1]{organization={},
+%%             addressline={},
+%%             city={},
+%%             postcode={},
+%%             state={},
+%%             country={}}
+%%
+%% \affiliation[label2]{organization={},
+%%             addressline={},
+%%             city={},
+%%             postcode={},
+%%             state={},
+%%             country={}}
+
+
+
+\author[Label1,Label3]{Zecheng Gan} %% Author name
+\author[Label0,Label2]{Xuanzhao Gao*} %% Author name
+\author[Label4]{Yuqing Li}
+%% Author affiliation
+\affiliation[Label0]{organization={Thrust of Advanced Materials, The Hong Kong University of Science and Technology (Guangzhou)},%Department and Organization
+            addressline={Nansha District},
+            city={Guangzhou},
+            postcode={511453}, 
+            state={Guangdong},
+            country={China}}
+\affiliation[Label1]{organization={Thrust of Advanced Materials and Guangzhou Municipal Key Laboratory of Materials Informatics, The Hong Kong University of Science and Technology (Guangzhou)},%Department and Organization
+            addressline={Nansha District},
+            city={Guangzhou},
+            postcode={511453}, 
+            state={Guangdong},
+            country={China}}
+\affiliation[Label2]{organization={Department of Physics, The Hong Kong University of Science and Technology},%Department and Organization
+            addressline={Clear Water Bay},
+            city={Kowloon},
+            postcode={999077}, 
+            state={Hong Kong SAR},
+            country={China}}
+\affiliation[Label3]{organization={Department of Mathematics, The Hong Kong University of Science and Technology},%Department and Organization
+            addressline={Clear Water Bay},
+            city={Kowloon},
+            postcode={999077}, 
+            state={Hong Kong SAR},
+            country={China}}
+\affiliation[Label4]{organization={School of Mathematical Sciences, CMA-Shanghai},%Department and Organization
+            addressline={Shanghai Jiao Tong University},
+            city={Shanghai},
+            postcode={200240}, 
+            state={Shanghai},
+            country={China}}            
+
+%% Abstract
+\begin{abstract}
+%% Text of abstract
+Nanocofined systems, namely, macroscopic in $xy$ and nano-sized in $z$, are of multiscale nature.
+We introduce a modified Ewald-splitting strategy tailored to the quasi-2D confined geometry, which allows efficient numerical simulations for the dynamics of Coulomb particles under dielectric confinement.
+A collection of numerical techniques are introduced in this work, including optimal quadrature rules, fast pairwise kernel summation method, and the random batch importance sampling technique, to reduce the overall computation cost to $\fO(N)$, where $N$  is the number of confined particles. 
+Simulations of several prototype systems are presented to demonstrate the accuracy and efficiency of our method. 
+In addition, we present a few multiscale phenomena particularly associated with nanoconfined Coulomb particle systems, including dielectric modulated boundary layers, anisotropic diffusion, and electrical double layer (EDL) formation driven by charge asymmetry.
+\end{abstract}
+
+%%Graphical abstract
+\begin{graphicalabstract}
+%\includegraphics{grabs}
+\end{graphicalabstract}
+
+%%Research highlights
+\begin{highlights}
+\item Research highlight 1
+\item Research highlight 2
+\end{highlights}
+
+%% Keywords
+\begin{keyword}
+%% keywords here, in the form: keyword \sep keyword
+molecular dynamics\sep Coulomb system\sep nanoconfinement\sep dielectric interfaces\sep random batch Ewald
+%% PACS codes here, in the form: \PACS code \sep code
+
+%% MSC codes here, in the form: \MSC code \sep code
+%% or \MSC[2008] code \sep code (2000 is the default)
+\MSC[2020] 82M37\sep 65C35\sep65T50\sep44A20
+\end{keyword}
+
+\end{frontmatter}
+
+%% Add \usepackage{lineno} before \begin{document} and uncomment 
+%% following line to enable line numbers
+%% \linenumbers
+
+%% main text
+%%
+
+%% Use \section commands to start a section
+\section{Introduction}
+\label{sec...intro}
+
+In recent years,   the modeling, simulation, and experimental investigation of quasi-two-dimensional (quasi-2D) systems have gained significant attention across various disciplines~~\cite{benjamin1997molecular, quere2005non, chen2006pinned, mccann2006landau, fukuma2010water, mazars2011long, giovambattista2012computational, moreno2021quantum}. Typically, such  systems possess a nano-sized longitudinal
+thickness in the $z$ direction, achieved through confinement,
+bulk-like and modeled as periodic in the transverse $xy$ directions,   hence endowed with an  inherent multi-scale nature.
+Among the quasi-2D systems, the Coulomb systems under dielectric nanoconfinement are of particular interest to us. 
+A key observation in these systems  is the   \emph{dielectric confinement effect}~\cite{hong1992dielectric,katan2019quantum}, arising from the discontinuity in dielectric properties at the boundaries,  leading to distinct electrostatic screening behaviors.  This effect plays a pivotal role in governing the properties of Coulomb systems   and   has been implicated in a wide range of phenomena,  including ion transport in nanochannels~\cite{antila2018dielectric}, the structural organization of polymer brushes~\cite{yuan2020structure}, and the pattern formation observed in confined  dipolar systems~\cite{wang2019dielectric, gao2024broken}. Despite significant advancements in simulation techniques over the past few decades, achieving accurate and efficient representations of the dielectric confinement effect remains a formidable challenge~\cite{gao2024broken}. Moreover, the intrinsic multi-scale nature of quasi-2D systems, combined with the long-range interactions inherent to Coulomb forces,   presents profound difficulties for both theoretical modeling and numerical simulation approaches.
+
+
+For isotropic, non-confined  
+$N$-particle systems, modeled under either periodic or free-space boundary conditions, linear-scaling algorithms have been developed to enable their efficient simulation. Among these, two prominent strategies have emerged: the fast multipole methods (FMM)~\cite{greengard1987fast} and the Ewald summation~\cite{deserno1998mesh}. Both approaches are designed to efficiently compute the long-range interactions among the 
+$N(N-1)/2$ particle pairs governed by the Coulomb potential, represented by the kernel 
+$\frac{1}{\Norm{\vr_i-\vr_j}}$ kernel, where   
+$\vr_i$ and 
+$\vr_j$ are denote the positions  of the $i$-th and the $j$-th particles, respectively, and
+$\Norm{\vr_i-\vr_j}$ stands  for the Euclidean distance between these two particles.  FMM mitigates this challenge by leveraging multipole expansion and hierarchical low-rank approximations to reduce algorithmic  complexity, while Ewald summation enhances efficiency by decomposing the Coulomb kernel into short-range and long-range components,  with fast Fourier transform (FFT) techniques used to compute the long-range term. It is noteworthy that  a recent alternative, namely the random batch Ewald (RBE) method~\cite{jin2021random}, adopts a stochastic approximation for the pairwise long-range interactions in the Fourier space~($\vk$-space). By utilizing random minibatches and importance sampling techniques, the RBE achieves $\fO(N)$ scaling with reduced variance.
+It is important to highlight that the aforementioned methods are directly applicable to the simulation of isotropic Coulomb systems. However, for quasi-2D Coulomb systems with confined geometries, modifications to existing algorithms or the development of novel methodologies are required to address the challenges posed by reduced symmetry.
+
+
+A flurry of methods have been developed to reduce the $\fO(N^2)$   complexity.  Some notable examples include the Ewald3DC method~\cite{yeh1999ewald}, the  MMM2D method~\cite{arnold2002mmm2d}, the spectral Ewald method~\cite{lindbo2012fast}, the periodic FMMs~\cite{yan2018flexibly, pei2023fast}, and the SoEwald2D~\cite{gan2024fast}. While a comprehensive review of these techniques is beyond the scope of this paper,  it is worth noting that all these methods are based on either FMM or the standard Ewald-splitting framework, with some achieving computational complexities as low as $\mathcal{O}(N\log N)$ or even $\mathcal{O}(N)$. Nevertheless, these methods are primarily applicable to systems with spatially homogeneous dielectric constants, which limits their ability to account for dielectric confinement effects.  To overcome such limitation, it is necessary   to  incorporate techniques designed to handle the sharp dielectric interface conditions. One direct  pathway is   solve for the induced charge density or surface potential on dielectric interfaces via usage of  various optimization techniques~\cite{Barros2014Efficient, Barros2014Dielectric, tyagi2010iterative, jadhao2012simulation, jadhao2013variational}.  Alternatively, strategies that utilize the Image Charge Method (ICM) in  combination with established electrostatic solvers~\cite{tyagi2007icmmm2d, tyagi2008electrostatic, dos2015electrolytes, yuan2021particle, liang2020harmonic, liang2022hsma, gan2024random} offer promising avenues.
+Despite their potential, these methods are not without shortcomings.  For instance,  ICM-based methods require a substantial increase in the number of image charges to achieve convergence, which introduces challenges in maintaining both computational accuracy and efficiency.
+
+In this work, we proposed an~$\mathcal{O}(N)$ simulation algorithm Quasi-Ewald method (QEM) for doubly periodic charged particle systems with dielectric mismatches at boundary.
+To overcome the difficulties caused by the geometry of quasi-2D systems, the Quasi-Ewald method is based on a novel Quasi-Ewald splitting strategy, which divides the original Coulomb kernel into short range real space and long range Fourier space components.
+Through Dirichlet to Neumann mapping, we derived the Green's function of the Poisson equation in this class of systems~\cite{dos2017simulations}. 
+By combining the Quasi-Ewald splitting strategy and the Green's function, we obtained a analytic and fast convergent lattice summation formula.
+We further develop a set of efficient and accurate method to numerically evaluate these components.
+We apply analytic reduction combined with a tailored Gauss quadrature rule~\cite{trefethen2022exactness} to numerically evaluate Hankel transform of 0-th order~\cite{piessens2000hankel} in the short range components, and developed a \textit{separation via sorting} technique~\cite{jiang2021approximating, gan2024fast} to fasten the computation of the pairwise summation in the long range components.
+Moreover, by combining with the \textit{random batch sampling}~\cite{jin2020random, jin2021random, jin2021randomquantum, golse2019random, jin2021convergence, liang2022superscalability, li2020random, jin2022mean}, Quasi-Ewald method achieves a linear complexity, making it suitable for molecular dynamics simulations of large-scale systems.
+These combined strategies lead to a simple and efficient Quasi-Ewald method that is mesh-free and does not require the introduction of any image charge to handle dielectric mismatch at boundaries.
+Consequently, this approach is capable of addressing challenges posed by extremely thin systems with polarizable boundaries, which are not adequately addressed by most of the previous methods.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Preliminaries}\label{section....Preliminaries}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+In this section, we introduce some concepts and notations to be used in this paper. A schematic of the quasi-2D charged system is given in Fig.~\ref{fig:box}. We remark that the Quasi-2D Coulomb systems are 3D systems for which the characteristic length scale in the $z$ direction is much smaller than that in the $xy$ plane, with charged particles confined in the~$z$ direction.
+To approximate the electrostatic interaction between the charged particles in the Quasi-2D Coulomb systems, one can model the system to be doubly periodic in $xy$ directions to mimic the environment of the electrolyte. Therefore, we consider a simulation box with edge lengths~$\left(L_x, L_y, L_z\right)$ in three directions, with its parallel interfaces located at~$z = 0$ and~$ z = L_z$, and these two interfaces  separate the~$\sR^3$  into three areas. From the top to the bottom, these three areas are respectively labeled by~$\Omega_{\mrm{u}}$,~$\Omega_{\mrm{c}}$ and~$\Omega_{\mrm{d}}$, hence the dielectric permittivity is a piece-wise constant function defined as
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{equation}\label{eq:sanwich}
+    \epsilon(\V{r})=\left\{
+        \begin{array}{ll}
+        \epsilon_{\mrm{u}}, & {\V{r} \in \Omega_{\mrm{u}}}\\
+        \epsilon_{\mrm{c}}, & {\V{r} \in \Omega_{\mrm{c}}}\\
+        \epsilon_{\mrm{d}}, & {\V{r} \in \Omega_{\mrm{d}}}
+    \end{array} \right.\;,
+\end{equation}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+where~$\epsilon_u$,~$\epsilon_c$ and~$\epsilon_d$ are all positive constants.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% code to generate the position of the particles
+% function rand_string(n)
+%     xyz = [rand(n) * 4, rand(n) * 3, rand(n) * 4]
+%     st = ["$(xyz[1][i])/$(xyz[2][i])/$(xyz[3][i])" for i in 1:n]
+%     return reduce((x, y) -> x * ", " * y, st)
+% end
+
+\begin{figure}[htbp]
+    \centering
+    \begin{tikzpicture}[scale=0.6]
+
+        \draw[->] (-5, 0, 0) -- (9, 0, 0) node[right] {$x$}; % x-axis
+        \draw[->] (0, -1, 0) -- (0, 4, 0) node[above] {$z$}; % y-axis
+        \draw[->] (0, 0, -1) -- (0, 0, 7) node[above] {$y$}; % z-axis
+
+        \fill[orange, opacity=0.2] (-4.5, 0, -0.5) -- (8.5, 0, -0.5) -- (8.5, 0, 4.5) -- (-4.5, 0, 4.5);
+        % \fill[orange, opacity=0.2] (-4.5, 0, 4.5) -- (8.5, 0, 4.5) -- (8.5, -0.5, 4.5) -- (-4.5, -0.5, 4.5);
+        % \fill[orange, opacity=0.2] (8.5, 0, -0.5) -- (8.5, 0, 4.5) -- (8.5, -0.5, 4.5) -- (8.5, -0.5, -0.5);
+
+        \draw[thick] (0, 0, 0) -- (4, 0, 0) -- (4, 3, 0) -- (0, 3, 0) -- cycle; % Bottom face
+
+        \foreach \x/\y/\z in {1.1681915835663497/0.4784386449304706/3.0114784670813646, 1.37700874310584/0.4564910752408716/1.723302872827872, 3.730994750135867/1.2345031904085388/2.103105645365449, 1.827895374334192/2.07357017874381/3.746941345635766, 3.066558538444058/1.5385426337573604/1.7619877149348904, 1.323901301301564/1.5495075401772844/0.6031052215686215, 3.756938726146066/2.4640736386255653/3.077635065930065, 2.8772957887165047/2.6997418470234025/2.9329762207627343, 3.2340462748359378/0.05840416805411408/3.426026606528974, 2.6025039709080175/2.9218252913656833/0.57717965442315666} {
+            \draw[fill=red] (\x, \y, \z) circle (0.1);
+        }
+
+        \foreach \x/\y/\z in {2.6498617350978773/2.150049613814989/1.5048602780413822, 3.089169032276023/1.0562600341829351/3.3127362964215057, 2.5980246280095605/0.7722521776014004/3.9662770148938087, 1.1349256153410514/2.870534190907561/3.169316637530182, 3.1201708293697656/0.9091412698002154/1.6441954803083996, 1.9206578784987878/2.6240285163641914/1.8820001242058, 2.21640094284661/0.839090054913301/0.3248449650128413, 1.7055625414319642/1.0502926700849304/2.1025386222981464, 1.9224549177172139/1.8402480747416887/3.7853267350243893, 0.6942437596034523/1.2454445897320752/1.4473021778716602} {
+            \draw[fill=blue] (\x, \y, \z) circle (0.1);
+        }
+
+        \foreach \dx/\dy in {-4/0, 4/0} {
+            \foreach \x/\y/\z in {1.1681915835663497/0.4784386449304706/3.0114784670813646, 1.37700874310584/0.4564910752408716/1.723302872827872, 3.730994750135867/1.2345031904085388/2.103105645365449, 1.827895374334192/2.07357017874381/3.746941345635766, 3.066558538444058/1.5385426337573604/1.7619877149348904, 1.323901301301564/1.5495075401772844/0.6031052215686215, 3.756938726146066/2.4640736386255653/3.077635065930065, 2.8772957887165047/2.6997418470234025/2.9329762207627343, 3.2340462748359378/0.05840416805411408/3.426026606528974, 2.6025039709080175/2.9218252913656833/0.57717965442315666} {
+            \draw[draw=red, fill=white] (\x + \dx, \y + \dy, \z) circle (0.1);
+        }
+
+            \foreach \x/\y/\z in {2.6498617350978773/2.150049613814989/1.5048602780413822, 3.089169032276023/1.0562600341829351/3.3127362964215057, 2.5980246280095605/0.7722521776014004/3.9662770148938087, 1.1349256153410514/2.870534190907561/3.169316637530182, 3.1201708293697656/0.9091412698002154/1.6441954803083996, 1.9206578784987878/2.6240285163641914/1.8820001242058, 2.21640094284661/0.839090054913301/0.3248449650128413, 1.7055625414319642/1.0502926700849304/2.1025386222981464, 1.9224549177172139/1.8402480747416887/3.7853267350243893, 0.6942437596034523/1.2454445897320752/1.4473021778716602} {
+                \draw[draw=blue, fill=white] (\x + \dx, \y + \dy, \z) circle (0.1);
+            }
+        }
+
+        
+        \draw[thick] (0, 0, 4) -- (4, 0, 4) -- (4, 3, 4) -- (0, 3, 4) -- cycle; % Top face
+        \draw[thick] (0, 0, 0) -- (0, 0, 4); % Front left
+        \draw[thick] (4, 0, 0) -- (4, 0, 4); % Front right
+        \draw[thick] (4, 3, 0) -- (4, 3, 4); % Back right
+        \draw[thick] (0, 3, 0) -- (0, 3, 4); % Back left
+
+        % Draw dashed boxes for all 8 neighboring boxes
+        \foreach \dx/\dy in {-4/0, 4/0} {
+            \draw[thick, dashed] (\dx - 0.5, 0, \dy) -- (4.5 + \dx, 0, \dy);
+            \draw[thick, dashed] (4 + \dx, 0, \dy) -- (4 + \dx, 3, \dy);
+            \draw[thick, dashed] (4.5 + \dx, 3, \dy) -- (\dx - 0.5, 3, \dy);
+            \draw[thick, dashed] (\dx, 0, \dy) -- (\dx, 3, \dy);
+
+            \draw[thick, dashed] (\dx - 0.5, 0, 4 + \dy) -- (4.5 + \dx, 0, 4 + \dy);
+            \draw[thick, dashed] (4 + \dx, 0, 4 + \dy) -- (4 + \dx, 3, 4 + \dy);
+            \draw[thick, dashed] (4.5 + \dx, 3, 4 + \dy) -- (\dx - 0.5, 3, 4 + \dy);
+            \draw[thick, dashed] (\dx, 0, 4 + \dy) -- (\dx, 3, 4 + \dy);
+
+            \draw[thick, dashed] (\dx, 0, \dy - 0.5) -- (\dx, 0, 4.5 + \dy); % Front left
+            \draw[thick, dashed] (4 + \dx, 0, \dy - 0.5) -- (4 + \dx, 0, 4.5 + \dy); % Front right
+            \draw[thick, dashed] (4 + \dx, 3, \dy - 0.5) -- (4 + \dx, 3, 4.5 + \dy); % Back right
+            \draw[thick, dashed] (\dx, 3, \dy - 0.5) -- (\dx, 3, 4.5 + \dy); % Back left
+        }
+
+        \fill[green, opacity=0.2] (-4.5, 3, -0.5) -- (8.5, 3, -0.5) -- (8.5, 3, 4.5) -- (-4.5, 3, 4.5) -- cycle;
+        % \fill[green, opacity=0.2] (-4.5, 3, -0.5) -- (8.5, 3, -0.5) -- (8.5, 3.5, -0.5) -- (-4.5, 3.5, -0.5) -- cycle;
+        % \fill[green, opacity=0.2] (-4.5, 3, -0.5) -- (-4.5, 3, 4.5) -- (-4.5, 3.5, 4.5) -- (-4.5, 3.5, -0.5) -- cycle;
+
+
+        \node at (2, 0, 5) {$L_x$};
+        \node at (4.6, 0, 2) {$L_y$};
+        \node at (-0.5, 0.5, 0) {$L_z$};
+
+        \draw[decorate, decoration={brace, amplitude=10pt, mirror}] (8.5, 0.2, 0) -- (8.5, 2.8, 0) node[midway,xshift=20] {$\Omega_{\mrm{c}}$};
+        \draw[decorate, decoration={brace, amplitude=10pt, mirror}] (8.5, 3.2, 0) -- (8.5, 4.2, 0) node[midway,xshift=20] {$\Omega_{\mrm{u}}$};
+        \draw[decorate, decoration={brace, amplitude=10pt, mirror}] (8.5, -1.2, 0) -- (8.5, -0.2, 0) node[midway,xshift=20] {$\Omega_{\mrm{d}}$};
+
+    \end{tikzpicture}
+    \caption{
+        A schematic of the quasi-2D charged system.
+        The filled circles represent the charged particles confined in the central simulation box, and the empty circles represent the periodic replicas in $xy$ plane.
+        The green and orange regions represent the sharp dielectric interfaces $\partial \Omega_c \cap \partial \Omega_{u}$ and $\partial \Omega_c \cap \partial \Omega_{d}$ , respectively.
+        As the system is doubly periodic in both $xy$ directions, here only the periodicity in~$x$ is sketched for clarity.
+    }
+    \label{fig:box}
+\end{figure}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+During the simulation, we consider~$N$ particles inside the box with position~$\V{r}_i \in \Omega_{\mrm{c}}$ and charge~$q_i$~$(1 \leq i \leq N)$ satisfying the electroneutrality condition
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{equation}
+    \sum_{i = 1}^N q_i = 0\;,
+\end{equation}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+and  all particles are evolved according to Newton’s equations
+\begin{equation}\label{eq:NewtonEquation}
+    \begin{split}
+        \mrm{d} \V{r}_i &= \V{v}_i \mrm{d} t\;,\\
+        m_i \mrm{d} \V{v}_i &= \V{F}_i \mrm{d} t + \mrm{d} \V{\eta}_i \;,
+    \end{split}
+\end{equation}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+where~$\V{F}_i$ represents the force on the $i$-th particle and~$\D \V{\eta}_i$ represents the coupling with the environment (heat bath), and
+the forces are computed using~$\V{F}_i:= - \grad_{\V{r}_i} U$, where $U$ is the potential energy of the system, 
+\begin{equation}
+    U = \frac{1}{2} {\sum_{\V{m}}}^\prime \sum_{i, j = 1}^{N} q_i q_j G(\V{r}_i+ \V{L}_{\V{m}},~\V{r}_j )\;,
+\end{equation}
+where~$\V{m}=(m_x, m_y, 0)$ with $ (m_x, m_y)\in \mathbb{Z}^2$ ranges over the two-dimensional integers vectors, and ${\sum\limits_{\V{m}}}^\prime$ is defined such that $\vm=\vzero$ is not included when $i=j$, moreover, $\V{L}_{\V{m}} := (m_x L_x, m_y L_y, 0)$ is the quasi-2D lattice constant vector. Then, given a fixed point $\V{r}^\prime:=(x^{\prime}, y^{\prime},z^{\prime})$, $G(\V{r},~\V{r}^\prime)$ is the Green's function of    the following Poisson's equation
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{equation}\label{eq...text...Poisson}
+    \left \{
+    \begin{array}{ll}
+        - \grad_{\V{r}} \cdot\left[ \epsilon(\V{r}) \grad_{\V{r}} G(\V{r},~\V{r}^\prime) \right] = \delta (\V{r} - \V{r}^\prime), & \text{for}~\V r \in \mathbb{R}^3 \;, \\
+%%%%%%%%%%%%%%%%%%%%%%%%%%%        
+        G(\V{r},~\V{r}^\prime) |_{-} = G(\V{r},~\V{r}^\prime) |_{+}, & \text{on}~\partial\Omega_{\mrm{c}}\;, \\
+%%%%%%%%%%%%%%%%%%%%%%%%%%%        
+        \epsilon_{\mrm{c}} \partial_{z} G(\V{r},~\V{r}^\prime) |_{-} = \epsilon_{\mrm{u}} \partial_{z} G(\V{r},~\V{r}^\prime) |_{+}, & \text{on}~\partial \Omega_{\mrm{c}} \cap \partial \Omega_{\mrm{u}}\;,     \\
+%%%%%%%%%%%%%%%%%%%%%%%%%%%            
+\epsilon_{\mrm{c}} \partial_{z} G(\V{r},~\V{r}^\prime) |_{-} = \epsilon_{\mrm{d}} \partial_{z} G(\V{r},~\V{r}^\prime) |_{+}, & \text{on}~\partial \Omega_{\mrm{c}} \cap \partial \Omega_{\mrm{d}}\;,\\
+%%%%%%%%%%%%%%%%%%%%%%%%%%%  
+G(\V{r},~\V{r}^\prime) \to 0, & \text{as}~{r} \to \infty\;,
+\end{array}\right.
+\end{equation}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+where $r:=\Norm{\vr}$.
+The ICM can be applied  to solve the above equation, which expresses the Green's function as effects of an infinite series of image charges arising from the mirror reflection.
+The magnitude of image charges is weakened by powers of the dielectric mismatches defined as
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{equation}
+    \gamma_{\mrm{u}} := \frac{\epsilon_{\mrm{c}} - \epsilon_{\mrm{u}}}{\epsilon_{\mrm{c}} + \epsilon_{\mrm{u}}},~~
+    \gamma_{\mrm{d}} := \frac{\epsilon_{\mrm{c}} - \epsilon_{\mrm{d}}}{\epsilon_{\mrm{c}} + \epsilon_{\mrm{d}}}\;.
+\end{equation}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+In this paper, we focus on the case where $\gamma_{\mrm{u}}$ and $\gamma_{\mrm{d}}$ are real numbers, moreover, $\gamma_{\mrm{u}}\gamma_{\mrm{d}}<1$,
+and the Green's function~$G(\V{r}, \V{r}^\prime)$ can be conveniently expressed as an infinite series of image charges arising from the mirror reflection~\cite{jackson2021classical,liang2022hsma}
+\begin{equation}\label{eq:ICM}
+    G(\V{r}, \V{r}^\prime) = \frac{1}{4 \pi \epsilon_{\mrm{c}}} \left[ \frac{\delta(\V{r} - \V{r}^\prime)}{\Norm{\V{r} - \V{r}^\prime}} + \sum_{l = 1}^\infty \left( \frac{\gamma_l^+}{\Norm{\V{r} - \V{r}_{+}^{\prime(l)}}} + \frac{\gamma_l^-}{\Norm{\V{r} - \V{r}_{-}^{ \prime(l)}}} \right) \right]\;,
+\end{equation}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+and the factors for the $l$-th order image charge are $\gamma_l^{+}=\gamma_{d}^{\lceil l/2 \rceil} \gamma_{u}^{\lfloor l/2 \rfloor}$ and $\gamma_l^{-} = \gamma_{d}^{\lfloor l/2 \rfloor} \gamma_{u}^{\lceil l/2 \rceil}$, where $+(-)$ corresponds to the image charges in $\Omega_{\textrm {u}}\left(\Omega_{\textrm {d}}\right)$ and the notation $\lceil x\rceil(\lfloor x\rfloor)$ represents the ``ceil" (``floor") function, and with  position  $\boldsymbol{r}^{\prime}=(x^{\prime}, y^{\prime},z^{\prime})$,
+position   of the $l$th-order image of charge  reads $\boldsymbol{r}_{\pm}^{\prime(l)}=\left(x^{\prime}, y^{\prime},(-1)^l z^{\prime} \pm l L_z\right)$. These observations highlight the utility of the ICM in providing insights into the effects of parallel dielectric slabs.  However, due to the long-range nature of Coulomb interactions, ICM is not well suited for   direct usage.
+
+% The basic idea of Ewald summation~\cite{de1980simulation1, de1980simulation2, de1983simulation} is to   rewrite the long-range Coulomb interaction into a sum of two terms 
+% \begin{equation}
+%     \frac{1}{r} = \frac{\mrm{erf}(\sqrt{\alpha} r)}{r} + \frac{\mrm{erfc}(\sqrt{\alpha} r)}{r}\;,
+% \end{equation}
+% where $\alpha > 0$ is   known as the splitting parameter,  
+% $
+%     \mrm{erf}(x) := \frac{2}{\sqrt{\pi}} \int_0^{x} \exp{(-u^2)} \mrm{d} u $ is the well
+% known error function and
+% $\mrm{erfc}(x) := 1- \mrm{erf}(x)$ is the complementary error function. For doubly periodic systems, the Ewald2D methods~\cite{parry1975electrostatic, heyes1977molecular, de1979electrostatic}  evaluate energy as
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% \begin{equation}\label{eq:Ewald2D}
+%     \begin{split}
+%         U_s &= \frac12 \sum_{i, j = 1}^N q_i q_j {\sum_{\V{m}}}^{\prime} \frac{\mrm{erfc}(\alpha \abs{\V{r}_i - \V{r}_j + \V{L_m}})}{\abs{\V{r}_i - \V{r}_j + \V{L_m}}} - \frac{\alpha}{\sqrt{\pi}} \sum_{i = 1}^{N} q_i^2 \;, \\
+%         U_l &= U_l^0 + \sum_{k > 0} U_l^k\;,
+%     \end{split}
+% \end{equation}
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Throughout the remainder sections, we will extensively use Fourier transforms. For ease of discussion, the mathematical notations and definitions are first provided.
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% \begin{defi}\label{Definition...FourierTransform}(Quasi-2D Fourier transform) 
+% 	Let $f(\bm{\rho},z)$ be a function that is doubly-periodic in $xy$-dimensions, its quasi-2D Fourier transform is defined by
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%    
+% 	\begin{equation}
+% 		\Tilde{f}(\bm{k},\kappa):=\int_{\fR^2}\int_{\mathbb{R}}f(\bm{\rho},z)\exp\left(-i \bm{k}\cdot\bm{\rho}\right)\exp\left({- i \kappa z}\right)\D z \D \bm{\rho},
+% 	\end{equation}
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%     
+% where $\mathcal{R}^2:=[0,L_x]\times [0,L_y]$. Moreover,
+% 	the function $f(\bm{\rho},z)$ can be recovered from the corresponding inverse quasi-2D Fourier transform 
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%     
+% 	\begin{equation}
+% 		f(\bm{\rho},z)=\frac{1}{2 \pi L_x L_y}\sum_{\bm{k} \in \mathcal{K}^2} \int_{\mathbb{R}} \Tilde{f}(\bm{k}, \kappa)\exp\left({i \bm{k} \cdot \bm{\rho}}\right) \exp\left({i \kappa z}\right) \D \kappa\;,
+% 	\end{equation}
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%     
+% where $\mathcal{K}^2:=\frac{2\pi}{L_x}\mathbb{Z}\times \frac{2\pi}{L_y}\mathbb{Z}$.
+% \end{defi}
+
+
+The idea of the Ewald splitting technique can be understood as decomposing the source term    into the sum of short-range and long-range components.
+% :
+% \begin{equation}
+% 	\delta(\bm{r})=\left[\delta(\bm{r})-(\delta\ast\tau)(\bm{r})\right]+(\delta\ast\tau)(\bm{r}),
+% \end{equation}
+% where   $\ast$ stands for  the convolution operator, and $\tau(\bm{r})$ is the screening function.
+%In the standard Ewald splitting~\cite{ewald1921berechnung}, $\tau$ is chosen to be  Gaussian.
+For doubly periodic systems, the Ewald2D methods~\cite{parry1975electrostatic, heyes1977molecular, de1979electrostatic}  evaluate the interaction energy $U$ as
+\begin{equation}
+    U= U_s+U_l\;.
+\end{equation}
+The short range and long range components are given by
+\begin{equation}\label{eq:Ewald2D}
+    \begin{split}
+        U_s &= \frac12 \sum_{i, j = 1}^N q_i q_j {\sum_{\V{m}}}^{\prime} \frac{\mrm{erfc}(\sqrt{\alpha} \abs{\V{r}_i - \V{r}_j + \V{L_m}})}{\abs{\V{r}_i - \V{r}_j + \V{L_m}}} - \sqrt{\frac{\alpha}{{\pi}}} \sum_{i = 1}^{N} q_i^2 \;, \\
+        U_l &= \frac12 \sum_{i, j = 1}^N q_i q_j {\sum_{\V{m}}}  \frac{\mrm{erf}(\sqrt{\alpha} \abs{\V{r}_i - \V{r}_j + \V{L_m}})}{\abs{\V{r}_i - \V{r}_j + \V{L_m}}}\;,%=U_l^0 + \sum_{k > 0} U_l^k\;,
+    \end{split}
+\end{equation}
+respectively, where~$\mrm{erf}(x)$ is the error function 
+\begin{equation}
+    \mrm{erf}(x) := \frac{2}{\sqrt{\pi}} \int_0^{x} \exp{(-u^2)} \mrm{d} u \;,
+\end{equation}
+and~$\mrm{erfc}(x) := 1- \mrm{erf}(x)$. Moreover, based on \cite[Lemma 2.4]{gan2024fast}, the potential $U_l$ can be further decomposed \xz{should we call that a ``decomposition"?} into
+\begin{equation}
+ U_l  =  U_l^{\bm{0}} +\sum_{\V{k} \neq \bm{0}} U_l^{\V{k}}  \;,   
+\end{equation}
+and,
+	\begin{equation}\label{eq:philk}
+	 U_l^{\V{k}} := \frac{\pi}{2L_x L_y} \sum_{i,j = 1}^N q_i q_{j} \frac{\exp\left({\mathrm{i} \V{k} \cdot \V{\rho}_{ij}}\right)}{k} \left[\xi^{+}(k, z_{ij})+\xi^{-}(k, z_{ij})\right],
+	\end{equation}
+	with $\bm{\rho}_{ij}:=(x_{i}-x_{j},y_{i}-y_{j})$, $z_{ij}:=\abs{z_{i}-z_{j}}$,  $k:=\Norm{\vk}$, and 
+	\begin{equation}\label{eq::9}
+		\xi^{\pm}(k, z_{ij}) := \exp\left({\pm k z_{ij}}\right) \mrm{erfc} \left( \frac{k}{2 \sqrt{\alpha}} \pm \sqrt{\alpha} z_{ij}\right)\;,
+	\end{equation} 
+moreover,
+	\begin{equation}\label{eq:phil0}
+		 U_l^{\bm{0}}  := -\frac{ \pi}{L_x L_y} \sum_{j = 1}^N q_iq_{j} \left[ {z_{ij}} \mrm{erf}(\sqrt{\alpha} {z_{ij}}) + \frac{\exp\left({-\alpha z_{ij}^2}\right)}{\sqrt{\alpha \pi}}  \right]\;.
+	\end{equation} 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+Although the Ewald2D summation is the exact solution and does not involve any uncontrolled approximation. However, two significant drawbacks limit its application for large-scale simulations.  In one hand, even with optimal choice of $\alpha$, computing the interaction energy $U$ for an $N$-particle system   takes $O\left(N^2\right)$ complexity, which is    considerably higher than the $\mathcal{O}(N^{3/2})$ scaling of the standard Ewald method. In the other,
+the function $\xi^{ \pm}\left(k, z_{i j}\right)$ is ill-conditioned in that    it grows exponentially with increasing 
+$k z_{i j}$
+, resulting in catastrophic error cancellation when evaluated under finite machine precision. These challenges underscore the necessity for more efficient numerical methods that can simultaneously handle long-range interactions, doubly periodic boundary conditions, and dielectric mismatches while ensuring both numerical stability and computational efficiency.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{The Quasi-Ewald Method}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+In this section, we present quasi-Ewald splitting, a novel decomposition strategy tailored for quasi-2D systems with dielectric mismatches. By integrating this approach with random batch sampling, we develop an efficient summation method that achieves linear complexity.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Quasi-Ewald splitting and Green's Function in the Reciprocal Space}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+Firstly, given a fixed point  $\V{r}^\prime=(x^{\prime}, y^{\prime},z^{\prime})$, we decompose   the Dirac delta function into
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{equation}\label{eq...text...Quasi-EwaldMethod...QuasiEwaldSplitting}
+\begin{aligned}
+    \delta(\V{r}-\V{r}^\prime) &= \left[\delta (\V{r}-\V{r}^\prime) - {\left( \frac{\alpha}{\pi} \right)} \exp{\left(-\alpha \Norm{\vrho-\vrho^\prime}^2\right)} \delta(z-z^\prime) \right]\\&~~ + {\left( \frac{\alpha}{\pi} \right)} \exp{\left(-\alpha \Norm{\vrho-\vrho^\prime}^2\right)} \delta(z-z^\prime)\;,
+    \end{aligned}
+\end{equation}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+where $\vr:=(\vrho, z):=(x,y,z)$,   $\vrho:=(x,y)$, and $\vrho^\prime:=(x^\prime,y^\prime)$.
+ In this formulation, the first term represents  a charge neutral short range kernel centered at $\vr^\prime$, and the second term corresponds to a smooth long range kernel.  We further define  
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{equation}\label{eq...text...Kernels}
+    \begin{split}
+        \sigma_{s}(\V{r}; \vr^\prime) &:= \delta (\V{r}-\V{r}^\prime) - {\left( \frac{\alpha}{\pi} \right)} \exp{\left(-\alpha \Norm{\vrho-\vrho^\prime}^2\right)} \delta(z-z^\prime)\;,\\
+        \sigma_{l}(\V{r};\vr^\prime) &:= {\left( \frac{\alpha}{\pi} \right)} \exp{\left(-\alpha \Norm{\vrho-\vrho^\prime}^2\right)} \delta(z-z^\prime)\;,
+    \end{split}
+\end{equation}
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%  Consequently, the total charge density in the system can be expressed as 
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% \begin{equation}
+%     \sigma(\vr) = \sum_{\V{m}} \sum_{i = 1}^{N} q_i \left[\sigma_{s}(\V{r} - \V{r}_i + \V{L_m})  +  \sigma_{s}(\V{r} - \V{r}_i + \V{L_m})\right]\;,
+% \end{equation}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+and  depiction of the decomposition process is provided in Fig.~\ref{fig:QuasiEwaldSplitting}.  
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{figure}
+    \centering
+    \begin{tikzpicture}[scale = 0.6]
+
+        \def\r{0.2}
+
+        \draw[thick, dashed] (0, 0, 0) -- (4, 0, 0);
+        \draw[thick] (4, 0, 0) -- (4, 3, 0);
+        \draw[thick] (4, 3, 0) -- (0, 3, 0);
+        \draw[thick, dashed] (0, 3, 0) -- (0, 0, 0);
+
+
+        \foreach \x/\y/\z in {1.1681915835663497/0.4784386449304706/3.0114784670813646, 1.37700874310584/0.4564910752408716/1.723302872827872, 3.730994750135867/1.2345031904085388/2.103105645365449} {
+            \shade[ball color=red!60, opacity=1] (\x, \y, \z) circle (\r);
+        }
+
+        \foreach \x/\y/\z in {1.827895374334192/2.07357017874381/3.746941345635766, 3.066558538444058/1.5385426337573604/1.7619877149348904, 1.323901301301564/1.5495075401772844/0.6031052215686215} {
+            \shade[ball color=blue!60, opacity=1] (\x, \y, \z) circle (\r);
+        }
+
+        \draw[thick] (0, 0, 4) -- (4, 0, 4) -- (4, 3, 4) -- (0, 3, 4) -- cycle; % Top face
+        \draw[thick, dashed] (0, 0, 0) -- (0, 0, 4); % Front left
+        \draw[thick] (4, 0, 0) -- (4, 0, 4); % Front right
+        \draw[thick] (4, 3, 0) -- (4, 3, 4); % Back right
+        \draw[thick] (0, 3, 0) -- (0, 3, 4); % Back left
+
+        \foreach \x/\y/\z in {1.1681915835663497/0.4784386449304706/3.0114784670813646, 1.37700874310584/0.4564910752408716/1.723302872827872, 3.730994750135867/1.2345031904085388/2.103105645365449} {
+            % draw an circle plane laying in the xz plane
+            \fill[fill=blue!60, opacity=0.3] (\x + 8, \y, \z) ellipse (0.7 and 0.3);
+            \shade[ball color=red!60, opacity=1] (\x + 8, \y, \z) circle (\r);
+        }
+
+        \foreach \x/\y/\z in {1.827895374334192/2.07357017874381/3.746941345635766, 3.066558538444058/1.5385426337573604/1.7619877149348904, 1.323901301301564/1.5495075401772844/0.6031052215686215} {
+            \fill[fill=red!60, opacity=0.3] (\x + 8, \y, \z) ellipse (0.7 and 0.3);
+            \shade[ball color=blue!60, opacity=1] (\x + 8, \y, \z) circle (\r);
+        }
+
+        \foreach \x/\y/\z in {1.1681915835663497/0.4784386449304706/3.0114784670813646, 1.37700874310584/0.4564910752408716/1.723302872827872, 3.730994750135867/1.2345031904085388/2.103105645365449} {
+            % draw an circle plane laying in the xz plane
+            \fill[fill=red!60, opacity=0.3] (\x + 16, \y, \z) ellipse (0.7 and 0.3);
+        }
+
+        \foreach \x/\y/\z in {1.827895374334192/2.07357017874381/3.746941345635766, 3.066558538444058/1.5385426337573604/1.7619877149348904, 1.323901301301564/1.5495075401772844/0.6031052215686215} {
+            \fill[fill=blue!60, opacity=0.3] (\x + 16, \y, \z) ellipse (0.7 and 0.3);
+        }
+
+        \foreach \x/\y/\z in {8/0/0, 16/0/0} {
+            \draw[thick, dashed] (\x, \y, \z) -- (4 + \x, \y, \z);
+            \draw[thick] (4 + \x, \y, \z) -- (4 + \x, 3 + \y, \z);
+            \draw[thick] (4 + \x, 3 + \y, \z) -- (\x, 3 + \y, \z);
+            \draw[thick, dashed] (\x, \y, \z) -- (\x, 3 + \y, \z);
+            \draw[thick] (\x, \y, 4 + \z) -- (4 + \x, \y, 4 + \z) -- (4 + \x, 3 + \y, 4 + \z) -- (\x, 3 + \y, 4 + \z) -- cycle;
+            \draw[thick, dashed] (\x, \y, \z) -- (\x, \y, 4 + \z);
+            \draw[thick] (4 + \x, \y, \z) -- (4 + \x, \y, 4 + \z);
+            \draw[thick] (4 + \x, 3 + \y, \z) -- (4 + \x, 3 + \y, 4 + \z);
+            \draw[thick] (\x, 3 + \y, \z) -- (\x, 3 + \y, 4 + \z);
+        }
+
+        \node at (5.2, 1, 0) {$=$};
+        \node at (13.2, 1, 0) {$+$};
+
+        \node at (1.5, 3.5, 0) {(a)};
+        \node at (9.5, 3.5, 0) {(b)};
+        \node at (17.5, 3.5, 0) {(c)};
+
+    \end{tikzpicture}
+    \caption{
+        An illustration for the Quasi-Ewald splitting strategy in a unit cell.
+        (a) Charged particles are distributed in the simulation box, cations and anions are represented by red and blue spheres, respectively.
+        Sub-figures (b) and (c) shows how Quasi-Ewald splitting works. 
+        The discs represent 2D Gaussian charge planes which screen the original point charges.
+        We split the original problem into two sub-problems, one with charge neutral particles so that the interactions are short-ranged, another with smooth charge density with a proper geometry so that can be solved rapidly in the reciprocal space.
+    }
+    \label{fig:QuasiEwaldSplitting}
+\end{figure}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+Throughout this paper, we will extensively use 2D-Fourier transforms, whose definition is given by
+\begin{defi}
+Given function $f(\vrho, z)$, its 2D-Fourier
+transform is defined by
+  \begin{equation} 
+\Hat{f}(\vk, z):=\int_{\sR^2}f(\vrho,z)\exp{(-\mathrm{i} \V{k} \cdot \V{\rho})} \D \vrho \;.
+\end{equation}
+The function  $f(\vrho, z)$ can be  recovered from the corresponding inverse 2D-Fourier transform
+  \begin{equation} 
+{f}(\vrho, z)=\frac{1}{4\pi^2}\int_{\sR^2}\Hat{f}(\vk, z)\exp{(\mathrm{i} \V{k} \cdot \V{\rho})} \D \vk \;.
+\end{equation}
+\end{defi} 
+% \begin{equation}\label{eq...text...FourierTransformKernels}
+%     \begin{split}   
+%  \hat{\sigma}_{s}(\vk,z) &=\delta(z)\left[1-\exp\left(-\frac{k^2}{4\alpha}\right)\right]\;,\\
+%  \hat{\sigma}_{l}(\vk,z) &=\delta(z)\exp\left(-\frac{k^2}{4\alpha}\right)\;.
+%     \end{split}
+% \end{equation}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{prop}
+Given  fixed point     $\V{r}^\prime=(x^{\prime}, y^{\prime},z^{\prime})$,    non-zero modes of the 2D-Fourier
+transform  of  $ \sigma_{s}(\V{r};\vr^\prime)$ and   $\sigma_{l}(\V{r};\vr^\prime)$  respectively reads
+\begin{align*}
+ \Hat{\sigma}_{s}(\vk,z;z^\prime) &= \delta(z-z^\prime) \exp{(-\mathrm{i} \V{k} \cdot \V{\rho}^\prime)}\left(1-\exp\left(-\frac{k^2}{4\alpha}\right)\right)\;,  \\
+ \Hat{\sigma}_{l}(\vk,z;z^\prime) &= \delta(z-z^\prime) \exp{(-\mathrm{i} \V{k} \cdot \V{\rho}^\prime)}\exp\left(-\frac{k^2}{4\alpha}\right)\;,
+\end{align*}   
+where $\vk\neq\vzero$, and the zeroth mode reads
+\begin{align*}
+ \Hat{\sigma}_{s}(\vzero,z;z^\prime) &= 0\;,  \\
+ \Hat{\sigma}_{l}(\vzero,z;z^\prime) &= \delta(z-z^\prime)\;.
+\end{align*}   
+\end{prop}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{proof}
+We observe that for $\vk\neq\vzero$, the following integral reads %the  2D-Fourier transform  of $ \sigma_{s}(\V{r}-\vr^\prime)$ reads
+\begin{align*}
+  % \Hat{\sigma}_{s}(\vk,z-z^\prime) &=    \int_{\sR^2}\sigma_{s}(\V{r}-\vr^\prime)\exp{(-\mathrm{i} \V{k} \cdot \V{\rho})} \D \vrho \\
+  % &= \delta(z-z^\prime)\left(
+ & \int_{\sR^2}\left[\delta(\vrho-\vrho^\prime)- {\left( \frac{\alpha}{\pi} \right)} \exp{\left(-\alpha \Norm{\vrho-\vrho^\prime}^2\right)}\right] \exp{(-\mathrm{i} \V{k} \cdot \V{\rho})} \D \vrho \\
+ =&\exp{(-\mathrm{i} \V{k} \cdot \V{\rho}^\prime)}\left[1-  \int_{\sR^2}{\left( \frac{\alpha}{\pi} \right)} \exp{\left(-\alpha \Norm{\vrho-\vrho^\prime}^2\right)}  \exp{(-\mathrm{i} \V{k} \cdot (\V{\rho}-\vrho^\prime))} \D \vrho\right]\\
+ =&\exp{(-\mathrm{i} \V{k} \cdot \V{\rho}^\prime)}\left(1-\exp\left(-\frac{k^2}{4\alpha}\right)\right)\;,
+\end{align*}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+hence we obtain that 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{align*}
+ \Hat{\sigma}_{s}(\vk,z;z^\prime) &= \delta(z-z^\prime) \exp{(-\mathrm{i} \V{k} \cdot \V{\rho}^\prime)}\left(1-\exp\left(-\frac{k^2}{4\alpha}\right)\right)\;,  \\
+ \Hat{\sigma}_{l}(\vk,z;z^\prime) &= \delta(z-z^\prime) \exp{(-\mathrm{i} \V{k} \cdot \V{\rho}^\prime)}\exp\left(-\frac{k^2}{4\alpha}\right)\;.
+\end{align*}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+We observe further that the following integral reads
+\begin{align*}
+  % \Hat{\sigma}_{s}(\vk,z-z^\prime) &=    \int_{\sR^2}\sigma_{s}(\V{r}-\vr^\prime)\exp{(-\mathrm{i} \V{k} \cdot \V{\rho})} \D \vrho \\
+  % &= \delta(z-z^\prime)\left(
+ & \int_{\sR^2}\left[\delta(\vrho-\vrho^\prime)- {\left( \frac{\alpha}{\pi} \right)} \exp{\left(-\alpha \Norm{\vrho-\vrho^\prime}^2\right)}\right]  \D \vrho \\
+ =&\int_{\sR^2}\left[\delta(\vrho-\vrho^\prime)- {\left( \frac{\alpha}{\pi} \right)} \exp{\left(-\alpha \Norm{\vrho-\vrho^\prime}^2\right)}\right]  \D \left(\vrho-\vrho^\prime\right) =0\;,
+\end{align*}
+which finishes the proof.
+\end{proof}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+ Given $\vr_0:=(\vrho_0,z_0):=(x_0, y_0, z_0)\in\Omega_{\mrm{c}}$,  then the   Poisson's equation reads \xz{it seems that this equation is exactly the same as Eq.~\eqref{eq...text...Poisson}} 
+ \begin{equation}\label{eq...text...RepPoisson}
+    \left \{
+    \begin{array}{ll}
+        - \grad_{\V{r}} \cdot\left[ \epsilon(\V{r}) \grad_{\V{r}} G(\V{r},~\V{r}_0) \right] = \delta (\V{r} - \V{r}_0), & \V r \in \mathbb{R}^3 \;, \\
+%%%%%%%%%%%%%%%%%%%%%%%%%%%        
+        G(\V{r},~\V{r}_0) |_{-} = G(\V{r},~\V{r}_0) |_{+}, & \text{on}~\partial\Omega_{\mrm{c}}\;, \\
+%%%%%%%%%%%%%%%%%%%%%%%%%%%        
+        \epsilon_{\mrm{c}} \partial_{z} G(\V{r},~\V{r}_0) |_{-} = \epsilon_{\mrm{u}} \partial_{z} G(\V{r},~\V{r}_0) |_{+}, & \text{on}~\partial \Omega_{\mrm{c}} \cap \partial \Omega_{\mrm{u}}\;,     \\
+%%%%%%%%%%%%%%%%%%%%%%%%%%%            
+\epsilon_{\mrm{c}} \partial_{z} G(\V{r},~\V{r}_0) |_{-} = \epsilon_{\mrm{d}} \partial_{z} G(\V{r},~\V{r}_0) |_{+}, & \text{on}~\partial \Omega_{\mrm{c}} \cap \partial \Omega_{\mrm{d}}\;,\\
+%%%%%%%%%%%%%%%%%%%%%%%%%%%  
+G(\V{r},~\V{r}_0) \to 0, & \text{as}~{r} \to \infty\;.
+\end{array}\right.
+\end{equation}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+We shall exploy   the Dirichlet to Neumann mapping technique to derive  the Green's function  $G(\V{r}, \V{r_0})$    in the reciprocal space. 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{thm}\label{Proposition...GreensFunction}
+    As we define
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    \begin{equation}
+        \Hat{G}(\vk, z; z_0) = \int_{\mathbb{R}^2} G(\V{r}, \V{r_0}) \exp{(-\mathrm{i} \V{k} \cdot \V{\rho})} \D \vrho\;,
+    \end{equation}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%     
+then for $\vk=\vzero$,
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%   
+\begin{equation}\label{eq...hat_G_solution...Zeroth}
+        \hat{G}(\vzero, z; z_0) = \frac{\abs{z-z_0}}{2 \epsilon_{\mathrm{c}}}\;,
+\end{equation}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%        
+and for $\vk\neq \vzero$,
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%     
+    \begin{equation}\label{eq...hat_G_solution...Non-zero}
+    \begin{aligned}
+\hat{G}(\vk, z; z_0) &=  \frac{ \exp{(-\mathrm{i} \V{k} \cdot \V{\rho}_0)}}{2k\epsilon_{\mrm{c}}\left(1-\gamma_{\mrm{u}}\gamma_{\mrm{d}}\exp(-2kL_z)\right)} \sum_{p=1}^4\Gamma_p\exp(-ka_p(z;z_0))\;, %\Big[\exp(-k\abs{z-z_0})\\
+% &~~+\gamma_{\mrm{d}}\exp(-k(z+z_0))+\gamma_{\mrm{u}}\exp(-k(2L_z-z-z_0))\\
+% &~~+\gamma_{\mrm{u}}\gamma_{\mrm{d}}\exp(-k(2L_z-\abs{z-z_0}))\Big]\;.
+    \end{aligned}     
+    \end{equation}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%         
+where 
+\begin{align*}
+ \Gamma_{1:4}&:=\left[1,\gamma_{\mrm{d}},\gamma_{\mrm{u}},\gamma_{\mrm{u}}\gamma_{\mrm{d}}\right]\;,\\
+ a_{1:4}(z;z_0)&:=\left[\abs{z-z_0}, z+z_0,2L_z-z-z_0,2L_z-\abs{z-z_0}\right]\;.
+\end{align*}
+\end{thm}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{proof}
+    By applying Fourier transform on both sides of Eqn.~\eqref{eq...text...Poisson},
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% \begin{equation*} 
+%      \left \{
+%     \begin{array}{ll}
+%         - \grad_{\V{r}} \cdot\left[ \epsilon(\V{r}) \grad_{\V{r}} G(\V{r},~\vr_0) \right] = \delta (\V{r} - \vr_0), & \V r \in \mathbb{R}^3 \;, \\
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%        
+%         G(\V{r},~\vr_0) |_{-} = G(\V{r},~\vr_0) |_{+}, & \text{on}~\partial\Omega_{\mrm{c}}\;, \\
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%        
+%         \epsilon_{\mrm{c}} \partial_{z} G(\V{r},~\vr_0) |_{-} = \epsilon_{\mrm{u}} \partial_{z} G(\V{r},~\vr_0) |_{+}, & \text{on}~\partial \Omega_{\mrm{c}} \cap \partial \Omega_{\mrm{u}}\;,     \\
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%            
+% \epsilon_{\mrm{c}} \partial_{z} G(\V{r},~\vr_0) |_{-} = \epsilon_{\mrm{d}} \partial_{z} G(\V{r},~\vr_0) |_{+}, & \text{on}~\partial \Omega_{\mrm{c}} \cap \partial \Omega_{\mrm{d}}\;,\\
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%  
+% G(\V{r},~\vr_0) \to 0, & \text{as}~\Norm{\vr} \to \infty\;.
+% \end{array}\right.
+% \end{equation*}
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+ then for $\vk\neq \vzero$, i.e., $k>0$, we obtain that
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    \begin{equation*} 
+        \begin{split}
+            \frac{\partial^2 \Hat{G}_{\mrm{c}}(\vk, z; z_0)}{{\partial z}^2} - k^2 \Hat{G}_{\mrm{c}}(\vk, z; z_0) = - \frac{ \exp{(-\mathrm{i} \V{k} \cdot \V{\rho}_0)}\delta (z- z_0)}{\epsilon_{\mrm{c}}}&,~z \in [0, L_z],\\
+            \frac{\partial^2 \hat{G}_{\mrm{u}}(\vk, z; z_0)}{{\partial z}^2} - k^2 \hat{G}_{\mrm{u}}(\vk, z; z_0) = 0&,~z > L_z,\\
+            \frac{\partial^2 \hat{G}_{\mrm{d}}(\vk, z; z_0)}{{\partial z}^2} - k^2 \hat{G}_{\mrm{d}}(\vk, z; z_0) = 0&,~z < 0,
+        \end{split}
+    \end{equation*}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    with the boundary conditions satisfying
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%    
+    \begin{equation*}
+        \begin{split}
+            \Hat{G}_{\mrm{c}}(\vk, 0; z_0) &= \Hat{G}_{\mrm{d}}(\vk, 0; z_0)\;,\\
+            \hat{G}_{\mrm{c}}(\vk, L_z; z_0) &= \hat{G}_{\mrm{u}}(\vk, L_z; z_0)\;,\\
+            \epsilon_{\mrm{c}} \partial_z\Hat{G}_{\mrm{c}}(\vk, 0; z_0) &= \epsilon_{\mrm{d}} \partial_z\Hat{G}_{\mrm{d}}(\vk, 0; z_0)\;,\\
+            \epsilon_{\mrm{c}} \partial_z\Hat{G}_{\mrm{c}}(\vk, L_z; z_0) &= \epsilon_{\mrm{u}} \partial_z\Hat{G}_{\mrm{u}}(\vk, L_z; z_0)\;,\\
+            \lim_{z \to \infty} \Hat{G}_{\mrm{u}}(\vk, z; z_0) &= \lim_{z \to -\infty}\Hat{G}_{\mrm{d}}(\vk, z; z_0)  = 0\;,
+        \end{split}
+    \end{equation*}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+based on the infinite boundary condition,  $\Hat{G}_{\mrm{u}}(\vk, z; z_0)$ and $\Hat{G}_{\mrm{d}}(\vk, z; z_0)$ take the form
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{align*}
+    \Hat{G}_{\mrm{u}}(\vk, z; z_0)&=C_{\mrm{u}}(z_0)\exp(-kz),~z > L_z\;,\\
+     \Hat{G}_{\mrm{d}}(\vk, z; z_0)&=C_{\mrm{d}}(z_0)\exp(kz),~~~~z < 0\;,
+\end{align*}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+therefore, we have 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{align*}
+    \partial_z\Hat{G}_{\mrm{u}}(\vk, z; z_0)&=-k\Hat{G}_{\mrm{u}}(\vk, z; z_0),~z > L_z\;,\\
+     \partial_z\Hat{G}_{\mrm{d}}(\vk, z; z_0)&=k\Hat{G}_{\mrm{d}}(\vk, z; z_0),~z < 0\;,
+\end{align*}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+hence the boundary condition can be  simplified into
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{align*}
+ \epsilon_{\mrm{c}}\partial_z\Hat{G}_{\mrm{c}}(\vk, 0; z_0)&=\epsilon_{\mrm{d}} \partial_z\Hat{G}_{\mrm{d}}(\vk, 0; z_0)=k\epsilon_{\mrm{d}} \Hat{G}_{\mrm{d}}(\vk, 0; z_0)=k\epsilon_{\mrm{d}} \Hat{G}_{\mrm{c}}(\vk, 0; z_0)\;,\\
+  \epsilon_{\mrm{c}}\partial_z\Hat{G}_{\mrm{c}}(\vk, L_z; z_0)&=\epsilon_{\mrm{u}} \partial_z\Hat{G}_{\mrm{u}}(\vk, L_z; z_0)=-k\epsilon_{\mrm{u}} \Hat{G}_{\mrm{u}}(\vk, L_z; z_0)=-k\epsilon_{\mrm{u}} \Hat{G}_{\mrm{c}}(\vk, L_z; z_0)\;.
+\end{align*} 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+Finally, for $z\in[0, z_0]$, $\Hat{G}_{\mrm{c}}(\vk, z; z_0)$ takes the form
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{equation*}
+    \Hat{G}_{\mrm{c}}(\vk, z; z_0)=\left \{
+            \begin{array}{cc}
+                \begin{aligned}
+                    & A\exp(kz)+B\exp(-kz)\;,
+                \end{aligned} & z>z_0, \\
+                \begin{aligned}
+                 & E\exp(kz)+F\exp(-kz)\;,
+                \end{aligned} & z<z_0,
+            \end{array}
+        \right. \;
+\end{equation*}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+with $A, B, E, F$ satisfying
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{equation}\label{proof...Matrix}
+\begin{aligned}
+ &A\exp(kz_0)+B\exp(-kz_0)  = E\exp(kz_0)+F\exp(-kz_0)\;,\\
+ &A\exp(kz_0)-B\exp(-kz_0)-E\exp(kz_0)+F\exp(-kz_0)=-\frac{ \exp{(-\mathrm{i} \V{k} \cdot \V{\rho}_0)}}{k\epsilon_{\mrm{c}}}\;,\\
+ &\epsilon_{\mrm{c}}(E-F)=\epsilon_{\mrm{d}}(E+F)\;,\\
+ &\epsilon_{\mrm{c}}\left(A\exp(kL_z)-B\exp(-kL_z)\right)=-\epsilon_{\mrm{u}}\left(A\exp(kL_z)+B\exp(-kL_z)\right)\;,
+\end{aligned}\end{equation}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+whose solution reads
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{align*}
+A&=\frac{ \exp{(-\mathrm{i} \V{k} \cdot \V{\rho}_0)}}{2k\epsilon_{\mrm{c}}}\frac{\exp(-2kL_z)}{1-\gamma_{\mrm{u}}\gamma_{\mrm{d}}\exp(-2kL_z)} \left(\gamma_{\mrm{u}}\exp(kz_0)+\gamma_{\mrm{u}}\gamma_{\mrm{d}}\exp(-kz_0)\right)\;,\\
+B&=\frac{ \exp{(-\mathrm{i} \V{k} \cdot \V{\rho}_0)} }{2k\epsilon_{\mrm{c}}}\frac{1}{1-\gamma_{\mrm{u}}\gamma_{\mrm{d}}\exp(-2kL_z)} \left(\exp(kz_0)+\gamma_{\mrm{d}}\exp(-kz_0)\right)\;,\\
+E&=A+\frac{\exp{(-\mathrm{i} \V{k} \cdot \V{\rho}_0)} }{2k\epsilon_{\mrm{c}}}\exp(-kz_0)\\
+&=\frac{\exp{(-\mathrm{i} \V{k} \cdot \V{\rho}_0)}}{2k\epsilon_{\mrm{c}}}\frac{\gamma_{\mrm{u}}\exp(-2kL_z)}{1-\gamma_{\mrm{u}}\gamma_{\mrm{d}}\exp(-2kL_z)} \exp(kz_0)\\&~~+\frac{\exp{(-\mathrm{i} \V{k} \cdot \V{\rho}_0)}}{2k\epsilon_{\mrm{c}}}\frac{1}{1-\gamma_{\mrm{u}}\gamma_{\mrm{d}}\exp(-2kL_z)}\exp(-kz_0)\;,\\
+F&=\frac{\exp{(-\mathrm{i} \V{k} \cdot \V{\rho}_0)}}{2k\epsilon_{\mrm{c}}}\frac{\gamma_{\mrm{u}}\gamma_{\mrm{d}}\exp(-2kL_z)}{1-\gamma_{\mrm{u}}\gamma_{\mrm{d}}\exp(-2kL_z)} \exp(kz_0)\\&~~+\frac{\exp{(-\mathrm{i} \V{k} \cdot \V{\rho}_0)}}{2k\epsilon_{\mrm{c}}}\frac{\gamma_{\mrm{d}}}{1-\gamma_{\mrm{u}}\gamma_{\mrm{d}}\exp(-2kL_z)} \exp(-kz_0)\;,
+\end{align*}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+ and similar procedures can be applied to the case $\vk=\vzero$, we omit this for brevity.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\end{proof}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{rmk}\label{Remark...Nonzero+larger}
+ The condition $\gamma_u \gamma_d < 1$ and $k > 0$ guarantees that the determinant  of the Eqn. \eqref{proof...Matrix} is non-zero, hence $A,B,E,F$ admit  unique solutions. Moreover, it is noteworthy that all  the components in $a_{1:4}(z;z_0)$ take positive values. 
+\end{rmk}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+Based on the decomposition relation \eqref{eq...text...Quasi-EwaldMethod...QuasiEwaldSplitting} and definition in Eqn. \eqref{eq...text...Kernels}, we observe that 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{equation}%\label{eq...text...Rewrite-in-kernels}
+   \delta(\V{r}-\V{r}_0)=\sigma_s  (\V{r};\V{r}_0)+\sigma_l  (\V{r};\V{r}_0)\;,
+\end{equation}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+and we  shall decompose the Green's function  $ G(\V{r}, \V{r_0})$ correspondingly into
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{equation}
+    G(\V{r}, \V{r_0})= G_s(\V{r}, \V{r_0})+ G_l(\V{r}, \V{r_0})\;,
+\end{equation}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+where $ G_s(\V{r}, \V{r_0})$ and $ G_l(\V{r}, \V{r_0})$ are the solutions to the   Poisson's equation \eqref{eq...text...RepPoisson}  except that $\delta(\V{r}-\V{r}_0)$ is replaced respectively by $\sigma_s  (\V{r};\V{r}_0)$ and $\sigma_l  (\V{r};\V{r}_0)$.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{cor}
+For any $\vk\neq \vzero$, given     $\hat{G}(\vk, z; z_0)$, we obtain that  
+    \begin{align*}
+        \hat{G}_s(\vk, z; z_0)&=\hat{G}(\vk, z; z_0)\left[1-\exp\left(-\frac{k^2}{4\alpha}\right)\right]\;,\\
+        \hat{G}_l(\vk, z; z_0)&=\hat{G}(\vk, z; z_0)\exp\left(-\frac{k^2}{4\alpha}\right)\;,
+    \end{align*} 
+    and for  $\vk=\vzero$, given     $\hat{G}(\vzero, z; z_0)$, we obtain that  
+        \begin{align*}
+        \hat{G}_s(\vzero, z; z_0)&=0\;,\\
+        \hat{G}_l(\vzero, z; z_0)&=\hat{G}(\vzero, z; z_0)\;.
+    \end{align*} 
+\end{cor}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+Its proof is straightforward in that we only need to solve out the Systems of Equations \eqref{proof...Matrix} by replacing  the coefficient $-\frac{\exp{(-\mathrm{i} \V{k} \cdot \V{\rho}_0)}}{k\epsilon_{\mrm{c}}}$ 
+ respectively with  $-\frac{\exp{(-\mathrm{i} \V{k} \cdot \V{\rho}_0)}}{k\epsilon_{\mrm{c}}}\left[1-\exp\left(-\frac{k^2}{4\alpha}\right)\right]$ and  $-\frac{\exp{(-\mathrm{i} \V{k} \cdot \V{\rho}_0)}}{k\epsilon_{\mrm{c}}}\exp\left(-\frac{k^2}{4\alpha}\right)$. Consequently, the Green's function $ G_s(\V{r}, \V{r_0})$ and $ G_l(\V{r}, \V{r_0})$ can be recovered following the inverse Fourier transform of $  \hat{G}_s(\vk, z; z_0)$ and $  \hat{G}_l(\vk, z; z_0)$,
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{equation*}
+\begin{aligned}
+ G_s(\V{r}, \V{r_0})&=   \frac{1}{4\pi^2}\int_{\sR^2} \hat{G}_s(\vk, z; z_0)\exp{(\mathrm{i} \V{k} \cdot \V{\rho})} \D \vk\\
+ &= \frac{1}{4\pi^2}\int_{\sR^2} \hat{G}(\vk, z; z_0)\left[1-\exp\left(-\frac{k^2}{4\alpha}\right)\right]\exp{(\mathrm{i} \V{k} \cdot \V{\rho})} \D \vk\;,\\
+ G_l(\V{r}, \V{r_0})&=   \frac{1}{4\pi^2}\int_{\sR^2} \hat{G}_l(\vk, z; z_0)\exp{(\mathrm{i} \V{k} \cdot \V{\rho})} \D \vk\\
+ &= \frac{1}{4\pi^2}\int_{\sR^2} \hat{G}(\vk, z; z_0)\exp\left(-\frac{k^2}{4\alpha}\right)\exp{(\mathrm{i} \V{k} \cdot \V{\rho})} \D \vk\;.
+\end{aligned}    
+\end{equation*}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+Hence the total interaction energy reads
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{align*}
+   U & =   U_s+U_l\;,
+\end{align*}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+whereas
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{align}
+U_s&:=    \frac{1}{2} {\sum_{\V{m}}}^\prime \sum_{i, j = 1}^{N} q_i q_j G_s(\V{r}_i+\vL_m, \V{r}_j)\;, \label{eq::U_s}\\
+U_l&:=   \frac{1}{2} {\sum_{\V{m}}}\sum_{i, j = 1}^{N} q_i q_j G_l(\V{r}_i+\vL_m, \V{r}_j)\;. \label{eq::U_l}
+\end{align}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+Given $\vr_j:=(\vrho_j, z_j)$, then for the short range kernel $G_s(\cdot, \V{r}_j)$, whose expression reads 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{align*}
+ &G_s(\V{r}, \V{r}_j)\\
+ =&   \frac{1}{4\pi^2}\int_{\sR^2} \hat{G}(\vk, z; z_j)\left[1-\exp\left(-\frac{k^2}{4\alpha}\right)\right]\exp{(\mathrm{i} \V{k} \cdot \V{\rho})} \D \vk\\
+ =& \frac{1}{4\pi^2}\int_{\sR^2} \frac{ \exp{(\mathrm{i} \V{k} \cdot (\V{\rho}-\V{\rho}_j))}}{2k\epsilon_{\mrm{c}}\left(1-\gamma_{\mrm{u}}\gamma_{\mrm{d}}\exp(-2kL_z)\right)} \left[1-\exp\left(-\frac{k^2}{4\alpha}\right)\right]\left[\sum_{p=1}^4\Gamma_p\exp(-ka_p(z;z_j))\right]\D \vk\;,
+% =&\frac{1}{8\pi^2\epsilon_{\mrm{c}}}\int_{\sR^2} \frac{ \exp{(\mathrm{i} \V{k} \cdot \V{\rho}_{ij})}}{k\left(1-\gamma_{\mrm{u}}\gamma_{\mrm{d}}\exp(-2kL_z)\right)} \left[1-\exp\left(-\frac{k^2}{4\alpha}\right)\right]\sum_{p=1}^4\Gamma_p\exp(-ka_p(z_i;z_j))\D \vk\;,
+\end{align*}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+moreover, if further given $\V{r}_i:=(\vrho_i, z_i)$, we obtain that 
+\begin{align*}
+   &G_s(\V{r}_i, \V{r}_j)\\
+   =& \frac{1}{8\pi^2\epsilon_{\mrm{c}}}\int_{\sR^2} \frac{ \exp{(\mathrm{i} \V{k} \cdot \V{\rho}_{ij})}}{k\left(1-\gamma_{\mrm{u}}\gamma_{\mrm{d}}\exp(-2kL_z)\right)} \left[1-\exp\left(-\frac{k^2}{4\alpha}\right)\right]\left[\sum_{p=1}^4\Gamma_p\exp(-ka_p(z_i;z_j))\right]\D \vk\;,
+\end{align*}
+where $\V{\rho}_{ij}:=\vrho_i-\vrho_j$. 
+\rev{
+    In actually calculations, due to the short range nature of~$G_s(\cdot, \V{r}_j)$, the infinite sum in Eq.~\eqref{eq::U_s} is truncated to a finite sum in real space with a cutoff $r_c$, given by
+    \begin{equation}\label{eq::U_s_truncated}
+        U_s \approx U_{s, *} = \sum_{\abs{\bm{\rho}_{ij, m}} \leq r_c} q_i q_j G_s(\V{r}_i+\vL_m, \V{r}_j)\;,
+    \end{equation}
+    where $\bm{\rho}_{ij, m}:=\vrho_i-\vrho_j+ (L_x m_x, L_y m_y)$, and the summation indicates that among all possible pairs of particles, only the terms with $\abs{\bm{\rho}_{ij, m}} \leq r_c$ are considered.
+}
+
+
+ As for the long  range kernel $G_l(\cdot, \V{r}_j)$, based on the Poisson summation formula, we obtain that 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% \begin{align*}
+%  &G_l(\V{r}_i, \V{r}_j)\\
+%  =&   \frac{1}{4\pi^2}\int_{\sR^2} \hat{G}(\vk, z_i; z_j)\exp\left(-\frac{k^2}{4\alpha}\right)\exp{(\mathrm{i} \V{k} \cdot \V{\rho}_i)} \D \vk\\
+%  =& \frac{1}{4\pi^2}\int_{\sR^2} \frac{ \exp{(\mathrm{i} \V{k} \cdot (\V{\rho}_i-\V{\rho}_j))}}{2k\epsilon_{\mrm{c}}\left(1-\gamma_{\mrm{u}}\gamma_{\mrm{d}}\exp(-2kL_z)\right)} \exp\left(-\frac{k^2}{4\alpha}\right)\sum_{p=1}^4\Gamma_p\exp(-ka_p(z_i;z_j))\D \vk\\
+%  =&\frac{1}{8\pi^2\epsilon_{\mrm{c}}}\int_{\sR^2} \frac{ \exp{(\mathrm{i} \V{k} \cdot \V{\rho}_{ij})}}{k\left(1-\gamma_{\mrm{u}}\gamma_{\mrm{d}}\exp(-2kL_z)\right)} \exp\left(-\frac{k^2}{4\alpha}\right)\sum_{p=1}^4\Gamma_p\exp(-ka_p(z_i;z_j))\D \vk\;,
+% \end{align*}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{equation}\label{eq...text...PoissonSummation}
+ \sum_{\vm} G_l(\V{r}+\vL_m, \V{r}_j)  =\frac{1}{ L_xL_y}   \sum_{\vk\in\fK^2} \Hat{G}_l(\vk,z;z_j)\exp(\textrm{i}\vk\cdot \vrho) \;,
+\end{equation}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+where \[\fK^2 := \left\{\vk \in \frac{  2\pi}{L_x}\sZ\times \frac{  2\pi}{L_y}\sZ \right\}\;.\]
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+Furthermore, the RHS of Eqn. \eqref{eq...text...PoissonSummation} reads
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{align*}
+&\frac{1}{ L_xL_y}   \sum_{\vk\in\fK^2} \Hat{G}_l(\vk,z;z_j)\exp(\textrm{i}\vk\cdot \vrho)\\
+%=&\frac{1}{ L_xL_y}  \left( \sum_{\vk\in\fK^2}  \hat{G}(\vk, z; z_j)\exp\left(-\frac{k^2}{4\alpha}\right)\exp{(\mathrm{i} \V{k} \cdot \V{\rho})} \right)\\
+=& \frac{1}{ L_xL_y}   \left[\hat{G}_l(\vzero, z; z_j)+\sum_{\vk\in\fK^2,\vk\neq\vzero}  \hat{G}_l(\vk, z; z_j)\exp{(\mathrm{i} \V{k} \cdot \V{\rho})}\right]\\
+=&\frac{1}{ L_xL_y}   \left[\hat{G}(\vzero, z; z_j)+\sum_{\vk\in\fK^2,\vk\neq\vzero}  \hat{G}(\vk, z; z_j)\exp\left(-\frac{k^2}{4\alpha}\right)\exp{(\mathrm{i} \V{k} \cdot \V{\rho})}\right]\;,
+\end{align*}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+therefore, given $\vr_i$, the above expression can be simplified into
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{align*}
+ &\frac{1}{ L_xL_y}   \sum_{\vk\in\fK^2,\vk\neq\vzero} \Hat{G}_l(\vk,z;z_j)\exp(\textrm{i}\vk\cdot \vrho)\\
+ =& \frac{1}{ L_xL_y}   \sum_{\vk\in\fK^2,\vk\neq\vzero} \frac{ \exp{(\mathrm{i} \V{k} \cdot \V{\rho}_{ij})}}{2k\epsilon_{\mrm{c}}\left(1-\gamma_{\mrm{u}}\gamma_{\mrm{d}}\exp(-2kL_z)\right)}\left[\sum_{p=1}^4\Gamma_p\exp(-ka_p(z_i;z_j))\right] \exp\left(-\frac{k^2}{4\alpha}\right)\;,
+\end{align*}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+to sum up, the energy $U_l$ reads
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{align*}
+U_l&=\frac{1}{2}\sum_{\vm}\sum_{i,j=1}^N q_iq_j     G_l(\V{r}_i+\vL_m, \V{r}_j)\\
+&=\frac{1}{4\epsilon_{\mrm{c}} L_xL_y}\sum_{i,j=1}^N  q_iq_j \Bigg({\Abs{z_i-z_j}} +\\&~~~~+  \sum_{\vk\in\fK^2,\vk\neq\vzero} \frac{ \exp{(\mathrm{i} \V{k} \cdot \V{\rho}_{ij})}}{k\left(1-\gamma_{\mrm{u}}\gamma_{\mrm{d}}\exp(-2kL_z)\right)}\left[\sum_{p=1}^4\Gamma_p\exp(-ka_p(z_i;z_j))\right] \exp\left(-\frac{k^2}{4\alpha}\right)\Bigg)\;.
+\end{align*}
+\xz{I don't think we have to mention RBE here.}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Efficient Calculation of Short Range Interaction Energy}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+We observe that the energy $U_s$ is constituted  by the terms
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{align*}
+  &G_s(\V{r}_i, \V{r}_j)\\
+   =& \frac{1}{8\pi^2\epsilon_{\mrm{c}}}\int_{\sR^2} \frac{ \exp{(\mathrm{i} \V{k} \cdot \V{\rho}_{ij})}}{k\left(1-\gamma_{\mrm{u}}\gamma_{\mrm{d}}\exp(-2kL_z)\right)} \left[1-\exp\left(-\frac{k^2}{4\alpha}\right)\right]\left[\sum_{p=1}^4\Gamma_p\exp(-ka_p(z_i;z_j))\right]\D \vk\;,  
+\end{align*}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+in which $\vr_i$ and $\vr_j$ are given, and we further notice  that all the components in $G_s(\V{r}_i, \V{r}_j)$ take the form
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{align*}
+   & \int_{\sR^2} \frac{ \exp{(\mathrm{i} \V{k} \cdot \V{\rho}_{ij})}}{k\left(1-\gamma_{\mrm{u}}\gamma_{\mrm{d}}\exp(-2kL_z)\right)} \left[1-\exp\left(-\frac{k^2}{4\alpha}\right)\right]\exp(-ka_p(z_i;z_j))\D \vk\\
+   =2\pi&\int_0^{+\infty} \frac{ \exp(-ka_p(z_i;z_j))}{1-\gamma_{\mrm{u}}\gamma_{\mrm{d}}\exp(-2kL_z)} \left[1-\exp\left(-\frac{k^2}{4\alpha}\right)\right]\fJ_0(\rho_{ij}k)\D k\;,
+\end{align*}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+where $\rho_{ij}:=\Norm{\vrho_{ij}}=\Norm{\vrho_i-\vrho_j}$, and $\fJ_0(\cdot)$ is the zeroth-order Bessel function,  which  can   be expressed as a complex contour integral over a full period.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{defi}
+    The zeroth-order Bessel function of the first kind, denoted by $\fJ_0(r)$, is formally defined via the integral representation
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{equation}
+      \fJ_0(r):=\frac{1}{2\pi} \int_0^{2\pi} \exp(\mathrm{i} r\sin \theta) \D \theta\;.  
+    \end{equation}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
+\end{defi}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+We proceed to evaluate the following integral
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{equation}\label{eq...text...InfiniteIntegral}
+\int_0^{+\infty} \frac{ \exp(-ak)}{1-\gamma_{\mrm{u}}\gamma_{\mrm{d}}\exp(-2kL_z)} \left[1-\exp\left(-\frac{k^2}{4\alpha}\right)\right]\fJ_0(\rho k)\D k\;,    
+\end{equation}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+where $a>0$ and $\rho>0$ are fixed constants. Firstly, we observe that Eqn. \eqref{eq...text...InfiniteIntegral} can be written into
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{align*}
+   & \int_0^{+\infty} \frac{ \exp(-ak)}{1-\gamma_{\mrm{u}}\gamma_{\mrm{d}}\exp(-2kL_z)} \left[1-\exp\left(-\frac{k^2}{4\alpha}\right)\right]\fJ_0(\rho k)\D k\\
+   =&\underbrace{\int_0^{+\infty} \frac{1}{1-\gamma_{\mrm{u}}\gamma_{\mrm{d}}\exp(-2kL_z)}  \exp(-ak) \fJ_0(\rho k)\D k}_{\text{Term}~\mathrm{I}}\\
+   &-\underbrace{\int_0^{+\infty} \frac{1}{1-\gamma_{\mrm{u}}\gamma_{\mrm{d}}\exp(-2kL_z)}\exp\left(-\frac{k^2}{4\alpha}\right)  \exp(-ak) \fJ_0(\rho k)\D k}_{\text{Term}~\mathrm{II}}\;.
+\end{align*}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+Secondly, we observe further that Term $\mathrm{I}$ can be decomposed into
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{align*}
+&\int_0^{+\infty} \frac{1}{1-\gamma_{\mrm{u}}\gamma_{\mrm{d}}\exp(-2kL_z)}  \exp(-ak) \fJ_0(\rho k)\D k\\
+=&\underbrace{\int_0^{+\infty}   \exp(-ak) \fJ_0(\rho k)\D k}_{\text{Term}~\mathrm{I(a)}}\\
+&+\underbrace{\int_0^{+\infty} \frac{\gamma_{\mrm{u}}\gamma_{\mrm{d}}}{1-\gamma_{\mrm{u}}\gamma_{\mrm{d}}\exp(-2kL_z)}  \exp(-2kL_z)\exp(-ak) \fJ_0(\rho k)\D k}_{\text{Term}~\mathrm{I(b)}}\;,
+\end{align*}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+on the basis of the identity
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{equation*}
+    \int_0^{+\infty}\exp(-ax)\fJ_0(x)\D x=\frac{1}{\sqrt{a^2+1}}\;,
+\end{equation*}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+then Term $\mathrm{I(a)}$ can be simplified into 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{equation}\label{eq...text...TermI(A)}
+    \int_0^{+\infty}   \exp(-ak) \fJ_0(\rho k)\D k=\frac{1}{\sqrt{a^2+\rho^2}}\;.
+\end{equation}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+It is observed that Term $\mathrm{I(b)}$ and Term $\mathrm{II}$  comprise infinite integrals involving rapidly decaying functions coupled with oscillatory components. To efficiently evaluate such integrals over an infinite domain, we employ the method proposed in \cite{trefethen2022exactness}, which facilitates numerical computation by truncating the integration region to a finite domain. 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% \begin{thm}[Theorem 5.1 in \cite{trefethen2022exactness}]\label{Thm...Truncation}
+%  Let $f(x)$ be analytic and bounded for $x \in(-\infty, \infty)$, and suppose $F(x):=\exp \left(-x^2\right) f(x)$ extends to a bounded analytic function in the infinite strip $-a<\operatorname{Im} x<$ a for some $a>0$. Let $L>0$ be fixed, and for each $n \geq 1$, as we denote  \[I_n(F):=\sum_{j=1}^n w_jF(x_j)\;,\] as the estimate of the integral \[I(F):=\int_{-\infty}^{+\infty} F(x)\D x \;,\]  obtained by applying Gauss-Legendre, Clenshaw-Curtis, or equispaced trapezoidal quadrature on the truncated interval $\left[-L n^{1 / 3}, L n^{1 / 3}\right]$. Then for some $C>0$,  the following holds 
+%  \begin{equation}
+%  \left|I-I_n\right|=\fO\left(\exp \left(-C n^{2 / 3}\right)\right), \quad n \rightarrow \infty\;.  
+%  \end{equation}
+% \end{thm}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+For any given 
+$M>0$, as the infinite integral can be decomposed into
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{equation*}
+ \int_0^{+\infty} F(k)\D  k=  \int_0^{M} F(k)\D  k+\int_M^{+\infty} F(k)\D  k\;,
+\end{equation*}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
+then the first part of the integral can be efficiently evaluated  using  Gauss-Legendre quadrature, while the second integral can be neglected for sufficiently large $M$. To ensure   validity of such truncation, it is necessary to provide some  estimates on the associated truncation error as a function of $M$.
+% For the Term $\mathrm{I(b)}$, its truncation error reads
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% \begin{equation}\label{eq...text...TruncationError(Term1(b))}
+% \begin{aligned}
+%     &\Abs{\int_M^{+\infty} \frac{\gamma_{\mrm{u}}\gamma_{\mrm{d}}}{1-\gamma_{\mrm{u}}\gamma_{\mrm{d}}\exp(-2kL_z)}  \exp(-2kL_z)\exp(-ak) \fJ_0(\rho k)\D k}\\
+%     \leq &  \frac{\Abs{\gamma_{\mrm{u}}\gamma_{\mrm{d}}}}{1-\max\{0,\gamma_{\mrm{u}}\gamma_{\mrm{d}}\}}\int_M^{+\infty}  \exp(-2kL_z)) \Abs{\fJ_0(\rho k)}\D k
+% \end{aligned}    
+% \end{equation}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{prop}
+We denote the     truncation errors of Term $\mathrm{I(b)}$ and Term $\mathrm{II}$ respectively by
+\begin{align*}
+  \Delta \mathrm{I}_b(M)&:=\int_M^{+\infty} \frac{\gamma_{\mrm{u}}\gamma_{\mrm{d}}}{1-\gamma_{\mrm{u}}\gamma_{\mrm{d}}\exp(-2kL_z)}  \exp(-2kL_z)\exp(-ak) \fJ_0(\rho k)\D k \;,\\  
+  \Delta \mathrm{II}(M)&:=\int_M^{+\infty}  \frac{1}{1-\gamma_{\mrm{u}}\gamma_{\mrm{d}}\exp(-2kL_z)}\exp\left(-\frac{k^2}{4\alpha}\right)  \exp(-ak) \fJ_0(\rho k)\D k \;,
+\end{align*}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+whose estimates read
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{align}
+    \Abs{\Delta \mathrm{I}_b(M)} &\leq  \frac{\Abs{\gamma_{\mrm{u}}\gamma_{\mrm{d}}}}{1-\max\{0,\gamma_{\mrm{u}}\gamma_{\mrm{d}}\}}\frac{1}{\sqrt{\rho L_z}}\mrm{erfc}(\sqrt{2L_zM})\;,\\
+    \Abs{\Delta \mathrm{II}(M)} &\leq \frac{\sqrt{2\alpha} }{1-\max\{0,\gamma_{\mrm{u}}\gamma_{\mrm{d}}\}} \mrm{erfc}\left(\frac{M}{2\sqrt{\alpha}}\right)\;.
+\end{align}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\end{prop}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{proof}
+We obtain immediately that for $r>0$ large enough,     
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{equation*}
+   \Abs{\fJ_0(r)}\leq \sqrt{\frac{2}{\pi}} \frac{1}{\sqrt{r}}\;, 
+\end{equation*}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+thus we have 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{align*}
+   & \int_M^{+\infty}  \exp(-2kL_z)\exp(-ak) \fJ_0(\rho k)\D k \\
+\leq & \int_M^{+\infty}  \exp(-2kL_z)\sqrt{\frac{2}{\pi}} \frac{1}{\sqrt{\rho k}} \D k=\frac{1}{\sqrt{\rho L_z}}\mrm{erfc}(\sqrt{2L_zM})\;,
+\end{align*}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+and 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{align*}
+  &\int_M^{+\infty}  \exp\left(-\frac{k^2}{4\alpha}\right)  \exp(-ak) \fJ_0(\rho k)\D k \\
+  \leq &\int_M^{+\infty} \exp\left(-\frac{k^2}{4\alpha}\right)\sqrt{\frac{2}{\pi}} \frac{1}{\sqrt{\rho k}} \D k\\ 
+  \leq &\int_M^{+\infty} \exp\left(-\frac{k^2}{4\alpha}\right)\sqrt{\frac{2}{\pi}} \D k=\sqrt{2\alpha} \mrm{erfc}\left(\frac{M}{2\sqrt{\alpha}}\right)\;,
+\end{align*}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+and we finish our proof.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\end{proof}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+(Some Numerical Experiment BLABLABLA)
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Efficient Calculation of  Long Range Interaction Energy}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+As the long range interaction  energy $U_l$ reads
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{align*} 
+U_l&=\frac{1}{4\epsilon_{\mrm{c}} L_xL_y}\sum_{i,j=1}^N q_iq_j\Bigg({\Abs{z_i-z_j}} +\\&~~~~+  \sum_{\vk\in\fK^2,\vk\neq\vzero} \frac{ \exp{(\mathrm{i} \V{k} \cdot \V{\rho}_{ij})}}{k\left(1-\gamma_{\mrm{u}}\gamma_{\mrm{d}}\exp(-2kL_z)\right)}\left[\sum_{p=1}^4\Gamma_p\exp(-ka_p(z_i;z_j))\right] \exp\left(-\frac{k^2}{4\alpha}\right)\Bigg)\;,
+\end{align*}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+and we endeavor to  reduce the $\fO(N^2)$ complexity to linear scaling by incorporating the idea of random batch sampling in combination with some alignment techniques.
+
+%Firstly, we shall deal with the summation over $i$ and $j$, i.e., $\sum_{i,j=1}^N$. 
+We observe that the four components in the following summation read
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{align*}
+     &\sum_{p=1}^4\Gamma_p\exp(-ka_p(z_i;z_j))\\  
+     =&\exp(-k\Abs{z_i-z_j})+\gamma_{\mrm{d}}\exp(-k(z_i+z_j))\\
+     &+\gamma_{\mrm{u}}\exp(-k(2L_z-z_i-z_j)) +\gamma_{\mrm{u}}\gamma_{\mrm{d}}\exp(-k(2L_z-\Abs{z_i-z_j}))\;.
+\end{align*}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+To facilitate the computation, we define auxiliary functions   $h_{1:4}(k)$ as 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{align*}
+ h_1(\vk)&:= \frac{1}{4\epsilon_{\mrm{c}} L_xL_yk\left(1-\gamma_{\mrm{u}}\gamma_{\mrm{d}}\exp(-2kL_z)\right)} \;,\\
+  h_2(\vk)&:= \frac{\gamma_{\mrm{d}}}{4\epsilon_{\mrm{c}} L_xL_yk\left(1-\gamma_{\mrm{u}}\gamma_{\mrm{d}}\exp(-2kL_z)\right)} \;,\\
+   h_3(\vk)&:= \frac{\gamma_{\mrm{u}}\exp(-2kL_z)}{4\epsilon_{\mrm{c}} L_xL_yk\left(1-\gamma_{\mrm{u}}\gamma_{\mrm{d}}\exp(-2kL_z)\right)}\;,\\
+     h_4(\vk)&:= \frac{\gamma_{\mrm{u}}\gamma_{\mrm{d}}\exp(-2kL_z)}{4\epsilon_{\mrm{c}} L_xL_yk\left(1-\gamma_{\mrm{u}}\gamma_{\mrm{d}}\exp(-2kL_z)\right)}\;,
+\end{align*}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+and another set of auxiliary functions   $S_{0:4}(k)$ as
+%which allows us to express the summation over $i$ and $j$ in  $U_l$ as
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{align*} 
+S_0&:=\frac{1}{4\epsilon_{\mrm{c}} L_xL_y}\sum_{i,j=1}^Nq_iq_j {\Abs{z_i-z_j}}\;,\\
+S_1(\vk)&:=\sum_{i,j=1}^Nq_iq_j  \exp{(\mathrm{i} \V{k} \cdot \V{\rho}_{ij})}\exp(-k\Abs{z_i-z_j})\;,\\
+S_2(\vk)&:=\sum_{i,j=1}^Nq_iq_j  \exp{(\mathrm{i} \V{k} \cdot \V{\rho}_{ij})}\exp(-k(z_i+z_j))\;,\\
+S_3(\vk)&:=\sum_{i,j=1}^Nq_iq_j  \exp{(\mathrm{i} \V{k} \cdot \V{\rho}_{ij})}\exp(k(z_i+z_j))\;,\\
+S_4(\vk)&:=\sum_{i,j=1}^Nq_iq_j \exp{(\mathrm{i} \V{k} \cdot \V{\rho}_{ij})}\exp(k\Abs{z_i-z_j})\;.
+\end{align*}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+Consequently, the long-range interaction energy   $U_l$ reads
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{equation}\label{eq...text...Energy}
+U_l =    S_0+ \sum_{\vk\in\fK^2,\vk\neq\vzero} \exp\left(-\frac{k^2}{4\alpha}\right)\sum_{p=1}^4S_p(\vk)h_p(\vk)\;.
+\end{equation}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+and for simplicity, we denote hereafter in this paper that 
+\begin{equation}\label{eq...text...phi}
+    \phi(\vk):=\sum_{p=1}^4S_p(\vk)h_p(\vk)\;,
+\end{equation}
+and on the basis of Eqn. \eqref{eq...text...phi}, the   energy   $U_l$ can be simplified into 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{equation} \label{eq...text...EnergywithPhi}
+U_l =    S_0+ \sum_{\vk\in\fK^2,\vk\neq\vzero} \phi(\vk)\exp\left(-\frac{k^2}{4\alpha}\right) \;,
+\end{equation}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+and the idea of random batch sampling is employed to efficiently evaluate the summation over   $\vk$, i.e., $\sum_{\vk\in\fK^2,\vk\neq\vzero}$. 
+%However, prior to this step, we shall  introduce some alignment techniques to further enhance computational efficiency.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsubsection{Part One: Pairwise Summation}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+It is easy to observe that  the  auxiliary functions  $S_2(\vk)$ and $S_3(\vk)$ are multiplicatively separable  in the sense that  they can be written into
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{align*}
+S_2(\vk)&=\sum_{i,j=1}^Nq_iq_j  \exp{(\mathrm{i} \V{k} \cdot \V{\rho}_{ij})}\exp(-k(z_i+z_j))\\
+&=\left(\sum_{i=1}^Nq_i\exp{(\mathrm{i} \V{k} \cdot \V{\rho}_{i})}\exp(-kz_i)\right)\left(\sum_{j=1}^Nq_j\exp{(-\mathrm{i} \V{k} \cdot \V{\rho}_{j})}\exp(-kz_j)\right)\;,\\
+S_3(\vk)&=\sum_{i,j=1}^Nq_iq_j  \exp{(\mathrm{i} \V{k} \cdot \V{\rho}_{ij})}\exp(k(z_i+z_j))\\
+&=\left(\sum_{i=1}^Nq_i  \exp{(\mathrm{i} \V{k} \cdot \V{\rho}_{i})}\exp(kz_i)\right)\left(\sum_{j=1}^Nq_j  \exp{(-\mathrm{i} \V{k} \cdot \V{\rho}_{j})}\exp(kz_j)\right)\;,
+\end{align*}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+such factorization significantly reduces computational complexity, as the direct evaluation of the double summation requires 
+$\fO(N^2)$ operations, whereas the factorized form allows computation in only 
+$\fO(N)$ steps.
+
+However, the functions $S_0$,  $S_1(\vk)$ and $S_4(\vk)$  are non-multiplicatively separable due to the presence of the absolute difference term $\abs{z_i - z_j}$ which prevents direct factorization. Consequently, the strategy employed for 
+$S_2(\vk)$ and $S_3(\vk)$ is no longer applicable. To achieve linear computational complexity in evaluating these terms,  some specialized alignment techniques must be introduced.
+
+Firstly, we sort all $N$ particles according to their positions along the 
+$z$-axis, ensuring the ordering
+\begin{equation*}
+   0 < z_1 < z_2 <  \cdots <  z_{N - 1}<z_N < L_z\;.
+\end{equation*}
+Since for all  $i$, $z_i \in (0, L_z)$ is uniformly bounded, hence  the strategies such as the bucket sorting~\cite{corwin2004sorting} can be applied, and the computational cost can be of order~$\mathcal{O}(N \log{N})$ or even  of order~$\mathcal{O}(N)$. Once all $N$ particles are sorted according to their positions along the 
+$z$-axis, we observe that $S_0$ can be written into
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{align*}
+    S_0 
+    & = \sum_{i = 1}^N q_i \left( \sum_{j = 1}^{i }{q_j (z_i - z_j)} \right) \\
+    & = 2 \sum_{i = 1}^N q_i \left( z_i \sum_{j = 1}^{i }q_j - \sum_{j = 1}^{i }z_j q_j  \right) \;.
+\end{align*}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+To efficiently compute this summation, we introduce two auxiliary sequences  $\left\{T_1(i)\right\}_{i=1}^N$ and $\left\{T_2(i)\right\}_{i=1}^N$, both of which  can be iteratively updated as follows:
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{align*}
+    &T_1(1)=q_1,~~T_1(i+1)=T_1(i)+q_{i+1}\;,\\
+    &T_2(1)=z_1q_1,~~T_2(i+1)=T_2(i)+z_{i+1}q_{i+1}\;.
+\end{align*}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+Using these auxiliary sequences, 
+$S_0$ can be efficiently calculated as
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\[
+S_0= 2 \sum_{i = 1}^N q_i \left( z_iT_1(i)-T_2(i)\right)\;,
+\]
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+which requires only 
+$4N$ operations, significantly reducing computational complexity in comparison with the naive summation.
+
+A similar strategy~\cite{jiang2021approximating, gan2024fast} can also be applied to the evaluation of $S_1(\vk)$ and $S_4(\vk)$. For $S_1(\vk)$, we obtain that 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{align*}
+S_1(\vk)&=\sum_{i,j=1}^Nq_iq_j  \exp{(\mathrm{i} \V{k} \cdot \V{\rho}_{ij})}\exp(-k\Abs{z_i-z_j})\\
+&=-\sum_{i=1}^Nq_i^2+\sum_{i=1}^N \sum_{j=1}^iq_iq_j  \exp{(\mathrm{i} \V{k} \cdot \V{\rho}_{ij})}\exp(-k(z_i-z_j))\\
+&~~+\sum_{i=1}^N \sum_{j=i}^Nq_iq_j  \exp{(\mathrm{i} \V{k} \cdot \V{\rho}_{ij})}\exp(-k(z_j-z_i))\\
+&= -\sum_{i=1}^Nq_i^2+\sum_{i=1}^N q_i\exp{(\mathrm{i} \V{k} \cdot \V{\rho}_{i})}\exp(-kz_i)\sum_{j=1}^iq_j\exp{(-\mathrm{i} \V{k} \cdot \V{\rho}_{j})}\exp(kz_j)\\
+&~~+\sum_{i=1}^N q_i\exp{(\mathrm{i} \V{k} \cdot \V{\rho}_{i})}\exp(kz_i)\sum_{j=i}^Nq_j\exp{(-\mathrm{i} \V{k} \cdot \V{\rho}_{j})}\exp(-kz_j)\;,
+\end{align*}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+ we introduce another two auxiliary sequences  $\left\{T_3(i)\right\}_{i=1}^N$ and $\left\{T_4(i)\right\}_{i=1}^N$, and it is noteworthy that $\left\{T_3(i)\right\}_{i=1}^N$ is  constructed through forward iteration, whereas  $\left\{T_4(i)\right\}_{i=1}^N$   is generated through backward iteration:
+ %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{align*}
+    &T_3(1)=q_1\exp{(-\mathrm{i} \V{k} \cdot \V{\rho}_{1})}\exp(kz_1)\;,\\
+    &T_3(i+1)=T_3(i)+q_{i+1}\exp{(-\mathrm{i} \V{k} \cdot \V{\rho}_{i+1})}\exp(kz_{i+1})\;,\\
+    &T_4(N)=q_N\exp{(-\mathrm{i} \V{k} \cdot \V{\rho}_{N})}\exp(-kz_N)\;,\\
+    &T_4(i-1)=T_4(i)+q_{i-1}\exp{(-\mathrm{i} \V{k} \cdot \V{\rho}_{i-1})}\exp(-kz_{i-1})\;,
+\end{align*}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+and
+$S_1(\vk)$ can be efficiently calculated as
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\[
+S_1(\vk)= -\sum_{i=1}^Nq_i^2+ \sum_{i=1}^N q_i\exp{(\mathrm{i} \V{k} \cdot \V{\rho}_{i})}\left[\exp(-kz_i)T_3(i)+\exp(kz_i)T_4(i)\right]\;.
+\]
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+As for $S_4(\vk)$, we shall follow the same routine:
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{align*}
+S_4(\vk)&=\sum_{i,j=1}^Nq_iq_j  \exp{(\mathrm{i} \V{k} \cdot \V{\rho}_{ij})}\exp(-k\Abs{z_i-z_j})\\
+&=-\sum_{i=1}^Nq_i^2+\sum_{i=1}^N \sum_{j=1}^iq_iq_j  \exp{(\mathrm{i} \V{k} \cdot \V{\rho}_{ij})}\exp(k(z_i-z_j))\\
+&~~+\sum_{i=1}^N \sum_{j=i}^Nq_iq_j  \exp{(\mathrm{i} \V{k} \cdot \V{\rho}_{ij})}\exp(k(z_j-z_i))\\
+&= -\sum_{i=1}^Nq_i^2+\sum_{i=1}^N q_i\exp{(\mathrm{i} \V{k} \cdot \V{\rho}_{i})}\exp(kz_i)\sum_{j=1}^iq_j\exp{(-\mathrm{i} \V{k} \cdot \V{\rho}_{j})}\exp(-kz_j)\\
+&~~+\sum_{i=1}^N q_i\exp{(\mathrm{i} \V{k} \cdot \V{\rho}_{i})}\exp(-kz_i)\sum_{j=i}^Nq_j\exp{(-\mathrm{i} \V{k} \cdot \V{\rho}_{j})}\exp(kz_j)\;,
+\end{align*}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+and we introduce another two auxiliary sequences  $\left\{T_5(i)\right\}_{i=1}^N$ and $\left\{T_6(i)\right\}_{i=1}^N$, and it is noteworthy that $\left\{T_5(i)\right\}_{i=1}^N$ is  constructed through forward iteration, whereas  $\left\{T_6(i)\right\}_{i=1}^N$   is generated through backward iteration:
+ %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{align*}
+    &T_5(1)=q_1\exp{(-\mathrm{i} \V{k} \cdot \V{\rho}_{1})}\exp(-kz_1)\;,\\
+    &T_5(i+1)=T_5(i)+q_{i+1}\exp{(-\mathrm{i} \V{k} \cdot \V{\rho}_{i+1})}\exp(-kz_{i+1})\;,\\
+    &T_6(N)=q_N\exp{(-\mathrm{i} \V{k} \cdot \V{\rho}_{N})}\exp(kz_N)\;,\\
+    &T_6(i-1)=T_6(i)+q_{i-1}\exp{(-\mathrm{i} \V{k} \cdot \V{\rho}_{i-1})}\exp(kz_{i-1})\;,
+\end{align*}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+and $S_4(\vk)$ can be written as
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\[
+S_4(\vk)= -\sum_{i=1}^Nq_i^2+ \sum_{i=1}^N q_i\exp{(\mathrm{i} \V{k} \cdot \V{\rho}_{i})}\left[\exp(kz_i)T_5(i)+\exp(-kz_i)T_6(i)\right]\;.
+\]
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+To sum up, given fixed frequency $\vk^\ast$, it only takes  linear complexity to evaluate $S_0$ and $\phi(\vk^\ast)$, and we proceed to deal with the   summation over $\vk$. 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsubsection{Part Two: Random Batch Importance Sampling}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+In this section, we shall introduce a stochastic algorithm designed to accelerate the Quasi-Ewald method in particle simulations, reducing the complexity to $\mathcal{O}(N)$. 
+Unlike existing methods relying on either FFT or FMM-based techniques to reduce the complexity, our idea involves adopting mini-batch stochastic approximation over Fourier modes, with importance sampling for variance reduction. 
+More precisely, let us consider the Fourier sum over $\bm k \in \mathcal{K}^2$ for a given kernel $f(\bm{k})$,
+one can alternatively understand the Fourier sum as an expectation
+\begin{equation}
+	\mu:=\sum_{\bm{k}\in\mathcal{K}^2}\frac{f(\bm{k})}{g(\bm{k})}g(\bm{k})=\mathbb{E}_{\bm k\sim g(\bm{k})}\left[\frac{f(\bm{k})}{g(\bm{k})}\right],
+\end{equation}
+\rev{
+    where $g(\bm{k})$ is a probability measure defined on the lattice $\bm k \in \mathcal{K}^2$ and the expectation~$\mathbb{E}_{\bm k\sim g(\bm{k})}$ is taken with respect to the probability measure.
+}
+% where $\mathbb{E}_{\bm k\sim g(\bm{k})}$ \yq{this part is wierd} denotes the expectation with $\bm{k}$ sampled from a chosen probability measure $g(\bm{k})$ defined on the lattice $\bm k \in \mathcal{K}^2$. 
+Instead of calculating the summation directly or using FFT, a mini-batch of Fourier modes (with batch size $P$) sampled from $g(\bm{k})$ are employed to estimate the expectation, resulting in an efficient stochastic algorithm.
+\xz{Better?}
+
+It is worth noting that the random mini-batch strategy originated from stochastic gradient descent in machine learning and was first introduced in the study of interacting particle systems by Jin et al.~\cite{jin2020random}, called the random batch method. Consequently
+on the basis of Eqn. \eqref{eq...text...Energy},  we observe that 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\[
+U_l =   S_0+ \sum_{\vk\in\fK^2,\vk\neq\vzero}\phi(\vk) \exp\left(-\frac{k^2}{4\alpha}\right) \;,
+\]
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+we define 
+\begin{equation}\label{eq::U_l0_Ulk}
+    U_l^{\vzero} := S_0,\quad\text{and}\quad U_l^{\vk\neq \vzero} :=\sum_{\vk\in\fK^2,\vk\neq\vzero}\phi(\vk) \exp\left(-\frac{k^2}{4\alpha}\right) \;,
+\end{equation}
+then $U_l$ can be written into the sum of these two components
+\[
+U_l= U_l^{\vzero}+U_l^{\vk\neq \vzero}\;,
+\]
+Since 
+$ U_l^{\vzero}$
+can be computed with linear complexity, we focus on the efficient evaluation of 
+$U_l^{\vk\neq \vzero}$, for which the idea of random batch is employed.
+Based on the above expression, we find a Gaussian decay factor in $U_l^{\vk\neq \vzero}$ explicitly, which can be normalized for the  purpose of importance sampling, so that we take
+\begin{equation}\label{eq::hk}
+	g(\bm{k}) := \frac{1}{H} \exp\left(-\frac{k^2}{4\alpha}\right)\;, %\quad H := \sum_{\bm{k}\neq\bm{0}}e^{-k^2/(4\alpha^2)},
+\end{equation}
+where \[H:= \sum_{\vk\in\fK^2,\vk\neq\vzero}\exp\left(-\frac{k^2}{4\alpha}\right)\;,\] serves as a normalization factor.
+% By application of the Poisson summation formula, $H$ can be computed as follows
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% \begin{align*}
+%   H+1&=  \sum_{\vk\in\fK^2}\exp\left(-\frac{k^2}{4\alpha}\right)\;,\\
+%   \sum_{\vk\in\fK^2}\exp\left(-\frac{k^2}{4\alpha}\right)&= \frac{\alpha L_xL_y}{\pi}\sum_{m_x,m_y\in\mathbb{Z}}\exp\left({-\alpha\left(m_x^2L_x^2+m_y^2L_y^2\right)}\right)\;,
+% \end{align*}
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% hence
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% \begin{equation}\label{eq::Happ}
+% 	H=-1+\frac{\alpha L_xL_y}{\pi}\sum_{m_x,m_y\in\mathbb{Z}}\exp\left({-\alpha\left(m_x^2L_x^2+m_y^2L_y^2\right)}\right)\;,
+% \end{equation}
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\xz{I removed the statement about the computation of $H$ and the truncation, since if we use the Metropolis algorithm, we don't need to compute $H$ explicitly.}
+Using the Metropolis algorithm~\cite{metropolis1953equation}, a random mini-batch of frequencies $\{\bm{k}_{\eta}\}_{\eta=1}^P$ is sampled, where~$P$ is the batch size, and $U_l$ can be approximated as 
+\begin{equation}\label{eq::RBapp}
+ U_l^{\vk\neq \vzero} \approx U_{l,\ast}^{\vk\neq \vzero}  :=   \frac{H}{P}\sum_{\eta=1}^P \phi(\vk_{\eta})=  \frac{H}{P}\sum_{\eta=1}^P \sum_{q=1}^4S_q(\vk_{\eta})h_q(\vk_{\eta})\;,
+\end{equation} 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+and the corresponding estimator of the force in Fourier space is given by
+\begin{equation}
+	 \bm{F}_{l,i}\approx\bm{F}_{l,i}^*=-  \grad_{\V{r}_i} U_l^{\vzero}- \grad_{\V{r}_i} U_{l,\ast}^{\vk\neq \vzero}\;,
+ \end{equation}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+Finally, combining all these strategies, we state our Quasi-Ewald method for calculating the electrostatic energy and forces in molecular dynamics simulations, see Algorithm~\ref{alg:rbqe}.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{algorithm}[ht] 
+\caption{The Quasi-Ewald method}
+\begin{algorithmic}[1]
+    \State \textbf{Input}:  Initialize the size of the simulation box $(L_x,L_y, L_z)$, as well as the positions, velocities, and charges of all particles. Choose a precision requirement $\varepsilon$ as well as batch size $P$.
+    \State \textbf{Precomputation}:  Determine Ewald splitting parameters $\alpha$. Generate real space cutoff by $r_c$.
+    \Procedure\text{Quasi-Ewald}{}       
+        \State Draw $P$ frequencies $\{\bm{k}_{\eta}\}_{\eta=1}^{P}$ using the Metropolis algorithm;
+        \State Sort all the particles according to their $z$ coordinates, such that $z_1 < z_2 < \cdots < z_N$;
+        \State Compute unbiased Fourier space energy $U_{l, *}^{\bm{k}\neq\bm{0}}$ by importance sampling Eq.~\eqref{eq::RBapp};
+        \State Compute zero-frequency part $U_{l}^{\bm{0}}$ according to Eq.~\eqref{eq::U_l0_Ulk}.
+        % \State Compute $U_{\text{self}}$ and $U_{\text{p-s}}$ via Eqs.~\eqref{eq::self} and \eqref{eq:spectial}, respectively.
+        \State Compute~$U_{s}^{*}$ by direct truncation in real space according to Eq.~\eqref{eq::U_s_truncated} with cutoff $r_c$. %\Comment{short-range part}
+        \State Compute $U^{*} = U_{s, *} + U_{l}^{\bm{0}} + U_{l, *}^{\bm{k}\neq\bm{0}}$.
+        \State Compute forces $\bm{F}_{i}^{*}$ via a similar procedure as that of $U^{*}$.
+    \EndProcedure
+
+    \State \textbf{Output}: Unbiased estimation of electrostatic energy $U^{*}$ and forces $\bm{F}_{l,i}^{*}$.
+\end{algorithmic}\label{alg:rbqe}
+\end{algorithm}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% \begin{algorithm}
+% \caption{The Quasi-Ewald method}
+% \label{alg:rbqe}
+% \begin{algorithmic}
+% \STATE{Choose~$\alpha$, the cutoff in real space~$\rho_c$, truncation point of the integrals~$k_c$, the number of points for the Gaussian quadrature~$n$, the batch size~$p$ and~$\D t$.}
+% \STATE{Randomly initialize the positions and velocities of charges~$\V{r}_i$ and~$\V{v}_i$ for~$1 \leq i \leq N$.}
+% \STATE{Sample sufficient number of~$\V{k}$ according to distribution $\exp{(-k^2 / (4 \alpha))} / H$, $k \neq 0$ to from a set~$\mathcal{K}$.}
+% \FOR{step in 1 : Step}
+%     \STATE{Find neighbors of each particle using cell list, then compute the short range parts of the Coulomb interaction by Eq.~\eqref{eq:F_short}, with a complexity of~$\mathcal{O}(nN)$.}
+%     \STATE{Sort all particles up in the $z$ direction, and randomly take~$p$ frequencies from the set~$\mathcal{K}$, and then estimate the long range interaction using Eq.~\eqref{eq:F_l_rbe}, with a complexity of~$\mathcal{O}(pN)$.}
+%     \STATE{Integrate Newton's equations~\eqref{eq:NewtonEquation} for time~$\D t$ via velocity-Verlet method and some appropriate thermostat, with a complexity of~$\mathcal{O}(N)$.}
+% \ENDFOR
+% \end{algorithmic}
+% \end{algorithm}
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Consistency and Variance Analysis}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+In this section, we provide theoretical analysis for the Quasi-Ewald method. We start with considering the fluctuations, i.e., the stochastic error introduced by the importance sampling at each time step.
+The fluctuations for the Fourier space components of   the force acting on the $i$th particle are defined as follows 
+\begin{equation}\label{eq::xichi}
+%	\Xi :=U_{l,\ast}^{\vk\neq \vzero}-U_l^{\vk\neq \vzero},\quad\text{and}\quad
+    \V{\chi}_{i} :=\vF_{l,i}^*-\vF_{l,i}=\grad_{\V{r}_i} U_{l,\ast}^{\vk\neq \vzero}-\grad_{\V{r}_i} U_{l}^{\vk\neq \vzero}\;.
+\end{equation}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+Proposition~\ref{prop:unbaised} is obtained directly by the definition of the importance sampling.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{prop}\label{prop:unbaised}
+	  $\vF_{l,i}^*$ is a  unbiased estimator, i.e.,  $\mathbb{E} \V{\chi}_{i} = \bm 0$, and its variance  can be expressed by
+% \begin{align*}
+% 		\mathbb{E}\Xi^2&=\frac{H}{P}\sum_{\bm{k}_1\in\fK^2, \bm{k}_1\neq \vzero}\exp\left(-\frac{\Norm{\vk_1}^2}{4\alpha}\right)\Abs{\phi(\vk_1)-\frac{1}{H} \sum_{\bm{k}_2\in\fK^2, \bm{k}_2\neq \vzero}\phi(\vk_2)\exp\left(-\frac{\Norm{\vk_2}^2}{4\alpha}\right)}^2\;,
+%         % \\
+%         % \Bigg|\sum_{q=1}^4S_q(\vk_{1})h_q(\vk_{1})\\
+%         % &~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-\frac{1}{H} \sum_{\bm{k}_2\neq \vzero}\exp\left(-\frac{\Norm{\vk_2}^2}{4\alpha}\right)\sum_{q=1}^4S_q(\vk_{2})h_q(\vk_{2}) \Bigg|^2\;,
+% \end{align*}
+% 	and
+\begin{align*}
+		\mathbb{E}\Norm{\V{\chi}_{i}}^2&=\frac{H}{P}\sum_{\bm{k}_1\in\fK^2, \bm{k}_1\neq \vzero}\exp\left(-\frac{\Norm{\vk_1}^2}{4\alpha}\right)\Bigg|\Bigg|\nabla_{\bm{r}_i}\phi(\vk_1)\\
+        &~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-\frac{1}{H} \sum_{\bm{k}_2\in\fK^2, \bm{k}_2\neq \vzero}\nabla_{\bm{r}_i}\phi(\vk_2)\exp\left(-\frac{\Norm{\vk_2}^2}{4\alpha}\right)\Bigg|\Bigg|^2\;.
+\end{align*}
+\end{prop}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+Furthermore, under the Debye-H$\ddot{\text{u}}$ckel approximation~\cite{levin2002electrostatic}, we have  the following~Lemma~\ref{lem::upper_bound_phiRB}, whose proof can be found in Appendix G in~\cite{gan2024fast}.
+\begin{lem} \label{lem::upper_bound_phiRB}
+  Under the assumption of the DH theory, given function of the form 
+    \begin{equation}
+       \mathscr{G}(\V{r}_i)=\sum_{j\neq i}q _i q_{j}\exp{(\mathrm{i} \V{k} \cdot \V{\rho}_{ij})}f(z_{ij}),
+    \end{equation}
+ where $\abs{f(z_{ij})}$ is bounded by  a constant $C_f$ independent of $z_{ij}$, then function $ \mathscr{G}(\V{r}_i)$ is bounded above by
+    \begin{equation}
+         \mathscr{G}(\V{r}_i)\leq q_i  C_f\lambda_{\mrm{D}}^2\;,
+    \end{equation}
+    where~$\lambda_{\mrm{D}}$  represents the Debye length.
+	% Under the assumption of the DH theory, $|\phi(\bm{k})|$ and $\Norm{\nabla_{\bm{r}_i}\phi(\bm{k})}$ have their respective upper bounds
+	% \begin{equation}
+	% 	\abs{ \widetilde{\varphi}^{\emph{RB}}(\bm{k})}\leq\frac{2\sqrt{\pi}\lambda_D^2 Q}{L_xL_y k}\left(\sqrt{\pi}+\frac{\alpha \varepsilon}{k}\right),
+	% 	\quad
+	% 	\abs{\nabla_{\bm{r}_{i}} \widetilde{\varphi}^{\emph{RB}}(\bm{k})}\leq  \frac{\pi \lambda_D^2 q_{i}^2}{L_xL_y}\left[3+\frac{\alpha}{\sqrt{\pi}}\left(1+\frac{2\sqrt{2}\varepsilon}{k}\right)\right], 
+	% \end{equation}
+	% where $\lambda_{D}$ represents the Debye length
+\end{lem}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+Finally, we introduce the following Theorem~\ref{thm:unbaised} for the boundedness and convergence in the fluctuations originated from the random batch approximation.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{thm}\label{thm:unbaised}
+	Under the assumption of the DH theory,   the variance  of the estimators of   forces have closed upper bounds
+	\begin{equation}
+		  \mathbb{E}\Norm{\V{\chi}_{i}}^2\leq\frac{ H^2q_i^2\lambda_{\mrm{D}}^4}{2P\epsilon_{\mrm{c}}^2 L_x^2L_y^2}\left( \frac{1+\Abs{\gamma_{\mrm{u}}}+\Abs{\gamma_{\mrm{d}}}+\Abs{\gamma_{\mrm{u}}\gamma_{\mrm{d}}}}{1-\max\{0,\gamma_{\mrm{u}}\gamma_{\mrm{d}}\}}\right)^2\;,
+	\end{equation}
+     where~$\lambda_{\mrm{D}}$  represents the Debye length.
+\end{thm}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{proof}
+We observe that 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{align*}
+ \nabla_{\bm{r}_i}\phi(\vk)&=   \sum_{q=1}^4 \nabla_{\bm{r}_i}\left\{S_q(\vk)\right\}h_q(\vk)\;,
+\end{align*}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+thus we have,
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% \begin{align*}
+%  \nabla_{\bm{r}_i} S_q(\vk)&= \begin{pmatrix} \nabla_{\vrho_i}S_q(\vk)\\
+% \partial_{z_i}S_q(\vk) \end{pmatrix}   = \begin{pmatrix} \mathrm{i} \V{k}S_q(\vk)\\
+% \pm k S_q(\vk) \end{pmatrix} =\begin{pmatrix} \mathrm{i} \V{k} \\
+% \pm k  \end{pmatrix}S_q(\vk)\;,
+% \end{align*}
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{align*}
+ \nabla_{\bm{r}_i} S_1(\vk)&=\sum_{j,j\neq i}q_iq_j   \begin{pmatrix} \mathrm{i} \V{k} \\
+ \pm k  \end{pmatrix}\exp{(\mathrm{i} \V{k} \cdot \V{\rho}_{ij})}\exp(-k\Abs{z_i-z_j})\;,\\
+ \nabla_{\bm{r}_i} S_2(\vk)&=\sum_{j,j\neq i}q_iq_j   \begin{pmatrix} \mathrm{i} \V{k} \\
+ -k  \end{pmatrix}\exp{(\mathrm{i} \V{k} \cdot \V{\rho}_{ij})}\exp(-k(z_i+z_j))\;,\\
+  \nabla_{\bm{r}_i} S_3(\vk)&=\sum_{j,j\neq i}q_iq_j   \begin{pmatrix} \mathrm{i} \V{k} \\
+ k  \end{pmatrix}\exp{(\mathrm{i} \V{k} \cdot \V{\rho}_{ij})}\exp(k(z_i+z_j))\;,\\
+ \nabla_{\bm{r}_i} S_4(\vk)&=\sum_{j,j\neq i}q_iq_j   \begin{pmatrix} \mathrm{i} \V{k} \\
+ \pm k  \end{pmatrix}\exp{(\mathrm{i} \V{k} \cdot \V{\rho}_{ij})}\exp(k\Abs{z_i-z_j})\;,\\
+\end{align*}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+and  the choice of $+$ or $-$ depends on the choice of particle. Consequently, $\grad_{\V{r}_i} \phi(\V{k})$ takes the form
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{align*}
+  \grad_{\V{r}_i} \phi(\V{k})  &=\sum_{j,j\neq i}q_iq_j  \exp{(\mathrm{i} \V{k} \cdot \V{\rho}_{ij})} \begin{pmatrix} \mathrm{i} \V{k} \\
+ \pm k  \end{pmatrix}g(z_{ij})\;,
+\end{align*}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+where the estimates on $g(z_{ij})$ reads
+\begin{align*}
+  \Abs{g(z_{ij})  }&\leq  \frac{1+\Abs{\gamma_{\mrm{u}}}+\Abs{\gamma_{\mrm{d}}}+\Abs{\gamma_{\mrm{u}}\gamma_{\mrm{d}}}}{4\epsilon_{\mrm{c}} L_xL_y k\left(1-\max\{0,\gamma_{\mrm{u}}\gamma_{\mrm{d}}\}\right)}\;,
+\end{align*}
+on the basis of Lemma \ref{lem::upper_bound_phiRB}, the upper bound of~$\abs{\grad_{\V{r}_i} \phi(\V{k})}$ can be estimated as follows 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{equation}
+  \Norm{\nabla_{\bm{r}_i}\phi(\vk)}\leq \frac{q_i\lambda_{\mrm{D}}^2}{2\epsilon_{\mrm{c}} L_xL_y}    \frac{1+\Abs{\gamma_{\mrm{u}}}+\Abs{\gamma_{\mrm{d}}}+\Abs{\gamma_{\mrm{u}}\gamma_{\mrm{d}}}}{1-\max\{0,\gamma_{\mrm{u}}\gamma_{\mrm{d}}\}}\;.
+\end{equation}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+Finally,  variance of force on the $i$-th particle is bounded above by
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{align*}
+   	\mathbb{E}\Norm{\V{\chi}_{i}}^2&\leq   \frac{2H}{P}\sum_{\bm{k}_1\in\fK^2, \bm{k}_1\neq \vzero}\exp\left(-\frac{\Norm{\vk_1}^2}{4\alpha}\right)\Norm{\nabla_{\bm{r}_i}\phi(\vk_1)}^2\\
+    &\leq  \frac{2H^2}{P}\left(\frac{q_i\lambda_{\mrm{D}}^2}{2\epsilon_{\mrm{c}} L_xL_y}    \frac{1+\Abs{\gamma_{\mrm{u}}}+\Abs{\gamma_{\mrm{d}}}+\Abs{\gamma_{\mrm{u}}\gamma_{\mrm{d}}}}{1-\max\{0,\gamma_{\mrm{u}}\gamma_{\mrm{d}}\}}\right)^2\\
+    &= \frac{ H^2q_i^2\lambda_{\mrm{D}}^4}{2P\epsilon_{\mrm{c}}^2 L_x^2L_y^2}\left( \frac{1+\Abs{\gamma_{\mrm{u}}}+\Abs{\gamma_{\mrm{d}}}+\Abs{\gamma_{\mrm{u}}\gamma_{\mrm{d}}}}{1-\max\{0,\gamma_{\mrm{u}}\gamma_{\mrm{d}}\}}\right)^2\;.
+\end{align*}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\end{proof}
+We remark that $H\sim L_xL_y$, then $	\mathbb{E}\Norm{\V{\chi}_{i}}^2=\fO\left(\frac{1}{P}\right)$ and independent of the particle number $N$.
+Theorem~\ref{thm:unbaised} has demonstrated that the variance of force scales as $\fO\left(\frac{1}{P}\right)$, unaffected by the growth of the system size $N$, provided the same   Debye length $\lambda_{\mrm{D}}$. 
+This is crucial for its practical usage in MD simulations, where the dynamical evolution typically relies on force calculations rather than energy. 
+We proceed to demonstrate  
+%some analysis for the strong convergence of the random batch MD, which further supports this observation. The following result indicates 
+that random mini-batch methods can be valid for capturing the finite time dynamics
+(we take the Langevin thermostat for illustration). Before that, we shall introduce  some additional notations.
+Let $\Delta t$ be the discretized time step, and $\bm{r}_i$, $m_i$, and $\bm{p}_i$ represent the position, mass, and momentum of the $i$th particle, respectively. 
+\begin{thm}(Strong convergence)
+Let $(\bm{r}_i, \bm{v}_i)$ be the solutions to
+\[
+\begin{split}
+&\D\bm{r}_i=\bm{v}_i\,\D t\;,\\
+&m_i \D\bm{v}_i=\left[\bm{F}_i-\gamma \bm{v}_i\right]\,\D t+\sqrt{\frac{2\gamma}{\beta}}\D \bm{W}_i\;,
+\end{split}
+\]
+where $\{\bm{W}_i\}_{i=1}^N$ are i.i.d. Wiener processes. Let $(\widetilde{\bm{r}}_i, \widetilde{\bm{v}}_i)$ be the solutions to
+\[
+\begin{split}
+&\D \widetilde{\bm{r}}_i=\widetilde{\bm{v}}_i\,\D t\;,\\
+&m_i \D\widetilde{\bm{v}}_i=\left[\bm{F}_i +\bm{\chi}_i-\gamma \widetilde{\bm{v}}_i\right]\,\D t+\sqrt{\frac{2\gamma}{\beta}}\D \bm{W}_i\;,
+\end{split}
+\]
+with the same initial values as $(\bm{r}_i, \bm{v}_i)$. Suppose that the masses $m_i$'s are bounded uniformly from above and below.
+If the forces $\bm{F}_i$ are bounded and Lipschitz and $\Exp \bm{\chi}_i=0$, then for any $T>0$, there exists $C(T)>0$ such that
+\[
+\Exp\left[\frac{1}{N}\sum_i (\Norm{\bm{r}_i-\widetilde{\bm{r}}_i}^2
++\Norm{\bm{v}_i-\widetilde{\bm{v}}_i}^2) \right] \leq C(T)\sqrt{\Lambda \Delta t}\;,
+\]
+where $\Lambda$ is an upper bound for $\max_i  \Exp\Norm{\bm{\chi}_i}^2$.
+\end{thm}
+Similar proofs for interacting particle systems can be found in \cite{jin2020convergence,li2019stochastic,li2020random}, and we omit the proof for the claims here.  Due to the assumption that $\bm{F}_i$ is bounded and Lipschitz, the claims above are not helpful for our problem. Anyhow, it can give us some insight how random batch type methods work.
+%Clearly, for a given configuration, a force computed using the RBE is a random approximation to the true force. A single-step evaluation of such random force definitely has no accuracy compared to the true force. The intuition why such methods work is that the effects of random forces accumulate in time. Since the random forces are unbiased, the random errors will roughly cancel out over time. This ``law of large numbers'' type mechanism in time then makes the random method work. The error bound above is the square root of  variance multiplied by $\Delta t$, which is the typical error bound given by central limit theorem.
+%Hence, our method is not aiming at computing the forces correctly for a fixed configuration. Instead, we attempt to obtain the evolution of the configurations and the equilibrium distribution with an acceptable error control. We use the RBE method only to speed up MD simulations and obtain configurations, and then use these configurations to compute the true energies, stress tensor (and pressure) using their definitions, without random batch approximation.
+
+% We shall introduce some additional notations.
+% Let $\Delta t$ be the discretized time step, and $\bm{r}_i$, $m_i$, and $\bm{p}_i$ represent the position, mass, and momentum of the $i$-th particle.
+% In each time step of the simulation, the forces   are computed, and the dynamics are subsequently evolved. 
+% For ease of discussion, let's consider the commonly used NVT ensemble. 
+% A thermostat is employed to regulate the system's temperature, ensuring that we sample from the correct distribution. Here, one considers the dynamics with Langevin thermostat~\cite{frenkel2023understanding}:
+% \begin{equation}\label{eq::langevin}
+% 	\begin{split}
+% 		& d \boldsymbol{r}_i = \frac{\boldsymbol{p}_i}{m_i} d t, \\ 
+% 		& d \boldsymbol{p}_i = \left[\boldsymbol{F}_i - \gamma \frac{\boldsymbol{p}_i}{m_i}\right] d t + \sqrt{\frac{2 \gamma}{\beta}} d \boldsymbol{W}_i,
+% 	\end{split}
+% \end{equation}
+% where $\boldsymbol{W}_i$ are i.i.d. Wiener processes, $\gamma$ is the reciprocal characteristic time associated with the thermostat.
+% Let $(\bm{r}_i^*, \bm{p}_i^*)$ be the phase space trajectory to Eq.~\eqref{eq::langevin}, where the exact force $\bm{F}_i$ is replaced by the random batch approximated stochastic force $\bm{F}_i^*=\bm{F}_i-\bm{\chi}_i$. We further suppose that masses~$m_{i}$ for all $i$ are uniformly bounded.
+% With these notations, the following theorem is introduced.
+% \begin{thm} (Strong Convergence)
+% 	Suppose for~$\forall i$, the force~$\V{F}_{i}$ is bounded and Lipschitz and~$\mathbb{E} \V{\chi}_{i} = \bm 0$. Under the synchronization coupling assumption that the same initial values as well as the same Wiener process $\bm{W}_i$ are used, then for any~$T > 0$, there exists $C(T) > 0$ such that
+% 	\begin{equation}\label{eq::bound}
+% 		\sup_{t\in[0,T]}\left( \mathbb{E} \left[ \frac{1}{N} \sum_{i = 1}^N \left(\abs{\V{r}_{i} - \V{r}_{i}^*}^2 + \abs{\V{p}_{i} - \V{p}_{i}^*}^2\right) \right] \right)^{1/2} \leq C(T) \sqrt{\Lambda(N) \Delta t}\;,
+% 	\end{equation}
+% 	where~$\Lambda(N)=\|\mathbb{E} \abs{\V{\chi}_{i}}^2\|_{\infty}$ is the upper bound for the variance in the random batch approximated force. In the Debye-H$\ddot{\text{u}}$ckel regime, $\Lambda(N)$ is independent of $N$ (see Theorem~\ref{thm:unbaised}).
+% 	\label{thm:rbm_consist}
+% \end{thm}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section*{Acknowledgments}
+
+This work is supported by the Natural Science Foundation of China Grant Nos. 12201146 (Z. G.) and 12401667~(Y. L.); Natural Science Foundation of Guangdong (Grant No.2023A1515012197); Basic and applied basic research project of Guangzhou (Grant No.2023A04J0054); and Guangzhou-HKUST(GZ)
+joint research project (Grant No.2023A03J0003 and 2024A03J0606).
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newpage
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\bibliographystyle{elsarticle-num}  
+\bibliography{Ref.bib}
+\end{document}
+ 

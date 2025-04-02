@@ -1,0 +1,58 @@
+\section{Background}
+
+% Molecular dynamics (MD) simulation is one of the most powerful tools for studying the behavior of solids and fluids in a rigorous and quantitative manner and has been widely used in many areas of physics, chemistry, biology, materials science, and related disciplines.
+% By tracking the positions and velocities of all particles, MD can provide a detailed description of the system's static and dynamic properties.
+% In MD simulations, the system is modeled as a collection of particles, which interact with each other through potential functions and the time evolution of the system is determined by the Newton's laws of motion.
+% Thus, time cost of MD simulations is dominated by the calculation of the derivatives of the potential energy with respect to the particle positions, i.e. the force between particles.
+
+% The potential can be generally classified into two categories: short-range and long-range.
+% For the short-range potential such as the Lennard-Jones potential, the computational cost scales as $\mathcal O(N)$ with the number of particles $N$ based on the neighbor list algorithm and the real space truncation.
+% For the long-range potential such as the Coulomb potential, the computational cost scales as $\mathcal O(N^2)$ in the naive implementation, which is prohibitive for large-scale systems.
+% Fast algorithms are thus highly desirable for simulating the Coulomb systems.
+% For isotropic Coulomb systems, deterministic algorithms with complexity of $\mathcal O(N)$ or $\mathcal O(N\log N)$ have been developed, which usually fall into one of the two categories: fast multipole methods (FMM)~\cite{greengard1987fast,cheng1999fast,ying2004kernel} and fast Fourier transform (FFT) based Ewald-splitting methods~\cite{hockney2021computer,darden1993particle,essmann1995smooth}.
+
+Quasi two dimensional (quasi-2D) Coulomb systems~\cite{mazars2011long}, which are macroscopic in two dimensions but with atomic-size thickness in the other, have caught much attention in many areas of science and engineering. 
+Typically, such systems possess a nano-sized longitudinal thickness in the $z$ direction, achieved through confinement, bulk-like and modeled as periodic in the transverse $xy$ directions, hence endowed with an  inherent multi-scale nature.
+Due to the confinement effect, such systems can exhibit various interesting behaviors for future nanotechnologies;
+prototype examples include graphene~\cite{novoselov2004electric}, metal dichalcogenide monolayers~\cite{kumar2012tunable}, and colloidal monolayers~\cite{mangold2003phase}.
+
+
+To study the behavior of quasi-2D Coulomb systems, molecular dynamics (MD) simulations are one of the most powerful tools.
+By tracking the positions and velocities of all particles, MD can provide a detailed description of the system's static and dynamic properties.
+In MD simulations, the system is modeled as a collection of particles, which interact with each other through potential functions and the time evolution of the system is determined by the Newton's laws of motion.
+Thus, time cost of MD simulations is dominated by the calculation of the derivatives of the potential energy with respect to the particle positions, i.e. the force between particles.
+Unlike the short-range interaction such as the Lennard-Jones potential, the Coulomb interaction is long-range and scales as $\mathcal O(N^2)$ in the naive pair-wise implementation.
+
+
+For fully-periodic or free-space Coulomb systems, various algorithms have been developed, such as the fast multipole methods (FMM)~\cite{greengard1987fast,cheng1999fast,ying2004kernel}, fast Fourier transform (FFT) based Ewald-splitting methods~\cite{hockney2021computer,darden1993particle,essmann1995smooth} and the recently proposed random batch Ewald (RBE) method~\cite{jin2021random, liang2022superscalability,liang2024JCP}.
+These fast algorithms have been successfully applied to large-scale simulations of Coulomb systems under various ensembles and reaching complexity of $\mathcal O(N\log N)$ or even $\mathcal O(N)$.
+
+
+However, for quasi-2D systems, the reduced symmetry gives rise to new phenomena, but also brings formidable challenges in both theory and computation.
+The first challenge comes from the involved \emph{long-range} interaction kernels, including but not limited to Coulomb and dipolar kernels in electrostatics, Oseen and Rotne-Prager-Yamakawa kernels in hydrodynamics and the static exchange-correlation kernels in density functional theory calculations. 
+% For fully-periodic or free-space systems, $\mathcal O(N)$ fast algorithms have been developed; but the field is still under developing for partially-periodic systems.
+The anisotropy of such systems poses extra challenges for simulations:
+(1) the periodic and non-periodic directions need to be handled separately due to their different boundary conditions and length scales;
+(2) the convergence properties of the lattice kernel summation requires careful consideration, which largely depend on the well-poseness of the underlying PDEs. 
+Another challenge comes from practical applications.
+To accurately determine the phase diagram of a many-body system may require thousands of simulation runs under different conditions~\cite{levin2002electrostatic}, each with billions of time steps to sample ensemble averages.
+Moreover, to eliminate the finite size effect, millions of free particles need to be simulated. Such large-scale simulations are especially required for quasi-2D systems, so as to accommodate its strong anisotropy, and resolving possible boundary layers forming near the confinement surfaces~\cite{mazars2011long}. 
+The cumulative impact of these considerations poses significant challenges for numerical simulations for quasi-2D systems. 
+
+To address these issues associated with the particle-based simulation of quasi-2D systems, a variety of numerical methods have been developed.
+Most of them fall into two categories: 
+(1) Fourier spectral methods~\cite{lindbo2012fast,nestler2015fast,doi:10.1021/acs.jctc.3c01124, maxian2021fast}, where particles are first smeared onto grids, and subsequently the underlying PDE is solved in Fourier domain where fast Fourier transform (FFT) can be used for acceleration; 
+(2) adaptive tree-based methods, where fast multipole method (FMM)~\cite{greengard1987fast} or tree code~\cite{Barnes1986Nature} orginally proposed for free-space systems can be extended to quasi-2D systems by careful extension to match the partially-periodic boundary conditions~\cite{yan2018flexibly,liang2020harmonic}. 
+Alternative methods have also been proposed, such as the Lekner summation-based MMM2D method~\cite{arnold2002novel}, multilevel summation methods~\cite{doi:10.1021/ct5009075,greengard2023dual}, and correction-based approaches such as Ewald3DC~\cite{yeh1999ewald} and EwaldELC~\cite{arnold2002electrostatics}, which first solve a fully-periodic system and then add the partially-periodic correction terms. 
+By combining with either FFT or FMM, these methods achieve $\mathcal{O}(N\log N)$ or even $\mathcal{O}(N)$ complexity. 
+
+However, the issue of large-scale simulation of quasi-2D systems is still far from settled.
+A few challenges remains. First, FFT-based methods need extra techniques to properly handle the non-periodic direction, such as truncation~\cite{parry1975electrostatic}, regularization~\cite{nestler2015fast}, or periodic extension~\cite{lindbo2012fast}, which may lead to algebraic convergence or require extra zero-padding to guarantee accuracy. 
+Recent advancements by Shamshirgar \emph{et al.}~\cite{shamshirgar2021fast}, combining spectral solvers with kernel truncation methods (TKM)~\cite{vico2016fast}, have reduced the zero-padding factor from $6$ to $2$~\cite{lindbo2012fast}, which still requires doubling the number of grids with zero-padding. 
+% A similar reduction is also reported in the work of Maxian \emph{et al. }\cite{maxian2021fast}. 
+Second, the periodization of FMM needs to encompass more near-field contributions from surrounding cells~\cite{yan2018flexibly,barnett2018unified}. The recently proposed 2D-periodic FMM~\cite{PEI2023111792} may offer a promising avenue; however, it has not yet been extended to partially-periodic problems.
+Finally, it is worth noting that most of the aforementioned issues will become more serious when $L_z\ll \min\{L_x, L_y\}$, in which case the Ewald series summation will converge much slower~\cite{arnold2002electrostatics}, and the zero-padding issue of FFT-based methods also becomes worse~\cite{maxian2021fast}.
+Thus, efficient and accurate simulation of quasi-2D systems is still an open problem and a great challenge.
+
+\section{Thesis Outlines}
+

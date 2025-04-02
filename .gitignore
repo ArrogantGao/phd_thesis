@@ -15,10 +15,12 @@ main.pdf
 *.cls
 *.sty
 *.ins
-*.pdf
 *.lof
 *.lot
 *.bcf
 *.run.xml
 *.fls
 *.fdb_latexmk
+
+
+000_thesis.pdf

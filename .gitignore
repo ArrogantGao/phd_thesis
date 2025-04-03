@@ -13,7 +13,6 @@ main.pdf
 *.synctex.gz
 *.dtx
 *.cls
-*.sty
 *.ins
 *.lof
 *.lot

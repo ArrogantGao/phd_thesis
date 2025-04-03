@@ -995,13 +995,6 @@ Furthermore, we aim to apply the RBE2D method to other complex systems, such as 
 
 \appendix
 
-\begin{figure}[!ht]
-\begin{center}
-\includegraphics[width=0.8\textwidth]{./figure/Trapezoidal.pdf}
-\caption{Integration contours in the error estimation of trapezoidal rule.}
-\label{fig:Trapezoidal}
-\end{center} 
-\end{figure}
 
 \section{Quadrature error of the trapezoidal rule}\label{app::trapezoidal}
 We employ the method of contour integrals~\cite{Donaldson1972SINUA,trefethen2014Rev} to derive a precise estimation for the error in  {the} trapezoidal rule when discretizing Eqs.~\eqref{eq:ewald2d-intform1} and \eqref{eq::J02}. Consider the integral
@@ -1043,6 +1036,14 @@ where the remainder error term can be estimated as
 \begin{equation}\label{eq::A.8}
 |E_{\text{err}}|\sim \mathcal{O}(e^{-\text{sign}(\pi/\xi-|b|/2)\left|\pi/\xi-|b|/2\right|^2}).
 \end{equation}
+
+\begin{figure}[!ht]
+    \begin{center}
+    \includegraphics[width=0.8\textwidth]{./figure/Trapezoidal.pdf}
+    \caption{Integration contours in the error estimation of trapezoidal rule.}
+    \label{fig:Trapezoidal}
+    \end{center} 
+\end{figure}
 
 %\section*{Acknowledgements}
 %The work of Z. G. and X. G. is supported by the National Science Foundation of China (Grant No. 12201146); National Science Foundation of Guangdong (Grant No.~2023A1515012197); Basic and applied basic research project of Guangzhou (Grant No.~2023A04J0054); and Guangzhou-HKUST(GZ) Joint research project (Grant Nos. 2023A03J0003 and 2024A03J0606).

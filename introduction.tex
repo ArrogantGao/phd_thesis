@@ -62,9 +62,9 @@ Second, the periodization of FMM needs to encompass more near-field contribution
 Finally, it is worth noting that most of the aforementioned issues will become more serious when $L_z\ll \min\{L_x, L_y\}$, in which case the Ewald series summation will converge much slower~\cite{arnold2002electrostatics}, and the zero-padding issue of FFT-based methods also becomes worse~\cite{maxian2021fast}.
 Thus, efficient and accurate simulation of quasi-2D systems is still an open problem and a great challenge.
 
-In this thesis, a new class of fast summation methods for quasi-2D Coulomb systems are introduced, which combines the Ewald splitting technique and the random batch sampling method.
-These methods are able to achieve $\mathcal{O}(N\log N)$ complexity and are able to handle strongly confined quasi-2D systems with large aspect ratios and sharp dielectric interfaces.
-Rigorous error estimates and complexity analysis are provided, further validated by numerical tests.
+In this thesis, we introduce a novel class of fast summation methods for quasi-2D Coulomb systems that synergistically combines the Ewald splitting technique with random batch sampling. 
+Our proposed methods achieve optimal $\mathcal{O}(N)$ computational complexity while maintaining high efficiency for strongly confined quasi-2D systems, even in challenging scenarios involving large aspect ratios and sharp dielectric interfaces. 
+We provide comprehensive theoretical analysis including rigorous error estimates and complexity bounds, which are thoroughly validated through extensive numerical experiments.
 
 \section{Thesis Outlines}
 
@@ -83,7 +83,7 @@ Then based on the error analysis, we propose a new algorithm named the random ba
 
 
 In Chapter~\ref{chp_quasiewald}, we focus on the so-called negatively dielectirc confined quasi-2D systems, where the dielectric constant of the confinement can be negative, which leads to divergence in the previous methods.
-We propose a new algorithm named the quasi-Ewald method, where we introduce a new type of splitting technique, called the quasi-Ewald splitting, to handle the divergence issue.
-With the proposed method, we observe spontaneous symmetry breaking (SSB) phenomena in symmetrically charged binary particle systems under such negative dielectric confined systems.
+We propose a new algorithm named the quasi-Ewald method, where we introduce a new type of splitting technique, called the quasi-Ewald splitting, based on which the divergence issue can be properly handled.
+With the proposed method, we study the negative dielectric confined quasi-2D systems and observe spontaneous symmetry breaking (SSB) phenomena in symmetrically charged binary particle systems.
 
-In Chapter~\ref{chp_conclusion}, we provide a conclusion for this thesis, where we summarize the advantages and disadvantages of the proposed methods, and discuss the potential applications of the proposed methods as well as the future work.
+Finally, Chapter~\ref{chp_conclusion} concludes this thesis by providing a comprehensive summary of our proposed methods, critically analyzing their strengths and limitations, and exploring promising future research directions and potential applications in computational physics and materials science.

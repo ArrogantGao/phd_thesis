@@ -70,20 +70,23 @@ We provide comprehensive theoretical analysis including rigorous error estimates
 
 The content of this thesis is organized as follows.
 
-In Chapter~\ref{chp_preliminaries}, we introduce the physical model and mathematical notations for dielectric confined quasi-2D Coulomb systems, and provide a concise overview of the Ewald summation formula for fully-periodic and doubly-periodic Coulomb systems.
-We will also revisit the random batch sampling method for fully-periodic Coulomb systems, which is the basis of the methods proposed in this thesis.
+In Chapter~\ref{chp_preliminaries}, we introduce the physical model and mathematical notations for dielectric confined quasi-2D Coulomb systems.
+Then, we provide a concise overview of the Ewald summation formula for doubly-periodic Coulomb systems with or without dielectric confinements.
+% We will also revisit the random batch sampling method for fully-periodic Coulomb systems, which is the basis of the methods proposed in this thesis.
 
 In Chapter~\ref{chp_soewald2d}, we first introduce the kernel approximation technique called the sum-of-exponential (SOE) approximation, which approximates an arbitrary kernel function by a linear combination of exponential functions.
-Then, based on the SOE approximation, we propose an algorithm named the sum-of-exponential Ewald2D method, which utilizes the SOE approximation and the random batch sampling method to accelerate the Ewald2D summation for quasi-2D Coulomb systems without dielectric confinements.
+Then, based on the SOE approximation, we propose an algorithm named the sum-of-exponential Ewald2D (SOEwald2D) method, which utilizes the SOE approximation and the random batch sampling method to accelerate the Ewald2D summation for quasi-2D Coulomb systems without dielectric confinements.
 Numerical results are provided to validate the accuracy and efficiency of the proposed method.
 
-In Chapter~\ref{chp_rbe2d}, we first introduce the image charge method, which is a popular approach for treating the dielectric confinements in quasi-2D systems.
-Additionally, a rigorous error analysis will be provided for the combination of the image charge method and the Ewald summation formula.
-Then based on the error analysis, we propose a new algorithm named the random batch Ewald2D method, which is able to handle the quasi-2D Coulomb systems with dielectric confinements and is scalable to large-scale simulations on modern supercomputers.
+In Chapter~\ref{chp_rbe2d}, we focus on the quasi-2D Coulomb systems with dielectric confinements.
+We first provide a rigorous error analysis for the combination of the image charge method and the Ewald summation formula.
+Then, we introduce a novel algorithm called the random batch Ewald2D (RBE2D) method, which efficiently handles quasi-2D Coulomb systems with dielectric confinements while maintaining excellent scalability for large-scale simulations on modern supercomputing architectures.
+Detailed numerical results are provided to validate the accuracy and efficiency of the proposed method.
 
+In Chapter~\ref{chp_quasiewald}, we investigate quasi-2D systems with negative dielectric confinements, where the polarizable materials possess negative dielectric constants.
+The previous methods based on the image charge method break down in such systems due to the unusual polarization effects.
+To handle the numerical challenges in such systems, we develop the quasi-Ewald method (QEM), which introduces a novel quasi-Ewald splitting technique to properly address the divergence issues inherent in these systems. 
+Using this method, we explore the behavior of negatively confined quasi-2D charged systems and discover remarkable spontaneous symmetry breaking (SSB) phenomena emerging in symmetrically charged binary particle systems.
 
-In Chapter~\ref{chp_quasiewald}, we focus on the so-called negatively dielectirc confined quasi-2D systems, where the dielectric constant of the confinement can be negative, which leads to divergence in the previous methods.
-We propose a new algorithm named the quasi-Ewald method, where we introduce a new type of splitting technique, called the quasi-Ewald splitting, based on which the divergence issue can be properly handled.
-With the proposed method, we study the negative dielectric confined quasi-2D systems and observe spontaneous symmetry breaking (SSB) phenomena in symmetrically charged binary particle systems.
-
-Finally, Chapter~\ref{chp_conclusion} concludes this thesis by providing a comprehensive summary of our proposed methods, critically analyzing their strengths and limitations, and exploring promising future research directions and potential applications in computational physics and materials science.
+Finally, Chapter~\ref{chp_conclusion} concludes this thesis with a comprehensive summary of our methodological contributions. 
+We critically evaluate the strengths and limitations of our proposed algorithms, and outline promising future research directions for both theoretical developments and practical applications in computational physics and materials science.

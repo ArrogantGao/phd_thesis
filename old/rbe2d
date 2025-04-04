@@ -977,17 +977,17 @@ Furthermore, the   {parallel efficiency} is shown in the inset of Fig.~\ref{fig:
 The results clearly demonstrate that the RBE2D outperforms the ICM-PPPM across the range of \( N \) up to \( 10^6 \).}
 
 \section{Conclusion}\label{sec::conclusion}
-In summary, we have developed a novel RBE2D method to efficiently simulate a collection of charges in a quasi-2D geometry, with the extension to   {scenarios} with dielectric confinement.
+In summary, we have developed a novel RBE2D method to efficiently simulate a collection of charges in a quasi-2D geometry, with the extension to scenarios with dielectric confinement.
 Our method adopts an importance sampling strategy in $\V k$-space and scales optimally as $\mathcal O(N)$ and has reduced variance.
 The accuracy, efficiency and scalability of our method are demonstrated via various numerical tests. 
-  {Compared to} existing method, an excellent agreement in the simulation results is observed, but with a significant reduction in the computational cost and  {improved} strong scalability thanks to the stochastic sampling nature of our method. 
+Compared to existing method, an excellent agreement in the simulation results is observed, but with a significant reduction in the computational cost and improved strong scalability thanks to the stochastic sampling nature of our method. 
 Thus, our method can enable highly efficient and accurate simulations for large-scale simulations of charged systems under quasi-2D confinement.
 
 When the confined interfaces are not of planar shape, we anticipate that a boundary integral formulation can be incorporated -- the polarization effect can be approximated as the field due to induced surface charges, then in each field evaluations, RBE2D may be applied to reduce the computational cost, so that it will be capable of efficiently and accurately simulate charged particles confined by structured surfaces~\cite{wu2018asymmetric}.
 
- {We intend to compare the RBE2D method with other existing approaches in our future work. For example, our previous study~\cite{gan2024fast} also focuses on quasi-2D Coulomb systems, while the RBE2D method presented here provides distinct advantages in dealing with dielectric interfaces and achieving exceptional parallel performance. 
+We intend to compare the RBE2D method with other existing approaches in our future work. For example, our previous study~\cite{gan2024fast} also focuses on quasi-2D Coulomb systems, while the RBE2D method presented here provides distinct advantages in dealing with dielectric interfaces and achieving exceptional parallel performance. 
 % A more comprehensive comparison will take into account various factors, including hardware architectures and system sizes. 
-Furthermore, we aim to apply the RBE2D method to other complex systems, such as membrane-protein systems and battery-electrolyte systems, where confinement effects can significantly influence their properties.}
+Furthermore, we aim to apply the RBE2D method to other complex systems, such as membrane-protein systems and battery-electrolyte systems, where confinement effects can significantly influence their properties.
 
 
 %Future works will focus on the extension of the RBE2D method to more complex systems, such as the membrane-protein systems and the battery-electrolyte systems, where the dielectric interfaces play a crucial role in the system dynamics.

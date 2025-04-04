@@ -1,1 +1,21 @@
-This is a conclusion.
+Quasi-2D systems are ubiquitous in nature and play a crucial role in various fields, including materials science, biophysics, and electrochemistry. 
+However, the simulation of quasi-2D systems is challenging due to the strong Coulomb interactions and the complex boundary conditions.
+The challenges can be summarized as follows:
+\begin{itemize}
+    \item[1.] The reduced symmetry of the system leads to the breakdown of the traditional Ewald summation, especially for the systems with large aspect ratios.
+    \item[2.] The dielectric confinement introduces additional complexity to the system, which requires careful treatment of the polarization effect, especially for the systems with strong polarizable interfaces.
+    % \item[3.] The large system size and the need for high accuracy pose significant challenges for the computational resources.
+\end{itemize}
+Due to these challenges, existing methods are largely restricted to quasi-2D systems with moderate aspect ratios and weakly polarizable interfaces, limiting their broader applicability.
+
+In this thesis, we have developed a class of novel fast algorithms for simulating quasi-2D Coulomb systems, making significant methodological advances in computational physics. 
+The main contributions can be summarized in three key aspects:
+\begin{itemize}
+    \item[1.] Our method are mesh free and can reach the optimal $\mathcal{O}(N)$ complexity in both CPU and memory consumptions without relying on either FFT or FMM.
+    \item[2.] Our method are able to handle the anisotropy of the system. Both analysis and numerical results validate that our method is not affected by the aspect ratio of the system.
+    \item[3.] Our method are able to handle the dielectric confinement effect very efficiently, even for the case where the interfaces are stronly polarizable.
+\end{itemize}
+These advantages make our method a powerful tool for simulating quasi-2D Coulomb systems, and it is expected to have broad applications in various fields.
+
+In the future, we are interested in extending our method to other interaction kernels, such as dipolar crystals, Stokesian fluids and Yukawa potentials~\cite{Messina2017PRL,Hou2009PRL}.
+Furthermore, we aim to apply the RBE2D method to other complex systems, such as membrane-protein systems and battery-electrolyte systems, where confinement effects can significantly influence their properties.

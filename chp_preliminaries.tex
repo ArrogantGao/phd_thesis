@@ -1,11 +1,12 @@
-In this chapter, we first present the mathematical formulation and governing equations of quasi-2D Coulomb systems, along with the notations used throughout this thesis.
-We then revisit the Ewald summation method for doubly periodic lattice sums and its extension to dielectric-confined systems through combination with the image charge method, as well as its reformulation.
+In this chapter, we first introduce the quasi-2D Coulomb systems, along with the mathematical notations used throughout this thesis.
+Then we revisit the Ewald summation method for doubly periodic lattice sums and its extension to dielectric-confined systems through combination with the image charge method, as well as its reformulation.
+Finally we will introduce the random batch Ewald (RBE) method, which is a powerful method to accelerate the computation of the electrostatic energy.
 
 \section{Quasi-2D Coulomb systems}
 
 Quasi-2D systems are three-dimensional models characterized by double periodicity in the $xy$ dimensions and confinement by planar dielectric interfaces along the $z$-axis.
 The characteristic length scale in the non-periodic direction is often significantly smaller than that in the periodic directions. 
-In what follows, we present the mathematical formulation of the model, along with its analytical solution based on image charges.
+In what follows, we present the mathematical formulation of the model.
 
 Consider two parallel dielectric interfaces positioned at $z=0$ and $z=H$, dividing the entire 3D space $\mathbb{R}^3$ into three distinct layers. 
 From top to bottom, these layers are denoted as $\Omega_{\text{u}}$, $\Omega_{\text{c}}$ and $\Omega_{\text{d}}$, respectively. 
@@ -104,8 +105,8 @@ An illustration of the quasi-2D charged system is shown in Fig.~\ref{fig:box}.
 
 \subsection{Homogeneous Quasi-2D Systems}
 
-We first introduce the case where the dielectric constants are equal throughout the system, i.e.,~$\eps_{\mrm{u}} = \eps_{\mrm{d}} = \eps_{\mrm{c}}$. For simplicity and without loss of generality, we set~$\eps_{\mrm{u}} = \eps_{\mrm{d}} = \eps_{\mrm{c}} = 1$.
-The electrostatic potential $\phi(\V r)$ for such systems, assuming uniform background dielectric media, is governed by the following Poisson's equation with DPBCs:
+We first introduce the case where the dielectric constants are equal throughout the system, i.e.,~$\eps_{\mrm{u}} = \eps_{\mrm{d}} = \eps_{\mrm{c}}$. For simplicity, we set~$\eps_{\mrm{u}} = \eps_{\mrm{d}} = \eps_{\mrm{c}} = 1$.
+The electrostatic potential $\phi(\V r)$ for such systems then is governed by the following Poisson's equation with doubly periodic boundary conditions (DPBCs):
 \begin{equation}\label{eq::Poisson}
 	-\Delta\phi(\bm{r}) = 4\pi g(\bm{r}), \quad \text{with} \quad g(\bm{r})= \sum_{\V{m}}\sum_{j=1}^{N}q_{j}\delta(\bm{r}-\bm{r}_{j}+\bm{\mathcal{M}}),%\quad \lim_{z\rightarrow \infty}\nabla_{z}\phi(\bm{r})=0,
 \end{equation}
@@ -145,8 +146,8 @@ Given these notations, Theorem \ref{order} clarifies the necessary conditions to
 \end{proof}
 %It is remarked that, for fully-periodic systems, the pairwise Coulomb summation is conditionally convergent\cite{de1980simulation}, meaning that the series summation result depends on the specific shape of summation region.
 
-In practice, a common choice in Ewald 3D/2D summation approaches is by choosing the spherical/circular shape of summation region centered at the origin with unit radius; i.e., the sum is taken over $\abs{\V m}=0, 1, 2\ldots, R$ in ascending order, where $R$ is the truncation parameter.
-As long as Eq.~\eqref{eq::pairssum} is well defined, Proposition~\ref{prop::boundary} establishes a precise relationship between Eq.~\eqref{eq::pairssum} and the solution to Poisson's equation Eq.~\eqref{eq::Poisson} with a properly chosen boundary condition as $z\to\infty$.
+In practice, a common choice is to choose the spherical/circular shape of summation region centered at the origin with unit radius; i.e., the sum is taken over $\abs{\V m}=0, 1, 2\ldots, R$ in ascending order, where $R$ is the truncation parameter.
+As long as Eq.~\eqref{eq::pairssum} is well defined, Proposition~\ref{prop::boundary} establishes a precise relationship between Eq.~\eqref{eq::pairssum} and the solution to Poisson's equation Eq.~\eqref{eq::Poisson} given a properly chosen boundary condition as $z\to\infty$.
 
 \begin{prop}\label{prop::boundary}
 	If the the series summation of $\phi(\bm{r})$ in Eq.~\eqref{eq::pairssum} satisfies both conditions stated in Theorem~\ref{order}, then it is a unique solution to Poisson's equation Eq.~\eqref{eq::Poisson} given the far-field boundary condition
@@ -214,7 +215,12 @@ It is remarked that, though the quasi-2D Coulomb summation is absolutely converg
 
 \subsection{Dielectric Confined Quasi-2D Systems}
 
-For dielectric confined systems, i.e.~$\eps_{\mrm{u}}, \eps_{\mrm{d}} \neq \eps_{\mrm{c}}$, the Green's function $G(\V{r},~\V{r}^\prime)$, which describes the electrostatic response at any target location $\V r\in\mathbb{R}^3$ due to a point source charge located at $\V{r}^\prime\in\Omega$, satisfies Poisson's equation with dielectric interface conditions:
+Then we consider the case where the dielectric constants are different in the upper and lower regions, i.e.~$\eps_{\mrm{u}}, \eps_{\mrm{d}} \neq \eps_{\mrm{c}}$.
+We assume that the interaction energy can be represented as
+\begin{equation}\label{eq:U_direct}
+    U = \frac{1}{2} \sum_{\V{m}} {}^\prime \sum_{i=1}^{N}\sum_{j=1}^{N} q_i q_j G(\V{r}_i,~\V{r}_j + \bm{\mathcal{M}})\;,
+\end{equation}
+where the Green's function $G(\V{r},~\V{r}^\prime)$, which describes the electrostatic response at any target location $\V r\in\mathbb{R}^3$ due to a point source charge located at $\V{r}^\prime\in\Omega$, satisfying Poisson's equation with dielectric interface conditions:
 \begin{equation}
     \left\{
     \begin{array}{ll}
@@ -228,15 +234,11 @@ For dielectric confined systems, i.e.~$\eps_{\mrm{u}}, \eps_{\mrm{d}} \neq \eps_
     \label{eq:Poisson_G}
 \end{equation}
 where $G_{\bm{n}}$ represents the normal derivative of $G$ at planar interfaces, and the subscripts ``$+$/$-$'' denote exterior and interior limits, respectively. 
-Due to the double periodicity in $xy$, the total electrostatic energy $U$ can be expressed as
-\begin{equation}\label{eq:U_direct}
-    U = \frac{1}{2} \sum_{\V{m}} {}^\prime \sum_{i=1}^{N}\sum_{j=1}^{N} q_i q_j G(\V{r}_i,~\V{r}_j + \V{L}_{\V{m}})\;,
-\end{equation}
-where~$\V{L}_{\V{m}} := (m_x L_x, m_y L_y,0)$ defines the quasi-2D periodic lattice with $\V{m}=(m_x,m_y) \in \mathbb{Z}^2$, and the prime notation $\sum{}^\prime$ indicates that when $i=j$ and $m_x = m_y = 0$, the Green's function should be modified by
+The prime notation $\sum{}^\prime$ indicates that when $i=j$ and $m_x = m_y = 0$, the Green's function should be modified by
 \begin{equation}\label{eq::Green}
     G(\V{r}, \V{r}^\prime) \rightarrow \lim_{\V{r} \to \V{r}^\prime} \left(G(\V{r}, \V{r}^\prime) - \frac{1}{4\pi \eps_{\T c}\abs{\V{r} - \V{r}^\prime}} \right)\;,
 \end{equation}
- so that the unwanted singular self-interaction is excluded in the summation.
+so that the unwanted singular self-interaction is excluded in the summation.
 
 The computation of the Green's function $G$, 
 as defined by Eqs.~\eqref{eq:Poisson_G} and~\eqref{eq::Green} is challenging. 
@@ -255,13 +257,17 @@ Finally, the detailed positions of the $l$-th level images along $z$-axis are gi
 \begin{equation}\label{eq:z_l}
     z_{+}^{(l)} = (-1)^l z + 2\lceil l/2\rceil H \;,\quad z_{-}^{(l)} = (-1)^l z - 2\lfloor l/2\rfloor H \;.
 \end{equation}
-In practice, since all dielectric constants are positive, it follows that $\abs{\gamma_{\mrm{u}}},\abs{\gamma_{\T d}}\leq 1$. This implies that the infinite image charge series converges and can be truncated at the~$M$-th level. 
+Assuming all dielectric constants are positive, it follows that $\abs{\gamma_{\mrm{u}}},\abs{\gamma_{\T d}}\leq 1$. 
+This implies that the infinite image charge series converges and can be truncated at the~$M$-th level. 
 Consequently, the original dielectric-confined system can be approximated by a homogeneous system augmented with $M$ additional levels of image charges in $z$, which can be readily solved using standard methods for homogeneous quasi-2D systems.
+However, as have been mentioned in the Chapter~\ref{chp_intro}, recent studies have shown that special materials~\cite{Kornyshev1996Static, Schlaich2016Water, Kornyshev2021Nonlocal} can have negative dielectric constants, which may lead to the divergence of the image charge series.
 
-\section{Revisiting the Ewald Summation Formula}
+\section{Ewald summation formula}
 
 In this section, we first revisit the widely used ``Ewald splitting'' technique~\cite{ewald1921berechnung}, the Ewald2D summation for homogeneous quasi-2D systems, and provide its extension to dielectric-confined cases, i.e., the evaluation of Eq.~\eqref{eq:U_direct}.
 Then we introduce a reformulation of the ICM-Ewald2D summation, enabling its efficient computation accelerated via FFT, thereby reducing the cost to $ O(N \log N)$. 
+
+\subsection{Ewald splitting and Ewald3D summation} \label{sec::ewald_splitting}
 
 In the Ewald splitting, the Coulomb kernel is decomposed into a sum of short-range and long-range components:
 \begin{equation}\label{eq:ewald_decomposition}
@@ -274,6 +280,21 @@ where $\alpha>0$ is the splitting factor, the error function $\mathrm{erf}(x)$ i
 and the complementary error function $\mathrm{erfc}(x):=1-\mathrm{erf}(x)$. 
 The advantage of Ewald splitting is clear:
 the short-range component, although singular, decays rapidly and is thus well-suited for real space computation, whereas the long-range component, being smooth, can be efficiently handled in reciprocal space.
+
+For a triply-periodic system, such decomposition leads to the well-known Ewald3D summation formula~\cite{Ewald1921AnnPhys}, and here we simply state the result.
+For a charge neutral triply-periodic system, the electrostatic energy can be decomposed as short-range and long-range components:
+\begin{align}
+	U_{s} & = \frac{1}{2} \sum_{i, j=1}^N \sum_{\V{n}}{}^\prime q_iq_j\frac{\mathrm{erfc}(\alpha\abs{\V r_{ij}+\V{L}_{\bm{n}} })}{\abs{\V r_{ij}+ \V{L}_{\bm{n}}}} \;, \\
+	U_{\ell} & = \frac{2 \pi}{L_x L_y L_z} \sum_{\V{k} \neq \V{0}} \frac{1}{k^2} \abs{\rho(\V{k})}^2 e^{-\frac{k^2}{4\alpha^2}} - \sqrt{\frac{\alpha}{\pi}}\sum_{i=1}^{N}q_i^2\;,
+\end{align}
+where~$(L_x, L_y, L_z)$ is the size of the simulation box, $\V{n} = (n_x, n_y, n_z) \in \mathbb{Z}^3$ is the integer vector, $\V{L}_{\V{n}} = (n_x L_x, n_y L_y, n_z L_z)$ and $\V{k} = 2\pi (n_x /L_x, n_y /L_y, n_z /L_z)$ are the lattice vectors in real and reciprocal spaces, respectively, and $\rho(\V{k})$ is the structure factor defined as
+\begin{equation}
+	\rho(\V{k}) = \sum_{i=1}^{N} q_i e^{-\i \V{k}\cdot \V{r}_i}\;.
+\end{equation}
+In practice, both summation in real and reciprocal spaces are truncated at a cutoff radius $r_c$ and $k_{c}$, respectively.
+A common choice is to set $r_c = s / \alpha$ and $k_c = 2 s \alpha$, where $s$ is a parameter to control the accuracy of the truncation.
+It has been shown that under such trunction, the truncation error of total energy decay as $O(e^{-s^2} / s^{2})$, and time complexity of Ewald3D summation is $O(N^{1.5})$.
+
 
 \subsection{Ewald2D Summation and its Error Estimation}
 
@@ -312,8 +333,7 @@ For ease of discussion, the mathematical notations and definitions are first pro
 	\end{equation}
 \end{defination}
 
-In order to calculate Eq.~\eqref{eq::pairssum}, the Ewald splitting based methods~\cite{Ewald1921AnnPhys} are often adopted. 
-The idea of the Ewald splitting technique can be understood as decomposing the source term $g(\bm{r})$ of Eq.~\eqref{eq::Poisson} into the sum of short-range and long-range components:
+In order to calculate Eq.~\eqref{eq::pairssum}, the Ewald splitting based methods~\cite{Ewald1921AnnPhys} are often adopted, by decomposing the source term $g(\bm{r})$ of Eq.~\eqref{eq::Poisson} into the sum of short-range and long-range components:
 \begin{equation}
 	g(\bm{r})=\left[g(\bm{r})-(g\ast\tau)(\bm{r})\right]+(g\ast\tau)(\bm{r}):=g_{s}(\bm{r})+g_{\ell}(\bm{r}),
 \end{equation}
@@ -323,6 +343,7 @@ In the standard Ewald splitting~\cite{Ewald1921AnnPhys,tornberg2016ewald} for qu
 \tau(\bm{\rho},z)=\sum_{\bm{m}}\pi^{-3/2}\alpha^3 e^{-\alpha^2 |\bm{r}+\bm{\mathcal{M}}|^2},\quad~ \widetilde{\tau}(\bm{k},\kappa)=e^{-(k^2+\kappa^2)/(4\alpha^2)},
 \end{equation}
 where $\alpha>0$ is a parameter to be optimized for balancing the computational cost in short-range and long-range components.
+
 The electrostatic potential at the $i$th particle location can be expressed as 
 \begin{equation}\label{eq::phi}
 	\phi(\bm{r}_{i}) :=\phi_{s}(\bm{r}_{i}) + \phi_{\ell}(\bm{r}_{i}) - \phi_{\text{self}}^{i}\;,
@@ -332,11 +353,12 @@ where the short-range ($\phi_{s}$) and long-range ($\phi_{\ell}$) components are
 	\phi_{s}(\bm{r}_{i}) &= \sum_{\V{m}} \sum_{j=1}^N {}^\prime \frac{q_{j} \erfc (\alpha \abs{\V{r}_{ij} + \V{\mathcal{M}}})}{\abs{\V{r}_{ij} + \V{\mathcal{M}}}}, \label{eq:phi_s} \\
 	\phi_{\ell}(\bm{r}_{i}) &= \sum_{\V{m}} \sum_{j=1}^N  \frac{q_{j} \erf (\alpha \abs{\V{r}_{ij} + \V{\mathcal{M}}})}{\abs{\V{r}_{ij} + \V{\mathcal{M}}}},\label{eq:phi_l}
 \end{align}
-with $\bm{r}_{ij}:=\bm{r}_{i}-\bm{r}_{j}$ and the error function $\erf(\cdot)$ and complementary error function $\erfc(\cdot)$ defined as
-\begin{equation}
-	\erf(x) := \frac{2}{\sqrt{\pi}} \int_0^{x} e^{-t^2} dt~\quad\text{and~}\erfc(x) := 1 - \erf(x), \label{eq:erf}
-\end{equation}
-respectively. 
+with $\bm{r}_{ij}:=\bm{r}_{i}-\bm{r}_{j}$.
+%  and the error function $\erf(\cdot)$ and complementary error function $\erfc(\cdot)$ defined as
+% \begin{equation}
+% 	\erf(x) := \frac{2}{\sqrt{\pi}} \int_0^{x} e^{-t^2} dt~\quad\text{and~}\erfc(x) := 1 - \erf(x), \label{eq:erf}
+% \end{equation}
+% respectively. 
 In Eq.~\eqref{eq:phi_s}, $\sum^\prime$ indicates that the sum excludes the self interaction term when $j=i$ and $\V{m}=\V{0}$; and in Eq.~\eqref{eq::phi}, $\phi_{\text{self}}^{i}$ is the unwanted interaction between the Gaussian and point source, which should also be subtracted for consistency,
 \begin{equation}\label{eq::self}
 	\phi_{\text{self}}^{i}=\lim_{r\rightarrow 0}\frac{q_{i} \erf (\alpha r)}{r}=\frac{2\alpha }{\sqrt{\pi}}q_{i},
@@ -346,14 +368,14 @@ Conversely, $\phi_{\ell}$ is still slowly decaying in real space but the interac
 The detailed formulation for the 2D Fourier expansion of $\phi_{\ell}$ is provided below.
 
 \begin{lem}\label{thm::SpectralExpansion}
-	By Fourier transform in the periodic $xy$ dimensions, $\phi_{\ell}$ can be written as the following series summation in $k$-space:
-	\begin{align}\label{eq::7} 
-		\phi_{\ell}(\bm{r}_{i}) = \sum_{\V{k} \neq \bm{0}} \phi_{\ell}^{\V{k}}(\bm{r}_{i}) + \phi_{\ell}^{\bm{0}}(\bm{r}_{i})\;,
-	\end{align}
-	where the non-zero modes read
-	\begin{align}\label{eq:philk}
-		\phi_{\ell}^{\V{k}}(\bm{r}_{i}) &= \frac{\pi}{L_x L_y} \sum_{j = 1}^N q_{j} \frac{e^{\m{i} \V{k} \cdot \V{\rho}_{ij}}}{k} \left[\xi^{+}(k, z_{ij})+\xi^{-}(k, z_{ij})\right],
-	\end{align}
+	By Fourier transform in the periodic $xy$ dimensions, $\phi_{\ell}$ can be written as the following series summation in the reciprocal space:
+	\begin{equation}\label{eq::7} 
+		\phi_{\ell}(\bm{r}_{i}) = \sum_{\V{h} \neq \bm{0}} \phi_{\ell}^{\V{h}}(\bm{r}_{i}) + \phi_{\ell}^{\bm{0}}(\bm{r}_{i})\;,
+	\end{equation}
+	where~$\V{h} = (h_x, h_y)$, and the non-zero modes read
+	\begin{equation}\label{eq:philk}
+		\phi_{\ell}^{\V{h}}(\bm{r}_{i}) = \frac{\pi}{L_x L_y} \sum_{j = 1}^N q_{j} \frac{e^{\m{i} \V{h} \cdot \V{\rho}_{ij}}}{h} \left[\xi^{+}(h, z_{ij})+\xi^{-}(h, z_{ij})\right]\;,
+	\end{equation}
 	with $\bm{\rho}_{ij}=(x_{i}-x_{j},y_{i}-y_{j})$, $z_{ij}=|z_{i}-z_{j}|$, and
 	\begin{equation}\label{eq::9}
 		\xi^{\pm}(k, z_{ij}) := e^{\pm k z_{ij}} \erfc \left( \frac{k}{2 \alpha} \pm \alpha z_{ij}\right)\;,
@@ -366,10 +388,26 @@ The detailed formulation for the 2D Fourier expansion of $\phi_{\ell}$ is provid
 
 Eqs.~\eqref{eq:phi_s}, \eqref{eq::self} and \eqref{eq::7} constitute the well-known Ewald2D summation, which has been derived through various methods~\cite{parry1975electrostatic,tornberg2016ewald,heyes1977molecular,de1979electrostatic,PhysRevB.61.6706}.
 An alternative derivation is provided in ~\ref{app::deriv}.
+The total interaction energy can be computed as
+\begin{equation}\label{eq::Us_Ewald2D}
+    U_{s} =  \frac{1}{2} \sum_{i,j=1}^N \sum_{\bm{m}}{}^\prime q_i q_{j} \frac{\te{erfc}\left(\alpha \left|\bm{r}_i - \bm{r}_{j} + \V{\mathcal{M}}\right|\right)}{\left|\bm{r}_i-\bm{r}_{j} + \V{\mathcal{M}}\right|}\;,
+\end{equation}
+\begin{equation}\label{eq::Ul_Ewald2D}
+    U_{\ell} =  \frac{\pi}{2L_xL_y}\sum_{i, j=1}^N  q_iq_{j} \sum_{\V h\neq \V 0}\frac{e^{\i \V h\cdot \V r_{ij}}}{h}\mathcal{G}_{\alpha}(h,z_i - z_{j})  - \frac{\alpha}{\sqrt{\pi}}\sum_{i=1}^{N}q_i^2+\mathcal{J}_0\;.
+\end{equation}
+where the 0-th mode correction term is given by
+\begin{equation}\label{eq::J0_Ewald2D}
+\mathcal J_0 = -\frac{\pi}{L_xL_y}\sum_{i,j=1}^{N} q_iq_{j}\mathcal{G}_{\alpha}^0(|z_i-z_{j}|),
+\end{equation}
+and the function $\mathcal{G}_{\alpha}$ and~$\mathcal{G}_{\alpha}^0$ are defined as
+\begin{equation}\label{eq::G_Ewald2D}
+    \mathcal{G}_{\alpha}(h,z) = \xi^{+}(h, z)+\xi^{-}(h, z),~\mathcal{G}_{\alpha}^0(z) = {z} \erf(\alpha {z}) + \frac{e^{-(\alpha z)^2}}{\alpha \sqrt{\pi}}.
+\end{equation}
 
-Although the Ewald2D method is a widely recognized, standard technique, its theoretical error analysis remains underdeveloped.
-In this section, we provide a truncation error analysis for the Ewald2D summation.
-The truncation error is clearly configuration dependent.
+
+% Although the Ewald2D method is a widely recognized, standard technique, its theoretical error analysis remains underdeveloped.
+% In this section, we provide a truncation error analysis for the Ewald2D summation.
+In actually computation, truncation in real and Fourier spaces are performed simultaneously, and the truncation error is clearly configuration dependent.
 Here the estimation is analyzed based on the \emph{ideal-gas assumption}~\cite{hansen2013theory}, which was used by Kolafa and Perram~\cite{kolafa1992cutoff} in analyzing the Ewald3D case. 
 Details of the ideal-gas assumption are summarized in \ref{app::ideal-gas}.
 The root mean square (RMS) error is used to measure the truncation error in a given physical quantity, which is defined as
@@ -379,7 +417,7 @@ The root mean square (RMS) error is used to measure the truncation error in a gi
 where $\mathscr{E}_i$ is the absolute error in the physical quantity due to $i$th particle, and $N$ is the total number of particles.
 
 In the following analysis, we denote the cutoff radii in real and Fourier spaces as $r_c$ and $k_c$, i.e., one only calculate the terms satisfying $\abs{\bm{r}_{ij} + \mathcal{M}} \leq r_c$ and 
-$|\bm{k}|\leq k_c$ in real and Fourier spaces, respectively.
+$|\bm{h }|\leq k_c$ in real and Fourier spaces, respectively.
 Our main findings are summarized as follows. 
 
 \begin{thm}\label{thm:ewald2d_phi_error}
@@ -436,7 +474,8 @@ Based on Theorem~\ref{thm:ewald2d_phi_error}, one can further obtain the error e
 
 It should be noticed that, since the real space interaction is short-ranged, it only requires computation of neighboring pairs within the cutoff radius $r_c$. 
 Many powerful techniques have been developed to reduce the cost for such short-range interactions into $\mathcal O(N)$ complexity, including the Verlet list~\cite{verlet1967computer}, the linked cell list~\cite{allen2017computer} and more recently the random batch list~\cite{liang2021random} algorithms. 
-Consequently, the main challenge lies in the long-range component calculation, which will be discussed in Section~\ref{sec:method}.
+Consequently, the main challenge lies in the long-range component calculation, which will be discussed in the following chapters.
+
 
 \subsection{Extension to Systems with Charged Slabs}\label{sec::sysslabs}
 
@@ -469,7 +508,7 @@ The 2D Fourier series expansion of~$\phi_{\text{p-s}}$ is provided in the follow
 \begin{thm}\label{thm::ionwall}
 	Suppose that $\widehat{\sigma}_{\mathrm{bot}}$ and $\widehat{\sigma}_{\mathrm{top}}$ are two-dimensional Fourier transform (see Lemma~\ref{lem::2dfourier}) of $\sigma_{\mathrm{bot}}$ and $\sigma_{\mathrm{top}}$, respectively. By Fourier analysis, the particle-slab component of the electric potential is given by
 	\begin{equation}\label{eq::phiionwall}
-		\phi_{\emph{p-s}}(\bm{r}_{i}) = \frac{2\pi}{L_xL_y}\sum_{\bm{k}\neq \bm{0}}\frac{e^{\m{i} \bm{k}\cdot\bm{\rho}_{i}}}{k}\left[\widehat{\sigma}_{\mathrm{bot}}(\bm{k})e^{-k|z_{i}|}+\widehat{\sigma}_{\mathrm{top}}(\bm{k})e^{-k|z_{i}-L_z|}\right]+\phi_{\emph{p-s}}^{\bm{0}}(\bm{r}_{i})\;,
+		\phi_{\emph{p-s}}(\bm{r}_{i}) = \frac{2\pi}{L_xL_y}\sum_{\bm{h}\neq \bm{0}}\frac{e^{\m{i} \bm{h}\cdot\bm{\rho}_{i}}}{h}\left[\widehat{\sigma}_{\mathrm{bot}}(\bm{h})e^{-h|z_{i}|}+\widehat{\sigma}_{\mathrm{top}}(\bm{h})e^{-h|z_{i}-L_z|}\right]+\phi_{\emph{p-s}}^{\bm{0}}(\bm{r}_{i})\;,
 	\end{equation}
 	where the 0-th mode reads
 	\begin{equation}\label{eq::phionwallzero}
@@ -479,18 +518,18 @@ The 2D Fourier series expansion of~$\phi_{\text{p-s}}$ is provided in the follow
 \begin{proof}
 	For $\bm{k}\neq\bm{0}$, applying the quasi-2D Fourier transform to both sides of Eq.~\eqref{eq::PoionWall} yields
 	\begin{equation}
-		\widetilde{\phi}_{\text{p-s}}(\bm{k},\kappa)=\frac{4\pi}{k^2+\kappa^2}\left[\widehat{\sigma}_{\mathrm{bot}}(\bm{k})+\widehat{\sigma}_{\mathrm{top}}(\bm{k})e^{-\m{i} \kappa L_z}\right]\;.
+		\widetilde{\phi}_{\text{p-s}}(\bm{h},\kappa)=\frac{4\pi}{h^2+\kappa^2}\left[\widehat{\sigma}_{\mathrm{bot}}(\bm{h})+\widehat{\sigma}_{\mathrm{top}}(\bm{h})e^{-\m{i} \kappa L_z}\right]\;.
 	\end{equation}
-	For $\bm{k}=0$, one first applys the 2D Fourier transform in $xy$ to obtain
+	For $\bm{h}=0$, one first applys the 2D Fourier transform in $xy$ to obtain
 	\begin{equation}
-		\left(-\partial_z^2+k^2\right)\widehat{\phi}(\bm{k},z)=4\pi\left[\widehat{\sigma}_{\mathrm{bot}}(\bm{k})\delta(z)+\widehat{\sigma}_{\mathrm{top}}(\bm{k})\delta(z-L_z)\right]\;.
+		\left(-\partial_z^2+h^2\right)\widehat{\phi}(\bm{h},z)=4\pi\left[\widehat{\sigma}_{\mathrm{bot}}(\bm{h})\delta(z)+\widehat{\sigma}_{\mathrm{top}}(\bm{h})\delta(z-L_z)\right]\;.
 	\end{equation}
-	By integrating both sides twice and taking $\bm{k}=0$, the $0$-th mode follows 
+	By integrating both sides twice and taking $\bm{h}=0$, the $0$-th mode follows 
 	\begin{equation}
 		\widehat{\phi}(\bm{0},z)=-2\pi\left[\widehat{\sigma}_{\mathrm{bot}}(\bm{0})|z|+\widehat{\sigma}_{\mathrm{top}}(\bm{0})|z-L_z|\right]+A_0z+B_0\;,
 	\end{equation}
 	where $A_0$ and $B_0$ are undetermined constants. 
-	Finally, applying the corresponding inverse transforms to $\widetilde{\phi}_{\text{p-s}}(\bm{k},\kappa)$ and $\widehat{\phi}(\bm{0},z)$ such that the boundary conditions Eq.~\eqref{eq::boundionwall} is matched, one has $A_0=B_0=0$. The proof of Eqs.~\eqref{eq::phiionwall}-\eqref{eq::phionwallzero} is then completed. 
+	Finally, applying the corresponding inverse transforms to $\widetilde{\phi}_{\text{p-s}}(\bm{h},\kappa)$ and $\widehat{\phi}(\bm{0},z)$ such that the boundary conditions Eq.~\eqref{eq::boundionwall} is matched, one has $A_0=B_0=0$. The proof of Eqs.~\eqref{eq::phiionwall}-\eqref{eq::phionwallzero} is then completed. 
 \end{proof}
 
 
@@ -532,18 +571,17 @@ where $U_*=\sum_{i}\phi_*$ with $*$ representing any of the subscripts used in E
 \subsection{The ICM-Ewald2D Summation and its Reformulation}
 
 For dielectric confined systems, combined with the ICM, the Ewald2D summation can be extended to accommodate for dielectric-confined systems.
-In the ICM-Ewald2D summation~\cite{gan2024random}, Eqs.~\eqref{eq:ewald2d-1}-\eqref{eq:ewald2d-2} are modified as
+In the ICM-Ewald2D summation~\cite{gan2024random}, Eqs.~\eqref{eq::Us_Ewald2D}-\eqref{eq::J0_Ewald2D} are modified as
 \begin{equation}\label{eq::Uc}
-    U_{\te{real}}^{\text{c}} =  \frac{1}{2} \sum_{i,j=1}^N \sum_{\bm{m}}{}^\prime \sum_{l=0}^M q_iq_{j \pm}^{(l)} \frac{\te{erfc}\left(\alpha \left|\bm{r}_i - \bm{r}_{j\pm}^{(l)}+\V{L}_{\V{m}}\right|\right)}{\left|\bm{r}_i-\bm{r}_{j\pm}^{(l)}+\V{L}_{\V{m}}\right|}\;,
+    U_{s}^{\text{c}} =  \frac{1}{2} \sum_{i,j=1}^N \sum_{\bm{m}}{}^\prime \sum_{l=0}^M q_iq_{j \pm}^{(l)} \frac{\te{erfc}\left(\alpha \left|\bm{r}_i - \bm{r}_{j\pm}^{(l)}+ \V{\mathcal{M}}\right|\right)}{\left|\bm{r}_i-\bm{r}_{j\pm}^{(l)}+\V{\mathcal{M}}\right|}\;,
 \end{equation}
 \begin{equation}\label{eq::Fourier2D}
-    U^{\te{c}}_{\te{Fourier}} =  \frac{\pi}{2L_xL_y}\sum_{i, j=1}^N \sum_{l = 0}^{M} q_iq_{j \pm}^{(l)} \sum_{\V h\neq \V 0}\frac{e^{\i \V h\cdot \V r_{ij}}}{h}\mathcal{G}_{\alpha}(h,z_i - z_{j \pm}^{(l)})  - \frac{\alpha}{\sqrt{\pi}}\sum_{i=1}^{N}q_i^2+\mathcal{J}^{\te{c}}_0\;.
+    U^{\te{c}}_{\ell} =  \frac{\pi}{2L_xL_y}\sum_{i, j=1}^N \sum_{l = 0}^{M} q_iq_{j \pm}^{(l)} \sum_{\V h\neq \V 0}\frac{e^{\i \V h\cdot \V r_{ij}}}{h}\mathcal{G}_{\alpha}(h,z_i - z_{j \pm}^{(l)})  - \frac{\alpha}{\sqrt{\pi}}\sum_{i=1}^{N}q_i^2+\mathcal{J}^{\te{c}}_0\;.
 \end{equation}
 Here $q_{j\pm}^{(l)}=\gamma_{\pm}^{(l)}q_j$ are the $l$-th layer image charge  strengths (with $l = 0$ terms indicating the original source charges), and the $\V 0$-th mode correction term should be modified accordingly as 
 \begin{equation}\label{eq:ewald2d-j0}
-\mathcal J_0^c = -\frac{\pi}{L_xL_y}\sum_{i,j=1}^{N}\sum_{l=0}^{M} q_iq_{j\pm}^{(l)}\mathcal{G}_{\alpha}^0(|z_i-z_{j\pm}^{(l)}|),
+    \mathcal J_0^c = -\frac{\pi}{L_xL_y}\sum_{i,j=1}^{N}\sum_{l=0}^{M} q_iq_{j\pm}^{(l)}\mathcal{G}_{\alpha}^0(|z_i-z_{j\pm}^{(l)}|)\;.
 \end{equation}
-with $\mathcal G_{\alpha}^{0}(z) := z\mathrm{erf}\left(\alpha z\right)+(\alpha\sqrt{\pi})^{-1}e^{-\alpha^2z^2}$.
 Eqs.~\eqref{eq::Uc}--\eqref{eq:ewald2d-j0} integrate the well-established Ewald2D summation formula~\cite{parry1975electrostatic,zhonghanhu2014JCTC} for homogeneous systems with the ICM representation to account for polarization contributions. 
 The resulting ICM-Ewald2D formula effectively performs a quasi-2D lattice summation on a system augmented in $z$ by a factor of $2M+1$. 
 By selecting a sufficiently large $M$ and setting the real space and reciprocal space cutoffs as $r_c=s/\alpha$ and $k_c=2s\alpha$, respectively, where $s>0$ is a parameter, 
@@ -554,7 +592,7 @@ It is noteworthy that for homogeneous systems, such a reformulation was rigorous
 In what follows, we extend their approach to dielectric-confined systems.
 
 
-First, one can rewrite the function~$\mathcal{G}_{\alpha}(h,z)$ in Eq.~\eqref{eq:G_hzij} into an integral form:
+First, one can rewrite the function~$\mathcal{G}_{\alpha}(h,z)$ in Eq.~\eqref{eq::G_Ewald2D} into an integral form:
 \begin{equation}\label{eq::Ga-integral}
     \mathcal{G}_{\alpha}(h,z) = \int_{-\infty}^{\infty}\frac{e^{-\frac{h^2}{4\alpha^2}-t^2}}{\frac{h^2}{4\alpha^2}+t^2}e^{2\i \alpha z t} dt\;,
 \end{equation}
@@ -567,15 +605,13 @@ Discretizing the integrals in Eqs.~\eqref{eq::Ga-integral} and \eqref{eq::J0-int
 %By commutating the $i,j$-index of Eq.~\eqref{eq::J0-integral} and using the fact that $z_{ij}=-z_{ji}$, the first-order term on the numerator is eliminated and both of the integrands are smooth and exponentially decaying. Hence discretizing the integrals via trapezoidal rule yields spectral convergence~\cite{trefethen2014Rev}, which provides an approximation of Eq.~\eqref{eq::Uc} that
 \begin{equation}\label{eq::UcFour}
 \begin{split}
-    U^{\T c}_{\T {Fourier}} = \frac{2\pi}{L_xL_yL_z}\sum_{\bm{k}\neq \bm{0}}\frac{e^{-\frac{k^2}{4\alpha^2}}}{k^2}\rho_{\bm{k}}\bar{\rho}_{\bm{k}}^{M}-\frac{\alpha}{\sqrt{\pi}}\sum_{i=1}^{N}q_i^2+ U_{\T {YB}}^{M}+U_{\T {ELC}}^{M}+U_{\T{Trap}}^{M}\;,
+    U^{\T c}_{\ell} = \frac{2\pi}{L_xL_yL_z}\sum_{\bm{k}\neq \bm{0}}\frac{e^{-\frac{k^2}{4\alpha^2}}}{k^2}\rho_{\bm{k}}\bar{\rho}_{\bm{k}}^{M}-\frac{\alpha}{\sqrt{\pi}}\sum_{i=1}^{N}q_i^2+ U_{\T {YB}}^{M}+U_{\T {ELC}}^{M}+U_{\T{Trap}}^{M}\;,
 \end{split}
 \end{equation}
 where $\bm{k}=2\pi(n_x/L_x,n_y/L_y,n_z/L_z)$ denotes the 3D periodic lattice vector, and the structure factors $\rho_{\bm{k}}$ and $\widetilde{\rho}_{\bm{k}}^{M}$ are defined as
 \begin{equation}
-\begin{split}
-    \rho_{\bm{k}} := \sum_{i=1}^{N}q_ie^{\i \bm{k}\cdot \bm{r}_i}\; \quad~\text{and}\quad~
-    \widetilde{\rho}_{\bm{k}}^{M} & := \sum_{j=1}^{N}q_j\left[e^{-\i \bm{k}\cdot \bm{r}_i}+\sum_{l=1}^{M}\left(\gamma_{+}^{(l)}e^{-\i \bm{k}\cdot \bm{r}_{j+}^{(l)}}+\gamma_{-}^{(l)}e^{-\i \bm{k}\cdot \bm{r}_{j-}^{(l)}}\right)\right]\;.
-\end{split}
+    \rho_{\bm{k}} := \sum_{i=1}^{N}q_ie^{\i \bm{k}\cdot \bm{r}_i}\;,~
+    \widetilde{\rho}_{\bm{k}}^{M} := \sum_{j=1}^{N}q_j\left[e^{-\i \bm{k}\cdot \bm{r}_i}+\sum_{l=1}^{M}\left(\gamma_{+}^{(l)}e^{-\i \bm{k}\cdot \bm{r}_{j+}^{(l)}}+\gamma_{-}^{(l)}e^{-\i \bm{k}\cdot \bm{r}_{j-}^{(l)}}\right)\right]\;.
 \end{equation}
 On the RHS of Eq.~\eqref{eq::UcFour}, the first two terms resemble the standard Ewald3D summation (with added \emph{vacuum layer} in $z$), where the second term accounts for the self-energy correction. 
 The remaining terms provide the additional components required to correct Ewald3D back to Ewald2D:
@@ -599,7 +635,38 @@ By applying an analysis analogous to that of Pan and Hu~\cite{pan2014rigorous}, 
 
 In practical computations, the first term in Eq.~\eqref{eq::UcFour} can be efficiently calculated using fast algorithms such as the FFT~\cite{yuan2021particle}, the periodic FMM~\cite{pei2023fast}, and the random batch importance sampling~\cite{liang2022improved}, achieving computational complexities of $O(N\log N)$ or $O(N)$. 
 Note that the ICM-YB correction term $U_{\T {YB}}^{M}$ can be directly computed with a cost of $O(N)$, and the remainder term $U_{\text{trap}}^M$ can be eliminated by appropriately choosing $L_z$.
-This parameter selection strategy is employed in the recently proposed ICM-Ewald3D~\cite{dos2015electrolytes} and ICM-PPPM~\cite{yuan2021particle} methods. 
+% This parameter selection strategy is employed in the recently proposed ICM-Ewald3D~\cite{dos2015electrolytes} and ICM-PPPM~\cite{yuan2021particle} methods. 
 % However, it is important to note that this approach overlooks the influence of the ICM-ELC correction term $U_{\T {ELC}}^{M}$, which may introduce significant errors. 
 % Additionally, a rigorous estimate of the image truncation error is also absent in existing works. 
 % In this study, we address and unify both sources of error.
+
+\section{Random batch Ewald method}
+
+In this section, we briefly introduce the random batch Ewald (RBE) method~\cite{jin2021random}, which provides an efficient stochastic approach for evaluating long-range interactions in triply-periodic systems and has been successfully applied to large-scale simulations of Coulomb systems under various ensembles~\cite{liang2022superscalability,liang2024JCP, liang2022random}.
+
+RBE method was originally proposed to accelerate the Ewald3D summation~\cite{jin2021random}.
+As have been introduced in Sec.~\ref{sec::ewald_splitting}, the Ewald3D summation can be decomposed into short-range and long-range components: the short-range component is computed in real space, while the long-range component is computed in reciprocal space, and a direct computation of the long-range component leads to a time complexity of $O(N^{1.5})$.
+Instead of computing the long-range component directly, RBE method approximates the long-range component via random batch importance sampling.
+Comparing to the widely used FFT based methods such as the particle-particle particle-mesh (PPPM) method~\cite{hockney2021computer,darden1993particle,essmann1995smooth}, RBE reduces the time complexity from $O(N\log N)$ to $O(N)$, and its simplicity makes it suitable for parallelization compared to the FMM based methods~\cite{greengard1987fast,cheng1999fast,ying2004kernel}.
+
+% The main idea of RBE is to treat the Gaussian factor in the long-range component of Ewald3D summation as a dis
+
+Recall that the long-range component of Ewald3D summation is given by:
+\begin{equation}
+	U_{\ell}^{\V{k}} = \frac{2 \pi}{L_xL_yL_z} \sum_{\V{k} \neq \V{0}} \frac{1}{k^2} \abs{\rho_{\V{k}}}^2 e^{-\frac{\V{k}^2}{4\alpha^2}}\;.
+\end{equation}
+Due to the rapid decay of the Gaussian function, RBE interprets the $U_{\ell}^{\V{k}}$ term as an expectation with respect to a discrete Gaussian distribution~$\mathcal{P}_{\V{k}}$:
+\begin{equation}
+	\mathcal{P}_{\V{k}} = \frac{e^{-\frac{\V{k}^2}{4\alpha^2}}}{S},~~\V{k} \neq \V{0} \;,
+\end{equation}
+where $S$ is the normalization constant:
+\begin{equation}
+	S = \sum_{\V{k} \neq \V{0}} e^{-\frac{\V{k}^2}{4\alpha^2}} - 1\;.
+\end{equation}
+Thus in RBE, the long-range component is approximated as follows:
+\begin{equation}
+	U_{\ell} \approx U_{\ell, *} =  \frac{2 \pi}{L_xL_yL_z} \sum_{\V{k} \in \V{k}_p} \frac{1}{k^2} \abs{\rho_{\V{k}}}^2 - \frac{\alpha}{\sqrt{\pi}}\sum_{i=1}^{N}q_i^2\;,
+\end{equation}
+where $\V{k}_p$ is a set of $P$ random vectors sampled from the discrete Gaussian distribution~$\mathcal{P}_{\V{k}}$, thus $U_{\ell, *}$ is an unbiased estimator of $U_{\ell}$.
+The same procedure is also valid for the force calculation.
+It has been proved that the batch size $P$ is an $O(1)$ constant irrelevant to the system size $N$, so that the time complexity of RBE is always $O(N)$.

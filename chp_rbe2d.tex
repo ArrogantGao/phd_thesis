@@ -1,4 +1,4 @@
-\section{Accurate Error Estimates in Ewald Summation for Dielectrically Confined Coulomb Systems}
+\section{Accurate error estimates in Ewald summation for dielectrically confined Coulomb systems}
 
 In this section, we present a comprehensive error analysis for both energy and force calculations, addressing the truncation error of the image charge series and the errors arising from the reformulation of the ICM-Ewald2D summation. 
 We also perform extensive numerical experiments to validate our error analysis.
@@ -53,8 +53,8 @@ To estimate $U_{\text{err}}$, we use the fact that $\mathcal{G}_{M}(z_i,z_j)$ ca
 for odd $M$, and 
 \begin{equation}
     \begin{split}
-        \mathcal{G}_M(z_i,z_j) = & \sum_{n = \frac{M}{2}}^{\infty}  \gamma_{\T u}^n \gamma_{\T d}^n e^{- 2nhH} \left[  \gamma_{\T u} \gamma_{\T d} e^{- h (2 H  + z_{ij})} + \gamma_{\T u} \gamma_{\T d}  e^{- h (2 H  - z_{ij})} + \gamma_{\T u} e^{- h (z_i + z_j)} + \gamma_{\T d} e^{- h (2H  - z_i - z_j)} \right] \\
-        %= & (\gamma_{\T u} \gamma_{\T d})^{\frac{M}{2}} e^{- M H h} \sum_{n = 0}^{\infty} \left( \gamma_{\T u} \gamma_{\T d} e^{- 2hH} \right)^n \left[ \gamma_{\T u} \gamma_{\T d} e^{- h (2 H + z_{ij})} + \gamma_{\T u} \gamma_{\T d} e^{- h (2H - z_{ij})} + \gamma_{\T d} e^{-h (2 H - z_i - z_j)} + \gamma_{\T u} e^{ - h (z_i + z_j)} \right] \\
+        & \mathcal{G}_M(z_i,z_j) \\
+        = & \sum_{n = \frac{M}{2}}^{\infty}  \gamma_{\T u}^n \gamma_{\T d}^n e^{- 2nhH} \left[  \gamma_{\T u} \gamma_{\T d} e^{- h (2 H  + z_{ij})} + \gamma_{\T u} \gamma_{\T d}  e^{- h (2 H  - z_{ij})} + \gamma_{\T u} e^{- h (z_i + z_j)} + \gamma_{\T d} e^{- h (2H  - z_i - z_j)} \right] \\
         = & (\gamma_{\T u} \gamma_{\T d})^{\frac{M}{2}} e^{- M H h} \frac{\left[ \gamma_{\T u} \gamma_{\T d} e^{- h (2 H + z_{ij})} + \gamma_{\T u} \gamma_{\T d} e^{- h (2H - z_{ij})} + \gamma_{\T u} e^{ - h (z_i + z_j)} + \gamma_{\T d} e^{-h (2 H - z_i - z_j)} \right]}{1 - \gamma_{\T u} \gamma_{\T d} e^{-2hH}}  \;,
     \end{split}
 \end{equation}
@@ -420,7 +420,7 @@ Detailed error curves as functions of $M$ and $L_z$ are plotted in Fig.~\ref{fig
 It is evident from Fig.~\ref{fig:error_parameter_selection_force} that, across all test cases with varying $\gamma$ and $\varepsilon$, the selected parameters consistently achieve optimal or near-optimal performance, especially for the case $\gamma = 1$. 
 Consequently, we conclude that the parameter selection strategy proposed herein offers practical guidance for optimizing the performance of MD simulations of dielectric-confined systems.
 
-\section{Random Batch Ewald2D Method}\label{sec::RBE2D}
+\section{Random batch Ewald2D method}\label{sec::RBE2D}
 
 \subsection{The algorithm}\label{subsec::RBE2D_algorithm}
 

@@ -1,6 +1,8 @@
+In this chapter, we focus on the quasi-2D Coulomb systems in uniform dielectric media, and introduce a fast algorithm named the random batch sum-of-exponentials Ewald2D (RBSE2D) method, which reaches an optimal time complexity of $O(N)$ for the force calculation and can easily handle the systems with large aspect ratios.
+
 \section{Sum-of-exponentials Ewald2D method} \label{sec:method}
 
-In this section, we introduce a novel summation method by using the SOE approximation in evaluating $\xi^{\pm}(k,z)$ and $\partial_{z}\xi^{\pm}(k,z)$. 
+In this section, we introduce a novel summation method by using the SOE approximation in evaluating $\xi^{\pm}(h,z)$ and $\partial_{z}\xi^{\pm}(h,z)$. 
 This method significantly reduces the overall complexity of Ewald2D to $O(N^{7/5})$ without compromising accuracy. 
 Error and complexity analyses are also provided.
 
@@ -38,7 +40,7 @@ Due to these advantages, we will utilize the VPMR as the SOE construction tool i
 %It is worth noting that the existing methods for %constructing a sum-of-Gaussians approximation can be %easily extended to constructing an SOE by %incorporating a change of variable $x=\sqrt{t}$.
 %\end{rmk}
 
-\subsection{SOE approximations of $\xi^{\pm}(k,z)$} \label{subsec::SOEapp}
+\subsection{SOE approximations of $\xi^{\pm}(h,z)$} \label{subsec::SOEapp}
 
 To start with, we introduce a useful identity which is a special case of the Laplace transform~(\cite{oberhettinger2012tables}, pp.~374-375; \cite{myint2007linear}, pp.~688). 
 \begin{lem}
@@ -48,9 +50,9 @@ To start with, we introduce a useful identity which is a special case of the Lap
 	\end{equation}
 \end{lem}
 
-Substituting $a=\alpha^2$, $b=k/2$, $c=0$, $x=\pm z$ into Eq.~\eqref{eq::identity} yields the integral representations of $\xi^{\pm}(k,z)$:
+Substituting $a=\alpha^2$, $b=h/2$, $c=0$, $x=\pm z$ into Eq.~\eqref{eq::identity} yields the integral representations of $\xi^{\pm}(h,z)$:
 \begin{equation}\label{eq::xi20}
-	\xi^{\pm}(k,z) = \frac{2\alpha}{\sqrt{\pi}}e^{-k^2/(4\alpha^2)}e^{\pm kz}\int_{\pm z}^{\infty}e^{-\alpha^2t^2-kt} dt \;.
+	\xi^{\pm}(h,z) = \frac{2\alpha}{\sqrt{\pi}}e^{-h^2/(4\alpha^2)}e^{\pm hz}\int_{\pm z}^{\infty}e^{-\alpha^2t^2-ht} dt \;.
 \end{equation}
 We then approximate the Gaussian factor $e^{-\alpha^2t^2}$ in the integrand of Eq.~\eqref{eq::xi20} by an $M$-term SOE on the whole real axis, as
 \begin{equation}\label{eq::xi21}
@@ -61,59 +63,59 @@ We then approximate the Gaussian factor $e^{-\alpha^2t^2}$ in the integrand of E
 	% \left|e^{-x^2}-\sum_{\ell=1}^M w_l e^{-s_l|x|}\right|\leq \varepsilon
 	% \end{equation}
 % exists where $M$ is the number of exponentials, $w_l$ denotes the weights, and $s_l$ denotes the exponents. 
-Inserting Eq.~\eqref{eq::xi21} into Eq.~\eqref{eq::xi20} results in an approximation to $\xi^{\pm}(k,z)$:
+Inserting Eq.~\eqref{eq::xi21} into Eq.~\eqref{eq::xi20} results in an approximation to $\xi^{\pm}(h,z)$:
 \begin{equation}\label{eq::xi_M_int}
-	\xi_{M}^{\pm}(k, z) := \frac{2\alpha}{\sqrt{\pi}} e^{-k^2/(4\alpha^2)} e^{\pm kz} \int_{\pm z}^{\infty} \sum_{l = 1}^M w_{l} e^{ - s_{l} \alpha \abs{t}} e^{-kt} dt \;.
+	\xi_{M}^{\pm}(h, z) := \frac{2\alpha}{\sqrt{\pi}} e^{-h^2/(4\alpha^2)} e^{\pm hz} \int_{\pm z}^{\infty} \sum_{l = 1}^M w_{l} e^{ - s_{l} \alpha \abs{t}} e^{-ht} dt \;.
 \end{equation}
 The integral can be calculated analytically (with $\alpha, z > 0$), yielding 
 \begin{equation}\label{eq::plus}
-	\xi_M^{+}(k,z) = \frac{2 \alpha}{\sqrt{\pi}} e^{-k^2/(4 \alpha^2)} \sum_{l = 1}^M w_l\frac{e^{- \alpha s_l z}}{\alpha s_l + k } 
+	\xi_M^{+}(h,z) = \frac{2 \alpha}{\sqrt{\pi}} e^{-h^2/(4 \alpha^2)} \sum_{l = 1}^M w_l\frac{e^{- \alpha s_l z}}{\alpha s_l + h } 
 \end{equation}
 and
 \begin{equation}\label{eq::minus}
-	\xi_{M}^{-}(k, z) = \frac{2 \alpha}{\sqrt{\pi}} e^{-k^2/(4 \alpha^2)} \sum_{l = 1}^M w_l \left[ - \frac{e^{-\alpha s_l z}}{\alpha s_l - k} + \frac{2\alpha s_l e^{- kz}} {(\alpha s_l)^2 - k^2} \right] \;.
+	\xi_{M}^{-}(h, z) = \frac{2 \alpha}{\sqrt{\pi}} e^{-h^2/(4 \alpha^2)} \sum_{l = 1}^M w_l \left[ - \frac{e^{-\alpha s_l z}}{\alpha s_l - h} + \frac{2\alpha s_l e^{- hz}} {(\alpha s_l)^2 - h^2} \right] \;.
 \end{equation}
-Similarly, one can also obtain the approximation of~$\partial_z \xi^{\pm}(k,z)$, given by
+Similarly, one can also obtain the approximation of~$\partial_z \xi^{\pm}(h,z)$, given by
 \begin{equation}\label{eq::dz_plus}
-	\partial_z \xi_{M}^{+}(k, z) := - \frac{2 \alpha^2 }{\sqrt{\pi}} e^{-k^2/(4 \alpha^2)} \sum_{l = 1}^M w_l s_l \frac{e^{- \alpha s_l z}}{\alpha s_l + k } 
+	\partial_z \xi_{M}^{+}(h, z) := - \frac{2 \alpha^2 }{\sqrt{\pi}} e^{-h^2/(4 \alpha^2)} \sum_{l = 1}^M w_l s_l \frac{e^{- \alpha s_l z}}{\alpha s_l + h } 
 \end{equation}
 and
 \begin{equation}\label{eq::dz_minus}
-	\partial_z \xi_{M}^{-}(k, z) := - \frac{2 \alpha^2}{\sqrt{\pi}} e^{-k^2/(4 \alpha^2)} \sum_{l = 1}^M w_l s_l \left[ - \frac{e^{-\alpha s_lz}}{\alpha s_l - k} + \frac{2 k e^{- kz}} {(\alpha s_l )^2 - k^2} \right] \;.
+	\partial_z \xi_{M}^{-}(h, z) := - \frac{2 \alpha^2}{\sqrt{\pi}} e^{-h^2/(4 \alpha^2)} \sum_{l = 1}^M w_l s_l \left[ - \frac{e^{-\alpha s_lz}}{\alpha s_l - h} + \frac{2 h e^{- hz}} {(\alpha s_l )^2 - h^2} \right] \;.
 \end{equation}
-The approximation error, which relies on the prescribed precision $\varepsilon$ of the SOE, also has spectral convergence in $k$.
+The approximation error, which relies on the prescribed precision $\varepsilon$ of the SOE, also has spectral convergence in $h$.
 This is summarized in Theorem \ref{thm:error_xi}.
 
 \begin{thm}\label{thm:error_xi}
 	Given an $M$-term SOE expansion for the Gaussian kernel $f(x)=e^{-\alpha^2x^2}$ satisfying Eq.~\eqref{eq::SOE1}, the approximation of~$\xi^{\pm}$ derived from Eqs.~\eqref{eq::xi20}-\eqref{eq::minus} has a global error bound
 	\begin{equation}\label{eq::bound_xi}
-		\abs{\xi^{\pm}(k,z) - \xi_{M}^{\pm}(k, z)} \leq \frac{2 \alpha e^{-k^2/(4 \alpha^2)}}{\sqrt{\pi} k} \varepsilon\;,
+		\abs{\xi^{\pm}(h,z) - \xi_{M}^{\pm}(h, z)} \leq \frac{2 \alpha e^{-h^2/(4 \alpha^2)}}{\sqrt{\pi} h} \varepsilon\;,
 	\end{equation}
 	and for the approximation of~$\partial_z \xi^{\pm}$ using Eqs.~\eqref{eq::dz_plus}-\eqref{eq::dz_minus}, the error bound is given by
 	\begin{equation}\label{eq::bound_dz_xi}
-		\abs{\partial_z \xi^{\pm}(k,z) - \partial_z \xi_{M}^{\pm}(k, z)} \leq \frac{4 \alpha e^{-k^2/(4 \alpha^2)}}{\sqrt{\pi}} \varepsilon\;,
+		\abs{\partial_z \xi^{\pm}(h,z) - \partial_z \xi_{M}^{\pm}(h, z)} \leq \frac{4 \alpha e^{-h^2/(4 \alpha^2)}}{\sqrt{\pi}} \varepsilon\;,
 	\end{equation}
-	which is independent of $z$ and decays rapidly with $k$.
+	which is independent of $z$ and decays rapidly with $h$.
 \end{thm}
 
 \begin{proof}
 	To prove Eq.~\eqref{eq::bound_xi}, one can directly subtract Eq.~\eqref{eq::xi_M_int} from  Eq.~\eqref{eq::xi20} to obtain:
 	\begin{equation}
 		\begin{split}
-			&\abs{\xi^{\pm}(k, z) - \xi_{M}^{\pm}(k, z)}\\
-			\leq & \frac{2 \alpha}{\sqrt{\pi}} e^{-k^2/(4 \alpha^2)} \int_{\pm z}^\infty e^{\pm kz - k t} \abs{e^{-\alpha^2 t^2} - \sum_{l = 1}^M w_l e^{-\alpha s_l\abs{t}} } dt \\
-			\leq & \frac{2 \alpha}{\sqrt{\pi}} e^{ - k^2/(4 \alpha^2)} \varepsilon \int_{\pm z}^\infty e^{\pm kz - k t} dt \\
-			= & \frac{2 \alpha e^{-k^2/(4 \alpha^2)}}{\sqrt{\pi} k} \varepsilon\;,
+			&\abs{\xi^{\pm}(h, z) - \xi_{M}^{\pm}(h, z)}\\
+			\leq & \frac{2 \alpha}{\sqrt{\pi}} e^{-h^2/(4 \alpha^2)} \int_{\pm z}^\infty e^{\pm hz - h t} \abs{e^{-\alpha^2 t^2} - \sum_{l = 1}^M w_l e^{-\alpha s_l\abs{t}} } dt \\
+			\leq & \frac{2 \alpha}{\sqrt{\pi}} e^{ - h^2/(4 \alpha^2)} \varepsilon \int_{\pm z}^\infty e^{\pm hz - h t} dt \\
+			= & \frac{2 \alpha e^{-h^2/(4 \alpha^2)}}{\sqrt{\pi} h} \varepsilon\;,
 		\end{split}
 	\end{equation}
 	where from the second to the third line, one uses the boundness of SOE approximation error, i.e., Eq.~\eqref{eq::SOE1}.
 	For the approximation error of $\partial_z\xi^{\pm}$, the proof is similar. One can subtract the $z$-derivative of Eq.~\eqref{eq::xi_M_int} from the $z$-derivative of Eq.~\eqref{eq::xi20} to obtain
 	\begin{equation}
 	\begin{split}
-	& \abs{\partial_z \xi^{\pm}(k, z) - \partial_z \xi_{M}^{\pm}(k, z)}\\
-	\leq & \frac{2 \alpha}{\sqrt{\pi}} e^{-k^2/(4 \alpha^2)} \left( \int_{\pm z}^\infty k e^{\pm kz - k t} \abs{e^{-\alpha^2 t^2} - \sum_{l = 1}^M w_l e^{-\alpha s_l\abs{t}} } dt + \abs{e^{-\alpha^2 z^2} - \sum_{l = 1}^M w_l e^{-\alpha s_l\abs{z}} } \right)\\
-	\leq & \frac{2 \alpha}{\sqrt{\pi}} e^{ - k^2/(4 \alpha^2)} \varepsilon \left( k \int_{\pm z}^\infty e^{\pm kz - k t} dt + 1 \right) \\
-	= & \frac{4 \alpha e^{-k^2/(4 \alpha^2)}}{\sqrt{\pi}} \varepsilon\;.
+	& \abs{\partial_z \xi^{\pm}(h, z) - \partial_z \xi_{M}^{\pm}(h, z)}\\
+	\leq & \frac{2 \alpha}{\sqrt{\pi}} e^{-h^2/(4 \alpha^2)} \left( \int_{\pm z}^\infty h e^{\pm hz - h t} \abs{e^{-\alpha^2 t^2} - \sum_{l = 1}^M w_l e^{-\alpha s_l\abs{t}} } dt + \abs{e^{-\alpha^2 z^2} - \sum_{l = 1}^M w_l e^{-\alpha s_l\abs{z}} } \right)\\
+	\leq & \frac{2 \alpha}{\sqrt{\pi}} e^{ - h^2/(4 \alpha^2)} \varepsilon \left( h \int_{\pm z}^\infty e^{\pm hz - h t} dt + 1 \right) \\
+	= & \frac{4 \alpha e^{-h^2/(4 \alpha^2)}}{\sqrt{\pi}} \varepsilon\;.
 	\end{split}
 	\end{equation}
 	Again, the boundness of the SOE approximation error is used in the proof, i.e., from the second to the third line.
@@ -130,7 +132,7 @@ One can prove that
 \begin{equation}\label{eq::erfSOE}
 	\left|\erf(\alpha z)-\frac{2}{\sqrt{\pi}} \sum_{l = 1}^M \frac{w_l}{s_l} (1 - e^{- \alpha s_l z})\right|\leq \frac{2\alpha L_z}{\sqrt{\pi}}\varepsilon\;,
 \end{equation}
-where one assumes that $z\in[0,L_z]$, as for quasi-2D systems all particles are confined within a narrow region in $z$. 
+where one assumes that $z\in[0, H]$, as for quasi-2D systems all particles are confined within a narrow region in $z$. 
 
 The advantages and novelty of our SOE approach are summarized as follows.
 Firstly, Theorem~\ref{thm:error_xi} demonstrates that the approximation error of our SOE method is uniformly controlled in $z$ and decays exponentially in $k$. Secondly, the resulting approximation $\xi_{M}^{\pm}$ is well-conditioned, thus addressing the issue of catastrophic error cancellation when evaluating $\xi^{\pm}$. 
@@ -138,15 +140,15 @@ Achieving these properties are crucial for the subsequent algorithm design.
 
 \begin{rmk}
 	The choice of SOE approximation is not unique. Instead of approximating the Gaussian factor in the integrand with an SOE, a more directforward approach might be approximating the complementary error function in~$\xi^{\pm}$ using an SOE. 
-	Unfortunately, this will introduce an error proportional to~$e^{kz} \varepsilon$, which grows exponentially with~$k$, resulting in a much larger numerical error in the Fourier space summation for the long-range components of Coulomb energy and forces.
-\end{rmk}
+	Unfortunately, this will introduce an error proportional to~$e^{hz} \varepsilon$, which grows exponentially with~$h$, resulting in a much larger numerical error in the Fourier space summation for the long-range components of Coulomb energy and forces.
+\end{rmk}	
 
 
 \begin{figure}[ht] 
 	\centering
 	\includegraphics[width=\textwidth]{figs/fig_error_Uxi.pdf}
 	\caption{
-		The absolute error of the SOE expansion for (a) $\xi^{\pm}(k,z)$ and (b) $\erf(\alpha z)$ is plotted as a function of $z$, while fixing $k=\alpha=1$; absolute error of the SOE expansion of (c) $\xi^{+}(k,z)$ and (d) $\xi^{-}(k,z)$ as a function of $k^2$, while fixing $z=1$.
+		The absolute error of the SOE expansion for (a) $\xi^{\pm}(h,z)$ and (b) $\erf(\alpha z)$ is plotted as a function of $z$, while fixing $h=\alpha=1$; absolute error of the SOE expansion of (c) $\xi^{+}(h,z)$ and (d) $\xi^{-}(h,z)$ as a function of $h^2$, while fixing $z=1$.
 		Data are presented for SOEs with varying numbers of exponentials, $M=4,$ 8 and 16.
 	}
 	\label{fig:error_SOE}
@@ -165,22 +167,22 @@ Achieving these properties are crucial for the subsequent algorithm design.
 
 \subsection{SOEwald2D summation and its fast evaluation}\label{subsec::reforEwald2}
 In this section, we derive the SOE-reformulated Ewald2D (SOEwald2D) summation, and the corresponding fast evaluation scheme. 
-Let us first consider the contribution of the $\V{k}$-th mode $(\V k \neq \V{0})$ to the long-range interaction energy, denoted as $U_{\ell}^{\V{k}}$, which can be written in the following pairwise summation form 
+Let us first consider the contribution of the $\V{h}$-th mode $(\V h \neq \V{0})$ to the long-range interaction energy, denoted as $U_{\ell}^{\V{h}}$, which can be written in the following pairwise summation form 
 \begin{equation}\label{eq::pairssum8}
 	\begin{split}
-		U_{\ell}^{\V{k}} = \frac{1}{2} \sum_{i = 1}^N q_{i} \phi^{\V{k}}_\ell(\V{r}_{i}) =\frac{\pi}{L_xL_y}\sum_{1\leq j<i\leq N}q_{i}q_{j} \varphi^{\bm{k}} (\bm{r}_{i},\bm{r}_{j}) + \frac{Q \pi}{k L_x L_y} \erfc\left(\frac{k}{2 \alpha}\right)\;,
+		U_{\ell}^{\V{h}} = \frac{1}{2} \sum_{i = 1}^N q_{i} \phi^{\V{h}}_\ell(\V{r}_{i}) =\frac{\pi}{L_xL_y}\sum_{1\leq j<i\leq N}q_{i}q_{j} \varphi^{\bm{h}} (\bm{r}_{i},\bm{r}_{j}) + \frac{Q \pi}{h L_x L_y} \erfc\left(\frac{h}{2 \alpha}\right)\;,
 	\end{split}
 \end{equation}
 where we define
 \begin{equation}\label{eq:varphi_k}
-	\varphi^{\bm{k}}(\bm{r}_{i},\bm{r}_{j}):=\frac{e^{\m{i} \V{k} \cdot \V{\rho}_{ij}}}{k} \left[\xi^{+}(k, z_{ij})+\xi^{-}(k, z_{ij})\right].
+	\varphi^{\bm{h}}(\bm{r}_{i},\bm{r}_{j}):=\frac{e^{\m{i} \V{h} \cdot \V{\rho}_{ij}}}{h} \left[\xi^{+}(h, z_{ij})+\xi^{-}(h, z_{ij})\right].
 \end{equation}
-Substituting the SOE approximation of $\xi^{\pm}(k,z)$ described in Eqs.~\eqref{eq::plus} and \eqref{eq::minus}, a new SOE-based formulation can be obtained, denoted as $U_{\ell,\text{SOE}}^{\V{k}}$. 
-This approximation is achieved by substituting $\varphi^{\bm{k}}(\bm{r}_{i},\bm{r}_{j})$ with
+Substituting the SOE approximation of $\xi^{\pm}(h,z)$ described in Eqs.~\eqref{eq::plus} and \eqref{eq::minus}, a new SOE-based formulation can be obtained, denoted as $U_{\ell,\text{SOE}}^{\V{h}}$. 
+This approximation is achieved by substituting $\varphi^{\bm{h}}(\bm{r}_{i},\bm{r}_{j})$ with
 \begin{equation}\label{eq::SOEphi}
 	\begin{split}
-		\varphi^{\bm{k}}_{\text{SOE}}(\bm{r}_{i},\bm{r}_{j}) & := \frac{e^{\m{i} \V{k} \cdot \V{\rho}_{ij}}}{k} \left[\xi^{+}_M(k, z_{ij})+\xi^{-}_M(k, z_{ij})\right]\\
-		&=\frac{2\alpha e^{-k^2/(4\alpha^2)}}{\sqrt{\pi}k}e^{\m{i}\V{k} \cdot \V{\rho}_{ij}} \sum_{\ell = 1}^{M}  \frac{w_l}{\alpha^2 s_l^2 - k^2}\left( 2 \alpha s_l e^{-k z_{ij}} - 2ke^{-\alpha s_l z_{ij}}\right) \;.
+		\varphi^{\bm{h}}_{\text{SOE}}(\bm{r}_{i},\bm{r}_{j}) & := \frac{e^{\m{i} \V{h} \cdot \V{\rho}_{ij}}}{h} \left[\xi^{+}_M(h, z_{ij})+\xi^{-}_M(h, z_{ij})\right]\\
+		&=\frac{2\alpha e^{-h^2/(4\alpha^2)}}{\sqrt{\pi}h}e^{\m{i}\V{h} \cdot \V{\rho}_{ij}} \sum_{\ell = 1}^{M}  \frac{w_l}{\alpha^2 s_l^2 - h^2}\left( 2 \alpha s_l e^{-h z_{ij}} - 2ke^{-\alpha s_l z_{ij}}\right) \;.
 	\end{split}
 \end{equation}
 
@@ -196,24 +198,24 @@ where
 We now present an iterative approach to compute $U_{\ell,\text{SOE}}^{\V{k}}$ for each $\bm{k}$ with $\mathcal O(N)$ complexity. 
 For simplicity, consider pairwise sum in the following form:
 \begin{equation}\label{eq::33}
-	S = \sum_{1\leq j < i \leq N} q_{i} q_{j} e^{\m{i} \V{k} \cdot \V{\rho}_{ij}} e^{ - \beta z_{ij} }\;,
+	S = \sum_{1\leq j < i \leq N} q_{i} q_{j} e^{\m{i} \V{h} \cdot \V{\rho}_{ij}} e^{ - \beta z_{ij} }\;,
 \end{equation}
-where $\beta$ is a parameter satisfying $\mathscr{Re}(\beta)>0$. It is clear that the pairwise sums in both $U_{\ell,\text{SOE}}^{\V{k}}$ and $U_{\ell,\text{SOE}}^{\V{0}}$ are in the form of Eq.~\eqref{eq::33}, and direct evaluation takes $\mathcal O(N^2)$ cost. 
+where $\beta$ is a parameter satisfying $\mathscr{Re}(\beta)>0$. It is clear that the pairwise sums in both $U_{\ell,\text{SOE}}^{\V{h}}$ and $U_{\ell,\text{SOE}}^{\V{0}}$ are in the form of Eq.~\eqref{eq::33}, and direct evaluation takes $\mathcal O(N^2)$ cost. 
 
 To efficiently evaluate $S$, we initially sort the particle indices based on their $z$ coordinates, such that~$i > j \iff z_i > z_j$.
 % $z_1 \leq z_2 \leq \cdots \leq z_N$. 
 Subsequently, the summation can be rearranged into a separable and numerically stable form:
 \begin{align}
-	S &=\sum_{i = 1}^N q_{i} e^{\m{i} \bm{k}\cdot\bm{\rho}_{i}}e^{-\beta z_{i}} \sum_{j = 1}^{i - 1} q_{j} e^{-\m{i} \bm{k}\cdot\bm{\rho}_{j}}e^{\beta z_{j}} \label{eq::S0} \\ 
-	&= \sum_{i = 1}^N q_{i} e^{\m{i} \bm{k}\cdot\bm{\rho}_{i}}e^{-\beta(z_{i} - z_{i - 1})}A_{i}(\beta)\;, \label{eq::S}
+	S &=\sum_{i = 1}^N q_{i} e^{\m{i} \bm{h}\cdot\bm{\rho}_{i}}e^{-\beta z_{i}} \sum_{j = 1}^{i - 1} q_{j} e^{-\m{i} \bm{h}\cdot\bm{\rho}_{j}}e^{\beta z_{j}} \label{eq::S0} \\ 
+	&= \sum_{i = 1}^N q_{i} e^{\m{i} \bm{h}\cdot\bm{\rho}_{i}}e^{-\beta(z_{i} - z_{i - 1})}A_{i}(\beta)\;, \label{eq::S}
 \end{align}
 with coefficients
 \begin{equation}
-	A_{i}(\beta) =  \sum_{j = 1}^{i - 1} q_{j} e^{-\m{i} \bm{k}\cdot\bm{\rho}_{j}}e^{-\beta(z_{i - 1} - z_{j})}\;.
+	A_{i}(\beta) =  \sum_{j = 1}^{i - 1} q_{j} e^{-\m{i} \bm{h}\cdot\bm{\rho}_{j}}e^{-\beta(z_{i - 1} - z_{j})}\;.
 \end{equation}
-Clearly, $A_1(\beta)=0,$ $A_2(\beta)=q_1e^{-\m{i} \bm{k}\cdot\bm{\rho}_1}$, and for $i\geq 3$, a recursive algorithm can be constructed to achieve $\mathcal O(N)$ complexity in computing all the coeffcients:
+Clearly, $A_1(\beta)=0,$ $A_2(\beta)=q_1e^{-\m{i} \bm{h}\cdot\bm{\rho}_1}$, and for $i\geq 3$, a recursive algorithm can be constructed to achieve $\mathcal O(N)$ complexity in computing all the coeffcients:
 \begin{equation}\label{eq::35}
-	A_{i}(\beta) = A_{i - 1}(\beta) e^{-\beta(z_{i - 1} - z_{i - 2})} + q_{i - 1}e^{-\m{i} \bm{k}\cdot\bm{\rho}_{i-1}}\;,\quad i = 3, \cdots, N.
+	A_{i}(\beta) = A_{i - 1}(\beta) e^{-\beta(z_{i - 1} - z_{i - 2})} + q_{i - 1}e^{-\m{i} \bm{h}\cdot\bm{\rho}_{i-1}}\;,\quad i = 3, \cdots, N.
 \end{equation}
 One can thus efficiently evaluate $S$ with another $\mathcal{O}(N)$ operations by Eq.~\eqref{eq::S} and using the computed coefficients~$\V{A}(\beta) = (A_1(\beta), ..., A_N(\beta))$. 
 Consequently, the overall cost for evaluating the pairwise summation in forms of Eq.~\eqref{eq::33} is reduced to $\mathcal{O}(N)$.
@@ -223,11 +225,8 @@ Besides the iterative method discussed above, it is remarked that different fast
 \begin{rmk}
 	A similar iterative evaluation strategy can be developed based on Eq.~\eqref{eq::S0} instead of Eq.~\eqref{eq::S}, which may seem more straightforward.
 	However, it will lead to uncontrolled exponential terms such as $e^{\beta z_{j}}$, affecting the numerical stability.
-	The same issue occurs in the original Ewald2D summation, as has been discussed in Section~\ref{subsec::elec}.
-	%The prior sorting of particles along the $z$-direction allows the inserted factor to establish the conditions $z_{i}-z_{i-1}\geq 0$ and $z_{i-1}-z_{j}\geq 0$ for all $j \leq i - 1$. 
-In our recursive scheme, by prior sorting of all particles in $z$, it follows that  $z_{i}-z_{i-1} > 0$ and $z_{i-1} - z_{j} \geq 0$ for all $j \leq i - 1$, thus making all exponential terms in Eq.~\eqref{eq::S} with negative exponents, resolving the exponential blowup issue.
-	% In particular, for homogeneous systems, one has $e^{-\beta(z_{i} - z_{i-1})} \approx e^{-\beta L_z / N}\sim \mathcal{O}(1)$, since $N \gg L_z$ holds for typical quasi-2D systems. 
-	% This approximation strengthens stability when recursively calculating $A_{i}(\beta)$.
+	The same issue occurs in the original Ewald2D summation.
+	In our recursive scheme, by prior sorting of all particles in $z$, it follows that  $z_{i}-z_{i-1} > 0$ and $z_{i-1} - z_{j} \geq 0$ for all $j \leq i - 1$, thus making all exponential terms in Eq.~\eqref{eq::S} with negative exponents, resolving the exponential blowup issue.
 	\label{rmk::stable}
 \end{rmk}
 
@@ -235,9 +234,9 @@ In our recursive scheme, by prior sorting of all particles in $z$, it follows th
 
 Finally, the long-range component of Coulomb interaction energy in Ewald2D summation is approximated via:
 \begin{equation}\label{eq:U_l_SOE}
-	U_{\ell}\approx U_{\ell,\text{SOE}} := \sum_{\bm{k}\neq \bm{0}} U_{\ell,\text{SOE}}^{\bm{k}}+U_{\ell,\text{SOE}}^{\bm{0}},
+	U_{\ell}\approx U_{\ell,\text{SOE}} := \sum_{\bm{h}\neq \bm{0}} U_{\ell,\text{SOE}}^{\bm{h}}+U_{\ell,\text{SOE}}^{\bm{0}},
 \end{equation}
-where both $U_{\ell,\text{SOE}}^{\bm{k}}$ and $U_{\ell,\text{SOE}}^{\bm{0}}$ can be evaluated efficiently and accurately with linear complexity.
+where both $U_{\ell,\text{SOE}}^{\bm{h}}$ and $U_{\ell,\text{SOE}}^{\bm{0}}$ can be evaluated efficiently and accurately with linear complexity.
 In MD simulations, the force exerts on the $i$-th particle, $\bm{F}_{i}$, plays a significant role in the numerical integration of Newton's equations.
 One can similarly develop fast recursive algorithms to evaluate the SOE-reformulated forces,
 the detailed expressions for $\bm{F}_{i}$ is summarized in \ref{app::force}.
@@ -247,17 +246,17 @@ We finally summarize the SOEwald2D  in Algorithm~\ref{alg:SOEwald2D}. Its error 
 	\caption{The sum-of-exponentials Ewald2D method}
 	\begin{algorithmic}[1]
 		% \setstretch{1.15}
-		\State \textbf{Input}: Initialize the size of the simulation box $(L_x, L_y, L_z)$, as well as the positions, velocities, and charges of all particles. Choose a precision requirement $\varepsilon$.  %, proceed to compute the energy defined in Eq.~\eqref{eq:U} along with its corresponding gradient.
+		\State \textbf{Input}: Initialize the size of the simulation box $(L_x, L_y, H)$, as well as the positions, velocities, and charges of all particles. Choose a precision requirement $\varepsilon$.  %, proceed to compute the energy defined in Eq.~\eqref{eq:U} along with its corresponding gradient.
 		
-		\State \textbf{Precomputation stage}: Determine Ewald splitting parameters $\alpha$ and $s$ according to Eq.~\eqref{eq:trunction_error}. Generate real and Fourier space cutoffs by $r_c=s/\alpha$ and $k_c=2s\alpha$, respectively. Construct the SOE approximations of $\xi^{\pm}(k,z)$ and $\erf(\alpha z)$ following Section~\ref{subsec::SOEapp}.
+		\State \textbf{Precomputation stage}: Determine Ewald splitting parameters $\alpha$ and $s$ according to Eq.~\eqref{eq:trunction_error}. Generate real and Fourier space cutoffs by $r_c=s/\alpha$ and $k_c=2s\alpha$, respectively. Construct the SOE approximations of $\xi^{\pm}(h,z)$ and $\erf(\alpha z)$ following Section~\ref{subsec::SOEapp}.
 		
 		\Procedure\textnormal{SOEwald2D}{}   
 		\State Sort all the particles according to their $z$ coordinates, as $z_1 < z_2 < \cdots < z_N$.
-		\State Compute~$U_{\ell,\text{SOE}}^{\bm{k}}$ for $|\bm{k}|\leq k_c$ as well as $U_{\ell,\text{SOE}}^{\bm{0}}$ according to Section~\ref{subsec::reforEwald2}. 
+		\State Compute~$U_{\ell,\text{SOE}}^{\bm{h}}$ for $|\bm{h}|\leq k_c$ as well as $U_{\ell,\text{SOE}}^{\bm{0}}$ according to Section~\ref{subsec::reforEwald2}. 
 		% \State Compute $U_{\text{self}}$ and $U_{\text{p-s}}$ according to Eqs.~\eqref{eq::self} and \eqref{eq::phiionwall}, respectively.
 		\State Compute~$U_{s}$ by direct truncation in real space according to Eq.~\eqref{eq:phi_s} with cutoff $r_c$. %\Comment{short-range part}
 		\State Compute $U_{\text{self}}$ according to Eqs.~\eqref{eq::self}.
-		\State Compute $U = \sum_{|\bm{k}|\leq k_c} U_{\ell, \text{SOE}}^{\bm{k}} + U_{\ell,\text{SOE}}^{\bm{0}} - U_{\text{self}} + U_{s} + U_{\text{p-s}}$.
+		\State Compute $U = \sum_{|\bm{h}|\leq k_c} U_{\ell, \text{SOE}}^{\bm{h}} + U_{\ell,\text{SOE}}^{\bm{0}} - U_{\text{self}} + U_{s} + U_{\text{p-s}}$.
 		\State Compute forces $\bm{F}_{i}$ using a similar procedure as that of $U$.
 		\EndProcedure
 		

@@ -574,7 +574,7 @@ Based on the expression of electrostatic potential $\phi$ derived above, the tot
 \end{align}
 where $U_*=\sum_{i}\phi_*$ with $*$ representing any of the subscripts used in Eq.~\eqref{eq::34}.
 
-\subsection{The ICM-Ewald2D Summation and its Reformulation}
+\subsection{The ICM-Ewald2D Summation and its Reformulation}\label{sec::icm_ewald2d}
 
 For dielectric confined systems, combined with the ICM, the Ewald2D summation can be extended to accommodate for dielectric-confined systems.
 In the ICM-Ewald2D summation~\cite{gan2024random}, Eqs.~\eqref{eq::Us_Ewald2D}-\eqref{eq::J0_Ewald2D} are modified as
@@ -638,6 +638,22 @@ The integrand in Eq.~\eqref{eq::Ga-integral} contains two simple poles at $t=\pm
 Additionally, the integrand in Eq.~\eqref{eq::J0-integral} is smooth, %with its first-order term canceled due to the antisymmetry of $z_{ij}=-z_{ji}$ and the charge neutrality condition when substituted into Eq.~\eqref{eq::Fourier2D}, 
 ensuring spectral convergence of the discretization. 
 By applying an analysis analogous to that of Pan and Hu~\cite{pan2014rigorous}, we obtain $|U_{\text{trap}}^{M}|\sim e^{-\alpha^2(L_z-H)^2}$, which becomes negligible for $L_z \gg H$.  
+
+Specially, for the case~$\gamma_{\T u}=\gamma_{\T d}=0$, i.e., the system is homogeneous, the long-range component is given by:
+\begin{equation}\label{eq::U3D_Four}
+	\begin{split}
+		U_{\ell} = \frac{2\pi}{L_xL_yL_z}\sum_{\bm{k}\neq \bm{0}}\frac{e^{-\frac{k^2}{4\alpha^2}}}{k^2}\rho_{\bm{k}}\bar{\rho}_{\bm{k}} - \frac{\alpha}{\sqrt{\pi}}\sum_{i=1}^{N}q_i^2+ U_{\T {YB}} + U_{\T {ELC}} + U_{\T{Trap}}\;,
+	\end{split}
+\end{equation}
+where $U_{\T {YB}}$ and $U_{\T {ELC}}$ are defined as:
+\begin{equation}\label{eq::U3D_YB}
+	U_{\T {YB}} := \frac{2\pi}{L_xL_yL_z}\left(\sum_{i=1}^{N}q_{i}z_{i}\right)\sum_{j=1}^{N}q_j z_{j}\;,
+\end{equation}
+%and
+\begin{equation}\label{eq::U3D_ELC}
+	U_{\T {ELC}} := \frac{2\pi}{L_xL_y}\sum_{i,j=1}^{N}q_iq_j\sum_{\bm{h}\neq \bm{0}} \frac{e^{\i \bm{h}\cdot\bm{r}_{ij}}}{h}\frac{\cosh(hz_{ij})}{1-e^{hL_z}}\;.
+\end{equation}
+
 
 In practical computations, the first term in Eq.~\eqref{eq::UcFour} can be efficiently calculated using fast algorithms such as the FFT~\cite{yuan2021particle}, the periodic FMM~\cite{pei2023fast}, and the random batch importance sampling~\cite{liang2022improved}, achieving computational complexities of $O(N\log N)$ or $O(N)$. 
 Note that the ICM-YB correction term $U_{\T {YB}}^{M}$ can be directly computed with a cost of $O(N)$, and the remainder term $U_{\text{trap}}^M$ can be eliminated by appropriately choosing $L_z$.

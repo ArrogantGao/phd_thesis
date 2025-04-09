@@ -1,8 +1,15 @@
+In Chapter~\ref{chp_soewald2d}, we introduced an efficient algorithm, the SOEwald2D method, to compute the electrostatic energy and force of a quasi-2D system in a homogeneous dielectric medium.
+However, in most of the practical applications, the system is confined by dielectric interfaces, which is a more challenging problem.
+In this chapter, we focus on the case of dielectrically confined Coulomb systems.
+First, we derive the accurate error estimates for the Ewald summation for dielectrically confined Coulomb systems.
+Then, we introduce the Random Batch Ewald2D (RBE2D) method, which is a fast and accurate method for computing the electrostatic energy and force of dielectrically confined Coulomb systems.
+
+
 \section{Accurate error estimates in Ewald summation for dielectrically confined Coulomb systems}
 
 In this section, we present a comprehensive error analysis for both energy and force calculations, addressing the truncation error of the image charge series and the errors arising from the reformulation of the ICM-Ewald2D summation. 
 We also perform extensive numerical experiments to validate our error analysis.
-We will focus on force-related results in the main text, while energy-related findings are provided in Section 1 of the Supporting Information (SI).
+We will focus on force-related results in the main text, while energy-related findings are provided in Section~\ref{sec:numeric_energy}.
 It is also important to note that in practical computations, the use of FFT can introduce additional errors due to particle spreading onto the uniform grid and the finite resolution of the grid. 
 Since these error sources have been thoroughly analyzed in the literature~\cite{deserno1998mesh,wang2012numerical,liang2023error,wang2016multiple,barnett2019parallel,barnett2021aliasing} and are separable from the error discussed in this work, we refer interested readers to these works for more details.
 
@@ -123,7 +130,7 @@ The numerical results are presented in Fig.~\ref{fig:icm_error_force} (a) and (b
 All results demonstrate that the force errors decay exponentially as $M$ increases. 
 Additionally, we observe that the errors decay slower as the aspect ratio $L_x / H$ (Fig.~\ref{fig:icm_error_force} (a)) and the reflection factor $\gamma$ (Fig.~\ref{fig:icm_error_force} (b)) increases, both are consistent with our theoretical predictions in Eq.~\eqref{eq::Ferr1}. 
 Furthermore, to quantitatively validate our theoretical findings, we also plot the theoretical decay rates predicted by Eq.~\eqref{eq::Ferr1} as dashed lines in Fig.~\ref{fig:icm_error_force}, showing excellent agreement with our numerical results.
-The results for relative errors in energy are documented in Section 1 of the SI, where similar conclusions hold.  
+The results for relative errors in energy are documented in Section~\ref{sec:numeric_energy}, where similar conclusions hold.  
 
 %In \Cref{fig:icm_error_force} (a) and (b), we maintained fixed values for the reflection rate and the system height, respectively. 
 %The results indicate that the energy error decreases exponentially with the number of reflection levels, denoted as~$M$, and the speed of decay depends on the reflection rate $\gamma$ and the system height $H$.
@@ -143,7 +150,7 @@ The results for relative errors in energy are documented in Section 1 of the SI,
 
 \subsection{Estimations of electrostatic layer correction (ELC) with image charges}\label{sec:error_reform}
 
-Another often-overlooked source of error in existing algorithms stems from the omission of the ELC term in Eq.~\eqref{eq:U^M_ELC} and the discretization error using the trapezoidal rule, which has been discussed in Section~\ref{sec:ewald}. 
+Another often-overlooked source of error in existing algorithms stems from the omission of the ELC term in Eq.~\eqref{eq:U^M_ELC} and the discretization error using the trapezoidal rule, which has been discussed in Section~\ref{sec::icm_ewald2d}. 
 In this section, we focus on deriving estimations of the ELC term with image charges.
 %a rough estimation has been given as the following Lemma~\cite{gan2024fast}.
 
@@ -253,7 +260,7 @@ for \( |g_{\T u}g_{\T d}| = 1 \), it grows linearly; and for \( |g_{\T u}g_{\T d
 In what follows, we perform a series of numerical tests to validate our theoretical analysis. 
 First, we examine the simplest case, i.e., systems \emph{without} dielectric interfaces by setting $\gamma_{\T u} = \gamma_{\T d} = 0$. 
 In our numerical tests, we fix $L_x = L_y = 10$, and vary the system heights by setting $H = 0.5, 1, 5$. 
-For clarity, we further introduce the dimensionless \emph{padding ratio} $P$, defined as $P = (L_z - H) / L_x$. 
+For clarity, we further introduce the dimensionless \emph{padding ratio} $R$, defined as $P = (L_z - H) / L_x$. 
 The results, presented in Fig.~\ref{fig:elc_error_force}, clearly show that the relative errors in force $\mathcal{E}_r$ decay exponentially with $P$. 
 Notably, the convergence with respect to $P$ is independent of the specific choice of $H$, aligning with our theoretical predictions in Eq.~\eqref{eq::ForceError}. 
 Furthermore, our findings underscore the computational challenges of simulating \emph{strongly-confined} systems, characterized by a high aspect ratio, i.e., $L_x / H$. 
@@ -262,31 +269,31 @@ According to Fig.~\ref{fig:elc_error_force}, achieving single- or double-precisi
 \begin{figure}[htbp]
     \centering
     \includegraphics[width=0.55\linewidth]{figs/elc_error_force.pdf}
-    \caption{Relative errors in force ($\mathcal{E}_r$) as a function of the padding ratio $P$ for systems without dielectric interfaces. 
-    We consider systems with heights $H = 0.5, 1, 5$ while fixing $L_x=L_y=10$. The padding ratio is defined as $P = (L_z - H) / L_x$. The dashed lines represent the fitted curves with decay rates using theoretical prediction Eq.~\eqref{eq::ForceError}. }
+    \caption{Relative errors in force ($\mathcal{E}_r$) as a function of the padding ratio $R$ for systems without dielectric interfaces. 
+    We consider systems with heights $H = 0.5, 1, 5$ while fixing $L_x=L_y=10$. The padding ratio is defined as $R = (L_z - H) / L_x$. The dashed lines represent the fitted curves with decay rates using theoretical prediction Eq.~\eqref{eq::ForceError}. }
     \label{fig:elc_error_force}
 \end{figure}
 
 Next, we examine systems with dielectric interfaces.
 We set $\gamma_{\T u}=\gamma_{\T d}=\gamma$ and explore two prototypical scenarios by choosing $\gamma = 0.6$ and $1$, respectively. 
-In both scenarios, the size of simulation box is fixed as $L_x=L_y=10$ and $H = 0.5$, and we vary the padding ratio $P$ (by changing $L_z$) and the image series truncation parameter $M$ to validate our theoretical results.
+In both scenarios, the size of simulation box is fixed as $L_x=L_y=10$ and $H = 0.5$, and we vary the padding ratio $R$ (by changing $L_z$) and the image series truncation parameter $M$ to validate our theoretical results.
 We first address the scenario with $\gamma = 0.6$, where we have $|g_{\T u}g_{\T d}| < 1$, so that the numerical errors are mainly contributed by the image series truncation error Eq.~\eqref{eq::Ferr1} and the ELC term Eq.~\eqref{eq::lhs_less1}.
 % \begin{equation}\label{eq::0.6}
 %     |\bm{F}_{\text{err}}^{M,i}| \sim \max \left\{ \lfloor(M+1)/2\rfloor^{-1}\left|\gamma_{\T u}\gamma_{\T d}\right|^{\lfloor\frac{M+1}{2}\rfloor} e^{-\frac{4\pi H\lfloor (M+1)/2\rfloor}{\max\{L_x,L_y\}}}, ~(g_{\T u}+g_{\T d}+2)e^{-\frac{2\pi L_z}{\max\{L_x,L_y\}}} \right\}\;.
 % \end{equation}
-The numerical results, as shown in Fig.~\ref{fig:error_icm_pad_gamma_0.6_force}, demonstrate that the errors in force decay exponentially with both the padding ratio $P$ and the number of image charge layers $M$, consistent with our theoretical predictions. Notice that in Fig.~\ref{fig:error_icm_pad_gamma_0.6_force} (a), the errors saturate at certain accuracy levels, this is due to the fixed image series truncation error (as we fix $M$). Similarly, the errors saturate in Fig.~\ref{fig:error_icm_pad_gamma_0.6_force} (b) as they reach the fixed ELC errors for given padding ratios $P$.
+The numerical results, as shown in Fig.~\ref{fig:error_icm_pad_gamma_0.6_force}, demonstrate that the errors in force decay exponentially with both the padding ratio $R$ and the number of image charge layers $M$, consistent with our theoretical predictions. Notice that in Fig.~\ref{fig:error_icm_pad_gamma_0.6_force} (a), the errors saturate at certain accuracy levels, this is due to the fixed image series truncation error (as we fix $M$). Similarly, the errors saturate in Fig.~\ref{fig:error_icm_pad_gamma_0.6_force} (b) as they reach the fixed ELC errors for given padding ratios $R$.
 \begin{figure}[htbp]
     \centering
     \includegraphics[width=0.98\linewidth]{figs/error_icm_pad_gamma_0.6_force.pdf}
     \caption{Relative errors in force ($\mathcal{E}_r$) for systems with dielectric interfaces. Here we fix $\gamma_{\T u}=\gamma_{\T d}=\gamma = 0.6$, $L_x=L_y=10$ and $H = 0.5$. 
-    Panel (a) illustrates errors as a function of padding ratio $P$ with fixed image charge layers ($M=5,~15,~25$); panel (b) illustrates errors as a function of $M$ with fixed padding ratios ($P = 1,~3,~5$). The dashed lines in (a) and (b) represent the fitted curves with decay rates using theoretical predictions Eq.~\eqref{eq::lhs_less1} and Eq.~\eqref{eq::Ferr1}, respectively.}
+    Panel (a) illustrates errors as a function of padding ratio $R$ with fixed image charge layers ($M=5,~15,~25$); panel (b) illustrates errors as a function of $M$ with fixed padding ratios ($R = 1,~3,~5$). The dashed lines in (a) and (b) represent the fitted curves with decay rates using theoretical predictions Eq.~\eqref{eq::lhs_less1} and Eq.~\eqref{eq::Ferr1}, respectively.}
     \label{fig:error_icm_pad_gamma_0.6_force}
 \end{figure}
 
 Now consider the scenario with $\gamma = 1$, where we have $|g_{\T u}g_{\T d}| > 1$, so that the numerical errors associated with the ELC term are described by Eq.~\eqref{eq::lhs_bigger1}.
 In this context, the error behavior becomes more complex: as $M$ increases, the ELC error exhibits exponential growth, whereas the image truncation error decreases exponentially.
-As illustrated in Fig.~\ref{fig:error_icm_pad_gamma_1_force} (a), by fixing $M$, we still observe exponential convergence in forces as the padding ratio $P$ increases. 
-However, for a fixed padding ratio $P$, the errors display non-monotonic behavior with increasing $M$, as depicted in Fig.~\ref{fig:error_icm_pad_gamma_1_force} (b).
+As illustrated in Fig.~\ref{fig:error_icm_pad_gamma_1_force} (a), by fixing $M$, we still observe exponential convergence in forces as the padding ratio $R$ increases. 
+However, for a fixed padding ratio $R$, the errors display non-monotonic behavior with increasing $M$, as depicted in Fig.~\ref{fig:error_icm_pad_gamma_1_force} (b).
 This subtle phenomenon was not fully understood since its first observation in the work of Yuan \emph{et al.}~\cite{yuan2021particle}. 
 Our analysis reveals it as the combined effect of image truncation and ELC errors: 
 initially, errors decrease due to the decay of image truncation errors; and once $M$ surpasses a certain $P$-dependent threshold, the error amplification mechanism predicted by Eq.~\eqref{eq::lhs_bigger1} becomes dominant, causing errors to grow exponentially.
@@ -296,7 +303,7 @@ Specifically, for systems with higher aspect ratios, a larger $M$ is required to
     \centering
     \includegraphics[width=0.98\linewidth]{figs/error_icm_pad_gamma_1_force.pdf}
     \caption{Relative errors in force ($\mathcal{E}_r$) for systems with dielectric interfaces. Here we fix $\gamma_{\T u}=\gamma_{\T d}=\gamma = 1$, $L_x=L_y=10$ and $H = 0.5$. 
-    Panel (a) illustrates errors as a function of padding ratio $P$ with fixed image charge layers ($M=25,~35,~45$); panel (b) illustrates errors as a function of $M$ with fixed padding ratios ($P = 1,~3,~5$). The dashed lines in (a) and (b) represent the fitted curves with decay/growth rates using theoretical predictions Eq.~\eqref{eq::lhs_bigger1} and Eq.~\eqref{eq::Ferr1}.}
+    Panel (a) illustrates errors as a function of padding ratio $R$ with fixed image charge layers ($M=25,~35,~45$); panel (b) illustrates errors as a function of $M$ with fixed padding ratios ($R = 1,~3,~5$). The dashed lines in (a) and (b) represent the fitted curves with decay/growth rates using theoretical predictions Eq.~\eqref{eq::lhs_bigger1} and Eq.~\eqref{eq::Ferr1}.}
     \label{fig:error_icm_pad_gamma_1_force}
 \end{figure}
 
@@ -334,7 +341,7 @@ For ICM-Ewald3D~\cite{dos2015electrolytes} and ICM-PPPM~\cite{yuan2021particle} 
 our error analysis indicates that four interrelated parameters must be determined to control accuracy: 1). the Ewald splitting parameter $\alpha$, 2). the real-space cutoff $r_c$, 3). the image charge series truncation parameter $M$, and 4). the padding length $L_z$. 
 By combining the error estimates from this study with the established Ewald splitting error, the overall error estimates for the ICM-Ewald3D and ICM-PPPM methods can be expressed as follows:
 \begin{equation}\label{eq:error_icmelc}
-\resizebox{0.935\width}{!}{\(
+\resizebox{0.8\width}{!}{\(
 %|U_{\T{err}}|\sim|\bm{F}_{\T{err}}^{i}| 
 \varepsilon \sim O\left(\frac{e^{-s^2}}{s^2}+\abs{\gamma_{\T u} \gamma_{\T d}}^{\lfloor\frac{M+1}{2}\rfloor} e^{-\frac{4\pi H \lfloor\frac{(M+1)}{2}\rfloor}{\max\{L_x,L_y\}}} + e^{-\frac{2\pi(L_z-H)}{\max\{L_x,L_y\}}} + \sum\limits_{l=1}^{M}C_{\gamma}^{(l)}e^{-\frac{2\pi(L_z-(l+1)H)}{\max\{L_x,L_y\}}}+e^{-\alpha^2 (L_z-H)^2}\right)\;,
 \)}
@@ -422,17 +429,23 @@ Consequently, we conclude that the parameter selection strategy proposed herein 
 
 \section{Random batch Ewald2D method}\label{sec::RBE2D}
 
+In this section, we introduce the random batch Ewald2D (RBE2D) method, which is a mesh-free fast algorithm for computing the electrostatic force in quasi-2D systems.
+After reformulating the Ewald2D summation as a 3D one, we can directly apply the RBE method to accelerate the reciprocal-space sum and reaching an optimal $O(N)$ scaling.
+The detailed algorithm is presented in Subsection~\ref{subsec::RBE2D_algorithm}.
+We then prove the unbiasedness and variance of the RBE2D method in Subsection~\ref{subsec::convergence}.
+Finally, we extend the RBE2D method to dielectric-confined systems in Subsection~\ref{subsec::IBCELCDielectric}.
+
 \subsection{The algorithm}\label{subsec::RBE2D_algorithm}
 
-We now introduce the random batch Ewald2D (RBE2D) method.
-Instead of deterministically  {computing} the $\V k$-space sum  {given by Eq.~\eqref{eq:ewald2d-ELC}} either directly or via FFT, we now evaluate it through a stochastic approximation, namely, the random ``mini-batch'' sampling~\cite{jin2020random}. 
+As been introduced in Section~\ref{sec::icm_ewald2d}, the Ewald2D summation can be reformulated as a 3D one, and here we apply the RBE method to accelerate the reciprocal-space sum.
+Instead of deterministically computing the $\V k$-space sum in Eq.~\eqref{eq::U3D_Four} either directly or via FFT, we now evaluate it through a stochastic approximation, namely, the random ``mini-batch'' sampling~\cite{jin2020random}. 
 Notice that the low $\V k$ modes are more important due to the $e^{-k^2/(4\alpha^2)}$ factor, an importance sampling strategy was further developed for variance reduction.
-The random batch Ewald (RBE) method has recently been developed for fully periodic systems~\cite{jin2021random,liang2022superscalability, liang2023random}, and here we extend it to quasi-2D systems.
+% The random batch Ewald (RBE) method has recently been developed for fully periodic systems~\cite{jin2021random,liang2022superscalability, liang2023random}, and here we extend it to quasi-2D systems.
 
-The long-range component of the electrostatic force exerts on $i$-th particle is given by $\V F_i^{\te{Fourier}}=-\nabla_{\bm{r}_i}U_{\text{Fourier}}$, its random batch approximation is denoted as
+The long-range component of the electrostatic force exerts on $i$-th particle is given by $\V F_i^{\ell}=-\nabla_{\bm{r}_i}U_{\ell}$, its random batch approximation is denoted as
 \begin{equation}\label{eq:forceRBE}
 \begin{aligned}
-    \V {\tilde{F}}_i^{\te{Fourier}}=-\sum_{\ell =1}^P \frac{S}{P}\frac{4\pi q_i\V k_\ell}{Vk_\ell^2} \te{Im}\left(e^{-\i \V k_\ell\cdot \V r_i}\rho(\V k_\ell)\right)\;,
+    \V {\tilde{F}}_i^{\ell}=-\sum_{\eta=1}^P \frac{S}{P}\frac{4\pi q_i\V k_\eta}{Vk_\ell^2} \te{Im}\left(e^{-\i \V k_\eta\cdot \V r_i}\rho(\V k_\eta)\right)\;,
 \end{aligned}
 \end{equation}
 where $P$ is the batch size, $V=L_xL_yL_z$ is the volume of the extended simulation domain $\Omega_{\text{3D}}$, 
@@ -461,15 +474,15 @@ For quasi-2D systems, the RBE2D method offers a particular advantage: it is mesh
 }
 
 \begin{thm}\label{Thm::1} 
-    Denote the fluctuation of the random batch approximation in force by $\V \Xi_{\V F,i}=\V {\tilde{F}}_i^{\emph{Fourier}}-\V {F}_i^{\emph{Fourier}}$. The random variable $\V \Xi_{\V F,i}$ has zero expectation, i.e., $\mathbb{E}\V \Xi_{\V F,i}=\V 0$, and its variance is given by
+    Denote the fluctuation of the random batch approximation in force by $\V \Xi_{\V F,i}=\V {\tilde{F}}_i^{\ell}-\V {F}_i^{\ell}$. The random variable $\V \Xi_{\V F,i}$ has zero expectation, i.e., $\mathbb{E}\V \Xi_{\V F,i}=\V 0$, and its variance is given by
     \begin{equation}\label{eq::30}
-        \mathbb{E}|\V \Xi_{\V F,i}|^2=\frac{1}{P}\left[\frac{(4\pi q_i)^2S}{V^2}\sum_{\bm{k}\neq \bm{0}}\frac{e^{-k^2/(4\alpha^2)}}{k^2}\left|\emph{Im}\left(e^{-\i \V k_\ell\cdot \V r_i}\rho(\V k_\ell)\right)\right|^2-|\V F_{i}^{\emph{Fourier}}|^2\right]
+        \mathbb{E}|\V \Xi_{\V F,i}|^2=\frac{1}{P}\left[\frac{(4\pi q_i)^2S}{V^2}\sum_{\bm{k}\neq \bm{0}}\frac{e^{-k^2/(4\alpha^2)}}{k^2}\left|\emph{Im}\left(e^{-\i \V k \cdot \V r_i}\rho(\V k)\right)\right|^2-|\V F_{i}^{\ell}|^2\right]
     \end{equation}
     which is bounded and scales as $\mathcal O(1/P)$. Furthermore, under the DH assumption, $\mathbb{E}|\V \Xi_{\V F,i}|^2$ is independent of both the particle number $N$ and the size $L_z$.
 \end{thm}
 
 \begin{proof}%[Proof of \emph{Theorem}~\emph{\ref{Thm::1}}]
-    The property of unbiasedness in Theorem~\ref{Thm::1} is straightforward and guarantees the consistency of the stochastic approximation, i.e., $\mathbb{E}\V{ \tilde{F}}_i^{\te{Fourier}}=\mathbb{E}\V {F}_i^{\te{Fourier}}$. 
+    The property of unbiasedness in Theorem~\ref{Thm::1} is straightforward and guarantees the consistency of the stochastic approximation, i.e., $\mathbb{E}\V{ \tilde{F}}_i^{\ell}=\mathbb{E}\V {F}_i^{\ell}$. 
     Let us now consider the variance.
     By the DH assumption, the structure factor term in Eq.~\eqref{eq::30} is bounded by a constant $C$~\cite{jin2021random} for $\bm{k}\neq \bm{0}$,
     \begin{equation}
@@ -535,7 +548,13 @@ It   {is worth} noting that, although the Coulomb potential is neither bounded n
 Additionally, following Theorem \ref{thm::2}, the fluctuations introduced by random batch approximation, $\V \Xi_{\V F,i}$,  can be physically understood as heating effects, which will cause a temperature drift for the system and is unwanted. 
 For NVT and NPT ensembles, the heating effect can be eliminated by introducing appropriate thermostats such as the Langevin thermostat~\cite{feller1995constant}, the Nos\'e-Hoover (NH) thermostat~\cite{hoover1985canonical}, etc. With an additional weak-coupled bath on the Newtonian dynamics to avoid energy drift, the NVE ensemble can also be accurately simulated with random batch-type approximations~\cite{liang2024JCP}.
 
-Next, we analyze the computational complexity of the RBE2D accelerated MD simulations. The detailed algorithm is summarized in Fig.~\ref{Alg::1}.  {In the RBE2D, the random batch importance sampling in Eq.~\eqref{eq:forceRBE} approximates the Fourier space force by summing over $P$ Fourier modes. At each step, $P$ structure factors, $\{\rho(\bm{k}_{\ell})\}_{\ell=1}^{P}$, are computed for all particles, resulting in a Fourier part complexity of $\mathcal{O}(PN)$. Furthermore, as shown in Theorems~\ref{Thm::1} and \ref{thm::2} and the analysis at the end of Sec.~\ref{subsec::RBE2D}, the RBE2D error does not grow as $N$ or $L_z$ increases when the batch size $P=\mathcal{O}(1)$ and $\alpha\sim N^{1/3}/(L_xL_yH)^{1/3}$ are provided. The real space part of the RBE2D is short-ranged due to the rapid decay of factor $\erfc(\alpha r)$ and can be directly truncated by introducing a cutoff $r_c$. As a result, the real space complexity is proportional to the product of $N$ and the average number of neighbors within a volume of $4\pi r_c^3$ per particle. For a given truncation error tolerance, $r_c\sim \alpha^{-1}$, yielding a real space complexity $\sim \alpha^{-3}N/(L_xL_yH)=\mathcal{O}(1)$ per particle. }As such, the total computational complexity is of $\mathcal{O}(N)$. 
+Next, we analyze the computational complexity of the RBE2D accelerated MD simulations. The detailed algorithm is summarized in Fig.~\ref{Alg::1}.  
+In the RBE2D, the random batch importance sampling in Eq.~\eqref{eq:forceRBE} approximates the Fourier space force by summing over $P$ Fourier modes. 
+At each step, $P$ structure factors, $\{\rho(\bm{k}_{\eta})\}_{\eta=1}^{P}$, are computed for all particles, resulting in a Fourier part complexity of $\mathcal{O}(PN)$. Furthermore, as shown in Theorems~\ref{Thm::1} and \ref{thm::2} and the analysis at the end of Section~\ref{subsec::RBE2D_algorithm}, the RBE2D error does not grow as $N$ or $L_z$ increases when the batch size $P=\mathcal{O}(1)$ and $\alpha\sim N^{1/3}/(L_xL_yH)^{1/3}$ are provided. 
+The real space part of the RBE2D is short-ranged due to the rapid decay of factor $\erfc(\alpha r)$ and can be directly truncated by introducing a cutoff $r_c$. 
+As a result, the real space complexity is proportional to the product of $N$ and the average number of neighbors within a volume of $4\pi r_c^3$ per particle. 
+For a given truncation error tolerance, $r_c\sim \alpha^{-1}$, yielding a real space complexity $\sim \alpha^{-3}N/(L_xL_yH)=\mathcal{O}(1)$ per particle. 
+As such, the total computational complexity is of $\mathcal{O}(N)$. 
 
 \begin{algorithm}[ht]
  \caption{(RBE2D accelerated molecular dynamics for quasi-2D systems)}\label{Alg::1}
@@ -543,10 +562,10 @@ Next, we analyze the computational complexity of the RBE2D accelerated MD simula
   \State Choose $\alpha$, $r_c$ (the cutoff in real space), $\Delta t$, the vacuum layer parameter $L_z$, and batch size $P$. Initialize the positions and velocities of ions as well as surface charge densities. Set $N_T$ as the total MD time steps.
   \For {$n \text{ in } 1: N_T$}
   \State Sample $P$ nonzero frequencies $\bm{k}\sim e^{-k^2/(4\alpha)}$ by the Metropolis procedure to form  set $\mathcal{K}$.
-  \State The $\V k$-space component of the force, $\bm{F}_i^{\te{Fourier}}$, is computed using the random batch approximation $\widetilde{\V F}_i^{\te{Fourier}}$ with the $P$ frequencies from the set $\mathcal{K}$.
-  \State The real space component of the force, $\bm{F}_i^{\te{real}}$, is computed by the neighbor list method. %The rest force terms, including the YB correction $\V F_{i}^{\te{YB}}$, the renormalization term $\V F_{i}^{\te{renorm}}$, and the ion-wall force $\V F_{i}^{\te{wall}}$, can be directly computed.
+  \State The $\V k$-space component of the force, $\bm{F}_i^{\ell}$, is computed using the random batch approximation $\widetilde{\V F}_i^{\ell}$ with the $P$ frequencies from the set $\mathcal{K}$.
+  \State The real space component of the force, $\bm{F}_i^{s}$, is computed by the neighbor list method. %The rest force terms, including the YB correction $\V F_{i}^{\te{YB}}$, the renormalization term $\V F_{i}^{\te{renorm}}$, and the ion-wall force $\V F_{i}^{\te{wall}}$, can be directly computed.
   \State Integrate the equations of motion for time step $\Delta t$ with an appropriate thermostat and its corresponding integration scheme. %the total force
-  %$$\V F_i=\widetilde{\V F}_i^{\te{Fourier}}+\bm{F}_i^{\te{real}}+\V F_{i}^{\te{YB}} + \V F_{i}^{\te{wall}}$$
+  %$$\V F_i=\widetilde{\V F}_i^{\ell}+\bm{F}_i^{\te{real}}+\V F_{i}^{\te{YB}} + \V F_{i}^{\te{wall}}$$
   
   \EndFor
  \end{algorithmic}
@@ -561,9 +580,9 @@ Besides its linear complexity, the RBE2D method offers two other significant adv
 \subsection{RBE2D method for dielectrically confined quasi-2D systems} \label{subsec::IBCELCDielectric}
 
 We now extend the RBE2D method for efficient MD simulations of dielectrically confined quasi-2D Coulomb systems. 
-First, given tolerance $\varepsilon$, one shall choose appropriate values for $M$ and $L_z$, such that the image series truncation error, the ELC term, and remainder error term can all be neglected. Then, let $\bm{F}_{\text{Fourier}}^{\text{c}}$ denotes the $\V k$-space component of force acting on the $i$-th particle, it reads
+First, given tolerance $\varepsilon$, one shall choose appropriate values for $M$ and $L_z$, such that the image series truncation error, the ELC term, and remainder error term can all be neglected. Then, let $\bm{F}_{\ell}^{\text{c}}$ denotes the $\V k$-space component of force acting on the $i$-th particle, it reads
 \begin{equation}\label{eq::52}
-\bm{F}_{\text{Fourier}}^{\text{c}}(\bm{r}_i)=-\frac{2\pi}{L_xL_yL_z}\sum_{\bm{k}}{}^{\prime}\frac{e^{-\frac{k^2}{4\alpha^2}}}{k^2}\nabla_{\bm{r}_i}\left[\rho_{\bm{k}}\bar{\rho}_{\bm{k}}^{M}\right]+\bm{F}_{\text{IBC}}^{M}(\bm{r}_i)\;,%+\bm{F}_{\text{ELC}}^{M}(\bm{r}_i)+\bm{F}_{\text{err}}^{M}(\bm{r}_i)\;,
+\bm{F}_{\ell}^{\text{c}}(\bm{r}_i)=-\frac{2\pi}{L_xL_yL_z}\sum_{\bm{k}}{}^{\prime}\frac{e^{-\frac{k^2}{4\alpha^2}}}{k^2}\nabla_{\bm{r}_i}\left[\rho_{\bm{k}}\bar{\rho}_{\bm{k}}^{M}\right]+\bm{F}_{\text{IBC}}^{M}(\bm{r}_i)\;,%+\bm{F}_{\text{ELC}}^{M}(\bm{r}_i)+\bm{F}_{\text{err}}^{M}(\bm{r}_i)\;,
 \end{equation}
 where 
 \begin{equation}\label{eq::rhorhoM}
@@ -577,12 +596,12 @@ If the image reflection level is truncated at $M$, the computational cost of ICM
 %This means that the cost does not increase rapidly as $M$ increases, which indicates that RBE2D is more suitable for systems with strong surface polarization. 
 %The detailed formula is given in Eq.~\eqref{eq::F_c_Four_detail}.
 
-We now again apply the importance sampling technique to approximate $\bm{F}_{\text{Fourier}}^{\text{c}}$, yielding the following stochastic estimator as 
+We now again apply the importance sampling technique to approximate $\bm{F}_{\ell}^{\text{c}}$, yielding the following stochastic estimator as 
 %More precisely, we regard the factor $e^{-\frac{k^{2}}{4\alpha^2}}$ as a discrete Gaussian distribution, and denote the resulting estimator of force as
 \begin{equation}\label{eq::important}
-\bm{F}_{\text{Fourier}}^{\text{c}}(\bm{r}_i)\approx \bm{F}_{\text{Fourier}}^{\text{c},*}(\bm{r}_i)=-\frac{2\pi }{L_xL_yL_z}\sum_{\ell=1}^{P}\frac{S}{P}\frac{\nabla_{\bm{r}_i}\left[\rho_{\bm{k}_{\ell}}\bar{\rho}_{\bm{k}_{\ell}}^{M}\right]}{k_{\ell}^2}+\bm{F}_{\text{IBC}}^{M}(\bm{r}_i),
+\bm{F}_{\ell}^{\text{c}}(\bm{r}_i)\approx \bm{F}_{\ell}^{\text{c},*}(\bm{r}_i)=-\frac{2\pi }{L_xL_yL_z}\sum_{\eta=1}^{P}\frac{S}{P}\frac{\nabla_{\bm{r}_i}\left[\rho_{\bm{k}_{\eta}}\bar{\rho}_{\bm{k}_{\eta}}^{M}\right]}{k_{\ell}^2}+\bm{F}_{\text{IBC}}^{M}(\bm{r}_i),
 \end{equation}
-where $\{\bm{k}_{\ell}\}_{\ell=1}^{P}$ are the $P$ batches of wave vectors sampled from $\mathscr{P}(\bm{k})$. 
+where $\{\bm{k}_{\eta}\}_{\eta=1}^{P}$ are the $P$ batches of wave vectors sampled from $\mathscr{P}(\bm{k})$. 
 It is important to note that when surface charges are present at the interfaces~\cite{spohr1997effect,yi2017note,yuan2021particle}, a straightforward modification to Eq.~\eqref{eq::important} is required, which allows for the simultaneous treatment of discrete ions and continuous surface charges.
 Detailed information can be found in the SM, Section S1.
 And the real space component of force is given by Eq.~(SM1.3), which can still be evaluated by neighbor lists algorithms.
@@ -610,12 +629,12 @@ Notice that Eq.~\eqref{eq::rhorhoM} can be rewritten as
     \end{split}
 \end{equation}
 This formulation enables the decoupling of the summation over particles index $j$ and their image index $l$. 
-In practical simulations, one shall first precompute $Y_{\text{odd}}(k_z)$ and $Y_{\text{even}}(k_z)$ for each $\bm{k} \in \{\bm{k}_{\ell}\}_{\ell=1}^{P}$, as these are configuration independent, with a computational cost of $\mathcal{O}(PM)$. 
+In practical simulations, one shall first precompute $Y_{\text{odd}}(k_z)$ and $Y_{\text{even}}(k_z)$ for each $\bm{k} \in \{\bm{k}_{\eta}\}_{\eta=1}^{P}$, as these are configuration independent, with a computational cost of $\mathcal{O}(PM)$. 
 Subsequently, for a given particle configuration, one evaluates $\rho_{\bm{k}}$, along with the conjugates of $Y_{\text{odd}}$ and $Y_{\text{even}}$, and computes
 \begin{equation}
     \sum_{j=1}^{N}q_je^{\i\bm{k}\cdot\bm{r}_{j}}\left(1+e^{-2\i k_zz_j}Y_{\text{odd}}(k_z)+Y_{\text{even}}(k_z)\right)
 \end{equation}
-for every $\bm{k}\in\{\bm{k}_{\ell}\}_{\ell=1}^{P}$, which incurs a cost of $\mathcal{O}(PN)$ operations. These intermediate variables are then utilized to evaluate $\nabla_{\bm{r}_i}\left[\rho_{\bm{k}}\bar{\rho}_{\bm{k}}^{M}\right]$ for all particles $i$ using Eq.~\eqref{eq::56}, adding another $\mathcal O(PN)$ to the cost. Finally, substituting the value of $\nabla_{\bm{r}_i}\left[\rho_{\bm{k}}\bar{\rho}_{\bm{k}}^{M}\right]$ into Eq.~\eqref{eq::important} allows for the computation of the first term on the right-hand side with $\mathcal{O}(PN)$ operations, followed by the addition of the IBC term, which incurs an $\mathcal{O}(N)$ cost. Consequently, the total computational cost for force evaluations is reduced from $\mathcal O(PMN)$ to $\mathcal O(P(M+N))$.
+for every $\bm{k}\in\{\bm{k}_{\eta}\}_{\eta=1}^{P}$, which incurs a cost of $\mathcal{O}(PN)$ operations. These intermediate variables are then utilized to evaluate $\nabla_{\bm{r}_i}\left[\rho_{\bm{k}}\bar{\rho}_{\bm{k}}^{M}\right]$ for all particles $i$ using Eq.~\eqref{eq::56}, adding another $\mathcal O(PN)$ to the cost. Finally, substituting the value of $\nabla_{\bm{r}_i}\left[\rho_{\bm{k}}\bar{\rho}_{\bm{k}}^{M}\right]$ into Eq.~\eqref{eq::important} allows for the computation of the first term on the right-hand side with $\mathcal{O}(PN)$ operations, followed by the addition of the IBC term, which incurs an $\mathcal{O}(N)$ cost. Consequently, the total computational cost for force evaluations is reduced from $\mathcal O(PMN)$ to $\mathcal O(P(M+N))$.
 In practice, one shall still take $\alpha \sim N^{1/3}/(L_xL_yH)^{1/3}$ to ensure that the real space calculation costs $\mathcal{O}(N)$, then the $\V k$-space components of force can be calculated as such so that the complexity is reduced to $\mathcal{O}(P(M+N))$.}
 Thus, the overall complexity of the RBE2D is approximately $\mathcal{O}(N)$ since both $P$ and $M$ are of $\mathcal O(1)$ and independent   {of} $N$.
 The detailed algorithm for RBE2D accelerated MD in the presence of dielectric interfaces is summarized in Algorithm~\ref{alg::RBEalg}.
@@ -628,13 +647,13 @@ The detailed algorithm for RBE2D accelerated MD in the presence of dielectric in
   \For {$n \text{ in } 1: N_T$}
   \State Sample $P$ nonzero frequencies $\bm{k}\sim e^{-k^2/(4\alpha)}$ by the Metropolis procedure to form set $\mathcal{K}$.
   \State The real space component of force is computed via a neighbor list algorithm (for both actual charges and image charges within $r_c$).
-  \State The Fourier space component of  {the} force is computed via the random batch approximation $\bm{F}_{\text{Fourier}}^{\text{c},*}$, with $P$ frequencies from the set $\mathcal{K}$.
+  \State The Fourier space component of  {the} force is computed via the random batch approximation $\bm{F}_{\ell}^{\text{c},*}$, with $P$ frequencies from the set $\mathcal{K}$.
   \State Integrate the equations of motions for time $\Delta t$ with  {an} appropriate integration scheme and some appropriate thermostat. 
   \EndFor
  \end{algorithmic}
 \end{algorithm}
 
-Finally, consider the fluctuation of random batch approximation of the force, denoted as $\bm{\Xi}_{\bm{F},i}^{\text{c}}=\bm{F}_{\text{Fourier}}^{\text{c},*}(\bm{r}_i)-\bm{F}_{\text{Fourier}}^{\text{c}}(\bm{r}_i)$, one can still show that 1) the variance of the RBE2D method is controlled via $\mathcal{O}(1/P)$ and is independent of $L_z$; 2) the RBE2D is capable to capture finite time structure and dynamic properties in MD simulations. 
+Finally, consider the fluctuation of random batch approximation of the force, denoted as $\bm{\Xi}_{\bm{F},i}^{\text{c}}=\bm{F}_{\ell}^{\text{c},*}(\bm{r}_i)-\bm{F}_{\ell}^{\text{c}}(\bm{r}_i)$, one can still show that 1) the variance of the RBE2D method is controlled via $\mathcal{O}(1/P)$ and is independent of $L_z$; 2) the RBE2D is capable to capture finite time structure and dynamic properties in MD simulations. 
 The proof is similar to Theorems~\ref{Thm::1} and~\ref{thm::2}, and is thus omitted here.
 
 \section{Numerical results on quasi-2D systems without dielectric interfaces}\label{sec::numerical}
@@ -646,7 +665,7 @@ Each node is equipped with $2\times$ Intel Xeon ICX Platinum $8358$ CPU ($2.6$GH
 The code is highly optimized, where  {the} message passing interface (MPI) and Intel AVX-512 instructions are used for parallelization and vectorization, respectively.
 
 To benchmark the accuracy, several widely investigated quantities are computed, such as concentration, mean-squared displacement (MSD), velocity auto-correlation functions (VACF), ensemble-averaged energy distribution, etc. 
-The calculation methods for these quantities are described in Section~SM2 of the SM. 
+The calculation methods for these quantities are described in Section~\ref{Sec::phyquan}.
 For comparison, we used the stable implementation of the PPPM2D method~\cite{crozier2001molecular} provided inside LAMMPS. 
 Results obtained using the PPPM2D method are labeled as ``PPPM''. 
 The parameters of the PPPM were automatically chosen in LAMMPS to achieve a desired relative error of $\Delta=10^{-4}$ for force evaluations~\cite{deserno1998mesh}. 
@@ -683,7 +702,7 @@ The Wasserstein-2 norm~\cite{santambrogio2015optimal, kolbe_2024_10912241} is us
 \end{equation}
 where $\Pi(\mathscr{P}_{\text{RBE}}, \mathscr{P}_{\text{PPPM}})$ represents the set of all joint distributions with marginal distributions $\mathscr{P}_{\text{RBE}}$ and $\mathscr{P}_{\text{PPPM}}$.
 The corresponding results are shown Fig.~\ref{fig:3_1}(b), where the~$W_2$ norms are   {plotted} as functions of~$L_z / H$ with   {varying} batch size~$P$.
-According to Theorem~\ref{thm::err}, when $L_z\approx H$, the errors coming from the ELC and remainder error term are still large and can not be ignored;   {this} is consistent with the error decay observed here. 
+According to the error estimination in Section~\ref{sec:error_reform}, when $L_z\approx H$, the errors coming from the ELC and remainder error term are still large and can not be ignored;   {this} is consistent with the error decay observed here. 
 We also find that, as $L_z\geq 3H$, the error no longer decreases as $L_z/H$ increases (with $P$ fixed); indicating that
 both ELC and remainder error terms now indeed become negligible, and the error primarily comes from the random batch approximation. 
 %Therefore, when the batch size $P$ is fixed, the error no longer decreases as $L_z/H$ grows beyond a certain extent.
@@ -695,7 +714,9 @@ The corresponding results are depicted in Fig.~\ref{fig:3_1}(c-d).
 We observe a convergence rate of $\mathcal{O}(1/P)$ in the average energy by the RBE2D (with that of the PPPM set as benchmark value). 
 This is consistent with our theoretical prediction Theorem~\ref{Thm::1} as the energies of both Coulomb and LJ scale quadratically in displacement near equilibrium.
 It is also noticed that, for the RBE2D method, choosing $P=50$ can already yield very accurate results, almost indistinguishable from those obtained via PPPM. 
- {Theorem~\ref{thm::2} also indicates that the error bound in the potential energy of the RBE2D method should converge linearly in $\Delta t$. As numerically validated in Fig.~SM1 in the SM, the error indeed decays with $\mathcal{O}(\Delta t)$ scaling. However, this $\mathcal{O}(\Delta t)$ scaling may not hold when $\Delta t$ is larger or in more complicated molecular models. In those scenarios, increasing \(\Delta t\) can lead to particles coming very close to one another (even with the presence of the LJ potential), introducing additional sources of error in other MD components—particularly in managing bond, angle, and dihedral constraints~\cite{frenkel2023understanding}. These artificial effects may result in unphysically large forces or even cause the simulation to fail.}
+ {Theorem~\ref{thm::2} also indicates that the error bound in the potential energy of the RBE2D method should converge linearly in $\Delta t$. 
+ As numerically validated in Fig.~\ref{fig:energy2d_3_1}, the error indeed decays with $\mathcal{O}(\Delta t)$ scaling. However, this $\mathcal{O}(\Delta t)$ scaling may not hold when $\Delta t$ is larger or in more complicated molecular models. 
+ In those scenarios, increasing \(\Delta t\) can lead to particles coming very close to one another (even with the presence of the LJ potential), introducing additional sources of error in other MD components—particularly in managing bond, angle, and dihedral constraints~\cite{frenkel2023understanding}. These artificial effects may result in unphysically large forces or even cause the simulation to fail.}
 %Furthermore, we observe a 
 
 \subsection{Accuracy test case II: all-atom SPC/E bulk water system}
@@ -742,7 +763,7 @@ We first investigate the time cost and complexity by varying particle number $N$
 In Fig.~\ref{fig:Time}(a), $64$ CPU cores are used, and the  CPU time per MD step for the RBE2D  {and the PPPM method} is documented with particle number $N$ up to $2\times 10^6$, where  {the real space CPU cost is identical for both methods by fixing the same Ewald splitting parameter $\alpha$ and real space cutoff $r_c$}.
  {It should be noted that the main goal of such parameter choice is for solely comparing the improvement of the RBE2D in Fourier space. We expect a fine tuning of $\alpha$ and other parameters to balance the cost of the RBE2D in real and Fourier spaces can further optimize its efficiency in practice.}
 The results clearly  {demonstrate} the $\mathcal{O}(N)$ complexity of the RBE2D method  {and its significant advantage over the PPPM method in the Fourier space computation.}
- {A more detailed comparison is further provided in Fig.~\ref{fig:timenondie} in the SM, where we compared the performance of each components of the RBE2D and PPPM methods with CPU cores fixed to be both $64$ and $1024$. The results show the improvement of the RBE2D method in the Fourier component computation across the entire range of particle numbers $N$, especially when utilizing a larger number of CPU cores.} %For the PPPM method, the communication cost grows rapidly in $N_{\mathrm{cores}}$, so that the $\mathcal{O}(N\log N)$ complexity is not observed when $N_{\mathrm{cores}}=1024$.} 
+ {A more detailed comparison is further provided in Fig.~\ref{fig:timenondie}, where we compared the performance of each components of the RBE2D and PPPM methods with CPU cores fixed to be both $64$ and $1024$. The results show the improvement of the RBE2D method in the Fourier component computation across the entire range of particle numbers $N$, especially when utilizing a larger number of CPU cores.} %For the PPPM method, the communication cost grows rapidly in $N_{\mathrm{cores}}$, so that the $\mathcal{O}(N\log N)$ complexity is not observed when $N_{\mathrm{cores}}=1024$.} 
 %\todo{do we need a reference here}
 %For  {the PPPM method}, the CPU time of the real space and the Fourier space computations are balanced to  {achieve optimal efficiency.} 
 % {For the RBE2D method, in order to illustrate its advantage in reducing the Fourier space cost compared to the PPPM method, we use the same Ewald parameter $\alpha$ and real space cutoff $r_c$ as PPPM to make sure that the real space cost is identical.
@@ -772,7 +793,7 @@ Furthermore, the strong scaling of the RBE2D remains over $70\%$ when~$\sim 4000
 
 In this section, numerical simulations are performed for systems in the presence of dielectric interfaces, including dielectrically confined electrolytes and SPC/E bulk water, to further validate the RBE2D method.  {Reduced LJ units and real units are used to parameterize these systems, respectively.}
 As a benchmark for accuracy and efficiency, the simulations are also  conducted using the HSMA method~\cite{liang2020harmonic} and the ICM-PPPM method~\cite{yuan2021particle}, both have been implemented in LAMMPS~\cite{liang2022hsma}. 
-For the RBE2D, parameters such as $M$ and $L_z$ are selected according to Section~\ref{subsec::IBC&ELC&ICM}; while
+For the RBE2D, parameters such as $M$ and $L_z$ are selected according to Section~\ref{sec:parameter}; while
 for the HSMA and ICM-PPPM, we use the same parameters suggested by Refs.~\cite{liang2020harmonic} and~\cite{yuan2021particle}, respectively. For all methods, the threshold in  relative errors is set to $10^{-4}$.
 
 \subsection{Accuracy test case III: dielectrically confined electrolytes}
@@ -780,7 +801,7 @@ for the HSMA and ICM-PPPM, we use the same parameters suggested by Refs.~\cite{l
 %To demonstrate the accuracy of the RBE2D method in MD simulations with planar dielectric 
 Here we examine four distinct electrolyte systems that are confined by two dielectric interfaces.
 These systems include 2:1 and 3:1 electrolytes with varying surface charge densities and dielectric contrasts.
-In these systems, all ions are modeled as soft spheres of diameter $r_{\text{d}}$, and are confined by purely repulsive shifted-truncated LJ walls ($\varepsilon_{\text{ion-wall}}=k_{\text{B}}T$; $\sigma_{\text{ion-wall}}=0.5r_{\text{d}}$) at $z=0$ and $z=H$. More detailed information regarding the system settings can be found in Table~SM1 in the SM. 
+In these systems, all ions are modeled as soft spheres of diameter $r_{\text{d}}$, and are confined by purely repulsive shifted-truncated LJ walls ($\varepsilon_{\text{ion-wall}}=k_{\text{B}}T$; $\sigma_{\text{ion-wall}}=0.5r_{\text{d}}$) at $z=0$ and $z=H$. More detailed information regarding the system settings can be found in Table~\ref{Table::Dielec}.
 The MD simulations utilize a time step $0.005\tau$, with temperature controlled by a NH thermostat %using an external temperature of $T=1$ and 
 with a damping time of $0.05\tau$,  {where $\tau$ is the reduced LJ unit of time defined in Section \ref{subsec::electrolyte-neutral}}.
 All simulations start with an equilibration period of $10^6$ time steps, followed by a production period of $10^8$ time steps.
@@ -788,7 +809,7 @@ All simulations start with an equilibration period of $10^6$ time steps, followe
 \begin{figure}[ht!]
 \centering
 	\includegraphics[width=0.95\linewidth]{figs/DistributionDie.pdf}
-	\caption{Ionic distributions for [(a) $2:1$ electrolyte and (b) $3:1$ electrolyte] between neutral interfaces with symmetric dielectric contrast, and [(c) $2:1$ electrolyte and (d) $3:1$ electrolyte] confined between walls with asymmetric dielectric contrasts and non-neutral asymmetric surface charge densities. More details about the system settings are provided in Tab.~SM1 in the SM. 
+	\caption{Ionic distributions for [(a) $2:1$ electrolyte and (b) $3:1$ electrolyte] between neutral interfaces with symmetric dielectric contrast, and [(c) $2:1$ electrolyte and (d) $3:1$ electrolyte] confined between walls with asymmetric dielectric contrasts and non-neutral asymmetric surface charge densities. More details about the system settings are provided in Tab.~\ref{Table::Dielec}. 
     Data   {is} shown for the RBE2D method with batch size $P=100$, and the HSMA and the ICM-PPPM methods with relative error threshold $10^{-4}$.} 
 	\label{fig:den1}
 \end{figure}
@@ -801,7 +822,7 @@ For all cases considered, the RBE2D results show excellent agreement with that o
 %A comparison with the HSMA and ICM-PPPM methods shows excellent agreement with the RBE2D results. 
 The ion distribution shown in panel (c) also agrees with the result from a boundary element solver~\cite{wu2018asymmetric}, and reported in \cite{yuan2021particle}, figure 4(b). 
 Additionally, we calculate the potential energy distribution $\mathscr{P}(U)$ for these systems and measure the discrepancy using the $W_2$ norm.
-A convergence rate of $\mathcal{O}(1/P)$ is again observed (see Fig.~\ref{fig:energy2d} in the SM).
+A convergence rate of $\mathcal{O}(1/P)$ is again observed (see Fig.~\ref{fig:energy2d}).
 
 \subsection{Accuracy test case IV: dielectrically confined SPC/E Water}
 

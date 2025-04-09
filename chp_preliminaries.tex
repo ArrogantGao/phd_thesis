@@ -296,7 +296,7 @@ A common choice is to set $r_c = s / \alpha$ and $k_c = 2 s \alpha$, where $s$ i
 It has been shown that under such trunction, the truncation error of total energy decay as $O(e^{-s^2} / s^{2})$, and time complexity of Ewald3D summation is $O(N^{1.5})$.
 
 
-\subsection{Ewald2D Summation and its Error Estimation}
+\subsection{Ewald2D Summation and its Error Estimation} \label{sec::ewald2d}
 
 % By Ewald splitting, it has been shown that the quasi-2D lattice sum for electrostatic energy $U$ (\emph{without} dielectric interfaces) can be decomposed as $ U = U_{\text{real}}+U_{\text{Fourier}}$, where~\cite{parry1975electrostatic,zhonghanhu2014JCTC}
 % \begin{equation}\label{eq:ewald2d-1}
@@ -476,6 +476,12 @@ It should be noticed that, since the real space interaction is short-ranged, it 
 Many powerful techniques have been developed to reduce the cost for such short-range interactions into $\mathcal O(N)$ complexity, including the Verlet list~\cite{verlet1967computer}, the linked cell list~\cite{allen2017computer} and more recently the random batch list~\cite{liang2021random} algorithms. 
 Consequently, the main challenge lies in the long-range component calculation, which will be discussed in the following chapters.
 
+In summary, the Ewald2D summation is the exact solution and does not involve any uncontrolled approximation. 
+However, two significant drawbacks limit its application for large-scale simulations:
+\begin{itemize}
+	\item Even with optimal choice of parameter $\alpha$, computing the interaction energy $U$ for an $N$-particle system through Eqs.~\eqref{eq:phi_s}, \eqref{eq::self} and \eqref{eq::7} takes $\mathcal O(N^2)$ complexity, which is worse than $\mathcal O(N^{3/2})$ for that of the Ewald3D, the fully-periodic case.
+	\item The function $\xi^{\pm}(k, z_{ij})$ is ill-conditioned: It grows exponentially as $kz_{ij}$ grows, leading to catastrophic error cancellation in actual computations with prescribed machine precision.
+\end{itemize}
 
 \subsection{Extension to Systems with Charged Slabs}\label{sec::sysslabs}
 
@@ -491,7 +497,7 @@ Under such setups, the potential $\phi$ can be written as the sum of particle-pa
 \end{align}
 Here, $\phi_{\text{p-p}}$ satisfies Eq.~\eqref{eq::Poisson} associated with the boundary condition Eq.~\eqref{eq::boundary2}. Note that Eq.~\eqref{eq::boundary1} does not apply since the particles are overall non-neutral. $\phi_{\text{p-s}}$ satisfies 
 \begin{equation}\label{eq::PoionWall}
-	-\Delta \phi_{\text{p-s}}(\bm{r}) = 4\pi h(\bm{r}), \quad \text{with}~ h(\bm{r}) =  \sigma_{\mathrm{bot}}(\bm{\rho}) \delta(z) + \sigma_{\mathrm{top}}(\bm{\rho}) \delta(z-L_z),
+	-\Delta \phi_{\text{p-s}}(\bm{r}) = 4\pi \sigma(\bm{r}), \quad \text{with}~ \sigma(\bm{r}) =  \sigma_{\mathrm{bot}}(\bm{\rho}) \delta(z) + \sigma_{\mathrm{top}}(\bm{\rho}) \delta(z-L_z),
 \end{equation}
 with the boundary condition
 \begin{equation}\label{eq::boundionwall}
@@ -642,9 +648,16 @@ Note that the ICM-YB correction term $U_{\T {YB}}^{M}$ can be directly computed 
 
 \section{Random batch Ewald method}
 
-In this section, we briefly introduce the random batch Ewald (RBE) method~\cite{jin2021random}, which provides an efficient stochastic approach for evaluating long-range interactions in triply-periodic systems and has been successfully applied to large-scale simulations of Coulomb systems under various ensembles~\cite{liang2022superscalability,liang2024JCP, liang2022random}.
+In this section, we briefly introduce the idea of random mini-batch sampling and its application to fully-periodic Coulomb systems.
+The random mini-batch strategy originated from stochastic gradient descent~\cite{robbins1951stochastic} in machine learning and was first introduced in the study of interacting particle systems by Jin, {\it et al.}~\cite{jin2020random}, called the random batch method (RBM).
+The method was proved to be successful in various areas, including nonconvex optimization~\cite{ghadimi2016mini}, Monte Carlo simulations~\cite{li2020random}, optimal control~\cite{ko2021model}, and quantum simulations~\cite{jin2021randomquantum}. 
+Recently, this idea has been applied to fully-periodic Lennard-Jones and Coulomb systems~\cite{liang2021random, jin2021random, liang2023SISC}, demonstrating superscalability in large-scale simulations~\cite{liang2022superscalability, liang2022improved,gao2024rbmdmoleculardynamicspackage}. 
+For long-range interactions such as Coulomb, to accurately reproduce the long-range electrostatic correlations, the so-called symmetry-preserving mean-field (SPMF) condition~\cite{hu2014symmetry} has been proposed. 
+The SPMF is originated from the local molecular field theory for Coulomb systems~\cite{chen2006local, hu2010efficient}, which states that algorithms must share a mean-field property, that is
+the averaged integration for the computed potential over certain directions should equal that of the exact $1/r$ Coulomb potential.
+For fully-periodic systems, by carefully imposing the SPMF in the random batch approximation, it has been shown that the long-range electrostatic correlations can be accurately captured~\cite{gao2023JCTC}.
 
-RBE method was originally proposed to accelerate the Ewald3D summation~\cite{jin2021random}.
+Among these methods, the random batch Ewald (RBE) method was originally proposed to accelerate the Ewald3D summation~\cite{jin2021random}.
 As have been introduced in Sec.~\ref{sec::ewald_splitting}, the Ewald3D summation can be decomposed into short-range and long-range components: the short-range component is computed in real space, while the long-range component is computed in reciprocal space, and a direct computation of the long-range component leads to a time complexity of $O(N^{1.5})$.
 Instead of computing the long-range component directly, RBE method approximates the long-range component via random batch importance sampling.
 Comparing to the widely used FFT based methods such as the particle-particle particle-mesh (PPPM) method~\cite{hockney2021computer,darden1993particle,essmann1995smooth}, RBE reduces the time complexity from $O(N\log N)$ to $O(N)$, and its simplicity makes it suitable for parallelization compared to the FMM based methods~\cite{greengard1987fast,cheng1999fast,ying2004kernel}.

@@ -130,7 +130,7 @@ For the $\V 0$-th frequency term Eq.~\eqref{eq:phil0} consisting of $\erf(\cdot)
 \end{equation}
 One can prove that
 \begin{equation}\label{eq::erfSOE}
-	\left|\erf(\alpha z)-\frac{2}{\sqrt{\pi}} \sum_{l = 1}^M \frac{w_l}{s_l} (1 - e^{- \alpha s_l z})\right|\leq \frac{2\alpha L_z}{\sqrt{\pi}}\varepsilon\;,
+	\left|\erf(\alpha z)-\frac{2}{\sqrt{\pi}} \sum_{l = 1}^M \frac{w_l}{s_l} (1 - e^{- \alpha s_l z})\right|\leq \frac{2\alpha H}{\sqrt{\pi}}\varepsilon\;,
 \end{equation}
 where one assumes that $z\in[0, H]$, as for quasi-2D systems all particles are confined within a narrow region in $z$. 
 
@@ -195,7 +195,7 @@ where
 	\varphi^{\bm{0}}_{\text{SOE}}(\bm{r}_{i},\bm{r}_{j}):=\sum_{l=1}^{M}\frac{w_l}{\sqrt{\pi}}\left[\frac{2z_{ij}}{s_l}+\left(\frac{1}{\alpha}-\frac{2z_{ij}}{s_l}\right)e^{-\alpha s_l z_{ij}}\right].
 \end{equation}
 
-We now present an iterative approach to compute $U_{\ell,\text{SOE}}^{\V{k}}$ for each $\bm{k}$ with $\mathcal O(N)$ complexity. 
+We now present an iterative approach to compute $U_{\ell,\text{SOE}}^{\V{h}}$ for each $\bm{h}$ with $\mathcal O(N)$ complexity. 
 For simplicity, consider pairwise sum in the following form:
 \begin{equation}\label{eq::33}
 	S = \sum_{1\leq j < i \leq N} q_{i} q_{j} e^{\m{i} \V{h} \cdot \V{\rho}_{ij}} e^{ - \beta z_{ij} }\;,
@@ -269,57 +269,57 @@ We finally summarize the SOEwald2D  in Algorithm~\ref{alg:SOEwald2D}. Its error 
 Here we derive error estimates for the SOEwald2D summation. 
 The total error in the interaction energy $U$ consists of the truncation error and the SOE approximation error:
 \begin{equation}
-	\mathscr{E}_{U} := \mathscr{E}_{U_{s}}(r_c, \alpha) + \mathscr{E}_{U_{\ell}}(r_c, \alpha) + \sum_{\bm{k}\neq\bm{0}}\mathscr{E}_{U_{\ell},\text{SOE}}^{ \bm{k}} + \mathscr{E}_{U_{\ell},\text{SOE}}^{\bm{0}}\;,
+	\mathscr{E}_{U} := \mathscr{E}_{U_{s}}(r_c, \alpha) + \mathscr{E}_{U_{\ell}}(r_c, \alpha) + \sum_{\bm{k}\neq\bm{0}}\mathscr{E}_{U_{\ell},\text{SOE}}^{ \bm{h}} + \mathscr{E}_{U_{\ell},\text{SOE}}^{\bm{0}}\;,
 \end{equation}
 where the first two terms are the truncation error of Ewald2D summation and have already been provided in Proposition~\ref{prop::2.12}. 
 The remainder two terms are the error due to the SOE approximation for the Fourier space components, where
 \begin{equation}
-	\mathscr{E}_{U_{\ell},\text{SOE}}^{\bm{k}}:=U_{\ell}^{\bm{k}}-U_{\ell,\text{SOE}}^{\bm{k}},\quad \text{and}\quad \mathscr{E}_{U_{\ell},\text{SOE}}^{\bm{0}}:=U_{\ell}^{\bm{0}}- U_{\ell,\text{SOE}}^{\bm{0}}.
+	\mathscr{E}_{U_{\ell},\text{SOE}}^{\bm{h}}:=U_{\ell}^{\bm{h}}-U_{\ell,\text{SOE}}^{\bm{h}},\quad \text{and}\quad \mathscr{E}_{U_{\ell},\text{SOE}}^{\bm{0}}:=U_{\ell}^{\bm{0}}- U_{\ell,\text{SOE}}^{\bm{0}}.
 \end{equation}
 Theorem~\ref{thm:SOE_error} provides  upper bound error estimates, when the Debye-H$\ddot{\text{u}}$ckel (DH) theory is assumed (see~\cite{levin2002electrostatic}, and also~\ref{app::Debye}) to approximate the charge distribution at equilibrium.
 
 \begin{thm}
 	\label{thm:SOE_error}
 	Given a set of SOE parameters $w_l$ and $s_l$ satisfying Eq.~\eqref{eq::SOE1} and a charge distribution satisfying the DH theory, the SOE approximation error for the Fourier component of interaction energy satisfies:
-	\begin{equation}\sum_{\bm{k}\neq\bm{0}}\mathscr{E}_{U_{\ell},\text{SOE}}^{\bm{k}} \leq \frac{2 \lambda_D^2 \alpha^3Q}{\sqrt{\pi}}\varepsilon,
+	\begin{equation}\sum_{\bm{h}\neq\bm{0}}\mathscr{E}_{U_{\ell},\text{SOE}}^{\bm{h}} \leq \frac{2 \lambda_D^2 \alpha^3Q}{\sqrt{\pi}}\varepsilon,
 		\quad \text{and} \quad
-		\mathscr{E}_{U_{\ell},\text{SOE}}^{\bm{0}} \leq \frac{\sqrt{\pi} \lambda_D^2 (1+2\alpha^2L_z)Q}{\alpha L_xL_y}\varepsilon,
+		\mathscr{E}_{U_{\ell},\text{SOE}}^{\bm{0}} \leq \frac{\sqrt{\pi} \lambda_D^2 (1+2\alpha^2H)Q}{\alpha L_xL_y}\varepsilon,
 		\label{eq::51}
 	\end{equation}
 	respectively, where $\lambda_D$ is the Debye length of the Coulomb system. 
 \end{thm}
 
 \begin{proof}
-	By definitions of $U_{\ell}^{\bm{k}}$ and $U_{\ell,\text{SOE}}^{\bm{k}}$, one has
+	By definitions of $U_{\ell}^{\bm{h}}$ and $U_{\ell,\text{SOE}}^{\bm{h}}$, one has
 	\begin{equation}\label{eq::42}
-		U_{\ell}^{\bm{k}}-U_{\ell,\text{SOE}}^{\bm{k}}= \frac{\pi}{2 L_xL_y}\sum_{i=1}^{N}\sum_{j\neq i}q_{i}q_{j}\frac{e^{\m{i} \bm{k}\cdot\bm{\rho}_{ij}}}{k}\mathscr{E}_{\xi^{\pm}},
+		U_{\ell}^{\bm{h}}-U_{\ell,\text{SOE}}^{\bm{h}}= \frac{\pi}{2 L_xL_y}\sum_{i=1}^{N}\sum_{j\neq i}q_{i}q_{j}\frac{e^{\m{i} \bm{h}\cdot\bm{\rho}_{ij}}}{h}\mathscr{E}_{\xi^{\pm}},
 	\end{equation}
 	where 
 	\begin{equation}\label{eq::44}
-		\mathscr{E}_{\xi^{\pm}} := \abs{\xi^{+}(k,z_{ij})-\xi_{M}^{+}(k,z_{ij})} + \abs{\xi^{-}(k,z_{ij})-\xi_{M}^{-}(k,z_{ij})}\;,
+		\mathscr{E}_{\xi^{\pm}} := \abs{\xi^{+}(h,z_{ij})-\xi_{M}^{+}(h,z_{ij})} + \abs{\xi^{-}(h,z_{ij})-\xi_{M}^{-}(h,z_{ij})}\;,
 	\end{equation}
 	By Theorem~\ref{thm:error_xi}, one has
 	\begin{equation}
-		|\mathscr{E}_{\xi^{\pm}}|\leq\frac{4\alpha e^{-k^2/(4\alpha^2)}}{\sqrt{\pi}k}\varepsilon\;.
+		|\mathscr{E}_{\xi^{\pm}}|\leq\frac{4\alpha e^{-h^2/(4\alpha^2)}}{\sqrt{\pi}h}\varepsilon\;.
 	\end{equation}
 	Substituting Eq.~\eqref{eq::44} into Eq.~\eqref{eq::42} and using the DH approximation, one gets
 	\begin{equation}\label{eq::47}
 		\begin{split}   
-			\left| \mathscr{E}_{U_{\ell},\text{SOE}}^{\bm{k}} \right| \leq \frac{2\sqrt{\pi} \lambda_D^2 \alpha Q}{L_x L_y} \frac{e^{-k^2 / (4\alpha^2)}}{k^2} \varepsilon.
+			\left| \mathscr{E}_{U_{\ell},\text{SOE}}^{\bm{h}} \right| \leq \frac{2\sqrt{\pi} \lambda_D^2 \alpha Q}{L_x L_y} \frac{e^{-h^2 / (4\alpha^2)}}{h^2} \varepsilon.
 		\end{split}
 	\end{equation}
-	To adequately consider the error in Fourier space, the thermodynamic limit is commonly considered~\cite{kolafa1992cutoff,deserno1998mesh}, wherein the sum over wave vectors is replaced by an integral over $\bm{k}$:
+	To adequately consider the error in Fourier space, the thermodynamic limit is commonly considered~\cite{kolafa1992cutoff,deserno1998mesh}, wherein the sum over wave vectors is replaced by an integral over $\bm{h}$:
 	\begin{equation}\label{eq::integral2}
-		\sum_{\bm{k}\neq\bm{0}}\approx \frac{L_xL_y}{(2\pi)^2}\int_{\frac{2\pi}{L}}^{\infty}kdk\int_{0}^{2\pi}d\theta,
+		\sum_{\bm{h}\neq\bm{0}}\approx \frac{L_xL_y}{(2\pi)^2}\int_{\frac{2\pi}{L}}^{\infty}h dh\int_{0}^{2\pi}d\theta,
 	\end{equation}
-	where $(k,\theta)$ are the polar coordinates and $L=\max\{L_x,L_y\}$. It then follows that
+	where $(h,\theta)$ are the polar coordinates and $L=\max\{L_x,L_y\}$. It then follows that
 	\begin{equation}
-		\sum_{\bm{k}\neq\bm{0}}\mathscr{E}_{U_{\ell},\text{SOE}}^{ \bm{k}}\leq \frac{2\lambda_D^2\alpha^3Q}{\sqrt{\pi}}\varepsilon.
+		\sum_{\bm{h}\neq\bm{0}}\mathscr{E}_{U_{\ell},\text{SOE}}^{ \bm{h}}\leq \frac{2\lambda_D^2\alpha^3Q}{\sqrt{\pi}}\varepsilon.
 	\end{equation}
 	Finally, recalling the SOE approximation errors of $\erf(\cdot)$ and Gaussian functions given by Eqs.~\eqref{eq::erfSOE} and \eqref{eq::SOE1}, one obtains 
 	\begin{equation}
 		\begin{split}  
-			\left|\mathscr{E}_{U_{\ell},\text{SOE}}^{\bm{0}}\right|\leq \frac{\sqrt{\pi} \lambda_D^2 (1+2\alpha^2L_z)Q}{\alpha L_xL_y}\varepsilon\;.
+			\left|\mathscr{E}_{U_{\ell},\text{SOE}}^{\bm{0}}\right|\leq \frac{\sqrt{\pi} \lambda_D^2 (1+2\alpha^2H)Q}{\alpha L_xL_y}\varepsilon\;.
 		\end{split}
 	\end{equation}
 	This finishes the proof.
@@ -340,26 +340,26 @@ For sorting (Step 4 in Algorithm~\ref{alg:SOEwald2D}), taking advantage of the q
 To achieve an optimal complexity, the cost of the real and reciprocal space summations (Steps 5 and 6) need to be balanced. 
 To analyze it, we first define $\rho_{s}$ and $\rho_{\ell}$ by the average densities in the real and Fourier spaces 
 \begin{equation}
-	\rho_{s}=\frac{N}{L_x L_y L_z},\quad \text{and} \quad \rho_{\ell}=\frac{L_xL_y}{(2\pi)^2},
+	\rho_{s}=\frac{N}{L_x L_y H},\quad \text{and} \quad \rho_{\ell}=\frac{L_xL_y}{(2\pi)^2},
 \end{equation}
 respectively.
 The cost $C_s$ for computing the short-range interaction $U_{s}$ scales as
 \begin{equation}\label{eq::cs}
-	C_{s}=\frac{4\pi}{3}r_c^3\rho_{s}N=\frac{4\pi s^3N^2}{3\alpha^3 L_xL_yL_z}.
+	C_{s}=\frac{4\pi}{3}r_c^3\rho_{s}N=\frac{4\pi s^3N^2}{3\alpha^3 L_x L_y H}.
 \end{equation}
 % Let $M$ stand for the number of exponentials.
-Meanwhile, the total cost $ C_{\ell}$ in computing $U_{\ell,\text{SOE}}^{\bm{k}}$ for all $0<|\bm{k}|\leq k_c$ and $U_{\ell,\text{SOE}}^{\bm{0}}$ is given by
+Meanwhile, the total cost $ C_{\ell}$ in computing $U_{\ell,\text{SOE}}^{\bm{h}}$ for all $0<|\bm{h}|\leq h_c$ and $U_{\ell,\text{SOE}}^{\bm{0}}$ is given by
 \begin{equation}\label{eq::cll}
 	C_{\ell} = \pi k_c^2\rho_{\ell}MN = \frac{1}{\pi}s^2 \alpha^2 L_x L_y M N
 \end{equation}
-since the recursive computation requires $\mathcal{O}(MN)$ operations for each $\bm{k}$. 
+since the recursive computation requires $\mathcal{O}(MN)$ operations for each $\bm{h}$. 
 To balance~$C_{s}$ and~$C_{\ell}$, one takes
 \begin{equation}
-	\alpha \sim \frac{N^{1/5}}{L_x^{2/5}L_y^{2/5}L_z^{1/5}},
+	\alpha \sim \frac{N^{1/5}}{L_x^{2/5}L_y^{2/5}H^{1/5}},
 \end{equation}
 leading to the optimal complexity
 \begin{equation}\label{eq::70}
-	% C_{s} = C_{\ell} \sim \mathcal{O}(L_x^{1/5}L_y^{1/5}L_z^{-2/5}N^{7/5}).
+	% C_{s} = C_{\ell} \sim \mathcal{O}(L_x^{1/5}L_y^{1/5}H^{-2/5}N^{7/5}).
 	C_{s} = C_{\ell} \sim \mathcal{O}(N^{7/5}).
 \end{equation}
 The self interaction~$U_{\text{self}}$ (Step 7) can be directly calculated with a complexity of $\mathcal{O}(N)$, and cost of summing up the total energy (Step 8) is clearly $\mathcal{O}(1)$.
@@ -367,13 +367,13 @@ By taking into consideration that the force calculation (Step $9$) requires asym
 It is clearly much faster than the original Ewald2D method which scales as $\mathcal{O}(N^{2})$; and surprisingly, it is even slightly faster than Ewald3D for fully-periodic systems, which scales as $\mathcal{O}(N^{3/2})$.
 
 \begin{rmk}\label{rmk::extreme}
-	For the extreme case, $L_z \ll \min\{L_x,L_y\}$, the neighboring region for the short-range interaction reduces to a cylinder with radius $r_c$ due to the strong confinement, rather than a spherical region. 
+	For the extreme case, $H \ll \min\{L_x,L_y\}$, the neighboring region for the short-range interaction reduces to a cylinder with radius $r_c$ due to the strong confinement, rather than a spherical region. 
 	In this case, one has:
 	\begin{equation}
-		C_{s}\sim 2\pi r_c^2 \frac{N}{L_x L_y} N=\frac{2\pi s^2N^2}{\alpha^2L_xL_yL_z}.
+		C_{s}\sim 2\pi r_c^2 \frac{N}{L_x L_y} N=\frac{2\pi s^2N^2}{\alpha^2L_x L_y H}.
 	\end{equation}
 	By simple calculation, the optimal complexity is found to be $\mathcal{O}(N^{3/2})$, which is the same as that of the Ewald3D summation for fully-periodic problems. 
-	% Similarly, when $L_z\gg \max\{L_x,L_y\}=\mathcal{O}(1)$, the optimal complexity is $\mathcal{O}(N)$ according to Eq.~\eqref{eq::70}.
+	% Similarly, when $H\gg \max\{L_x,L_y\}=\mathcal{O}(1)$, the optimal complexity is $\mathcal{O}(N)$ according to Eq.~\eqref{eq::70}.
 \end{rmk}
 
 % In a $N$ particle simulation of quasi-2D Coulomb systems, to further reduce the complexity to  $\mathcal{O}(N)$, we further introduce a stochastic approach to efficiently approximate the Fourier component in the periodic dimensions. 
@@ -383,26 +383,18 @@ It is clearly much faster than the original Ewald2D method which scales as $\mat
 
 In this section, we will introduce a stochastic algorithm designed to accelerate the SOEwald2D method in particle simulations, reducing the complexity to $\mathcal{O}(N)$. 
 Unlike existing methods relying on either FFT or FMM-based techniques to reduce the complexity, our idea involves adopting mini-batch stochastic approximation over Fourier modes, with importance sampling for variance reduction. 
-More precisely, let us consider the Fourier sum over $\bm k \in \mathcal{K}^2$ for a given kernel $f(\bm{k})$,
+More precisely, let us consider the Fourier sum over $\bm{h} \in \mathcal{K}^2$ for a given kernel $f(\bm{h})$,
 one can alternatively understand the Fourier sum as an expectation
 \begin{equation}
-	\mu:=\sum_{\bm{k}\in\mathcal{K}^2}\frac{f(\bm{k})}{h(\bm{k})}h(\bm{k})=\mathbb{E}_{\bm k\sim h(\bm{k})}\left[\frac{f(\bm{k})}{h(\bm{k})}\right],
+	\mu:=\sum_{\bm{h}\in\mathcal{K}^2}\frac{f(\bm{h})}{g(\bm{h})}h(\bm{h})=\mathbb{E}_{\bm h\sim g(\bm{h})}\left[\frac{f(\bm{h})}{g(\bm{h})}\right],
 \end{equation}
-where $\mathbb{E}_{\bm k\sim h(\bm{k})}$ denotes the expectation with $\bm{k}$ sampled from a chosen probability measure $h(\bm{k})$ defined on the lattice $\bm k \in \mathcal{K}^2$. 
-Instead of calculating the summation directly or using FFT, a mini-batch of Fourier modes (with batch size $P$) sampled from $h(\bm{k})$ are employed to estimate the expectation, resulting in an efficient stochastic algorithm.
-
-
-It is worth noting that the random mini-batch strategy originated from stochastic gradient descent~\cite{robbins1951stochastic} in machine learning and was first introduced in the study of interacting particle systems by Jin, {\it et al.}~\cite{jin2020random}, called the random batch method (RBM).
-The method was proved to be successful in various areas, including nonconvex optimization~\cite{ghadimi2016mini}, Monte Carlo simulations~\cite{li2020random}, optimal control~\cite{ko2021model}, and quantum simulations~\cite{jin2021randomquantum}. 
-Recently, this idea has been applied to fully-periodic Lennard-Jones and Coulomb systems~\cite{liang2021random, jin2021random, liang2023SISC}, demonstrating superscalability in large-scale simulations~\cite{liang2022superscalability, liang2022improved,gao2024rbmdmoleculardynamicspackage}. 
-For long-range interactions such as Coulomb, to accurately reproduce the long-range electrostatic correlations, the so-called symmetry-preserving mean-field (SPMF) condition~\cite{hu2014symmetry} has been proposed. The SPMF is originated from the local molecular field theory for Coulomb systems~\cite{chen2006local, hu2010efficient}, which states that algorithms must share a mean-field property, that is
-the averaged integration for the computed potential over certain directions should equal that of the exact $1/r$ Coulomb potential.
-For fully-periodic systems, by carefully imposing the SPMF in the random batch approximation, it has been shown that the long-range electrostatic correlations can be accurately captured~\cite{gao2023JCTC}.
+where $\mathbb{E}_{\bm h \sim g(\bm{h})}$ denotes the expectation with $\bm{h}$ sampled from a chosen probability measure $g(\bm{h})$ defined on the lattice $\bm h \in \mathcal{K}^2$. 
+Instead of calculating the summation directly or using FFT, a mini-batch of Fourier modes (with batch size $P$) sampled from $g(\bm{h})$ are employed to estimate the expectation, resulting in an efficient stochastic algorithm.
 
 However, when formulating algorithms for quasi-2D systems, the direct application of the random mini-batch idea introduces formidable challenges.
 The classical Ewald2D, either in the closed form (Eq.~\eqref{eq:philk}) or the integral form (Eq.~\eqref{eq::phil}), are unsuitable for random batch sampling:
 (1) the closed form demands $\mathcal{O}(N^2)$ complexity even with batch size $P\sim\mathcal O(1)$; 
-(2) the integral form is singular at $k=\kappa=0$, giving rise to significant variance.
+(2) the integral form is singular at $h = \kappa = 0$, giving rise to significant variance.
 In this section, we will show that the idea of random mini-batch can now be easily incorporated into the SOEwald2D algorithm based on the reformulation of Ewald2D proposed in Section~\ref{subsec::reforEwald2}, resulting in the Random Batch SOEwald2D~(RBSE2D) method, which can accurately satisfy the SPMF condition for quasi-2D geometry.
 Detailed analyses will also be provided.
 
@@ -411,59 +403,59 @@ Detailed analyses will also be provided.
 
 % In this section, we will introduce how the idea of random mini-batch sampling is induced into the SoEwald2D method, 
 
-It has been shown in Eqs.~\eqref{eq::pairssum8}, \eqref{eq:varphi_k} and \eqref{eq::SOEphi} that, after applying the SOE approximation to $U_{\ell}^{\bm{k}}$, the Fourier space summation in the SOEwald2D can be compactly written as
+It has been shown in Eqs.~\eqref{eq::pairssum8}, \eqref{eq:varphi_k} and \eqref{eq::SOEphi} that, after applying the SOE approximation to $U_{\ell}^{\bm{h}}$, the Fourier space summation in the SOEwald2D can be compactly written as
 \begin{equation}
-	\sum_{\bm{k}\neq\bm{0}} U_{\ell,\text{SOE}}^{\bm{k}} = \sum_{\bm{k}\neq\bm{0}} \widetilde{\varphi} (\bm{k})\;,
+	\sum_{\bm{h}\neq\bm{0}} U_{\ell,\text{SOE}}^{\bm{h}} = \sum_{\bm{h}\neq\bm{0}} \widetilde{\varphi} (\bm{h})\;,
 \end{equation}
-where $\widetilde{\varphi} ({\bm{k}})$ is defined as
+where $\widetilde{\varphi} ({\bm{h}})$ is defined as
 \begin{equation}
-	\widetilde{\varphi} ({\bm{k}}) := e^{-\frac{k^2}{4 \alpha}} \left[ \frac{2\alpha\sqrt{\pi}}{L_xL_y}\sum_{\ell = 1}^{M}  \frac{w_l \sum_{1\leq j < i \leq N}q_{i} q_{j} e^{\m{i}\V{k} \cdot \V{\rho}_{ij}} \left(2\alpha s_l e^{-k z_{ij}}-2k e^{-\alpha s_l z_{ij}}\right) }{k(\alpha^2 s_l^2 - k^2)} \right] \;.
+	\widetilde{\varphi} ({\bm{h}}) := e^{-\frac{h^2}{4 \alpha}} \left[ \frac{2\alpha\sqrt{\pi}}{L_xL_y}\sum_{\ell = 1}^{M}  \frac{w_l \sum_{1\leq j < i \leq N}q_{i} q_{j} e^{\m{i}\V{h} \cdot \V{\rho}_{ij}} \left(2\alpha s_l e^{-h z_{ij}}-2h e^{-\alpha s_l z_{ij}}\right) }{h(\alpha^2 s_l^2 - h^2)} \right] \;.
 \end{equation}
-Comparing to the original Ewald2D formula given in Section~\ref{subsec::elec}, one finds a Gaussian decay factor explicitly, which can be normalized for the purpose of importance sampling.
+Comparing to the original Ewald2D formula given in Section~\ref{sec::ewald2d}, one finds a Gaussian decay factor explicitly, which can be normalized for the purpose of importance sampling.
 Thus, we take
 \begin{equation}\label{eq::hk}
-	h(\bm{k}) := \frac{e^{-k^2/(4\alpha^2)}}{H}\quad\text{with}\quad H := \sum_{\bm{k}\neq\bm{0}}e^{-k^2/(4\alpha^2)},
+	g(\bm{h}) := \frac{e^{-h^2/(4\alpha^2)}}{S_2}\quad\text{with}\quad S_2 := \sum_{\bm{h}\neq\bm{0}}e^{-h^2/(4\alpha^2)},
 \end{equation}
-where $H$ serves as a normalization factor. 
+where $S_2$ serves as a normalization factor. 
 By the Poisson summation formula (see Lemma~\ref{lem::Poisson}), one has 
 \begin{equation}\label{eq::Happ}
-	H=\frac{\alpha L_xL_y}{\pi}\sum_{m_x,m_y\in\mathbb{Z}}e^{-\alpha(m_x^2L_x^2+m_y^2L_y^2)}-1,
+	S_2=\frac{\alpha L_xL_y}{\pi}\sum_{m_x,m_y\in\mathbb{Z}}e^{-\alpha(m_x^2L_x^2+m_y^2L_y^2)}-1,
 \end{equation}
 where $m_{\xi}=L_{\xi}k_{\xi}/2\pi$ with $\xi\in\{x,y\}$. 
-The computation of $H$ is cheap, since Eq.~\eqref{eq::Happ} can be simply truncated to obtain a good approximation. 
+The computation of $S_2$ is cheap, since Eq.~\eqref{eq::Happ} can be simply truncated to obtain a good approximation. 
 Generally speaking, $m_{\xi}=\pm 2$ is enough since $\alpha L_{\xi}\gg 1$.
-Then using the Metropolis algorithm~\cite{metropolis1953equation, hastings1970monte} (se \ref{app::Metropolis}), a random mini-batch of frequencies $\{\bm{k}_{\eta}\}_{\eta=1}^P$ is sampled, and the Fourier component of energy can be approximated as:
+Then using the Metropolis algorithm~\cite{metropolis1953equation, hastings1970monte} (see~\ref{app::Metropolis}), a random mini-batch of frequencies $\{\bm{h}_{\eta}\}_{\eta=1}^P$ is sampled, and the Fourier component of energy can be approximated as:
 \begin{equation}\label{eq::RBapp}
-	\sum_{\bm{k}\neq\bm{0}} U_{\ell,\text{SOE}}^{\bm{k}} \approx U_{\ell,*}^{\bm{k}\neq\bm{0}} := \frac{H}{P}\sum_{\eta=1}^{P}\widetilde{\varphi}^{\text{RB}}(\bm{k}_{\eta})
+	\sum_{\bm{h}\neq\bm{0}} U_{\ell,\text{SOE}}^{\bm{h}} \approx U_{\ell,*}^{\bm{h}\neq\bm{0}} := \frac{S_2}{P}\sum_{\eta=1}^{P}\widetilde{\varphi}^{\text{RB}}(\bm{h}_{\eta})
 \end{equation}
 % where~$P$ is the batch size, ~$\{\bm{k}_{\eta}\}_{\eta=1}^P$ is a batch of sampled frequencies
-where~$\widetilde{\varphi}^{\text{RB}}({\bm{k}})$ satisfies
+where~$\widetilde{\varphi}^{\text{RB}}({\bm{h}})$ satisfies
 \begin{equation}
 	\begin{split}
-		\widetilde{\varphi}^{\text{RB}}({\bm{k}}) e^{ - \frac{k^2}{4\alpha}} = \widetilde{\varphi}({\bm{k}}) \;,
+		\widetilde{\varphi}^{\text{RB}}({\bm{h}}) e^{ - \frac{h^2}{4\alpha}} = \widetilde{\varphi}({\bm{h}}) \;,
 	\end{split}
 \end{equation}
 and the corresponding estimator of the force in Fourier space is given by
 \begin{equation}
-	\sum_{\bm{k}\neq\bm{0}}\bm{F}_{\ell,\text{SOE}}^{\bm{k},i}\approx \bm{F}_{\ell,*}^{\bm{k}\neq\bm{0},i}=-\frac{H}{P} \sum_{\eta=1}^{P}\nabla_{\bm{r}_{i}}\widetilde{\varphi}^{\text{RB}}(\bm{k}_{\eta})\;.
+	\sum_{\bm{h}\neq\bm{0}}\bm{F}_{\ell,\text{SOE}}^{\bm{h},i}\approx \bm{F}_{\ell,*}^{\bm{h}\neq\bm{0},i}=-\frac{S_2}{P} \sum_{\eta=1}^{P}\nabla_{\bm{r}_{i}}\widetilde{\varphi}^{\text{RB}}(\bm{h}_{\eta})\;.
 \end{equation}
-Each~$\widetilde{\varphi}^{\text{RB}}({\bm{k}})$ and~$\nabla_{\bm{r}_{i}}\widetilde{\varphi}^{\text{RB}}(\bm{k})$ are pairwise summations, fit into the general form of Eq.~\eqref{eq::33}, and can be efficiently computed using the recursive procedure outlined in Eqs.~\eqref{eq::S}-\eqref{eq::35}. 
+Each~$\widetilde{\varphi}^{\text{RB}}({\bm{h}})$ and~$\nabla_{\bm{r}_{i}}\widetilde{\varphi}^{\text{RB}}(\bm{h})$ are pairwise summations, fit into the general form of Eq.~\eqref{eq::33}, and can be efficiently computed using the recursive procedure outlined in Eqs.~\eqref{eq::S}-\eqref{eq::35}. 
 Due to the use of importance sampling, it is ensured that the aforementioned random estimators are unbiased and have reduced variances, which will be proven in Section~\ref{subsec::consis}.
-It is also worth noting that (1) the $\bm k=\bm 0$ mode is excluded in the stochastic approximation and is always computed in an actual MD simulation. Since the averaged potential for the $\bm 0$th mode over the $xy$-plane equal to that of the exact $1/r$ potential, the SPMF condition~\cite{hu2014symmetry} is satisfied (only up to an $\mathcal O(\varepsilon)$ SOE approximation error); (2) for the  $\bm k\neq \bm 0$ modes, random batch sampling is adopted, and it will be justified that $P$ can be chosen independent of $N$; typically, one can choose $P\sim \mathcal O(1)$.
+It is also worth noting that (1) the $\bm h=\bm 0$ mode is excluded in the stochastic approximation and is always computed in an actual MD simulation. Since the averaged potential for the $\bm 0$th mode over the $xy$-plane equal to that of the exact $1/r$ potential, the SPMF condition~\cite{hu2014symmetry} is satisfied (only up to an $\mathcal O(\varepsilon)$ SOE approximation error); (2) for the  $\bm h\neq \bm 0$ modes, random batch sampling is adopted, and it will be justified that $P$ can be chosen independent of $N$; typically, one can choose $P\sim \mathcal O(1)$.
 
 
 In an actual MD simulation, one will utilize these unbiased estimators along with an appropriate heat bath to complete the particle evolution.  
-Except for the summation over Fourier modes $\bm{k}$, the methods of the RBSE2D for other components of both energy and force are the same as those in the SOEwald2D, and the algorithm is outlined in Algorithm~\ref{alg:RBSE2D}.
+Except for the summation over Fourier modes $\bm{h}$, the methods of the RBSE2D for other components of both energy and force are the same as those in the SOEwald2D, and the algorithm is outlined in Algorithm~\ref{alg:RBSE2D}.
 % These aspects as well as the convergence analysis will be provided in the subsequent Section~\ref{subsec::conv}.
 
 We now analyze the complexity of the RBSE2D method per time step. 
 Similar to the strategy in some FFT-based solvers~\cite{deserno1998mesh,lindbo2012fast}, one may choose $\alpha$ such that the time cost in real space is cheap and the computation in the Fourier space is accelerated. 
 More precisely, one chooses
 \begin{equation}\label{eq::59}
-	\alpha\sim\frac{N^{1/3}}{L_x^{1/3}L_y^{1/3}L_z^{1/3}}
+	\alpha\sim\frac{N^{1/3}}{L_x^{1/3}L_y^{1/3} H^{1/3}}
 \end{equation}
 so that the complexity for the real space part is $C_{s}\sim \mathcal{O}(N)$. 
-By using the random batch approximation Eq.~\eqref{eq::RBapp}, the number of frequencies to be considered is then reduced to $\mathcal{O}(P)$ per step, and  the complexity for the Fourier part is $\mathcal{O}(PN)$, even for the challenging cases where the system is untra-thin, i.e., $L_z\ll \min\{L_x,L_y\}$.
+By using the random batch approximation Eq.~\eqref{eq::RBapp}, the number of frequencies to be considered is then reduced to $\mathcal{O}(P)$ per step, and  the complexity for the Fourier part is $\mathcal{O}(PN)$, even for the challenging cases where the system is untra-thin, i.e., $H \ll \min\{L_x,L_y\}$.
 These imply that the RBSE2D method has linear complexity per time step if one chooses $P\sim \mathcal{O}(1)$, then by selecting $\alpha$ according to Eq.~\eqref{eq::59}, 
 % and in comparison with the analysis in Remark~\ref{rmk::extreme}, 
 the overall complexity of the RBSE2D is $\mathcal{O}(N)$ for all quasi-2D system setups.
@@ -472,18 +464,18 @@ the overall complexity of the RBSE2D is $\mathcal{O}(N)$ for all quasi-2D system
 	\caption{The random batch sum-of-exponentials Ewald2D method}
 	\begin{algorithmic}[1]
 		
-		\State \textbf{Input}: Initialize the size of the simulation box $(L_x,L_y, L_z)$, as well as the positions, velocities, and charges of all particles. Choose a precision requirement $\varepsilon$ as well as batch size $P$.
+		\State \textbf{Input}: Initialize the size of the simulation box $(L_x,L_y, H)$, as well as the positions, velocities, and charges of all particles. Choose a precision requirement $\varepsilon$ as well as batch size $P$.
 		
-		\State \textbf{Precomputation}: Determine Ewald splitting parameters $\alpha$ and $s$ according to Eqs.~\eqref{eq::59} and \eqref{eq:trunction_error}, respectively. Generate real space cutoff by $r_c=s/\alpha$. Construct the SOE approximation of $\xi^{\pm}(k,z)$ and $\erf(\alpha z)$ following Section~\ref{subsec::SOEapp}.
+		\State \textbf{Precomputation}: Determine Ewald splitting parameters $\alpha$ and $s$ according to Eqs.~\eqref{eq::59} and \eqref{eq:trunction_error}, respectively. Generate real space cutoff by $r_c=s/\alpha$. Construct the SOE approximation of $\xi^{\pm}(h,z)$ and $\erf(\alpha z)$ following Section~\ref{subsec::SOEapp}.
 		
 		\Procedure\text{RBSE2D}{}       
-		\State Draw $P$ frequencies $\{\bm{k}_{\eta}\}_{\eta=1}^{P}$ using the Metropolis algorithm;
+		\State Draw $P$ frequencies $\{\bm{h}_{\eta}\}_{\eta=1}^{P}$ using the Metropolis algorithm;
 		\State Sort all the particles according to their $z$ coordinates, such that $z_1 < z_2 < \cdots < z_N$;
-		\State Compute unbiased Fourier space energy $U_{\ell}^{\bm{k}\neq\bm{0},*}$ by importance sampling Eq.~\eqref{eq::RBapp};
+		\State Compute unbiased Fourier space energy $U_{\ell}^{\bm{h}\neq\bm{0},*}$ by importance sampling Eq.~\eqref{eq::RBapp};
 		\State Compute SOE-approximated zero-frequency part $U_{\ell,\text{SOE}}^{\bm{0}}$ according to Section~\ref{subsec::reforEwald2}.
 		\State Compute $U_{\text{self}}$ and $U_{\text{p-s}}$ via Eqs.~\eqref{eq::self} and \eqref{eq:spectial}, respectively.
 		\State Compute~$U_{s}$ by direct truncation in real space via Eq.~\eqref{eq:phi_s} with cutoff $r_c$. %\Comment{short-range part}
-		\State Compute $U^{*}=U_{\ell}^{\bm{k}\neq\bm{0},*}+U_{\ell,\text{SOE}}^{\bm{0}}-U_{\text{self}}+U_{s}+U_{\text{p-s}}$.
+		\State Compute $U^{*}=U_{\ell}^{\bm{h}\neq\bm{0},*}+U_{\ell,\text{SOE}}^{\bm{0}}-U_{\text{self}}+U_{s}+U_{\text{p-s}}$.
 		\State Compute forces $\bm{F}_{i}^{*}$ via a similar procedure as that of $U^{*}$.
 		\EndProcedure
 		
@@ -500,17 +492,17 @@ the overall complexity of the RBSE2D is $\mathcal{O}(N)$ for all quasi-2D system
 In this section, we provide theoretical analysis for the RBSE2D method. We start with considering the fluctuations, i.e., the stochastic error introduced by the importance sampling at each time step.
 The fluctuations for the Fourier space components of the energy and the force acting on the $i$th particle are defined as follows:
 \begin{equation}\label{eq::xichi}
-	\Xi := \sum_{\bm{k}\neq\bm{0}}\left( U_{\ell}^{\bm{k}}-U_{\ell,*}^{\bm{k}}\right),\quad\text{and}\quad\V{\chi}_{i} :=\sum_{\bm{k}\neq\bm{0}}\left(\bm{F}_{\ell}^{\bm{k},i}-\bm{F}_{\ell,*}^{\bm{k},i}\right)\;.
+	\Xi := \sum_{\bm{k}\neq\bm{0}}\left( U_{\ell}^{\bm{h}}-U_{\ell,*}^{\bm{h}}\right),\quad\text{and}\quad\V{\chi}_{i} :=\sum_{\bm{h}\neq\bm{0}}\left(\bm{F}_{\ell}^{\bm{h},i}-\bm{F}_{\ell,*}^{\bm{h},i}\right)\;.
 \end{equation}
 Proposition~\ref{prop:unbaised} is obtained directly by the definition of the importance sampling:
 \begin{prop}\label{prop:unbaised}
-	$U_{\ell,*}^{\bm{k}\neq\bm{0}}$ and $\bm{F}_{\ell,*}^{\bm{k}\neq\bm{0},i}$ are unbiased estimators, i.e. $\mathbb{E}\Xi= 0$, $\mathbb{E} \V{\chi}_{i} = \bm 0$, and their variances can be expressed by
+	$U_{\ell,*}^{\bm{h}\neq\bm{0}}$ and $\bm{F}_{\ell,*}^{\bm{h}\neq\bm{0},i}$ are unbiased estimators, i.e. $\mathbb{E}\Xi= 0$, $\mathbb{E} \V{\chi}_{i} = \bm 0$, and their variances can be expressed by
 	\begin{equation}\label{eq::Exi}
-		\mathbb{E}\Xi^2=\frac{H}{P}\sum_{\bm{k}_1\neq 0}e^{-k_1^2/(4\alpha^2)}\left|\widetilde{\varphi}^{\text{RB}}(\bm{k}_1)-\frac{1}{H} \sum_{\bm{k}_2\neq 0}\widetilde{\varphi}^{\text{RB}}(\bm{k}_2)e^{-k_2^2/(4\alpha^2)}\right|^2
+		\mathbb{E}\Xi^2=\frac{S_2}{P}\sum_{\bm{h}_1\neq 0}e^{-k_1^2/(4\alpha^2)}\left|\widetilde{\varphi}^{\text{RB}}(\bm{h}_1)-\frac{1}{S_2} \sum_{\bm{h}_2\neq 0}\widetilde{\varphi}^{\text{RB}}(\bm{h}_2)e^{-h_2^2/(4\alpha^2)}\right|^2
 	\end{equation}
 	and
 	\begin{equation}\label{eq::Echi}
-		\mathbb{E}|\V{\chi}_{i}|^2=\frac{H}{P}\sum_{\bm{k}_1\neq 0}e^{-k_1^2/(4\alpha^2)}\left|\nabla_{\bm{r}_i}\widetilde{\varphi}^{\text{RB}}(\bm{k}_1)-\frac{1}{H} \sum_{\bm{k}_2\neq 0}\nabla_{\bm{r}_i}\widetilde{\varphi}^{\text{RB}}(\bm{k}_2)e^{-k_2^2/(4\alpha^2)}\right|^2.
+		\mathbb{E}|\V{\chi}_{i}|^2=\frac{S_2}{P}\sum_{\bm{h}_1\neq 0}e^{-h_1^2/(4\alpha^2)}\left|\nabla_{\bm{r}_i}\widetilde{\varphi}^{\text{RB}}(\bm{h}_1)-\frac{1}{S_2} \sum_{\bm{h}_2\neq 0}\nabla_{\bm{r}_i}\widetilde{\varphi}^{\text{RB}}(\bm{h}_2)e^{-h_2^2/(4\alpha^2)}\right|^2.
 	\end{equation}
 \end{prop}
 % The unbiased property in Proposition~\ref{prop:unbaised} implies consistency of the random batch importance sampling. 
@@ -519,11 +511,11 @@ Proposition~\ref{prop:unbaised} is obtained directly by the definition of the im
 Furthermore, under the Debye-H$\ddot{\text{u}}$ckel approximation, one has the following~Lemma~\ref{lem::upper_bound_phiRB} for the upper bounds of random batch approximations.
 
 \begin{lem} 
-	Under the assumption of the DH theory, $|\widetilde{\varphi}^{\emph{RB}}(\bm{k})|$ and $|\nabla_{\bm{r}_i}\widetilde{\varphi}^{\emph{RB}}(\bm{k})|$ have upper bounds
+	Under the assumption of the DH theory, $|\widetilde{\varphi}^{\emph{RB}}(\bm{h})|$ and $|\nabla_{\bm{r}_i}\widetilde{\varphi}^{\emph{RB}}(\bm{h})|$ have upper bounds
 	\begin{equation}
-		\abs{ \widetilde{\varphi}^{\emph{RB}}(\bm{k})}\leq\frac{2\sqrt{\pi}\lambda_D^2 Q}{L_xL_y k}\left(\sqrt{\pi}+\frac{\alpha \varepsilon}{k}\right),
+		\abs{ \widetilde{\varphi}^{\emph{RB}}(\bm{h})}\leq\frac{2\sqrt{\pi}\lambda_D^2 Q}{L_xL_y h}\left(\sqrt{\pi}+\frac{\alpha \varepsilon}{h}\right),
 		\quad
-		\abs{\nabla_{\bm{r}_{i}} \widetilde{\varphi}^{\emph{RB}}(\bm{k})}\leq  \frac{\pi \lambda_D^2 q_{i}^2}{L_xL_y}\left[3+\frac{\alpha}{\sqrt{\pi}}\left(1+\frac{2\sqrt{2}\varepsilon}{k}\right)\right], 
+		\abs{\nabla_{\bm{r}_{i}} \widetilde{\varphi}^{\emph{RB}}(\bm{h})}\leq  \frac{\pi \lambda_D^2 q_{i}^2}{L_xL_y}\left[3+\frac{\alpha}{\sqrt{\pi}}\left(1+\frac{2\sqrt{2}\varepsilon}{h}\right)\right], 
 	\end{equation}
 	where $\lambda_{D}$ represents the Debye length.
 	\label{lem::upper_bound_phiRB}
@@ -531,38 +523,38 @@ Furthermore, under the Debye-H$\ddot{\text{u}}$ckel approximation, one has the f
 \begin{proof}
 	By the definition of $\widetilde{\varphi}^{\text{RB}}(\bm{k})$, one has
 	\begin{equation}
-		\abs{ \widetilde{\varphi}^{\text{RB}}(\bm{k})}\leq \frac{1}{e^{-k^2/(4\alpha^2)}}\left(\left|U_{\ell,\text{SOE}}^{\bm{k}}-U_{\ell}^{\bm{k}}\right|+\left|U_{\ell}^{\bm{k}}\right|\right)\;.
+		\abs{ \widetilde{\varphi}^{\text{RB}}(\bm{h})}\leq \frac{1}{e^{-h^2/(4\alpha^2)}}\left(\left|U_{\ell,\text{SOE}}^{\bm{h}}-U_{\ell}^{\bm{h}}\right|+\left|U_{\ell}^{\bm{h}}\right|\right)\;.
 	\end{equation}
 	% where~$U_{\ell}^{\bm{k}}$ is originally defined in Eq.~\eqref{eq::pairssum8}
 	An estimation for the first term is given in Theorem~\ref{thm:SOE_error}. 
 	To estimate the second term, one may write Eq.~\eqref{eq::pairssum8} as
 	\begin{equation}
-		U_{\ell}^{\bm{k}} = \frac{\pi}{2 L_x L_y} \sum_{i, j = 1}^N q_i q_j \frac{e^{\m{i} \V{k} \cdot \V{\rho}_{ij}}}{k} \left[ \xi^{+} (k, z_{ij})+\xi^{-} (k, z_{ij}) \right]\;.
+		U_{\ell}^{\bm{h}} = \frac{\pi}{2 L_x L_y} \sum_{i, j = 1}^N q_i q_j \frac{e^{\m{i} \V{h} \cdot \V{\rho}_{ij}}}{h} \left[ \xi^{+} (h, z_{ij})+\xi^{-} (h, z_{ij}) \right]\;.
 	\end{equation}
 	Then using the integral representation of $\xi^{\pm}$ Eq.~\eqref{eq::xi20}, one obtains the following estimate
 	\begin{equation}\label{eq::118}
 		\begin{split}
-			e^{\frac{k^2}{4 \alpha^2}} \left[\xi^{+} (k, z)+\xi^{-} (k, z)\right] & = \frac{2\alpha}{\sqrt{\pi}} \left(e^{k z} \int_{z}^{\infty} e^{-\alpha^2 t^2 - kt} dt+e^{-k z} \int_{-z}^{\infty} e^{-\alpha^2 t^2 - kt} dt\right)\\
+			e^{\frac{h^2}{4 \alpha^2}} \left[\xi^{+} (h, z)+\xi^{-} (h, z)\right] & = \frac{2\alpha}{\sqrt{\pi}} \left(e^{h z} \int_{z}^{\infty} e^{-\alpha^2 t^2 - ht} dt+e^{-h z} \int_{-z}^{\infty} e^{-\alpha^2 t^2 - ht} dt\right)\\
 			& \leq \frac{4\alpha}{\sqrt{\pi}} \int_{- \infty}^{\infty} e^{-\alpha^2 t^2} dt= 4\;.
 		\end{split}
 	\end{equation}
 	By employing the DH approximation, one has
 	\begin{equation}
-		\abs{ \widetilde{\varphi}^{\text{RB}}(\bm{k})}  \leq  \frac{2\sqrt{\pi}\lambda_D^2 Q}{L_xL_y k} \left(\sqrt{\pi} + \frac{\alpha \varepsilon}{k}\right)\;.
+		\abs{ \widetilde{\varphi}^{\text{RB}}(\bm{h})}  \leq  \frac{2\sqrt{\pi}\lambda_D^2 Q}{L_xL_y h} \left(\sqrt{\pi} + \frac{\alpha \varepsilon}{h}\right)\;.
 	\end{equation}
 	Similarly, by taking $z$-derivative of the integral form of $\xi^{\pm}$, the following estimate holds:
 	\begin{equation}\label{eq::estiZ}
 		\begin{split}
-			e^{\frac{k^2}{4 \alpha^2}} \partial_z \left[\xi^{+} (k, z)+\xi^{-} (k, z)\right] & = \frac{2\alpha}{\sqrt{\pi}} \partial_z \left( e^{\pm k z} \int_{\pm z}^{\infty} e^{-\alpha^2 t^2 - kt} dt \right) \\
-			& \leq \frac{2\alpha}{\sqrt{\pi}} k \left( e^{\pm k z} \int_{- \infty}^{\infty} e^{-\alpha^2 t^2 - kt} dt + e^{-\alpha^2 z^2} \right) \\
-			& \leq \left(2 + \frac{2\alpha}{\sqrt{\pi}} \right) k\;.
+			e^{\frac{h^2}{4 \alpha^2}} \partial_z \left[\xi^{+} (h, z)+\xi^{-} (h, z)\right] & = \frac{2\alpha}{\sqrt{\pi}} \partial_z \left( e^{\pm h z} \int_{\pm z}^{\infty} e^{-\alpha^2 t^2 - ht} dt \right) \\
+			& \leq \frac{2\alpha}{\sqrt{\pi}} h \left( e^{\pm h z} \int_{- \infty}^{\infty} e^{-\alpha^2 t^2 - ht} dt + e^{-\alpha^2 z^2} \right) \\
+			& \leq \left(2 + \frac{2\alpha}{\sqrt{\pi}} \right) h\;.
 		\end{split}
 	\end{equation}
 	Combining Lemma~\ref{lem::forceerr} with Eq.~\eqref{eq::estiZ} and using the DH approximation again give
 	\begin{equation}
 		\begin{split}
-			\abs{ \nabla_{\bm{r}_i}\widetilde{\varphi}^{\text{RB}}(\bm{k})}&\leq \frac{1}{e^{-k^2/(4\alpha^2)}}\left(\left|\nabla_{\bm{r}_i}U_{\ell,\text{SOE}}^{\bm{k}}-\nabla_{\bm{r}_i}U_{\ell}^{\bm{k}}\right|+\left|\nabla_{\bm{r}_i}U_{\ell}^{\bm{k}}\right|\right)\\
-			&\leq \frac{\pi \lambda_D^2 q_{i}^2}{L_xL_y}\left[3+\frac{\alpha}{\sqrt{\pi}}\left(1+\frac{2\sqrt{2}\varepsilon}{k}\right)\right].
+			\abs{ \nabla_{\bm{r}_i}\widetilde{\varphi}^{\text{RB}}(\bm{h})}&\leq \frac{1}{e^{-h^2/(4\alpha^2)}}\left(\left|\nabla_{\bm{r}_i}U_{\ell,\text{SOE}}^{\bm{h}}-\nabla_{\bm{r}_i}U_{\ell}^{\bm{h}}\right|+\left|\nabla_{\bm{r}_i}U_{\ell}^{\bm{h}}\right|\right)\\
+			&\leq \frac{\pi \lambda_D^2 q_{i}^2}{L_xL_y}\left[3+\frac{\alpha}{\sqrt{\pi}}\left(1+\frac{2\sqrt{2}\varepsilon}{h}\right)\right].
 			%\frac{2\sqrt{2\pi}\alpha C}{L_xL_y k}q_{i}^2\varepsilon+\frac{\sqrt{\pi}(3\sqrt{\pi}+\alpha) C}{L_xL_y}q_{i}^2\\
 		\end{split}
 	\end{equation}
@@ -573,7 +565,7 @@ Finally, by Lemma~\ref{lem::upper_bound_phiRB}, one has the following Theorem~\r
 	Under the assumption of the DH theory, further assume that the SOE approximation error $\varepsilon\ll 1$. 
 	Then the variances of the estimators of energy and forces have closed upper bounds
 	\begin{equation}
-		\mathbb{E}\Xi^2\leq \frac{H}{P}\frac{16\pi^{3/2}\lambda_D^4\alpha Q^2}{L_xL_y},\quad \quad \mathbb{E}|\V{\chi}_{i}|^2\leq\frac{H}{P}\frac{4\sqrt{\pi}\alpha^3(3\sqrt{\pi}+\alpha)\lambda_D^4 q_{i}^4}{L_xL_y}.
+		\mathbb{E}\Xi^2\leq \frac{S_2}{P}\frac{16\pi^{3/2}\lambda_D^4\alpha Q^2}{L_xL_y},\quad \quad \mathbb{E}|\V{\chi}_{i}|^2\leq\frac{S_2}{P}\frac{4\sqrt{\pi}\alpha^3(3\sqrt{\pi}+\alpha)\lambda_D^4 q_{i}^4}{L_xL_y}.
 	\end{equation}
 \end{thm}
 \begin{proof}
@@ -581,31 +573,31 @@ Finally, by Lemma~\ref{lem::upper_bound_phiRB}, one has the following Theorem~\r
 	\begin{equation}
 		\begin{split}
 			\mathbb{E}\Xi^2
-			& = \frac{1}{P}\sum_{\bm{k}_1\neq \bm{0}}\sum_{\bm{k}_2\neq \bm{0}}e^{-(k_1^2+k_2^2)/(4\alpha^2)}\left[\widetilde{\varphi}^{\text{RB}}(\bm{k}_1)-\widetilde{\varphi}^{\text{RB}}(\bm{k}_2)\right]^2\\
-			& = \frac{2}{P}\sum_{\bm{k}_1\neq \bm{0}}\sum_{\bm{k}_2\neq \bm{0}}e^{-(k_1^2+k_2^2)/(4\alpha^2)} \widetilde{\varphi}^{\text{RB}}(\bm{k}_1)^2 - \frac{2}{P} \left[ \sum_{\bm{k}\neq \bm{0}} e^{-k^2 /(4\alpha^2)} \widetilde{\varphi}^{\text{RB}}(\bm{k}) \right]^2\\
-			& \leq \frac{2H}{P}\sum_{\bm{k}\neq\bm{0}}e^{-k^2/(4\alpha^2)}\left|\widetilde{\varphi}^{\text{RB}}(\bm{k})\right|^2\;.
+			& = \frac{1}{P}\sum_{\bm{h}_1\neq \bm{0}}\sum_{\bm{h}_2\neq \bm{0}}e^{-(h_1^2+h_2^2)/(4\alpha^2)}\left[\widetilde{\varphi}^{\text{RB}}(\bm{h}_1)-\widetilde{\varphi}^{\text{RB}}(\bm{h}_2)\right]^2\\
+			& = \frac{2}{P}\sum_{\bm{h}_1\neq \bm{0}}\sum_{\bm{h}_2\neq \bm{0}}e^{-(h_1^2+h_2^2)/(4\alpha^2)} \widetilde{\varphi}^{\text{RB}}(\bm{h}_1)^2 - \frac{2}{P} \left[ \sum_{\bm{h}\neq \bm{0}} e^{-h^2 /(4\alpha^2)} \widetilde{\varphi}^{\text{RB}}(\bm{h}) \right]^2\\
+			& \leq \frac{2S_2}{P}\sum_{\bm{h}\neq\bm{0}}e^{-h^2/(4\alpha^2)}\left|\widetilde{\varphi}^{\text{RB}}(\bm{h})\right|^2\;.
 		\end{split}
 	\end{equation}
-	Then by using the upper bound of $\left|\widetilde{\varphi}^{\text{RB}}(\bm{k})\right|$ given in Lemma~\ref{lem::upper_bound_phiRB}, one has 
+	Then by using the upper bound of $\left|\widetilde{\varphi}^{\text{RB}}(\bm{h})\right|$ given in Lemma~\ref{lem::upper_bound_phiRB}, one has 
 	\begin{equation}
 		\begin{split}
-			\mathbb{E}\Xi^2&\leq \frac{2\lambda_D^4Q^2H}{\pi PL_xL_y}\int_{\frac{2\pi}{L}}^{\infty}\frac{e^{-k^2/(4\alpha^2)}}{k^2}\left(\sqrt{\pi}+\frac{\alpha \varepsilon}{k}\right)^24\pi k^2dk\\
-			&\leq \frac{H}{P}\frac{16\pi^{3/2}\lambda_D^4\alpha Q^2}{L_xL_y},
+			\mathbb{E}\Xi^2&\leq \frac{2\lambda_D^4Q^2H}{\pi PL_xL_y}\int_{\frac{2\pi}{L}}^{\infty}\frac{e^{-h^2/(4\alpha^2)}}{h^2}\left(\sqrt{\pi}+\frac{\alpha \varepsilon}{h}\right)^24\pi h^2dh\\
+			&\leq \frac{S_2}{P}\frac{16\pi^{3/2}\lambda_D^4\alpha Q^2}{L_xL_y},
 		\end{split}
 	\end{equation}
 	where the $\mathcal{O}(\varepsilon)$ and $\mathcal{O}(\varepsilon^2)$ terms are omitted. Analogously, the variance of force can be estimated by
 	\begin{equation}\label{eq::focva}
 		\begin{split}
-			\mathbb{E}|\V{\chi}_{i}|^2&\leq \frac{2H}{P}\sum_{\bm{k}\neq\bm{0}}e^{-k^2/(4\alpha^2)}\left|\nabla_{\bm{r}_i}\widetilde{\varphi}^{\text{RB}}(\bm{k})\right|^2\\
-			&\leq \frac{\lambda_D^4Hq_i^4}{2PL_xL_y} \int_{\frac{2\pi}{L}}^{\infty}e^{-k^2/(4\alpha^2)}\left[3+\frac{\alpha}{\sqrt{\pi}}\left(1+\frac{2\sqrt{2}\varepsilon}{k}\right)\right]^24\pi k^2dk\\
-			&\leq \frac{H}{P}\frac{4\sqrt{\pi}\alpha^3(3\sqrt{\pi}+\alpha)\lambda_D^4 q_{i}^4}{L_xL_y}.
+			\mathbb{E}|\V{\chi}_{i}|^2&\leq \frac{2S_2}{P}\sum_{\bm{h}\neq\bm{0}}e^{-h^2/(4\alpha^2)}\left|\nabla_{\bm{r}_i}\widetilde{\varphi}^{\text{RB}}(\bm{h})\right|^2\\
+			&\leq \frac{\lambda_D^4 S_2 q_i^4}{2PL_xL_y} \int_{\frac{2\pi}{L}}^{\infty}e^{-h^2/(4\alpha^2)}\left[3+\frac{\alpha}{\sqrt{\pi}}\left(1+\frac{2\sqrt{2}\varepsilon}{h}\right)\right]^24\pi h^2dh\\
+			&\leq \frac{S_2}{P}\frac{4\sqrt{\pi}\alpha^3(3\sqrt{\pi}+\alpha)\lambda_D^4 q_{i}^4}{L_xL_y}.
 		\end{split}
 	\end{equation}
 	
-	Finally, by definition Eq.~\ref{eq::hk}, $H$ has the following estimate:
+	Finally, by definition Eq.~\ref{eq::hk}, $S_2$ has the following estimate:
 	\begin{equation}\label{eq::happrx}
 		\begin{split}
-			H&=\sum_{\bm{k}\neq\bm{0}}e^{-k^2/(4\alpha^2)}\leq \frac{L_xL_y}{(2\pi)^2}\int_{\frac{2\pi}{L}}^{\infty} e^{-k^2/(4\alpha^2)}4\pi k^2dk\leq \frac{2\alpha^2L_xL_y}{\sqrt{\pi}}.
+			S_2 &= \sum_{\bm{h}\neq\bm{0}}e^{-h^2/(4\alpha^2)}\leq \frac{L_xL_y}{(2\pi)^2}\int_{\frac{2\pi}{L}}^{\infty} e^{-h^2/(4\alpha^2)}4\pi h^2dh\leq \frac{2\alpha^2L_xL_y}{\sqrt{\pi}}.
 		\end{split}
 	\end{equation}
 	Substituting Eq.~\eqref{eq::happrx} into Eq.~\eqref{eq::focva} gives $\mathbb{E}|\V{\chi}_{i}|^2=\mathcal{O}(1/P)$, and Eq.~\eqref{eq::focva} clearly shows the independence of the estimate on the particle number $N$.
@@ -698,9 +690,9 @@ All these calculations demonstrate the attractive features of the new methods.
 
 \subsection{Accuracy of the SOEwald2D method}\label{subsec::errSOE}
 
-In order to verify the convergence of the SOEwald2D method discussed in Section~\ref{subsec::errSOEwald2D}, one considers a system with equal dimensions of $L_x=L_y=L_z=100$, containing randomly distributed $50$ cations and $50$ anions with strengths $q=\pm 1$,  and confined by neutral slabs. 
+In order to verify the convergence of the SOEwald2D method discussed in Section~\ref{subsec::errSOEwald2D}, one considers a system with equal dimensions of $L_x=L_y=H=100$, containing randomly distributed $50$ cations and $50$ anions with strengths $q=\pm 1$,  and confined by neutral slabs. 
 % The number of ions is kept small to ensure accurate computation of the Ewald2D summation, as outlined in Section~\ref{subsec::elec}, which serves as a reference. 
-The original Ewald2D summation (outlined in Section~\ref{subsec::elec}) serves as a reference method.
+The original Ewald2D summation (outlined in Section~\ref{sec::ewald2d}) serves as a reference method.
 The Ewald splitting parameter $\alpha$ is fixed as $0.1$ for both the SOEwald2D and Ewald2D, and the cutoffs $r_c$ and $k_c$ are determined by Eq.~\eqref{eq::rckc}. 
 
 The absolute error in electrostatic energy as a function of $s$ is calculated. 
@@ -708,12 +700,11 @@ The results are presented in Figure~\ref{fig:error_fixn}(a) for different number
 Specifically, $M=4$, $8$ and $16$ correspond to SOE approximation errors $\varepsilon =10^{-4}$, $10^{-8}$, and $10^{-14}$, respectively. 
 The convergence behavior depicted in Figure~\ref{fig:error_fixn}(a) is consistent with our theoretical findings, demonstrating both a decaying rate of $O(e^{-s^2}/s^2)$ and a saturated precision of $O(\varepsilon)$ for the SOEwald2D method. 
 We also investigate how the relative error in energy varies as the system size scales, while keeping the density $\rho_{s}$ constant. 
-The results presented in Figure~\ref{fig:error_fixn}(b) reveal that the error is nearly unaffected by the size of the system, which aligns with the analysis presented in Section~\ref{subsec::errSOEwald2D}.
+The results presented in Figure~\ref{fig:error_fixn}(b) reveal that the error is nearly unaffected by the size of the system, which aligns with the analysis presented in Section~\ref{sec::ewald2d}.
 
 \begin{figure}[ht]
 	\centering
-	\includegraphics[width=0.48\textwidth]{figs/fig_error_fixn.pdf}
-	\includegraphics[width=0.48\textwidth]{figs/fig_error_N.pdf}
+	\includegraphics[width=\textwidth]{figs/fig_error_fixn.pdf}
 	\caption{
 		Accuracy in the electrostatic energy by the SOEwald2D method. (a): absolute error as a function of $s$; (b): relative error as a function of total number of ions $N$ with fixed ion density $\rho_{s}$. Results with different number of exponentials $M$ are considered. 
 	}
@@ -724,19 +715,19 @@ The results presented in Figure~\ref{fig:error_fixn}(b) reveal that the error is
 	\centering
 	\includegraphics[width=0.6\textwidth]{figs/fig_error_Lz.pdf} 
 	\caption{
-		The absolute error in electrostatic energy is evaluated for the SOEwald2D method using three sets of parameters, as well as for the Ewald2D method with $s=5$, as a function of the system's thickness $L_z$. 
+		The absolute error in electrostatic energy is evaluated for the SOEwald2D method using three sets of parameters, as well as for the Ewald2D method with $s=5$, as a function of the system's thickness $H$. 
 		% The system consists of $100$ uniformly distributed particles, with dimensions $L_x=L_y=100$ along the periodic dimensions. The Ewald parameter is set to $\alpha = 0.1$.
 	}
 	\label{fig:error_Lz}
 \end{figure}
 
-As discussed at the end of Section~\ref{subsec::elec}, one notable drawback of the original Ewald2D method is the occurrence of catastrophic error cancellation when the size of the non-periodic dimension increases. 
-To quantify this effect, one shall study the absolute error in electrostatic energy as a function of $L_z$. 
+As discussed at the end of Section~\ref{sec::ewald2d}, one notable drawback of the original Ewald2D method is the occurrence of catastrophic error cancellation when the size of the non-periodic dimension increases. 
+To quantify this effect, one shall study the absolute error in electrostatic energy as a function of $H$. 
 The Ewald2D truncation parameter~$s= 3, 4, 5$ are chosen for~$M = 4, 8, 16$, respectively, to obtain optimal accuracy as is guided by Figure~\ref{fig:error_fixn} (a).
 The system consists of $100$ uniformly distributed particles, with dimensions $L_x = L_y = 100$ along the periodic dimensions, and the Ewald parameter is set to be $\alpha = 0.1$.
 A double-precision floating-point (FP64) arithmetic for both the Ewald2D and SOEwald2D methods is employed, while the reference solution is obtained using the Ewald2D with a quadruple-precision floating-point (FP128) arithmetic, ensuring a sufficient number of significant digits. 
-The results presented in Figure~\ref{fig:error_Lz} clearly illustrate that the error of the Ewald2D method increases rapidly with $L_z$.
-In contrast, the error of the SOEwald2D method remains independent of $L_z$ for various values of $s$ and $M$, thanks to its stable and well-conditioned summation procedure.
+The results presented in Figure~\ref{fig:error_Lz} clearly illustrate that the error of the Ewald2D method increases rapidly with $H$.
+In contrast, the error of the SOEwald2D method remains independent of $H$ for various values of $s$ and $M$, thanks to its stable and well-conditioned summation procedure.
 
 For many existing methods, the accurate evaluation of the forces exert on particles can be strongly influenced by the particle's location in~$z$. 
 Due to the uniform convergence of SOE approximation, our method does not suffer from this issue, which is illustrated by two commonly employed examples that have been extensively studied in literature~\cite{lindbo2012fast,de2002electrostatics}. 
@@ -793,7 +784,7 @@ The LJ potential is given by
 	\end{cases}
 \end{equation}
 where $r_{\text{LJ}} = 2^{1/6} \sigma$ is the LJ cutoff, $\epsilon = k_B T$ is the coupling strength, $k_B$ is the Boltzmann constant, and $T$ is the external temperature. 
-The simulation box has dimensions $L_x = L_y = 100 \sigma$ and $L_z = 30 \sigma$, where the ions confined within the central region by purely repulsive LJ walls located at $z = 0$ and $z = 30 \sigma$ with $\epsilon_{\text{wall}} = \epsilon_{\text{LJ}}$ and $\sigma_{\text{wall}} = 0.5 \sigma$. 
+The simulation box has dimensions $L_x = L_y = 100 \sigma$ and $H = 30 \sigma$, where the ions confined within the central region by purely repulsive LJ walls located at $z = 0$ and $z = 30 \sigma$ with $\epsilon_{\text{wall}} = \epsilon_{\text{LJ}}$ and $\sigma_{\text{wall}} = 0.5 \sigma$. 
 The system contains $218$ cations and anions, and both two walls are neutral. 
 The simulation is performed with the time step~$\Delta=0.001\tau$, where~$\tau = \sqrt{m \sigma^2 / \eps_{\text{LJ}}}$ denotes the LJ unit of time. 
 The temperature is maintained by using a Nos\'e-Hoover thermostat~\cite{frenkel2023understanding} with relaxation times $0.1\tau$, fluctuating near the reduce external temperature $T=1$.
@@ -821,7 +812,7 @@ Clearly, the RBSE2D method successfully captures this anisotropic collective phe
 
 
 To assess the performance of our RBSE2D method for systems with non-neutral slabs, one studies
-a $1:1$ electrolyte containing~$218$ anions and~$218$ cations with~$q = \pm 1$, and with surface charge densities $\sigma_{\mathrm{bot}}=0.0218$ and~$\sigma_{\mathrm{top}}=-0.0218$. The simulation box is set to be $L_x = L_y = 100 \sigma$ and $L_z = 30 \sigma$.
+a $1:1$ electrolyte containing~$218$ anions and~$218$ cations with~$q = \pm 1$, and with surface charge densities $\sigma_{\mathrm{bot}}=0.0218$ and~$\sigma_{\mathrm{top}}=-0.0218$. The simulation box is set to be $L_x = L_y = 100 \sigma$ and $H = 30 \sigma$.
 The resulting equilibrium concentration of cations is shown in Figure~\ref{fig:Ez_density}(a), indicating that results of RBSE2D method with different batch sizes are in good agreement with that of the reference SOEwald2D method. 
 % The subplot of Figure~\ref{fig:Ez_density}(a) also depicts the convergence as the batch size $P$ increases, which is consistent with our analysis.
 

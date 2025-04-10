@@ -1,10 +1,11 @@
-In this chapter, we first introduce the quasi-2D Coulomb systems, along with the mathematical notations used throughout this thesis.
-Then we revisit the Ewald summation method for doubly periodic lattice sums and its extension to dielectric-confined systems through combination with the image charge method, as well as its reformulation.
-Finally we will introduce the random batch Ewald (RBE) method, which is a powerful method to accelerate the computation of the electrostatic energy.
+This chapter introduces the fundamental concepts and mathematical framework underlying this thesis.
+We begin by presenting confined quasi-2D Coulomb systems and establishing the mathematical notation used throughout.
+We then provide a comprehensive review of Ewald summation methods, focusing on the Ewald splitting technique and its applications to both fully and doubly periodic systems.
+The chapter concludes with an overview of the random batch Ewald (RBE) method, an efficient approach for accelerating electrostatic energy computations in fully periodic systems.
 
-\section{Quasi-2D Coulomb systems}
+\section{Confined Quasi-2D Coulomb systems}
 
-Quasi-2D systems are three-dimensional models characterized by double periodicity in the $xy$ dimensions and confinement by planar dielectric interfaces along the $z$-axis.
+Confined quasi-2D Coulomb systems are three-dimensional models characterized by double periodicity in the $xy$ dimensions and confinement by planar dielectric interfaces along the $z$-axis.
 The characteristic length scale in the non-periodic direction is often significantly smaller than that in the periodic directions. 
 In what follows, we present the mathematical formulation of the model.
 
@@ -262,10 +263,11 @@ This implies that the infinite image charge series converges and can be truncate
 Consequently, the original dielectric-confined system can be approximated by a homogeneous system augmented with $M$ additional levels of image charges in $z$, which can be readily solved using standard methods for homogeneous quasi-2D systems.
 However, as have been mentioned in the Chapter~\ref{chp_intro}, recent studies have shown that special materials~\cite{Kornyshev1996Static, Schlaich2016Water, Kornyshev2021Nonlocal} can have negative dielectric constants, which may lead to the divergence of the image charge series.
 
-\section{Ewald summation formula}
+\section{Ewald summation methods}
 
-In this section, we first revisit the widely used ``Ewald splitting'' technique~\cite{ewald1921berechnung}, the Ewald2D summation for homogeneous quasi-2D systems, and provide its extension to dielectric-confined cases, i.e., the evaluation of Eq.~\eqref{eq:U_direct}.
-Then we introduce a reformulation of the ICM-Ewald2D summation, enabling its efficient computation accelerated via FFT, thereby reducing the cost to $ O(N \log N)$. 
+In this section, we first revisit the widely used ``Ewald splitting'' technique~\cite{ewald1921berechnung}. which is the most widely used method for evaluating the long-range interactions in periodic systems.
+We then introduce it applications to both fully and doubly periodic systems, i.e. the Ewald3D and Ewald2D summation, respectively.
+Finally, we will briefly introduce the random batch Ewald (RBE) method~\cite{jin2021random}, which is a powerful method to accelerate the computation of the electrostatic energy in fully periodic systems.
 
 \subsection{Ewald splitting and Ewald3D summation} \label{sec::ewald_splitting}
 
@@ -295,29 +297,46 @@ In practice, both summation in real and reciprocal spaces are truncated at a cut
 A common choice is to set $r_c = s / \alpha$ and $k_c = 2 s \alpha$, where $s$ is a parameter to control the accuracy of the truncation.
 It has been shown that under such trunction, the truncation error of total energy decay as $O(e^{-s^2} / s^{2})$, and time complexity of Ewald3D summation is $O(N^{1.5})$.
 
+\subsection{Random batch Ewald} \label{sec::rbe}
 
-\subsection{Ewald2D Summation and its Error Estimation} \label{sec::ewald2d}
+Then we briefly introduce the idea of random mini-batch sampling and its application to fully-periodic Coulomb systems.
+The random mini-batch strategy originated from stochastic gradient descent~\cite{robbins1951stochastic} in machine learning and was first introduced in the study of interacting particle systems by Jin, {\it et al.}~\cite{jin2020random}, called the random batch method (RBM).
+The method was proved to be successful in various areas, including nonconvex optimization~\cite{ghadimi2016mini}, Monte Carlo simulations~\cite{li2020random}, optimal control~\cite{ko2021model}, and quantum simulations~\cite{jin2021randomquantum}. 
+Recently, this idea has been applied to fully-periodic Lennard-Jones and Coulomb systems~\cite{liang2021random, jin2021random, liang2023SISC}, demonstrating superscalability in large-scale simulations~\cite{liang2022superscalability, liang2022improved,gao2024rbmdmoleculardynamicspackage}. 
+For long-range interactions such as Coulomb, to accurately reproduce the long-range electrostatic correlations, the so-called symmetry-preserving mean-field (SPMF) condition~\cite{hu2014symmetry} has been proposed. 
+The SPMF is originated from the local molecular field theory for Coulomb systems~\cite{chen2006local, hu2010efficient}, which states that algorithms must share a mean-field property, that is
+the averaged integration for the computed potential over certain directions should equal that of the exact $1/r$ Coulomb potential.
+For fully-periodic systems, by carefully imposing the SPMF in the random batch approximation, it has been shown that the long-range electrostatic correlations can be accurately captured~\cite{gao2023JCTC}.
 
-% By Ewald splitting, it has been shown that the quasi-2D lattice sum for electrostatic energy $U$ (\emph{without} dielectric interfaces) can be decomposed as $ U = U_{\text{real}}+U_{\text{Fourier}}$, where~\cite{parry1975electrostatic,zhonghanhu2014JCTC}
-% \begin{equation}\label{eq:ewald2d-1}
-%     U_{\te{real}}=\frac{1}{2} \sum_{i, j=1}^N \sum_{\V m}{}^\prime q_iq_j\frac{\mathrm{erfc}(\alpha\abs{\V r_{ij}+\V{L}_{\bm{m}} })}{\abs{\V r_{ij}+ \V{L}_{\bm{m}}}} \;,
-% \end{equation}
-% \begin{equation}\label{eq:ewald2d-2}
-% \begin{split}
-%     U_{\te{Fourier}} = & \frac{\pi}{2L_xL_y}\sum_{i, j=1}^N q_iq_j\sum_{\V h\neq \V 0}\frac{e^{\i \V h\cdot \V r_{ij}}}{h}\mathcal{G}_{\alpha}(h,z_{ij}) - \frac{\alpha}{\sqrt{\pi}}\sum_{i=1}^{N}q_i^2+\mathcal J_0\;.
-% \end{split}
-% \end{equation}
-% Here, $ {\V h}=2\pi(n_x/L_x, n_y/L_y, 0)$ denotes the reciprocal lattice vector with $n_x,n_y\in \mathbb{Z}$ and $h=|\V{h}|$. 
-% The notation $\i = \sqrt{-1}$ represents the imaginary unit, and
-% the function $\mathcal{G}_{\alpha}(\cdot,\cdot)$ is defined as
-% \begin{equation}\label{eq:G_hzij}
-% \mathcal{G}_{\alpha}(h,z):=\left[e^{h z}\mathrm{erfc}\left(\frac{h}{2\alpha}+\alpha z\right)+e^{-h z}\mathrm{erfc}\left(\frac{h}{2\alpha}-\alpha z\right)\right]\;,
-% \end{equation}
-% with the $\V 0$-th mode correction 
-% \begin{equation}\label{eq:ewald2d-j0-homo}
-%     \mathcal J_0 = \frac{-\pi}{L_xL_y}\sum_{i, j=1}^N q_iq_j\left[z_{ij}\mathrm{erf}\left(\alpha z_{ij}\right)+\frac{1}{\alpha\sqrt{\pi}}e^{-\alpha^2z^2_{ij}}\right]\;.
-% \end{equation}
-% Eqs.~\eqref{eq:ewald2d-1}--\eqref{eq:ewald2d-j0-homo} are the well-known exact Ewald2D summation formulas~\cite{parry1975electrostatic,zhonghanhu2014JCTC}.
+Among these methods, the random batch Ewald (RBE) method was originally proposed to accelerate the Ewald3D summation~\cite{jin2021random}.
+As have been introduced in Sec.~\ref{sec::ewald_splitting}, the Ewald3D summation can be decomposed into short-range and long-range components: the short-range component is computed in real space, while the long-range component is computed in reciprocal space, and a direct computation of the long-range component leads to a time complexity of $O(N^{1.5})$.
+Instead of computing the long-range component directly, RBE method approximates the long-range component via random batch importance sampling.
+Comparing to the widely used FFT based methods such as the particle-particle particle-mesh (PPPM) method~\cite{hockney2021computer,darden1993particle,essmann1995smooth}, RBE reduces the time complexity from $O(N\log N)$ to $O(N)$, and its simplicity makes it suitable for parallelization compared to the FMM based methods~\cite{greengard1987fast,cheng1999fast,ying2004kernel}.
+
+% The main idea of RBE is to treat the Gaussian factor in the long-range component of Ewald3D summation as a dis
+
+Recall that the long-range component of Ewald3D summation is given by:
+\begin{equation}
+	U_{\ell}^{\V{k}} = \frac{2 \pi}{L_xL_yL_z} \sum_{\V{k} \neq \V{0}} \frac{1}{k^2} \abs{\rho_{\V{k}}}^2 e^{-\frac{\V{k}^2}{4\alpha^2}}\;.
+\end{equation}
+Due to the rapid decay of the Gaussian function, RBE interprets the $U_{\ell}^{\V{k}}$ term as an expectation with respect to a discrete Gaussian distribution~$\mathcal{P}_{\V{k}}$:
+\begin{equation}
+	\mathcal{P}_{\V{k}} = \frac{e^{-\frac{\V{k}^2}{4\alpha^2}}}{S},~~\V{k} \neq \V{0} \;,
+\end{equation}
+where $S$ is the normalization constant:
+\begin{equation}
+	S = \sum_{\V{k} \neq \V{0}} e^{-\frac{\V{k}^2}{4\alpha^2}} - 1\;.
+\end{equation}
+Thus in RBE, the long-range component is approximated as follows:
+\begin{equation}
+	U_{\ell} \approx U_{\ell, *} =  \frac{2 \pi}{L_xL_yL_z} \sum_{\V{k} \in \V{k}_p} \frac{1}{k^2} \abs{\rho_{\V{k}}}^2 - \frac{\alpha}{\sqrt{\pi}}\sum_{i=1}^{N}q_i^2\;,
+\end{equation}
+where $\V{k}_p$ is a set of $P$ random vectors sampled from the discrete Gaussian distribution~$\mathcal{P}_{\V{k}}$, thus $U_{\ell, *}$ is an unbiased estimator of $U_{\ell}$.
+The same procedure is also valid for the force calculation.
+It has been proved that the batch size $P$ is an $O(1)$ constant irrelevant to the system size $N$, so that the time complexity of RBE is always $O(N)$.
+
+
+\subsection{Ewald2D summation} \label{sec::ewald2d}
 
 Throughout the remainder sections, we will extensively use Fourier transforms for the DPBCs, which leads to the well-known Ewald2D~\cite{parry1975electrostatic, heyes1977molecular, de1979electrostatic} formula for quasi-2D Coulomb systems.
 For ease of discussion, the mathematical notations and definitions are first provided.
@@ -404,10 +423,7 @@ and the function $\mathcal{G}_{\alpha}$ and~$\mathcal{G}_{\alpha}^0$ are defined
     \mathcal{G}_{\alpha}(h,z) = \xi^{+}(h, z)+\xi^{-}(h, z),~\mathcal{G}_{\alpha}^0(z) = {z} \erf(\alpha {z}) + \frac{e^{-(\alpha z)^2}}{\alpha \sqrt{\pi}}.
 \end{equation}
 
-
-% Although the Ewald2D method is a widely recognized, standard technique, its theoretical error analysis remains underdeveloped.
-% In this section, we provide a truncation error analysis for the Ewald2D summation.
-In actually computation, truncation in real and Fourier spaces are performed simultaneously, and the truncation error is clearly configuration dependent.
+In practice, truncation in real and Fourier spaces are performed simultaneously, and the truncation error is clearly configuration dependent.
 Here the estimation is analyzed based on the \emph{ideal-gas assumption}~\cite{hansen2013theory}, which was used by Kolafa and Perram~\cite{kolafa1992cutoff} in analyzing the Ewald3D case. 
 Details of the ideal-gas assumption are summarized in \ref{app::ideal-gas}.
 The root mean square (RMS) error is used to measure the truncation error in a given physical quantity, which is defined as
@@ -480,10 +496,10 @@ In summary, the Ewald2D summation is the exact solution and does not involve any
 However, two significant drawbacks limit its application for large-scale simulations:
 \begin{itemize}
 	\item Even with optimal choice of parameter $\alpha$, computing the interaction energy $U$ for an $N$-particle system through Eqs.~\eqref{eq:phi_s}, \eqref{eq::self} and \eqref{eq::7} takes $\mathcal O(N^2)$ complexity, which is worse than $\mathcal O(N^{3/2})$ for that of the Ewald3D, the fully-periodic case.
-	\item The function $\xi^{\pm}(k, z_{ij})$ is ill-conditioned: It grows exponentially as $kz_{ij}$ grows, leading to catastrophic error cancellation in actual computations with prescribed machine precision.
+	\item The function $\xi^{\pm}(h, z_{ij})$ is ill-conditioned: It grows exponentially as $h z_{ij}$ grows, leading to catastrophic error cancellation in actual computations with prescribed machine precision.
 \end{itemize}
 
-\subsection{Extension to Systems with Charged Slabs}\label{sec::sysslabs}
+\subsection{Extension to systems with charged slabs}\label{sec::sysslabs}
 
 In the presence of charged slabs, boundary layers naturally arise -- opposite ions accumulate near the interface, forming an electric double layer. The structure of electric double layers plays essential role for properties of interfaces and has caught much attention~\cite{messina2004effect,breitsprecher2014coarse,moreira2002simulations}. Since charges on the slabs are often represented as a continuous surface charge density, we present the Ewald2D formulation with such a situation can be well treated.
 
@@ -573,129 +589,3 @@ Based on the expression of electrostatic potential $\phi$ derived above, the tot
 	U = U_{\text{p-p}} + U_{\text{p-s}}, \quad \text{with} \quad U_{\text{p-p}} := U_{s} + \sum_{\bm{k}\neq\bm{0}}U_{\ell}^{\bm{k}}+U_{\ell}^{\bm{0}}- U_{\text{self}}\;,
 \end{align}
 where $U_*=\sum_{i}\phi_*$ with $*$ representing any of the subscripts used in Eq.~\eqref{eq::34}.
-
-\subsection{The ICM-Ewald2D Summation and its Reformulation}\label{sec::icm_ewald2d}
-
-For dielectric confined systems, combined with the ICM, the Ewald2D summation can be extended to accommodate for dielectric-confined systems.
-In the ICM-Ewald2D summation~\cite{gan2024random}, Eqs.~\eqref{eq::Us_Ewald2D}-\eqref{eq::J0_Ewald2D} are modified as
-\begin{equation}\label{eq::Uc}
-    U_{s}^{\text{c}} =  \frac{1}{2} \sum_{i,j=1}^N \sum_{\bm{m}}{}^\prime \sum_{l=0}^M q_iq_{j \pm}^{(l)} \frac{\te{erfc}\left(\alpha \left|\bm{r}_i - \bm{r}_{j\pm}^{(l)}+ \V{\mathcal{M}}\right|\right)}{\left|\bm{r}_i-\bm{r}_{j\pm}^{(l)}+\V{\mathcal{M}}\right|}\;,
-\end{equation}
-\begin{equation}\label{eq::Fourier2D}
-    U^{\te{c}}_{\ell} =  \frac{\pi}{2L_xL_y}\sum_{i, j=1}^N \sum_{l = 0}^{M} q_iq_{j \pm}^{(l)} \sum_{\V h\neq \V 0}\frac{e^{\i \V h\cdot \V r_{ij}}}{h}\mathcal{G}_{\alpha}(h,z_i - z_{j \pm}^{(l)})  - \frac{\alpha}{\sqrt{\pi}}\sum_{i=1}^{N}q_i^2+\mathcal{J}^{\te{c}}_0\;.
-\end{equation}
-Here $q_{j\pm}^{(l)}=\gamma_{\pm}^{(l)}q_j$ are the $l$-th layer image charge  strengths (with $l = 0$ terms indicating the original source charges), and the $\V 0$-th mode correction term should be modified accordingly as 
-\begin{equation}\label{eq:ewald2d-j0}
-    \mathcal J_0^c = -\frac{\pi}{L_xL_y}\sum_{i,j=1}^{N}\sum_{l=0}^{M} q_iq_{j\pm}^{(l)}\mathcal{G}_{\alpha}^0(|z_i-z_{j\pm}^{(l)}|)\;.
-\end{equation}
-Eqs.~\eqref{eq::Uc}--\eqref{eq:ewald2d-j0} integrate the well-established Ewald2D summation formula~\cite{parry1975electrostatic,zhonghanhu2014JCTC} for homogeneous systems with the ICM representation to account for polarization contributions. 
-The resulting ICM-Ewald2D formula effectively performs a quasi-2D lattice summation on a system augmented in $z$ by a factor of $2M+1$. 
-By selecting a sufficiently large $M$ and setting the real space and reciprocal space cutoffs as $r_c=s/\alpha$ and $k_c=2s\alpha$, respectively, where $s>0$ is a parameter, 
-the error due to cutoffs has been estimated as $\sim O(e^{-s^2}/s^2)$~\cite{gan2024fast}, which decays rapidly as $s$ increases. 
-However, the pairwise summation terms (over $i$ and $j$) in Eqs.~\eqref{eq::Fourier2D} and \eqref{eq:ewald2d-j0} still lead to a computational complexity of $O(N^2)$, requiring further acceleration techniques.
-A widely used approach for acceleration is to reformulate the Ewald2D summation into a triply-periodic Ewald3D summation.
-It is noteworthy that for homogeneous systems, such a reformulation was rigorously established by Pan and Hu~\cite{pan2014rigorous}. 
-In what follows, we extend their approach to dielectric-confined systems.
-
-
-First, one can rewrite the function~$\mathcal{G}_{\alpha}(h,z)$ in Eq.~\eqref{eq::G_Ewald2D} into an integral form:
-\begin{equation}\label{eq::Ga-integral}
-    \mathcal{G}_{\alpha}(h,z) = \int_{-\infty}^{\infty}\frac{e^{-\frac{h^2}{4\alpha^2}-t^2}}{\frac{h^2}{4\alpha^2}+t^2}e^{2\i \alpha z t} dt\;,
-\end{equation}
-and analogously,
-\begin{equation}
-\label{eq::J0-integral}
-    \mathcal G_{\alpha}^{0}(z)=-\frac{1}{2\pi\alpha }\int_{-\infty}^{\infty}\frac{e^{-t^2}e^{2\i \alpha zt}-1}{t^2}dt\;.
-\end{equation}
-Discretizing the integrals in Eqs.~\eqref{eq::Ga-integral} and \eqref{eq::J0-integral} using the trapezoidal rule with mesh size $\pi/(\alpha L_z)$, where $L_z>H$ is a parameter, and substituting the discretized forms into Eq.~\eqref{eq::Fourier2D} gives
-%By commutating the $i,j$-index of Eq.~\eqref{eq::J0-integral} and using the fact that $z_{ij}=-z_{ji}$, the first-order term on the numerator is eliminated and both of the integrands are smooth and exponentially decaying. Hence discretizing the integrals via trapezoidal rule yields spectral convergence~\cite{trefethen2014Rev}, which provides an approximation of Eq.~\eqref{eq::Uc} that
-\begin{equation}\label{eq::UcFour}
-\begin{split}
-    U^{\T c}_{\ell} = \frac{2\pi}{L_xL_yL_z}\sum_{\bm{k}\neq \bm{0}}\frac{e^{-\frac{k^2}{4\alpha^2}}}{k^2}\rho_{\bm{k}}\bar{\rho}_{\bm{k}}^{M}-\frac{\alpha}{\sqrt{\pi}}\sum_{i=1}^{N}q_i^2+ U_{\T {YB}}^{M}+U_{\T {ELC}}^{M}+U_{\T{Trap}}^{M}\;,
-\end{split}
-\end{equation}
-where $\bm{k}=2\pi(n_x/L_x,n_y/L_y,n_z/L_z)$ denotes the 3D periodic lattice vector, and the structure factors $\rho_{\bm{k}}$ and $\widetilde{\rho}_{\bm{k}}^{M}$ are defined as
-\begin{equation}
-    \rho_{\bm{k}} := \sum_{i=1}^{N}q_ie^{\i \bm{k}\cdot \bm{r}_i}\;,~
-    \widetilde{\rho}_{\bm{k}}^{M} := \sum_{j=1}^{N}q_j\left[e^{-\i \bm{k}\cdot \bm{r}_i}+\sum_{l=1}^{M}\left(\gamma_{+}^{(l)}e^{-\i \bm{k}\cdot \bm{r}_{j+}^{(l)}}+\gamma_{-}^{(l)}e^{-\i \bm{k}\cdot \bm{r}_{j-}^{(l)}}\right)\right]\;.
-\end{equation}
-On the RHS of Eq.~\eqref{eq::UcFour}, the first two terms resemble the standard Ewald3D summation (with added \emph{vacuum layer} in $z$), where the second term accounts for the self-energy correction. 
-The remaining terms provide the additional components required to correct Ewald3D back to Ewald2D:
-\begin{equation}\label{eq:U^M_YB}
-U_{\T {YB}}^{M}:=\frac{2\pi}{L_xL_yL_z}\left(\sum_{i=1}^{N}q_{i}z_{i}\right)\sum_{j=1}^{N}q_j\left[z_{j}+\sum_{l=1}^{M}\left(\gamma_{+}^{(l)}z_{j+}^{(l)}+\gamma_{-}^{(l)}z_{j-}^{(l)}\right)\right]\;,
-\end{equation}
-%and
-\begin{equation}\label{eq:U^M_ELC}
-U_{\T {ELC}}^{M}:=\frac{2\pi}{L_xL_y}\sum_{i,j=1}^{N}q_iq_j\sum_{\bm{h}\neq \bm{0}} \frac{e^{\i \bm{h}\cdot\bm{r}_{ij}}}{h}\frac{\cosh(hz_{ij})+\mathscr{F}_{\text{ELC}}^M(z_i,z_j)}{1-e^{hL_z}}\;,
-\end{equation}
-where $\mathscr{F}_{\text{ELC}}^M(z_i,z_j)$ is defined as:
-\begin{equation}\label{eq::23}
-\mathscr{F}_{\text{ELC}}^M(z_i,z_j):=\sum\limits_{l=1}^{M}\left[\gamma_{+}^{(l)}\cosh(h(z_i-z_{j+}^{(l)}))+\gamma_{-}^{(l)}\cosh(h(z_i-z_{j-}^{(l)}))\right].
-\end{equation}
-The terms in Eqs.~\eqref{eq:U^M_YB} and~\eqref{eq:U^M_ELC} correspond to the ICM-YB~\cite{yuan2021particle} and ICM-ELC~\cite{tyagi2008electrostatic} corrections, respectively. 
-The remainder term, $U^{M}_{\T {trap}}$, emerges from the error introduced by trapezoidal discretization. 
-The integrand in Eq.~\eqref{eq::Ga-integral} contains two simple poles at $t=\pm {\T i}h/(2\alpha)$, allowing for the estimation of discretization error using contour integral techniques~\cite{trefethen2014Rev}. 
-Additionally, the integrand in Eq.~\eqref{eq::J0-integral} is smooth, %with its first-order term canceled due to the antisymmetry of $z_{ij}=-z_{ji}$ and the charge neutrality condition when substituted into Eq.~\eqref{eq::Fourier2D}, 
-ensuring spectral convergence of the discretization. 
-By applying an analysis analogous to that of Pan and Hu~\cite{pan2014rigorous}, we obtain $|U_{\text{trap}}^{M}|\sim e^{-\alpha^2(L_z-H)^2}$, which becomes negligible for $L_z \gg H$.  
-
-Specially, for the case~$\gamma_{\T u}=\gamma_{\T d}=0$, i.e., the system is homogeneous, the long-range component is given by:
-\begin{equation}\label{eq::U3D_Four}
-	\begin{split}
-		U_{\ell} = \frac{2\pi}{L_xL_yL_z}\sum_{\bm{k}\neq \bm{0}}\frac{e^{-\frac{k^2}{4\alpha^2}}}{k^2}\rho_{\bm{k}}\bar{\rho}_{\bm{k}} - \frac{\alpha}{\sqrt{\pi}}\sum_{i=1}^{N}q_i^2+ U_{\T {YB}} + U_{\T {ELC}} + U_{\T{Trap}}\;,
-	\end{split}
-\end{equation}
-where $U_{\T {YB}}$ and $U_{\T {ELC}}$ are defined as:
-\begin{equation}\label{eq::U3D_YB}
-	U_{\T {YB}} := \frac{2\pi}{L_xL_yL_z}\left(\sum_{i=1}^{N}q_{i}z_{i}\right)\sum_{j=1}^{N}q_j z_{j}\;,
-\end{equation}
-%and
-\begin{equation}\label{eq::U3D_ELC}
-	U_{\T {ELC}} := \frac{2\pi}{L_xL_y}\sum_{i,j=1}^{N}q_iq_j\sum_{\bm{h}\neq \bm{0}} \frac{e^{\i \bm{h}\cdot\bm{r}_{ij}}}{h}\frac{\cosh(hz_{ij})}{1-e^{hL_z}}\;.
-\end{equation}
-
-
-In practical computations, the first term in Eq.~\eqref{eq::UcFour} can be efficiently calculated using fast algorithms such as the FFT~\cite{yuan2021particle}, the periodic FMM~\cite{pei2023fast}, and the random batch importance sampling~\cite{liang2022improved}, achieving computational complexities of $O(N\log N)$ or $O(N)$. 
-Note that the ICM-YB correction term $U_{\T {YB}}^{M}$ can be directly computed with a cost of $O(N)$, and the remainder term $U_{\text{trap}}^M$ can be eliminated by appropriately choosing $L_z$.
-% This parameter selection strategy is employed in the recently proposed ICM-Ewald3D~\cite{dos2015electrolytes} and ICM-PPPM~\cite{yuan2021particle} methods. 
-% However, it is important to note that this approach overlooks the influence of the ICM-ELC correction term $U_{\T {ELC}}^{M}$, which may introduce significant errors. 
-% Additionally, a rigorous estimate of the image truncation error is also absent in existing works. 
-% In this study, we address and unify both sources of error.
-
-\section{Random batch Ewald method}
-
-In this section, we briefly introduce the idea of random mini-batch sampling and its application to fully-periodic Coulomb systems.
-The random mini-batch strategy originated from stochastic gradient descent~\cite{robbins1951stochastic} in machine learning and was first introduced in the study of interacting particle systems by Jin, {\it et al.}~\cite{jin2020random}, called the random batch method (RBM).
-The method was proved to be successful in various areas, including nonconvex optimization~\cite{ghadimi2016mini}, Monte Carlo simulations~\cite{li2020random}, optimal control~\cite{ko2021model}, and quantum simulations~\cite{jin2021randomquantum}. 
-Recently, this idea has been applied to fully-periodic Lennard-Jones and Coulomb systems~\cite{liang2021random, jin2021random, liang2023SISC}, demonstrating superscalability in large-scale simulations~\cite{liang2022superscalability, liang2022improved,gao2024rbmdmoleculardynamicspackage}. 
-For long-range interactions such as Coulomb, to accurately reproduce the long-range electrostatic correlations, the so-called symmetry-preserving mean-field (SPMF) condition~\cite{hu2014symmetry} has been proposed. 
-The SPMF is originated from the local molecular field theory for Coulomb systems~\cite{chen2006local, hu2010efficient}, which states that algorithms must share a mean-field property, that is
-the averaged integration for the computed potential over certain directions should equal that of the exact $1/r$ Coulomb potential.
-For fully-periodic systems, by carefully imposing the SPMF in the random batch approximation, it has been shown that the long-range electrostatic correlations can be accurately captured~\cite{gao2023JCTC}.
-
-Among these methods, the random batch Ewald (RBE) method was originally proposed to accelerate the Ewald3D summation~\cite{jin2021random}.
-As have been introduced in Sec.~\ref{sec::ewald_splitting}, the Ewald3D summation can be decomposed into short-range and long-range components: the short-range component is computed in real space, while the long-range component is computed in reciprocal space, and a direct computation of the long-range component leads to a time complexity of $O(N^{1.5})$.
-Instead of computing the long-range component directly, RBE method approximates the long-range component via random batch importance sampling.
-Comparing to the widely used FFT based methods such as the particle-particle particle-mesh (PPPM) method~\cite{hockney2021computer,darden1993particle,essmann1995smooth}, RBE reduces the time complexity from $O(N\log N)$ to $O(N)$, and its simplicity makes it suitable for parallelization compared to the FMM based methods~\cite{greengard1987fast,cheng1999fast,ying2004kernel}.
-
-% The main idea of RBE is to treat the Gaussian factor in the long-range component of Ewald3D summation as a dis
-
-Recall that the long-range component of Ewald3D summation is given by:
-\begin{equation}
-	U_{\ell}^{\V{k}} = \frac{2 \pi}{L_xL_yL_z} \sum_{\V{k} \neq \V{0}} \frac{1}{k^2} \abs{\rho_{\V{k}}}^2 e^{-\frac{\V{k}^2}{4\alpha^2}}\;.
-\end{equation}
-Due to the rapid decay of the Gaussian function, RBE interprets the $U_{\ell}^{\V{k}}$ term as an expectation with respect to a discrete Gaussian distribution~$\mathcal{P}_{\V{k}}$:
-\begin{equation}
-	\mathcal{P}_{\V{k}} = \frac{e^{-\frac{\V{k}^2}{4\alpha^2}}}{S},~~\V{k} \neq \V{0} \;,
-\end{equation}
-where $S$ is the normalization constant:
-\begin{equation}
-	S = \sum_{\V{k} \neq \V{0}} e^{-\frac{\V{k}^2}{4\alpha^2}} - 1\;.
-\end{equation}
-Thus in RBE, the long-range component is approximated as follows:
-\begin{equation}
-	U_{\ell} \approx U_{\ell, *} =  \frac{2 \pi}{L_xL_yL_z} \sum_{\V{k} \in \V{k}_p} \frac{1}{k^2} \abs{\rho_{\V{k}}}^2 - \frac{\alpha}{\sqrt{\pi}}\sum_{i=1}^{N}q_i^2\;,
-\end{equation}
-where $\V{k}_p$ is a set of $P$ random vectors sampled from the discrete Gaussian distribution~$\mathcal{P}_{\V{k}}$, thus $U_{\ell, *}$ is an unbiased estimator of $U_{\ell}$.
-The same procedure is also valid for the force calculation.
-It has been proved that the batch size $P$ is an $O(1)$ constant irrelevant to the system size $N$, so that the time complexity of RBE is always $O(N)$.

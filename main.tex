@@ -165,12 +165,13 @@
 %                                                                       %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\title{Fast Algorithms for Simulating Quasi-2D Coulomb Systems}  % Title of the thesis.
+% \title{Fast Algorithms for Simulating Quasi-2D Coulomb Systems}  % Title of the thesis.
+\title{Confined Quasi-2D Coulomb Systems: Theory, Algorithms, and Applications}
 \author{GAO, Xuanzhao}     % Author of the thesis.
 \degree{\PhD}             % Degree for which the thesis is. Options: \AM \MSc \MPhil \PhD
 \stage{\Thesis}              % Stage of PhD document; use \Thesis for all other degree. Options: \PQE \Proposal \Thesis
 \subject{IIP-AMAT} % Subject of the Degree.
-\department{The Advanced Material Thrust}       % Department to which the thesis is submitted.
+\department{Academy of Interdisciplinary Studies (AIS)}       % Department to which the thesis is submitted.
 \advisor{GAN, Zecheng}     % Supervisor. Additional co-supervisor can be added using \member
 % \member{XIANG, Yang, Thesis Co-Supervisor}
 % \member{LIU, Jinguo, Thesis Co-Supervisor}
@@ -290,32 +291,42 @@
 
 \chapter{Introduction}
 \label{chp_intro}
-\input{chp_introduction.tex}
+\input{chapters/chp_introduction.tex}
 \newpage
 
 \chapter{Preliminaries}
 \label{chp_preliminaries}
-\input{chp_preliminaries.tex}
+\input{chapters/chp_preliminaries.tex}
+\newpage
+
+\chapter{Ewald Summation for Dielectrically Confined Systems}
+\label{chp_icmewald2d}
+\input{chapters/chp_icmewald2d.tex}
 \newpage
 
 \chapter{Sum-of-Exponentials Ewald Method for Quasi-2D Coulomb Systems}
 \label{chp_soewald2d}
-\input{chp_soewald2d.tex}
+\input{chapters/chp_soewald2d.tex}
 \newpage
 
 \chapter{Random Batch Ewald Method for Dielectrically Confined Coulomb Systems}
 \label{chp_rbe2d}
-\input{chp_rbe2d.tex}
+\input{chapters/chp_rbe2d.tex}
 \newpage
 
 \chapter{Quasi-Ewald Method for Negatively Confined Coulomb Systems}
 \label{chp_quasiewald}
-\input{chp_quasiewald.tex}
+\input{chapters/chp_quasiewald.tex}
+\newpage
+
+\chapter{Applications in Molecular Dynamics Simulations}
+\label{chp_applications}
+\input{chapters/chp_applications.tex}
 \newpage
 
 \chapter{Conclusions and Future Work}
 \label{chp_conclusion}
-\input{chp_conclusion.tex}
+\input{chapters/chp_conclusion.tex}
 \newpage
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -361,19 +372,19 @@
 \appendix
 \chapter{Appendix for Chapter 2}
 \label{chp_appendix_preliminaries}
-\input{app_preliminaries.tex}
+\input{appendix/app_preliminaries.tex}
 
 \chapter{Appendix for Chapter 3}
 \label{chp_appendix_soe}
-\input{app_soewald2d.tex}
+\input{appendix/app_soewald2d.tex}
 
 \chapter{Appendix for Chapter 4}
 \label{chp_appendix_rbe}
-\input{app_rbe2d.tex}
+\input{appendix/app_rbe2d.tex}
 
 \chapter{Appendix for Chapter 5}
 \label{chp_appendix_quasiewald}
-\input{app_quasiewald.tex}
+\input{appendix/app_quasiewald.tex}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %                                                                       %

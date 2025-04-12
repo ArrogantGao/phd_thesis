@@ -1,4 +1,65 @@
-\section{Broken Symmetry in Quasi-2D Coulomb Systems}
+In this chapter, applications of the proposed methods in simulating the quasi-2D systems are presented.
+We first present the applications in simulating the SPC/E bulk water systems with up to $10^6$ atoms, and then report a spontaneous symmetry breaking phenomenon in negatively confined charged systems for the first time.
+
+\section{All-atom SPC/E water systems}
+
+In this section we perform all-atom MD simulations of SPC/E bulk water systems~\cite{berendsen1987missing} confined by two slabs with and without dielectric jumps utilizing the RBE2D method introduced in Chapter~\ref{chp_rbe2d}.
+The parameter settings follow the same settings as in Section~\ref{sec::numerical}.
+
+\subsection{SPC/E bulk water system without dielectric jumps}
+\label{sec::waterhomo}
+
+%To further demonstrate the accuracy and efficiency of the proposed RBE2D method, 
+We perform MD simulations for the SPC/E bulk water system~\cite{berendsen1987missing}. 
+The system has dimensions $L_x=L_y=H=55.9~\mathring{\text{A}}$ and consists of $17496$ atoms. 
+Two purely repulsive shifted-truncated LJ walls (with $\varepsilon_{\text{atom-wall}}= k_{\text{B}}T)$ are located at $z=0$ and $z=H$.  
+The simulations utilize a time step $\Delta t=1fs$, and $T$ is fixed at $298K$ by a NH thermostat with relaxation time $10fs$. 
+Equilibration proceeds for $10^5$ time steps, followed by a $10^6$ steps production period, with configurations sampled every $100$ time steps. 
+The cutoff is set as $r_c=10\mathring{A}$, and the ratio $L_z/H$ is fixed as $3$ to ensure that both the ELC and remainder error term are negligible.
+
+\begin{figure}[ht!]
+\centering
+\includegraphics[width=0.90\linewidth]{figs/Density_new.pdf}
+	\caption{MD results for a SPC/E bulk water system. (a)  Concentration of oxygen near the top surface; (b)  MSD along $z$-direction; (c)  VACF; and (d)  raincloud plots of the ensemble average distribution of the potential energy as well as a boxplot and raw data-points. The RBE2D with different batch size {s} $P$ and the PPPM are plotted. The inset in (d) shows the convergence on the $W_2$ norm with $\mathcal{O}(1/P)$ rate.}
+	\label{fig:Water}
+\end{figure}
+
+We analyze various equilibrium and dynamic properties of the system, including the oxygen concentration, the MSD in $z$, the VACF, and the distribution of potential energy $U$.
+The results are summarized in Fig.~\ref{fig:Water}(a-d).
+Notably, the RBE2D method yields highly consistent results in comparison to the PPPM method across all examined properties when $P \geq 100$. 
+This underscores the RBE2D's ability to effectively capture spatiotemporal information across multiple scales in molecular dynamics simulations.
+
+\subsection{Dielectrically confined SPC/E water}
+
+%To further assess the comparison of both the accuracy and efficiency between the RBE2D and ICM-PPPM methods, 
+We conclude the numerical tests with simulations of dielectrically confined SPC/E bulk water, and cross compare the RBE2D and ICM-PPPM methods. 
+%The equilibrium temperature is set to $T=298K$. 
+%The equilibration process was carried out for $50 ns$, followed by MD simulations on the NVT ensemble of $100ns$ for data collecting. 
+One can refer to Sec.~\ref{sec::waterhomo} for most of the system setups.
+Here the dielectric mismatches are introduced, set as $\gamma_{\text{top}}=\gamma_{\text{bot}}=-0.5$. 
+The parameters of the ICM-PPPM method were automatically chosen~\cite{kolafa1992cutoff} to achieve a relative error of $\Delta=10^{-4}$, and the real space cutoff distance $r_c$ was set to $12\mathring{A}$, which was selected to optimize the performance of the ICM-PPPM method. 
+
+\begin{figure}[ht]
+\centering
+\includegraphics[width=0.95\linewidth]{figs/Dielectric.pdf}
+    \caption{Distribution of oxygen atom {s} in SPC/E bulk water system (a), the MSD (b), the VACF (c), and comparison of time performance between RBE2D (with different $P$) and ICM-PPPM (d) are studied. 
+    The inset in (d) shows  {the} corresponding strong parallel efficiency $\eta(N_{\text{core}})$ defined as Eq.~\eqref{eq::etau}. 
+    The results derived from the RBE2D   {are} almost identical to those from the ICM-PPPM. 
+     {The RBE2D based MD is about $1.5$ orders of magnitudes faster than the ICM-PPPM-based MD.}
+    }
+    \label{fig:den2}
+\end{figure}
+
+We first examine the concentration of oxygen along  {the} $z$-axis for a system comprising $53367$ atoms, the results are displayed in Fig.~\ref{fig:den2}(a). 
+We again find  excellent agreement between the RBE2D and the ICM-PPPM when $P\geq 200$, whereas some small discrepancy is observed if one chooses $P=100$. 
+The MSD and VACF are also calculated and shown in Figs.~\ref{fig:den2}(b-c).
+The results clearly indicate that for dynamic properties of the water molecules (such as MSD and VACF), the results obtained by RBE2D is consistent   {with} that of the ICM-PPPM  {across} multiple time scales ($fs$ to $ns$). 
+
+Finally, the CPU time and scalability data of both the RBE2D and ICM-PPPM methods are documented in Fig.~\ref{fig:den2}(d), based on simulating a water system containing $139968$ atoms. It is observed that, the RBE2D is more than 10 times faster than the ICM-PPPM method. 
+Furthermore, the   {parallel efficiency} is shown in the inset of Fig.~\ref{fig:den2}(d), which indicates that RBE2D can remain a strong scaling of $60\%$ for up to $4000$ CPU cores, while that of ICM-PPPM drops to only about $5\%$, again demonstrating the strong   {parallel efficiency} of RBE2D method.  {We also provide a more detailed comparison between the RBE2D and ICM-PPPM methods in Fig.~\ref{fig:timedie} in the SM, using the same number of CPU cores (\( N_{\text{core}} = 64 \) and 1024) and a batch size of \( P = 200 \), with varying particle number $N$. 
+The results clearly demonstrate that the RBE2D outperforms the ICM-PPPM across the range of \( N \) up to \( 10^6 \).}
+
+\section{Broken symmetry in quasi-2D Coulomb systems}
 
 \subsection{Oscillatory single particle field}
 

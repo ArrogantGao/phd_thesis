@@ -233,22 +233,28 @@ The detailed algorithm for RBE2D accelerated MD in the presence of dielectric in
 Finally, consider the fluctuation of random batch approximation of the force, denoted as $\bm{\Xi}_{\bm{F},i}^{\text{c}}=\bm{F}_{\ell}^{\text{c},*}(\bm{r}_i)-\bm{F}_{\ell}^{\text{c}}(\bm{r}_i)$, one can still show that 1) the variance of the RBE2D method is controlled via $\mathcal{O}(1/P)$ and is independent of $L_z$; 2) the RBE2D is capable to capture finite time structure and dynamic properties in MD simulations. 
 The proof is similar to Theorems~\ref{Thm::1} and~\ref{thm::2}, and is thus omitted here.
 
-\section{Numerical results on quasi-2D systems without dielectric interfaces}\label{sec::numerical}
+\section{Numerical results}\label{sec::numerical}
 
 In this section, numerical results are first presented for the homogeneous case, validating the performance of RBE2D accelerated MD simulations. 
-Examples include coarse-grained model {s} of electrolytes and all-atom SPC/E bulk water systems~\cite{berendsen1987missing} confined by two slabs without dielectric jumps,  {where all the quantities are defined and calculated in reduced LJ units and real units~\cite{frenkel2023understanding}, respectively.}
+Examples include coarse-grained models of electrolytes and all-atom SPC/E bulk water systems~\cite{berendsen1987missing} confined by two slabs without dielectric jumps, where all the quantities are defined and calculated in reduced LJ units and real units~\cite{frenkel2023understanding}, respectively.
 Our method is implemented in LAMMPS (version 29Oct2020) \cite{thompson2021lammps} and performed on the ``Siyuan Mark-I'' high performance cluster at Shanghai Jiao Tong University. 
 Each node is equipped with $2\times$ Intel Xeon ICX Platinum $8358$ CPU ($2.6$GHz, $32$ cores) and $512$ GB memory.
-The code is highly optimized, where  {the} message passing interface (MPI) and Intel AVX-512 instructions are used for parallelization and vectorization, respectively.
+The code is highly optimized, where the message passing interface (MPI) and Intel AVX-512 instructions are used for parallelization and vectorization, respectively.
 
 To benchmark the accuracy, several widely investigated quantities are computed, such as concentration, mean-squared displacement (MSD), velocity auto-correlation functions (VACF), ensemble-averaged energy distribution, etc. 
 The calculation methods for these quantities are described in Section~\ref{Sec::phyquan}.
-For comparison, we used the stable implementation of the PPPM2D method~\cite{crozier2001molecular} provided inside LAMMPS. 
+For comparison, we used the stable implementation of the PPPM2D method~\cite{crozier2001molecular} provided inside LAMMPS for systems without dielectric interfaces.
 Results obtained using the PPPM2D method are labeled as ``PPPM''. 
+For systems with dielectric interfaces, we used the HSMA method~\cite{liang2020harmonic} and the ICM-PPPM method~\cite{yuan2021particle}.
 The parameters of the PPPM were automatically chosen in LAMMPS to achieve a desired relative error of $\Delta=10^{-4}$ for force evaluations~\cite{deserno1998mesh}. 
-  {To allow a fair comparison}, the Ewald splitting parameter $\alpha$ is always set to be the same for RBE2D and PPPM methods.
+For the RBE2D, parameters such as $M$ and $L_z$ are selected according to Section~\ref{sec:parameter}; while
+for the HSMA and ICM-PPPM, we use the same parameters suggested by Refs.~\cite{liang2020harmonic} and~\cite{yuan2021particle}, respectively. For all methods, the threshold in relative errors is set to $10^{-4}$.
+To allow a fair comparison, the Ewald splitting parameter $\alpha$ is always set to be the same for RBE2D and PPPM methods.
 
-\subsection{Accuracy test case I: 3:1 electrolytes immersed in an implicit solvent}\label{subsec::electrolyte-neutral}
+
+
+\subsection{3:1 electrolytes immersed in an implicit solvent}\label{subsec::electrolyte-neutral}
+
 We first perform coarse-grained MD simulations of $3:1$ electrolytes in the NVT ensemble. 
 Following the primitive model, all the ions are represented as soft spheres of diameter $\sigma$ and mass $m$ that interact via  {electrostatic interactions} and a purely repulsive shifted-truncated LJ potential
 \begin{equation}
@@ -296,28 +302,33 @@ It is also noticed that, for the RBE2D method, choosing $P=50$ can already yield
  In those scenarios, increasing \(\Delta t\) can lead to particles coming very close to one another (even with the presence of the LJ potential), introducing additional sources of error in other MD components—particularly in managing bond, angle, and dihedral constraints~\cite{frenkel2023understanding}. These artificial effects may result in unphysically large forces or even cause the simulation to fail.}
 %Furthermore, we observe a 
 
-\subsection{Accuracy test case II: all-atom SPC/E bulk water system}
-\label{sec::waterhomo}
+\subsection{Dielectrically confined electrolytes}
 
-%To further demonstrate the accuracy and efficiency of the proposed RBE2D method, 
-Next, we perform MD simulations for the SPC/E bulk water system~\cite{berendsen1987missing}. 
-The system has dimensions $L_x=L_y=H=55.9~\mathring{\text{A}}$ and consists of $17496$ atoms. 
-Two purely repulsive shifted-truncated LJ walls (with $\varepsilon_{\text{atom-wall}}= k_{\text{B}}T)$ are located at $z=0$ and $z=H$. 
-The simulations utilize a time step $\Delta t=1fs$, and $T$ is fixed at $298K$ by a NH thermostat with relaxation time $10fs$. 
-Equilibration proceeds for $10^5$ time steps, followed by a $10^6$ steps production period, with configurations sampled every $100$ time steps. 
-The cutoff is set as $r_c=10\mathring{A}$, and the ratio $L_z/H$ is fixed as $3$ to ensure that both the ELC and remainder error term are negligible.
+%To demonstrate the accuracy of the RBE2D method in MD simulations with planar dielectric 
+Here we examine four distinct electrolyte systems that are confined by two dielectric interfaces.
+These systems include 2:1 and 3:1 electrolytes with varying surface charge densities and dielectric contrasts.
+In these systems, all ions are modeled as soft spheres of diameter $r_{\text{d}}$, and are confined by purely repulsive shifted-truncated LJ walls ($\varepsilon_{\text{ion-wall}}=k_{\text{B}}T$; $\sigma_{\text{ion-wall}}=0.5r_{\text{d}}$) at $z=0$ and $z=H$. More detailed information regarding the system settings can be found in Table~\ref{Table::Dielec}.
+The MD simulations utilize a time step $0.005\tau$, with temperature controlled by a NH thermostat %using an external temperature of $T=1$ and 
+with a damping time of $0.05\tau$,  {where $\tau$ is the reduced LJ unit of time defined in Section \ref{subsec::electrolyte-neutral}}.
+All simulations start with an equilibration period of $10^6$ time steps, followed by a production period of $10^8$ time steps.
 
 \begin{figure}[ht!]
 \centering
-\includegraphics[width=0.90\linewidth]{figs/Density_new.pdf}
-	\caption{MD results for a SPC/E bulk water system. (a)  Concentration of oxygen near the top surface; (b)  MSD along $z$-direction; (c)  VACF; and (d)  raincloud plots of the ensemble average distribution of the potential energy as well as a boxplot and raw data-points. The RBE2D with different batch size {s} $P$ and the PPPM are plotted. The inset in (d) shows the convergence on the $W_2$ norm with $\mathcal{O}(1/P)$ rate.}
-	\label{fig:Water}
+	\includegraphics[width=0.95\linewidth]{figs/DistributionDie.pdf}
+	\caption{Ionic distributions for [(a) $2:1$ electrolyte and (b) $3:1$ electrolyte] between neutral interfaces with symmetric dielectric contrast, and [(c) $2:1$ electrolyte and (d) $3:1$ electrolyte] confined between walls with asymmetric dielectric contrasts and non-neutral asymmetric surface charge densities. More details about the system settings are provided in Tab.~\ref{Table::Dielec}. 
+    Data   {is} shown for the RBE2D method with batch size $P=100$, and the HSMA and the ICM-PPPM methods with relative error threshold $10^{-4}$.} 
+	\label{fig:den1}
 \end{figure}
 
-We analyze various equilibrium and dynamic properties of the system, including the oxygen concentration, the MSD in $z$, the VACF, and the distribution of potential energy $U$.
-The results are summarized in Fig.~\ref{fig:Water}(a-d).
-Notably, the RBE2D method yields highly consistent results in comparison to the PPPM method across all examined properties when $P \geq 100$. 
-This underscores the RBE2D's ability to effectively capture spatiotemporal information across multiple scales in molecular dynamics simulations.
+We first calculate the cation and anion distributions along  {the} $z$-axis for all considered systems, the results are summarized in Figure~\ref{fig:den1}(a-d). 
+In panels (a-b), where the dielectric contrasts are set as $\gamma_{\text{top}}=\gamma_{\text{bot}}=0.939$, the concentrations illustrate the so-called ``ion depletion effect'' near the insulator-like interfaces, consistent with previous findings. 
+%In panels (C-D), it is observed that the presence of surface charge modulates this repulsive effect, with the modulation arising from the addition of counterions to maintain charge neutrality. 
+Panels (c-d) demonstrate the complicated interplay between the dielectric confinement effect, interfacial charges, and ion valences, and their accumulative effects on the cation distribution. %while these effects mutually reinforce each other for the anion distribution.
+For all cases considered, the RBE2D results show excellent agreement with that of the HSMA and ICM-PPPM methods. 
+%A comparison with the HSMA and ICM-PPPM methods shows excellent agreement with the RBE2D results. 
+The ion distribution shown in panel (c) also agrees with the result from a boundary element solver~\cite{wu2018asymmetric}, and reported in \cite{yuan2021particle}, figure 4(b). 
+Additionally, we calculate the potential energy distribution $\mathscr{P}(U)$ for these systems and measure the discrepancy using the $W_2$ norm.
+A convergence rate of $\mathcal{O}(1/P)$ is again observed (see Fig.~\ref{fig:energy2d}).
 
 \subsection{CPU time performance}
 We now report the CPU time performance of the RBE2D method, compared to the PPPM method. 
@@ -364,69 +375,3 @@ when $N_{\text{core}}\geq 1024$, RBE2D is approximately 10 times faster than PPP
 Furthermore, the strong scaling of the RBE2D remains over $70\%$ when~$\sim 4000$ CPUs are employed, while that of the PPPM drops raplidly to $6\%$. 
  {The main difference between these two methods lies in their communication cost. The RBE2D requires only a single global communication for the reduction of $P$ structure factors. In comparison, the PPPM method, due to its use of FFT, requires six sequential rounds of communication to perform both forward and backward Fourier transforms, leading to poor scalability~\cite{fftscalability,arnold2013comparison}.} This highlights the excellent parallel scalability of the RBE2D method. 
 %Due to its mesh-free nature, the RBE2D method is expected to exhibit even greater advantages when applied to systems with strong confinement, where $H\ll\min\{L_x,L_y\}$. In such cases, the PPPM method requires more meshes, leading to a loss in efficiency. 
-
-
-\section{Numerical results on quasi-2D systems under dielectric confinement}\label{sec::numericalDielectric}
-
-In this section, numerical simulations are performed for systems in the presence of dielectric interfaces, including dielectrically confined electrolytes and SPC/E bulk water, to further validate the RBE2D method.  {Reduced LJ units and real units are used to parameterize these systems, respectively.}
-As a benchmark for accuracy and efficiency, the simulations are also  conducted using the HSMA method~\cite{liang2020harmonic} and the ICM-PPPM method~\cite{yuan2021particle}, both have been implemented in LAMMPS~\cite{liang2022hsma}. 
-For the RBE2D, parameters such as $M$ and $L_z$ are selected according to Section~\ref{sec:parameter}; while
-for the HSMA and ICM-PPPM, we use the same parameters suggested by Refs.~\cite{liang2020harmonic} and~\cite{yuan2021particle}, respectively. For all methods, the threshold in  relative errors is set to $10^{-4}$.
-
-\subsection{Accuracy test case III: dielectrically confined electrolytes}
-
-%To demonstrate the accuracy of the RBE2D method in MD simulations with planar dielectric 
-Here we examine four distinct electrolyte systems that are confined by two dielectric interfaces.
-These systems include 2:1 and 3:1 electrolytes with varying surface charge densities and dielectric contrasts.
-In these systems, all ions are modeled as soft spheres of diameter $r_{\text{d}}$, and are confined by purely repulsive shifted-truncated LJ walls ($\varepsilon_{\text{ion-wall}}=k_{\text{B}}T$; $\sigma_{\text{ion-wall}}=0.5r_{\text{d}}$) at $z=0$ and $z=H$. More detailed information regarding the system settings can be found in Table~\ref{Table::Dielec}.
-The MD simulations utilize a time step $0.005\tau$, with temperature controlled by a NH thermostat %using an external temperature of $T=1$ and 
-with a damping time of $0.05\tau$,  {where $\tau$ is the reduced LJ unit of time defined in Section \ref{subsec::electrolyte-neutral}}.
-All simulations start with an equilibration period of $10^6$ time steps, followed by a production period of $10^8$ time steps.
-
-\begin{figure}[ht!]
-\centering
-	\includegraphics[width=0.95\linewidth]{figs/DistributionDie.pdf}
-	\caption{Ionic distributions for [(a) $2:1$ electrolyte and (b) $3:1$ electrolyte] between neutral interfaces with symmetric dielectric contrast, and [(c) $2:1$ electrolyte and (d) $3:1$ electrolyte] confined between walls with asymmetric dielectric contrasts and non-neutral asymmetric surface charge densities. More details about the system settings are provided in Tab.~\ref{Table::Dielec}. 
-    Data   {is} shown for the RBE2D method with batch size $P=100$, and the HSMA and the ICM-PPPM methods with relative error threshold $10^{-4}$.} 
-	\label{fig:den1}
-\end{figure}
-
-We first calculate the cation and anion distributions along  {the} $z$-axis for all considered systems, the results are summarized in Figure~\ref{fig:den1}(a-d). 
-In panels (a-b), where the dielectric contrasts are set as $\gamma_{\text{top}}=\gamma_{\text{bot}}=0.939$, the concentrations illustrate the so-called ``ion depletion effect'' near the insulator-like interfaces, consistent with previous findings. 
-%In panels (C-D), it is observed that the presence of surface charge modulates this repulsive effect, with the modulation arising from the addition of counterions to maintain charge neutrality. 
-Panels (c-d) demonstrate the complicated interplay between the dielectric confinement effect, interfacial charges, and ion valences, and their accumulative effects on the cation distribution. %while these effects mutually reinforce each other for the anion distribution.
-For all cases considered, the RBE2D results show excellent agreement with that of the HSMA and ICM-PPPM methods. 
-%A comparison with the HSMA and ICM-PPPM methods shows excellent agreement with the RBE2D results. 
-The ion distribution shown in panel (c) also agrees with the result from a boundary element solver~\cite{wu2018asymmetric}, and reported in \cite{yuan2021particle}, figure 4(b). 
-Additionally, we calculate the potential energy distribution $\mathscr{P}(U)$ for these systems and measure the discrepancy using the $W_2$ norm.
-A convergence rate of $\mathcal{O}(1/P)$ is again observed (see Fig.~\ref{fig:energy2d}).
-
-\subsection{Accuracy test case IV: dielectrically confined SPC/E Water}
-
-%To further assess the comparison of both the accuracy and efficiency between the RBE2D and ICM-PPPM methods, 
-We conclude the numerical tests with simulations of dielectrically confined SPC/E bulk water, and cross compare the RBE2D and ICM-PPPM methods. 
-%The equilibrium temperature is set to $T=298K$. 
-%The equilibration process was carried out for $50 ns$, followed by MD simulations on the NVT ensemble of $100ns$ for data collecting. 
-One can refer to Sec.~\ref{sec::waterhomo} for most of the system setups.
-Here the dielectric mismatches are introduced, set as $\gamma_{\text{top}}=\gamma_{\text{bot}}=-0.5$. 
-The parameters of the ICM-PPPM method were automatically chosen~\cite{kolafa1992cutoff} to achieve a relative error of $\Delta=10^{-4}$, and the real space cutoff distance $r_c$ was set to $12\mathring{A}$, which was selected to optimize the performance of the ICM-PPPM method. 
-
-\begin{figure}[ht]
-\centering
-\includegraphics[width=0.95\linewidth]{figs/Dielectric.pdf}
-    \caption{Distribution of oxygen atom {s} in SPC/E bulk water system (a), the MSD (b), the VACF (c), and comparison of time performance between RBE2D (with different $P$) and ICM-PPPM (d) are studied. 
-    The inset in (d) shows  {the} corresponding strong parallel efficiency $\eta(N_{\text{core}})$ defined as Eq.~\eqref{eq::etau}. 
-    The results derived from the RBE2D   {are} almost identical to those from the ICM-PPPM. 
-     {The RBE2D based MD is about $1.5$ orders of magnitudes faster than the ICM-PPPM-based MD.}
-    }
-    \label{fig:den2}
-\end{figure}
-
-We first examine the concentration of oxygen along  {the} $z$-axis for a system comprising $53367$ atoms, the results are displayed in Fig.~\ref{fig:den2}(a). 
-We again find  excellent agreement between the RBE2D and the ICM-PPPM when $P\geq 200$, whereas some small discrepancy is observed if one chooses $P=100$. 
-The MSD and VACF are also calculated and shown in Figs.~\ref{fig:den2}(b-c).
-The results clearly indicate that for dynamic properties of the water molecules (such as MSD and VACF), the results obtained by RBE2D is consistent   {with} that of the ICM-PPPM  {across} multiple time scales ($fs$ to $ns$). 
-
-Finally, the CPU time and scalability data of both the RBE2D and ICM-PPPM methods are documented in Fig.~\ref{fig:den2}(d), based on simulating a water system containing $139968$ atoms. It is observed that, the RBE2D is more than 10 times faster than the ICM-PPPM method. 
-Furthermore, the   {parallel efficiency} is shown in the inset of Fig.~\ref{fig:den2}(d), which indicates that RBE2D can remain a strong scaling of $60\%$ for up to $4000$ CPU cores, while that of ICM-PPPM drops to only about $5\%$, again demonstrating the strong   {parallel efficiency} of RBE2D method.  {We also provide a more detailed comparison between the RBE2D and ICM-PPPM methods in Fig.~\ref{fig:timedie} in the SM, using the same number of CPU cores (\( N_{\text{core}} = 64 \) and 1024) and a batch size of \( P = 200 \), with varying particle number $N$. 
-The results clearly demonstrate that the RBE2D outperforms the ICM-PPPM across the range of \( N \) up to \( 10^6 \).}

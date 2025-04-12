@@ -3,7 +3,7 @@ We begin by presenting confined quasi-2D Coulomb systems and establishing the ma
 We then provide a comprehensive review of Ewald summation methods, focusing on the Ewald splitting technique and its applications to both fully and doubly periodic systems.
 The chapter concludes with an overview of the random batch Ewald (RBE) method, an efficient approach for accelerating electrostatic energy computations in fully periodic systems.
 
-\section{Confined Quasi-2D Coulomb systems}
+\section{Confined quasi-2D Coulomb systems}
 
 Confined quasi-2D Coulomb systems are three-dimensional models characterized by double periodicity in the $xy$ dimensions and confinement by planar dielectric interfaces along the $z$-axis.
 The characteristic length scale in the non-periodic direction is often significantly smaller than that in the periodic directions. 
@@ -104,7 +104,7 @@ An illustration of the quasi-2D charged system is shown in Fig.~\ref{fig:box}.
     \label{fig:box}
 \end{figure}
 
-\subsection{Homogeneous Quasi-2D Systems}
+\subsection{Homogeneous quasi-2D systems}
 
 We first introduce the case where the dielectric constants are equal throughout the system, i.e.,~$\eps_{\mrm{u}} = \eps_{\mrm{d}} = \eps_{\mrm{c}}$. For simplicity, we set~$\eps_{\mrm{u}} = \eps_{\mrm{d}} = \eps_{\mrm{c}} = 1$.
 The electrostatic potential $\phi(\V r)$ for such systems then is governed by the following Poisson's equation with doubly periodic boundary conditions (DPBCs):
@@ -214,7 +214,7 @@ The corresponding force on each particle is $\bm{F}^i=-\nabla_{\bm{r}_{i}} U$, f
 It is remarked that, though the quasi-2D Coulomb summation is absolutely convergent, due to the long-range nature of Coulomb interaction, directly truncating the series for computing energy or force will lead to slow convergence with a complexity of $\mathcal O(N^2)$.
 
 
-\subsection{Dielectric Confined Quasi-2D Systems}
+\subsection{Dielectric confined quasi-2D systems}
 
 Then we consider the case where the dielectric constants are different in the upper and lower regions, i.e.~$\eps_{\mrm{u}}, \eps_{\mrm{d}} \neq \eps_{\mrm{c}}$.
 We assume that the interaction energy can be represented as

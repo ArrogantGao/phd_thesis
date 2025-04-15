@@ -32,7 +32,7 @@ The partial derivatives of zero-frequency mode with respect to the periodic dire
 	\end{split}
 \end{equation}
 
-It is important to note that the computation of Fourier space forces using Eq.~\eqref{eq::Fi} follows a common recursive procedure with energy, since it has the same structure as given in Eq.~\eqref{eq::33}, and the overall cost for evaluating force on all~$N$ particles for each~$k$ point also amounts to~$\mathcal{O}(N)$, and the resulting SOEwald2D method is summarized in Algorithm~\ref{alg:SOEwald2D}.
+It is important to note that the computation of Fourier space forces using Eq.~\eqref{eq::Fi} follows a common recursive procedure with energy, since it has the same structure as given in Eq.~\eqref{eq::33}, and the overall cost for evaluating force on all~$N$ particles for each~$k$ point also amounts to~$O(N)$, and the resulting SOEwald2D method is summarized in Algorithm~\ref{alg:SOEwald2D}.
 
 Moreover, Lemma~\ref{lem::forceerr} establishes the overall error on forces $\bm{F}_{i}$, and the proof follows an almost similar approach to what was done for the energy. %The proof is postponed to~\ref{app::forceerror}
 

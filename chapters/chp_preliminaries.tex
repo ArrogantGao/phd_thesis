@@ -136,9 +136,9 @@ Given these notations, Theorem \ref{order} clarifies the necessary conditions to
 \begin{proof}
 	By the Taylor expansion, one has for large $|\bm{m}|$
 	\begin{equation}\label{eq::3}
-		\frac{1}{|\bm{r} + \bm{\mathcal{M}}|} = \frac{1}{|\bm{\mathcal{M}}|} - \frac{\bm{r} \cdot \bm{\mathcal{M}}}{|\bm{\mathcal{M}}|^3} + \mathcal{O} \left(\frac{1}{|\mathcal{\sM M}|^3}\right)\;.
+		\frac{1}{|\bm{r} + \bm{\mathcal{M}}|} = \frac{1}{|\bm{\mathcal{M}}|} - \frac{\bm{r} \cdot \bm{\mathcal{M}}}{|\bm{\mathcal{M}}|^3} + O \left(\frac{1}{|\mathcal{\sM M}|^3}\right)\;.
 	\end{equation}
-	In the right-hand side of Eq.~\eqref{eq::3}, the second term is odd with respect to $\V{m}$ and thus sums to zero due to the symmetry of $\mathcal{S}$. The last $\mathcal{O}(|\V{\mathcal{M}}|^{-3})$ term is absolutely convergent as $R\rightarrow \infty$. Therefore, it is sufficient to analyze the convergence behavior of the expression:
+	In the right-hand side of Eq.~\eqref{eq::3}, the second term is odd with respect to $\V{m}$ and thus sums to zero due to the symmetry of $\mathcal{S}$. The last $O(|\V{\mathcal{M}}|^{-3})$ term is absolutely convergent as $R\rightarrow \infty$. Therefore, it is sufficient to analyze the convergence behavior of the expression:
 	\begin{equation}\label{eq::4}
 		% J=\lim_{R\rightarrow\infty}\sum_{\bm{\mathcal{M}} \in \mathcal{S}}\frac{1}{|\bm{\mathcal{M}}|}\sum_{j=1}^{N}q_{j}.
         J=\lim_{R\rightarrow\infty}\sum_{\bm{m}/ R \in \mathcal{S}}\frac{1}{|\bm{\mathcal{M}}|}\sum_{j=1}^{N}q_{j}.
@@ -212,7 +212,7 @@ For such a well-defined quasi-2D Coulomb system, the electrostatic \emph{interac
 \end{equation}
 where the notation ``$\prime$'' represents that the~$i = j$ case is excluded when~$\bm{m} = \bm{0}$.
 The corresponding force on each particle is $\bm{F}^i=-\nabla_{\bm{r}_{i}} U$, for $i=1,2,\ldots, N$.
-It is remarked that, though the quasi-2D Coulomb summation is absolutely convergent, due to the long-range nature of Coulomb interaction, directly truncating the series for computing energy or force will lead to slow convergence with a complexity of $\mathcal O(N^2)$.
+It is remarked that, though the quasi-2D Coulomb summation is absolutely convergent, due to the long-range nature of Coulomb interaction, directly truncating the series for computing energy or force will lead to slow convergence with a complexity of $O(N^2)$.
 
 
 \subsection{Dielectric confined quasi-2D systems}
@@ -490,13 +490,13 @@ Based on Theorem~\ref{thm:ewald2d_phi_error}, one can further obtain the error e
 \end{rmk}
 
 It should be noticed that, since the real space interaction is short-ranged, it only requires computation of neighboring pairs within the cutoff radius $r_c$. 
-Many powerful techniques have been developed to reduce the cost for such short-range interactions into $\mathcal O(N)$ complexity, including the Verlet list~\cite{verlet1967computer}, the linked cell list~\cite{allen2017computer} and more recently the random batch list~\cite{liang2021random} algorithms. 
+Many powerful techniques have been developed to reduce the cost for such short-range interactions into $O(N)$ complexity, including the Verlet list~\cite{verlet1967computer}, the linked cell list~\cite{allen2017computer} and more recently the random batch list~\cite{liang2021random} algorithms. 
 Consequently, the main challenge lies in the long-range component calculation, which will be discussed in the following chapters.
 
 In summary, the Ewald2D summation is the exact solution and does not involve any uncontrolled approximation. 
 However, two significant drawbacks limit its application for large-scale simulations:
 \begin{itemize}
-	\item Even with optimal choice of parameter $\alpha$, computing the interaction energy $U$ for an $N$-particle system through Eqs.~\eqref{eq:phi_s}, \eqref{eq::self} and \eqref{eq::7} takes $\mathcal O(N^2)$ complexity, which is worse than $\mathcal O(N^{3/2})$ for that of the Ewald3D, the fully-periodic case.
+	\item Even with optimal choice of parameter $\alpha$, computing the interaction energy $U$ for an $N$-particle system through Eqs.~\eqref{eq:phi_s}, \eqref{eq::self} and \eqref{eq::7} takes $O(N^2)$ complexity, which is worse than $O(N^{3/2})$ for that of the Ewald3D, the fully-periodic case.
 	\item The function $\xi^{\pm}(h, z_{ij})$ is ill-conditioned: It grows exponentially as $h z_{ij}$ grows, leading to catastrophic error cancellation in actual computations with prescribed machine precision.
 \end{itemize}
 

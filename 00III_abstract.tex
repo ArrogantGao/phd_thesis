@@ -1,19 +1,17 @@
-This thesis develops novel fast algorithms for simulating quasi-two-dimensional (quasi-2D) Coulomb systems, which are characterized by double periodicity in two dimensions and confinement in the third dimension. 
-Such systems are crucial for studying various physical phenomena, including magnetic films, super-capacitors, ion channels, and quantum devices. 
-Despite their importance, efficient simulation of quasi-2D systems remains challenging due to their reduced symmetry, multi-scale nature, and the need to handle dielectric interfaces.
+This thesis introduces focuses on the quasi-two-dimensional (quasi-2D) Coulomb systems, which are prevalent in fields such as materials science, biophysics, and electrochemistry. 
+These systems, characterized by their macroscopic dimensions in two directions and atomic-scale thickness in the third, present significant computational challenges due to their complex boundary conditions and multi-scale nature, especially when confined by dielectric interfaces.
 
-We introduce a new class of fast summation methods that combines the Ewald splitting technique with random batch sampling. 
-Our approach achieves optimal $\mathcal{O}(N)$ computational complexity while maintaining high efficiency for strongly confined quasi-2D systems, even in challenging scenarios involving large aspect ratios and strongly polarizable interfaces.
+The research begins with a comprehensive theoretical analysis of Ewald summation methods tailored for quasi-2D systems, providing rigorous error estimates and optimal parameter selection strategies. 
+Building on this foundation, three innovative algorithms are developed: the Sum-of-Exponentials Ewald2D (SOEwald2D) method, the Random Batch Ewald2D (RBE2D) method, and the Quasi-Ewald Method (QEM), which are designed for simulating quasi-2D Coulomb systems in homogeneous dielectric environments, dielectrically confined quasi-2D systems, and systems with negative dielectric confinement, respectively.
+These algorithms integrate Ewald splitting techniques with random batch sampling, achieving optimal $O(N)$ computational complexity while maintaining high accuracy. 
+Notably, these methods are mesh-free and demonstrate superior parallel scalability compared to traditional FFT-based approaches.
 
-The thesis makes three main methodological contributions:
-First, we develop the sum-of-exponential Ewald2D (SOEwald2D) method, which utilizes sum-of-exponential approximation and random batch sampling to accelerate the Ewald2D summation for quasi-2D Coulomb systems without dielectric confinements. 
-Second, we propose the random batch Ewald2D (RBE2D) method for systems with dielectric confinements, as well as providing rigorous error analysis for the combination of image charge method and Ewald summation. 
-Third, we introduce the quasi-Ewald method (QEM) to handle systems with negative dielectric confinements, where traditional methods break down due to unusual polarization effects.
+The thesis validates these methods through extensive numerical experiments, including simulations of electrolyte systems and all-atom water models under various confinement conditions. 
+The results highlight the methods' ability to accurately capture both structural and dynamical properties while significantly outperforming existing approaches in computational efficiency, particularly for strongly confined systems.
 
-For each method, we provide comprehensive theoretical analysis including rigorous error estimates and complexity bounds. 
-These theoretical predictions are thoroughly validated through extensive numerical experiments. 
-Our methods demonstrate excellent scalability for large-scale simulations on modern supercomputing architectures. 
-Using these new algorithms, we discover remarkable spontaneous symmetry breaking phenomena emerging in symmetrically charged binary particle systems under negative dielectric confinement.
+Furthermore, this thesis demonstrates practical applications of the proposed methods through comprehensive studies of confined quasi-2D Coulomb systems. 
+These include all-atom molecular dynamics simulations of confined SPC/E water models and detailed numerical investigations of negatively confined electrolyte systems. 
+Notably, the research reveals a previously undiscovered phenomenon where symmetrically charged binary particle systems exhibit broken symmetries solely due to confinement effects.
 
-This work advances the field of computational physics by providing efficient and accurate tools for studying quasi-2D Coulomb systems, opening new possibilities for investigating complex physical phenomena at interfaces and in confined geometries. 
-The methodological framework developed here can be extended to other partially periodic systems and has broader implications for simulating various long-range interaction problems.
+The advancements presented in this thesis address long-standing computational challenges in simulating quasi-2D Coulomb systems, offering powerful tools for studying confined charged systems across scales. 
+The theoretical insights and algorithmic innovations open new avenues for exploring complex phenomena in biological systems, materials science, and electrochemistry.

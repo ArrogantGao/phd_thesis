@@ -213,10 +213,10 @@ $\Norm{\vr_i-\vr_j}$ stands  for the Euclidean distance between these two partic
 It is important to highlight that the aforementioned methods are directly applicable to the simulation of isotropic Coulomb systems. However, for quasi-2D Coulomb systems with confined geometries, modifications to existing algorithms or the development of novel methodologies are required to address the challenges posed by reduced symmetry.
 
 
-A flurry of methods have been developed to reduce the $\fO(N^2)$   complexity.  Some notable examples include the Ewald3DC method~\cite{yeh1999ewald}, the  MMM2D method~\cite{arnold2002mmm2d}, the spectral Ewald method~\cite{lindbo2012fast}, the periodic FMMs~\cite{yan2018flexibly, pei2023fast}, and the SoEwald2D~\cite{gan2024fast}. While a comprehensive review of these techniques is beyond the scope of this paper,  it is worth noting that all these methods are based on either FMM or the standard Ewald-splitting framework, with some achieving computational complexities as low as $\mathcal{O}(N\log N)$ or even $\mathcal{O}(N)$. Nevertheless, these methods are primarily applicable to systems with spatially homogeneous dielectric constants, which limits their ability to account for dielectric confinement effects.  To overcome such limitation, it is necessary   to  incorporate techniques designed to handle the sharp dielectric interface conditions. One direct  pathway is   solve for the induced charge density or surface potential on dielectric interfaces via usage of  various optimization techniques~\cite{Barros2014Efficient, Barros2014Dielectric, tyagi2010iterative, jadhao2012simulation, jadhao2013variational}.  Alternatively, strategies that utilize the Image Charge Method (ICM) in  combination with established electrostatic solvers~\cite{tyagi2007icmmm2d, tyagi2008electrostatic, dos2015electrolytes, yuan2021particle, liang2020harmonic, liang2022hsma, gan2024random} offer promising avenues.
+A flurry of methods have been developed to reduce the $\fO(N^2)$   complexity.  Some notable examples include the Ewald3DC method~\cite{yeh1999ewald}, the  MMM2D method~\cite{arnold2002mmm2d}, the spectral Ewald method~\cite{lindbo2012fast}, the periodic FMMs~\cite{yan2018flexibly, pei2023fast}, and the SoEwald2D~\cite{gan2024fast}. While a comprehensive review of these techniques is beyond the scope of this paper,  it is worth noting that all these methods are based on either FMM or the standard Ewald-splitting framework, with some achieving computational complexities as low as $O(N\log N)$ or even $O(N)$. Nevertheless, these methods are primarily applicable to systems with spatially homogeneous dielectric constants, which limits their ability to account for dielectric confinement effects.  To overcome such limitation, it is necessary   to  incorporate techniques designed to handle the sharp dielectric interface conditions. One direct  pathway is   solve for the induced charge density or surface potential on dielectric interfaces via usage of  various optimization techniques~\cite{Barros2014Efficient, Barros2014Dielectric, tyagi2010iterative, jadhao2012simulation, jadhao2013variational}.  Alternatively, strategies that utilize the Image Charge Method (ICM) in  combination with established electrostatic solvers~\cite{tyagi2007icmmm2d, tyagi2008electrostatic, dos2015electrolytes, yuan2021particle, liang2020harmonic, liang2022hsma, gan2024random} offer promising avenues.
 Despite their potential, these methods are not without shortcomings.  For instance,  ICM-based methods require a substantial increase in the number of image charges to achieve convergence, which introduces challenges in maintaining both computational accuracy and efficiency.
 
-In this work, we proposed an~$\mathcal{O}(N)$ simulation algorithm Quasi-Ewald method (QEM) for doubly periodic charged particle systems with dielectric mismatches at boundary.
+In this work, we proposed an~$O(N)$ simulation algorithm Quasi-Ewald method (QEM) for doubly periodic charged particle systems with dielectric mismatches at boundary.
 To overcome the difficulties caused by the geometry of quasi-2D systems, the Quasi-Ewald method is based on a novel Quasi-Ewald splitting strategy, which divides the original Coulomb kernel into short range real space and long range Fourier space components.
 Through Dirichlet to Neumann mapping, we derived the Green's function of the Poisson equation in this class of systems~\cite{dos2017simulations}. 
 By combining the Quasi-Ewald splitting strategy and the Green's function, we obtained a analytic and fast convergent lattice summation formula.
@@ -474,7 +474,7 @@ moreover,
 		 U_l^{\bm{0}}  := -\frac{ \pi}{L_x L_y} \sum_{j = 1}^N q_iq_{j} \left[ {z_{ij}} \mrm{erf}(\sqrt{\alpha} {z_{ij}}) + \frac{\exp\left({-\alpha z_{ij}^2}\right)}{\sqrt{\alpha \pi}}  \right]\;.
 	\end{equation} 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-Although the Ewald2D summation is the exact solution and does not involve any uncontrolled approximation. However, two significant drawbacks limit its application for large-scale simulations.  In one hand, even with optimal choice of $\alpha$, computing the interaction energy $U$ for an $N$-particle system   takes $O\left(N^2\right)$ complexity, which is    considerably higher than the $\mathcal{O}(N^{3/2})$ scaling of the standard Ewald method. In the other,
+Although the Ewald2D summation is the exact solution and does not involve any uncontrolled approximation. However, two significant drawbacks limit its application for large-scale simulations.  In one hand, even with optimal choice of $\alpha$, computing the interaction energy $U$ for an $N$-particle system   takes $O\left(N^2\right)$ complexity, which is    considerably higher than the $O(N^{3/2})$ scaling of the standard Ewald method. In the other,
 the function $\xi^{ \pm}\left(k, z_{i j}\right)$ is ill-conditioned in that    it grows exponentially with increasing 
 $k z_{i j}$
 , resulting in catastrophic error cancellation when evaluated under finite machine precision. These challenges underscore the necessity for more efficient numerical methods that can simultaneously handle long-range interactions, doubly periodic boundary conditions, and dielectric mismatches while ensuring both numerical stability and computational efficiency.
@@ -1182,7 +1182,7 @@ $z$-axis, ensuring the ordering
 \begin{equation*}
    0 < z_1 < z_2 <  \cdots <  z_{N - 1}<z_N < L_z\;.
 \end{equation*}
-Since for all  $i$, $z_i \in (0, L_z)$ is uniformly bounded, hence  the strategies such as the bucket sorting~\cite{corwin2004sorting} can be applied, and the computational cost can be of order~$\mathcal{O}(N \log{N})$ or even  of order~$\mathcal{O}(N)$. Once all $N$ particles are sorted according to their positions along the 
+Since for all  $i$, $z_i \in (0, L_z)$ is uniformly bounded, hence  the strategies such as the bucket sorting~\cite{corwin2004sorting} can be applied, and the computational cost can be of order~$O(N \log{N})$ or even  of order~$O(N)$. Once all $N$ particles are sorted according to their positions along the 
 $z$-axis, we observe that $S_0$ can be written into
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{align*}
@@ -1267,7 +1267,7 @@ To sum up, given fixed frequency $\vk^\ast$, it only takes  linear complexity to
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-In this section, we shall introduce a stochastic algorithm designed to accelerate the Quasi-Ewald method in particle simulations, reducing the complexity to $\mathcal{O}(N)$. 
+In this section, we shall introduce a stochastic algorithm designed to accelerate the Quasi-Ewald method in particle simulations, reducing the complexity to $O(N)$. 
 Unlike existing methods relying on either FFT or FMM-based techniques to reduce the complexity, our idea involves adopting mini-batch stochastic approximation over Fourier modes, with importance sampling for variance reduction. 
 More precisely, let us consider the Fourier sum over $\bm k \in \mathcal{K}^2$ for a given kernel $f(\bm{k})$,
 one can alternatively understand the Fourier sum as an expectation
@@ -1359,9 +1359,9 @@ Finally, combining all these strategies, we state our Quasi-Ewald method for cal
 % \STATE{Randomly initialize the positions and velocities of charges~$\V{r}_i$ and~$\V{v}_i$ for~$1 \leq i \leq N$.}
 % \STATE{Sample sufficient number of~$\V{k}$ according to distribution $\exp{(-k^2 / (4 \alpha))} / H$, $k \neq 0$ to from a set~$\mathcal{K}$.}
 % \FOR{step in 1 : Step}
-%     \STATE{Find neighbors of each particle using cell list, then compute the short range parts of the Coulomb interaction by Eq.~\eqref{eq:F_short}, with a complexity of~$\mathcal{O}(nN)$.}
-%     \STATE{Sort all particles up in the $z$ direction, and randomly take~$p$ frequencies from the set~$\mathcal{K}$, and then estimate the long range interaction using Eq.~\eqref{eq:F_l_rbe}, with a complexity of~$\mathcal{O}(pN)$.}
-%     \STATE{Integrate Newton's equations~\eqref{eq:NewtonEquation} for time~$\D t$ via velocity-Verlet method and some appropriate thermostat, with a complexity of~$\mathcal{O}(N)$.}
+%     \STATE{Find neighbors of each particle using cell list, then compute the short range parts of the Coulomb interaction by Eq.~\eqref{eq:F_short}, with a complexity of~$O(nN)$.}
+%     \STATE{Sort all particles up in the $z$ direction, and randomly take~$p$ frequencies from the set~$\mathcal{K}$, and then estimate the long range interaction using Eq.~\eqref{eq:F_l_rbe}, with a complexity of~$O(pN)$.}
+%     \STATE{Integrate Newton's equations~\eqref{eq:NewtonEquation} for time~$\D t$ via velocity-Verlet method and some appropriate thermostat, with a complexity of~$O(N)$.}
 % \ENDFOR
 % \end{algorithmic}
 % \end{algorithm}

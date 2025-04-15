@@ -55,7 +55,7 @@ For quasi-2D systems, the RBE2D method offers a particular advantage: it is mesh
     \begin{equation}\label{eq::30}
         \mathbb{E}|\V \Xi_{\V F,i}|^2=\frac{1}{P}\left[\frac{(4\pi q_i)^2S}{V^2}\sum_{\bm{k}\neq \bm{0}}\frac{e^{-k^2/(4\alpha^2)}}{k^2}\left|\emph{Im}\left(e^{-\i \V k \cdot \V r_i}\rho(\V k)\right)\right|^2-|\V F_{i}^{\ell}|^2\right]
     \end{equation}
-    which is bounded and scales as $\mathcal O(1/P)$. Furthermore, under the DH assumption, $\mathbb{E}|\V \Xi_{\V F,i}|^2$ is independent of both the particle number $N$ and the size $L_z$.
+    which is bounded and scales as $O(1/P)$. Furthermore, under the DH assumption, $\mathbb{E}|\V \Xi_{\V F,i}|^2$ is independent of both the particle number $N$ and the size $L_z$.
 \end{thm}
 
 \begin{proof}%[Proof of \emph{Theorem}~\emph{\ref{Thm::1}}]
@@ -80,7 +80,7 @@ For quasi-2D systems, the RBE2D method offers a particular advantage: it is mesh
     \end{equation}
     Substituting Eq.~\eqref{eq::Sa} into Eq.~\eqref{eq::32} yields
     \begin{equation}
-        \mathbb{E}|\V \Xi_{\V F,i}|^2\leq\frac{8\alpha^4Cq_i^2}{\pi P}\sim \mathcal O\left(\frac{1}{P}\right)
+        \mathbb{E}|\V \Xi_{\V F,i}|^2\leq\frac{8\alpha^4Cq_i^2}{\pi P}\sim O\left(\frac{1}{P}\right)
     \end{equation}
     which is independent of either $N$ or $L_z$.
 \end{proof}
@@ -115,7 +115,7 @@ If the forces $\bm{F}_i$ are bounded and Lipschitz, and the fluctuation of stoch
 \begin{equation}\label{eq::Convergence}
 \sup _{t \in[0, t_{\emph{MD}}]} \sqrt{\frac{1}{N} \sum_{i=1}^N \mathbb{E}\left(\left|\bm{r}_i-\widetilde{\bm{r}}_i\right|^2+\left|\bm{v}_i-\widetilde{\bm{v}}_i\right|^2\right)} \leq C(t_{\emph{MD}}) \sqrt{\Lambda \Delta t}. %\sim C(t_{\emph{MD}}) \sqrt{\frac{\Delta t}{P}}.
 \end{equation}
- {Here, $\Lambda$ is an upper bound for $\mathbb{E}|\V \Xi_{\V F,i}|^2$, and one has $\Lambda\sim \mathcal O(1/P)$ due to Theorem~\ref{Thm::1}.} 
+ {Here, $\Lambda$ is an upper bound for $\mathbb{E}|\V \Xi_{\V F,i}|^2$, and one has $\Lambda\sim O(1/P)$ due to Theorem~\ref{Thm::1}.} 
 \end{thm}
 
 Theorem~\ref{thm::2} indicates that the RBE2D approximated dynamics is capable of capturing finite time structure and dynamic properties.
@@ -127,11 +127,11 @@ For NVT and NPT ensembles, the heating effect can be eliminated by introducing a
 
 Next, we analyze the computational complexity of the RBE2D accelerated MD simulations. The detailed algorithm is summarized in Fig.~\ref{Alg::1}.  
 In the RBE2D, the random batch importance sampling in Eq.~\eqref{eq:forceRBE} approximates the Fourier space force by summing over $P$ Fourier modes. 
-At each step, $P$ structure factors, $\{\rho(\bm{k}_{\eta})\}_{\eta=1}^{P}$, are computed for all particles, resulting in a Fourier part complexity of $\mathcal{O}(PN)$. Furthermore, as shown in Theorems~\ref{Thm::1} and \ref{thm::2} and the analysis at the end of Section~\ref{subsec::RBE2D_algorithm}, the RBE2D error does not grow as $N$ or $L_z$ increases when the batch size $P=\mathcal{O}(1)$ and $\alpha\sim N^{1/3}/(L_xL_yH)^{1/3}$ are provided. 
+At each step, $P$ structure factors, $\{\rho(\bm{k}_{\eta})\}_{\eta=1}^{P}$, are computed for all particles, resulting in a Fourier part complexity of $O(PN)$. Furthermore, as shown in Theorems~\ref{Thm::1} and \ref{thm::2} and the analysis at the end of Section~\ref{subsec::RBE2D_algorithm}, the RBE2D error does not grow as $N$ or $L_z$ increases when the batch size $P=O(1)$ and $\alpha\sim N^{1/3}/(L_xL_yH)^{1/3}$ are provided. 
 The real space part of the RBE2D is short-ranged due to the rapid decay of factor $\erfc(\alpha r)$ and can be directly truncated by introducing a cutoff $r_c$. 
 As a result, the real space complexity is proportional to the product of $N$ and the average number of neighbors within a volume of $4\pi r_c^3$ per particle. 
-For a given truncation error tolerance, $r_c\sim \alpha^{-1}$, yielding a real space complexity $\sim \alpha^{-3}N/(L_xL_yH)=\mathcal{O}(1)$ per particle. 
-As such, the total computational complexity is of $\mathcal{O}(N)$. 
+For a given truncation error tolerance, $r_c\sim \alpha^{-1}$, yielding a real space complexity $\sim \alpha^{-3}N/(L_xL_yH)=O(1)$ per particle. 
+As such, the total computational complexity is of $O(N)$. 
 
 \begin{algorithm}[ht]
  \caption{(RBE2D accelerated molecular dynamics for quasi-2D systems)}\label{Alg::1}
@@ -149,7 +149,7 @@ As such, the total computational complexity is of $\mathcal{O}(N)$.
 \end{algorithm}
 Besides its linear complexity, the RBE2D method offers two other significant advantages:
 \begin{itemize}
-    \item  {Communication efficiency: The RBE2D method is embarrassingly parallel, requiring only a single global reduction of the structure factors for all $\mathcal{O}(P)$ samples when calculating the force using Eq.~\eqref{eq:forceRBE}.} This streamlined communication facilitates high scalability. 
+    \item  {Communication efficiency: The RBE2D method is embarrassingly parallel, requiring only a single global reduction of the structure factors for all $O(P)$ samples when calculating the force using Eq.~\eqref{eq:forceRBE}.} This streamlined communication facilitates high scalability. 
 
     \item Vacuum layer flexibility: the RBE2D is mesh free, and choosing a larger vacuum layer thickness incurs no extra cost. This provides flexibility for one to always choose a proper $L_z$ to guarantee accuracy, without sacrificing efficiency.
 \end{itemize}
@@ -169,7 +169,7 @@ where
 \end{split}
 \end{equation}
 with $\rho_{\bm{k}}^{M}$ the conjugate of $\bar{\rho}_{\bm{k}}^{M}$ and $\widehat{\bm{k}}=(k_x,k_y,-k_z)$. The calculation of Eq.~\eqref{eq::52} can also be accelerated via FFT, namely, the ICM-PPPM method~\cite{yuan2021particle}. 
-If the image reflection level is truncated at $M$, the computational cost of ICM-PPPM is $\mathcal O(MN \log(MN))$. Thus for strongly confined systems, the cost of FFT-based method will increase rapidly as $M$ increases.
+If the image reflection level is truncated at $M$, the computational cost of ICM-PPPM is $O(MN \log(MN))$. Thus for strongly confined systems, the cost of FFT-based method will increase rapidly as $M$ increases.
 %This means that the cost does not increase rapidly as $M$ increases, which indicates that RBE2D is more suitable for systems with strong surface polarization. 
 %The detailed formula is given in Eq.~\eqref{eq::F_c_Four_detail}.
 
@@ -206,14 +206,14 @@ Notice that Eq.~\eqref{eq::rhorhoM} can be rewritten as
     \end{split}
 \end{equation}
 This formulation enables the decoupling of the summation over particles index $j$ and their image index $l$. 
-In practical simulations, one shall first precompute $Y_{\text{odd}}(k_z)$ and $Y_{\text{even}}(k_z)$ for each $\bm{k} \in \{\bm{k}_{\eta}\}_{\eta=1}^{P}$, as these are configuration independent, with a computational cost of $\mathcal{O}(PM)$. 
+In practical simulations, one shall first precompute $Y_{\text{odd}}(k_z)$ and $Y_{\text{even}}(k_z)$ for each $\bm{k} \in \{\bm{k}_{\eta}\}_{\eta=1}^{P}$, as these are configuration independent, with a computational cost of $O(PM)$. 
 Subsequently, for a given particle configuration, one evaluates $\rho_{\bm{k}}$, along with the conjugates of $Y_{\text{odd}}$ and $Y_{\text{even}}$, and computes
 \begin{equation}
     \sum_{j=1}^{N}q_je^{\i\bm{k}\cdot\bm{r}_{j}}\left(1+e^{-2\i k_zz_j}Y_{\text{odd}}(k_z)+Y_{\text{even}}(k_z)\right)
 \end{equation}
-for every $\bm{k}\in\{\bm{k}_{\eta}\}_{\eta=1}^{P}$, which incurs a cost of $\mathcal{O}(PN)$ operations. These intermediate variables are then utilized to evaluate $\nabla_{\bm{r}_i}\left[\rho_{\bm{k}}\bar{\rho}_{\bm{k}}^{M}\right]$ for all particles $i$ using Eq.~\eqref{eq::56}, adding another $\mathcal O(PN)$ to the cost. Finally, substituting the value of $\nabla_{\bm{r}_i}\left[\rho_{\bm{k}}\bar{\rho}_{\bm{k}}^{M}\right]$ into Eq.~\eqref{eq::important} allows for the computation of the first term on the right-hand side with $\mathcal{O}(PN)$ operations, followed by the addition of the IBC term, which incurs an $\mathcal{O}(N)$ cost. Consequently, the total computational cost for force evaluations is reduced from $\mathcal O(PMN)$ to $\mathcal O(P(M+N))$.
-In practice, one shall still take $\alpha \sim N^{1/3}/(L_xL_yH)^{1/3}$ to ensure that the real space calculation costs $\mathcal{O}(N)$, then the $\V k$-space components of force can be calculated as such so that the complexity is reduced to $\mathcal{O}(P(M+N))$.}
-Thus, the overall complexity of the RBE2D is approximately $\mathcal{O}(N)$ since both $P$ and $M$ are of $\mathcal O(1)$ and independent   {of} $N$.
+for every $\bm{k}\in\{\bm{k}_{\eta}\}_{\eta=1}^{P}$, which incurs a cost of $O(PN)$ operations. These intermediate variables are then utilized to evaluate $\nabla_{\bm{r}_i}\left[\rho_{\bm{k}}\bar{\rho}_{\bm{k}}^{M}\right]$ for all particles $i$ using Eq.~\eqref{eq::56}, adding another $O(PN)$ to the cost. Finally, substituting the value of $\nabla_{\bm{r}_i}\left[\rho_{\bm{k}}\bar{\rho}_{\bm{k}}^{M}\right]$ into Eq.~\eqref{eq::important} allows for the computation of the first term on the right-hand side with $O(PN)$ operations, followed by the addition of the IBC term, which incurs an $O(N)$ cost. Consequently, the total computational cost for force evaluations is reduced from $O(PMN)$ to $O(P(M+N))$.
+In practice, one shall still take $\alpha \sim N^{1/3}/(L_xL_yH)^{1/3}$ to ensure that the real space calculation costs $O(N)$, then the $\V k$-space components of force can be calculated as such so that the complexity is reduced to $O(P(M+N))$.}
+Thus, the overall complexity of the RBE2D is approximately $O(N)$ since both $P$ and $M$ are of $O(1)$ and independent   {of} $N$.
 The detailed algorithm for RBE2D accelerated MD in the presence of dielectric interfaces is summarized in Algorithm~\ref{alg::RBEalg}.
 
 \begin{algorithm}[H]
@@ -230,7 +230,7 @@ The detailed algorithm for RBE2D accelerated MD in the presence of dielectric in
  \end{algorithmic}
 \end{algorithm}
 
-Finally, consider the fluctuation of random batch approximation of the force, denoted as $\bm{\Xi}_{\bm{F},i}^{\text{c}}=\bm{F}_{\ell}^{\text{c},*}(\bm{r}_i)-\bm{F}_{\ell}^{\text{c}}(\bm{r}_i)$, one can still show that 1) the variance of the RBE2D method is controlled via $\mathcal{O}(1/P)$ and is independent of $L_z$; 2) the RBE2D is capable to capture finite time structure and dynamic properties in MD simulations. 
+Finally, consider the fluctuation of random batch approximation of the force, denoted as $\bm{\Xi}_{\bm{F},i}^{\text{c}}=\bm{F}_{\ell}^{\text{c},*}(\bm{r}_i)-\bm{F}_{\ell}^{\text{c}}(\bm{r}_i)$, one can still show that 1) the variance of the RBE2D method is controlled via $O(1/P)$ and is independent of $L_z$; 2) the RBE2D is capable to capture finite time structure and dynamic properties in MD simulations. 
 The proof is similar to Theorems~\ref{Thm::1} and~\ref{thm::2}, and is thus omitted here.
 
 \section{Numerical results}\label{sec::numerical}
@@ -272,7 +272,7 @@ and $r_c$ is set as $10\sigma$ for both the RBE2D and PPPM methods.
 \begin{figure}[!ht]
 	\centering
 \includegraphics[width=0.90\linewidth]{figs/3_1Elec.pdf}
-	\caption{MD results for $3:1$ electrolytes. (a-b):  Variance of force and the error on ensemble average of the potential energy as a function of the relative size of the extended system, $L_z/H$. (c):  Concentration of cations along $z$-dimension. (d):  Raincloud plots of the ensemble average distribution of the potential energy as well as a boxplot and raw data-points. In (a), (c) and (d), results are shown for the RBE2D with different batch size {s} $P$ and the PPPM. In (b), we use the $W_2$ norm defined in Eq.~\eqref{eq::W2} to measure the difference between two distributions. The inset in (d) shows the convergence on the $W_2$ norm with $\mathcal{O}(1/P)$ rate.}
+	\caption{MD results for $3:1$ electrolytes. (a-b):  Variance of force and the error on ensemble average of the potential energy as a function of the relative size of the extended system, $L_z/H$. (c):  Concentration of cations along $z$-dimension. (d):  Raincloud plots of the ensemble average distribution of the potential energy as well as a boxplot and raw data-points. In (a), (c) and (d), results are shown for the RBE2D with different batch size {s} $P$ and the PPPM. In (b), we use the $W_2$ norm defined in Eq.~\eqref{eq::W2} to measure the difference between two distributions. The inset in (d) shows the convergence on the $W_2$ norm with $O(1/P)$ rate.}
 	\label{fig:3_1}
 \end{figure}
 
@@ -294,11 +294,11 @@ both ELC and remainder error terms now indeed become negligible, and the error p
 Finally, the concentration of trivalent ions along $z$ and the distribution of energy are investigated.
 %with different batch sizes and $L_z/H$ fixed to be $3$, demonstrating the capability of the RBE2D to accurately reproduce the spatial structure and the ensemble averages. 
 The corresponding results are depicted in Fig.~\ref{fig:3_1}(c-d). 
-We observe a convergence rate of $\mathcal{O}(1/P)$ in the average energy by the RBE2D (with that of the PPPM set as benchmark value). 
+We observe a convergence rate of $O(1/P)$ in the average energy by the RBE2D (with that of the PPPM set as benchmark value). 
 This is consistent with our theoretical prediction Theorem~\ref{Thm::1} as the energies of both Coulomb and LJ scale quadratically in displacement near equilibrium.
 It is also noticed that, for the RBE2D method, choosing $P=50$ can already yield very accurate results, almost indistinguishable from those obtained via PPPM. 
  {Theorem~\ref{thm::2} also indicates that the error bound in the potential energy of the RBE2D method should converge linearly in $\Delta t$. 
- As numerically validated in Fig.~\ref{fig:energy2d_3_1}, the error indeed decays with $\mathcal{O}(\Delta t)$ scaling. However, this $\mathcal{O}(\Delta t)$ scaling may not hold when $\Delta t$ is larger or in more complicated molecular models. 
+ As numerically validated in Fig.~\ref{fig:energy2d_3_1}, the error indeed decays with $O(\Delta t)$ scaling. However, this $O(\Delta t)$ scaling may not hold when $\Delta t$ is larger or in more complicated molecular models. 
  In those scenarios, increasing \(\Delta t\) can lead to particles coming very close to one another (even with the presence of the LJ potential), introducing additional sources of error in other MD components—particularly in managing bond, angle, and dihedral constraints~\cite{frenkel2023understanding}. These artificial effects may result in unphysically large forces or even cause the simulation to fail.}
 %Furthermore, we observe a 
 
@@ -328,7 +328,7 @@ For all cases considered, the RBE2D results show excellent agreement with that o
 %A comparison with the HSMA and ICM-PPPM methods shows excellent agreement with the RBE2D results. 
 The ion distribution shown in panel (c) also agrees with the result from a boundary element solver~\cite{wu2018asymmetric}, and reported in \cite{yuan2021particle}, figure 4(b). 
 Additionally, we calculate the potential energy distribution $\mathscr{P}(U)$ for these systems and measure the discrepancy using the $W_2$ norm.
-A convergence rate of $\mathcal{O}(1/P)$ is again observed (see Fig.~\ref{fig:energy2d}).
+A convergence rate of $O(1/P)$ is again observed (see Fig.~\ref{fig:energy2d}).
 
 \subsection{CPU time performance}
 We now report the CPU time performance of the RBE2D method, compared to the PPPM method. 
@@ -350,8 +350,8 @@ the system dimensions are set as $L_x=L_y=H$,  and the system size changes as on
 We first investigate the time cost and complexity by varying particle number $N$. 
 In Fig.~\ref{fig:Time}(a), $64$ CPU cores are used, and the  CPU time per MD step for the RBE2D  {and the PPPM method} is documented with particle number $N$ up to $2\times 10^6$, where  {the real space CPU cost is identical for both methods by fixing the same Ewald splitting parameter $\alpha$ and real space cutoff $r_c$}.
  {It should be noted that the main goal of such parameter choice is for solely comparing the improvement of the RBE2D in Fourier space. We expect a fine tuning of $\alpha$ and other parameters to balance the cost of the RBE2D in real and Fourier spaces can further optimize its efficiency in practice.}
-The results clearly  {demonstrate} the $\mathcal{O}(N)$ complexity of the RBE2D method  {and its significant advantage over the PPPM method in the Fourier space computation.}
- {A more detailed comparison is further provided in Fig.~\ref{fig:timenondie}, where we compared the performance of each components of the RBE2D and PPPM methods with CPU cores fixed to be both $64$ and $1024$. The results show the improvement of the RBE2D method in the Fourier component computation across the entire range of particle numbers $N$, especially when utilizing a larger number of CPU cores.} %For the PPPM method, the communication cost grows rapidly in $N_{\mathrm{cores}}$, so that the $\mathcal{O}(N\log N)$ complexity is not observed when $N_{\mathrm{cores}}=1024$.} 
+The results clearly  {demonstrate} the $O(N)$ complexity of the RBE2D method  {and its significant advantage over the PPPM method in the Fourier space computation.}
+ {A more detailed comparison is further provided in Fig.~\ref{fig:timenondie}, where we compared the performance of each components of the RBE2D and PPPM methods with CPU cores fixed to be both $64$ and $1024$. The results show the improvement of the RBE2D method in the Fourier component computation across the entire range of particle numbers $N$, especially when utilizing a larger number of CPU cores.} %For the PPPM method, the communication cost grows rapidly in $N_{\mathrm{cores}}$, so that the $O(N\log N)$ complexity is not observed when $N_{\mathrm{cores}}=1024$.} 
 %\todo{do we need a reference here}
 %For  {the PPPM method}, the CPU time of the real space and the Fourier space computations are balanced to  {achieve optimal efficiency.} 
 % {For the RBE2D method, in order to illustrate its advantage in reducing the Fourier space cost compared to the PPPM method, we use the same Ewald parameter $\alpha$ and real space cutoff $r_c$ as PPPM to make sure that the real space cost is identical.

@@ -94,13 +94,13 @@ In Eq.~\eqref{eq::A.5}, the last term can be considered as the residue correctio
 \end{split}
 \end{equation}
 
-To obtain a closed formula, it is necessary to determine the extremum of the exponent under the condition $a^*>a>0$. Since the range of $a$ is not specified, we can safely choose $a^*=\pi/\xi+b/2$ if $\pi/\xi+b/2>a$, and $a^*=\sqrt{a^2+1}$ otherwise. This choice ensures a decay rate of at least $\sim\mathcal{O}(e^{-\text{sign}(\pi/\xi+b/2)|\pi/\xi+b/2|^2})$, where $\text{sign}(t)=1$ if $t> 0$, $\text{sign}(t)=0$ if $t=0$, and $\text{sign}(t)=-1$ otherwise. By following a similar procedure, we can derive that the integral along $\text{Im}(t)=-a^*$ in Eq.~\eqref{eq::A.5} decays with order $\mathcal{O}(e^{-\text{sign}(\pi/\xi-b/2)|\pi/\xi-b/2|^2})$. Consequently, we can conclude that
+To obtain a closed formula, it is necessary to determine the extremum of the exponent under the condition $a^*>a>0$. Since the range of $a$ is not specified, we can safely choose $a^*=\pi/\xi+b/2$ if $\pi/\xi+b/2>a$, and $a^*=\sqrt{a^2+1}$ otherwise. This choice ensures a decay rate of at least $\sim O(e^{-\text{sign}(\pi/\xi+b/2)|\pi/\xi+b/2|^2})$, where $\text{sign}(t)=1$ if $t> 0$, $\text{sign}(t)=0$ if $t=0$, and $\text{sign}(t)=-1$ otherwise. By following a similar procedure, we can derive that the integral along $\text{Im}(t)=-a^*$ in Eq.~\eqref{eq::A.5} decays with order $O(e^{-\text{sign}(\pi/\xi-b/2)|\pi/\xi-b/2|^2})$. Consequently, we can conclude that
 \begin{equation}
 E_{M,\xi}=\frac{\pi}{a}\frac{e^{-ab}+e^{ab}}{1-e^{2\pi a/\xi}}+E_{\text{err}},
 \end{equation}
 where the remainder error term can be estimated as 
 \begin{equation}\label{eq::A.8}
-|E_{\text{err}}|\sim \mathcal{O}(e^{-\text{sign}(\pi/\xi-|b|/2)\left|\pi/\xi-|b|/2\right|^2}).
+|E_{\text{err}}|\sim O(e^{-\text{sign}(\pi/\xi-|b|/2)\left|\pi/\xi-|b|/2\right|^2}).
 \end{equation}
 
 \begin{figure}[!ht]
@@ -126,13 +126,16 @@ including the real space, the Fourier space, and ion-wall components. The real s
 \begin{equation}\label{eq::F_real_detail}
 \begin{split}
 \bm{F}_{\text{real}}^{\te{c}}(\bm{r}_i)
-& := -q_i\sum_{j=1}^{N} q_j \Biggg[\sum_{\bm{n}}{}^\prime \frac{\left(\bm{r}_{i,\bm{n}} - \bm{r}_{j}\right)}{\abs{\bm{r}_{i,\bm{n}} - \bm{r}_{j}}} K(\abs{\bm{r}_{i,\bm{n}} - \bm{r}_{j}}) + \frac{1}{2} \sum_{\bm{n}} \sum_{l=1}^{M} \frac{\gamma_{l}^+\left(\bm{r}_{i,\bm{n}}-\bm{r}_{j+}^{(l)}\right)}{\left|\bm{r}_{i,\bm{n}}-\bm{r}_{j+}^{(l)}\right|} K\left(\left|\bm{r}_{i,\bm{n}}-\bm{r}_{j+}^{(l)}\right|\right)\\
-+&\frac{1}{2}\sum_{\bm{n}}\sum_{l=1}^{M}\frac{\gamma_{l}^-\left(\bm{r}_{i,\bm{n}}-\bm{r}_{j-}^{(l)}\right)}{\left|\bm{r}_{i,\bm{n}}-\bm{r}_{j-}^{(l)}\right|}K\left(\left|\bm{r}_{i,\bm{n}}-\bm{r}_{j-}^{(l)}\right|\right)\Biggg]-\frac{q_i}{2}\sum_{j=1}^{N}q_j\sum_{\bm{n}}\sum_{l=1}^{M}\begin{pmatrix}
+& := -q_i\sum_{j=1}^{N} q_j \Biggg[\sum_{\bm{n}}{}^\prime \frac{\left(\bm{r}_{i,\bm{n}} - \bm{r}_{j}\right)}{\abs{\bm{r}_{i,\bm{n}} - \bm{r}_{j}}} K(\abs{\bm{r}_{i,\bm{n}} - \bm{r}_{j}}) \\
+&+ \frac{1}{2} \sum_{\bm{n}} \sum_{l=1}^{M} \frac{\gamma_{l}^+\left(\bm{r}_{i,\bm{n}}-\bm{r}_{j+}^{(l)}\right)}{\left|\bm{r}_{i,\bm{n}}-\bm{r}_{j+}^{(l)}\right|} K\left(\left|\bm{r}_{i,\bm{n}}-\bm{r}_{j+}^{(l)}\right|\right)\\
+&+\frac{1}{2}\sum_{\bm{n}}\sum_{l=1}^{M}\frac{\gamma_{l}^-\left(\bm{r}_{i,\bm{n}}-\bm{r}_{j-}^{(l)}\right)}{\left|\bm{r}_{i,\bm{n}}-\bm{r}_{j-}^{(l)}\right|}K\left(\left|\bm{r}_{i,\bm{n}}-\bm{r}_{j-}^{(l)}\right|\right)\Biggg]\\
+&-\frac{q_i}{2}\sum_{j=1}^{N}q_j\sum_{\bm{n}}\sum_{l=1}^{M}\begin{pmatrix}
 1&0&0\\
 0&1&0\\
 0&0&(-1)^l
-\end{pmatrix}\\\Biggg[&
-\frac{\gamma_{l}^+\left(\bm{r}_{i,\bm{n}}-\bm{r}_{j+}^{(l)}\right)}{\left|\bm{r}_{i,\bm{n}}-\bm{r}_{j+}^{(l)}\right|}K\left(\left|\bm{r}_{i,\bm{n}}-\bm{r}_{j+}^{(l)}\right|\right)+\frac{\gamma_{l}^-\left(\bm{r}_{i,\bm{n}}-\bm{r}_{j-}^{(l)}\right)}{\left|\bm{r}_{i,\bm{n}}-\bm{r}_{j-}^{(l)}\right|}K\left(\left|\bm{r}_{i,\bm{n}}-\bm{r}_{j-}^{(l)}\right|\right)\Biggg]
+\end{pmatrix}\Biggg[
+\frac{\gamma_{l}^+\left(\bm{r}_{i,\bm{n}}-\bm{r}_{j+}^{(l)}\right)}{\left|\bm{r}_{i,\bm{n}}-\bm{r}_{j+}^{(l)}\right|}K\left(\left|\bm{r}_{i,\bm{n}}-\bm{r}_{j+}^{(l)}\right|\right)\\
+&+\frac{\gamma_{l}^-\left(\bm{r}_{i,\bm{n}}-\bm{r}_{j-}^{(l)}\right)}{\left|\bm{r}_{i,\bm{n}}-\bm{r}_{j-}^{(l)}\right|}K\left(\left|\bm{r}_{i,\bm{n}}-\bm{r}_{j-}^{(l)}\right|\right)\Biggg]
 \end{split}
 \end{equation}
 where $\bm{r}_{i,\bm{n}}=\bm{r}_{i}+\bm{\ell}$, and $K(r):=\text{erfc}(\alpha r)/r^2+2\alpha e^{-\alpha^2r^2}/(\sqrt{\pi}r)$. The Fourier component of force, $\bm{F}^{\text{c}}_{\text{Fourier}}$, has been provided in Eq.~\eqref{eq::52}. In practice, we use the RBE force $\bm{F}^{\text{c},*}_{\text{Fourier}}$ in Eq.~\eqref{eq::important} as an unbiased estimator to $\bm{F}^{\text{c}}_{\text{Fourier}}$, in which the formula of IBC term is more complicated than  {in} the case of  {a} neutral interface:
@@ -150,7 +153,7 @@ where the $z$-direction dipole moments are defined via
 It is important to highlight that if the free ions in the solution continue to fulfill condition Eq.~\eqref{eq:neutrality}, the last two terms in Eq.~\eqref{eq::IBC} vanish. 
 The ion-wall component represents the force exerts on the mobile ions due to the charged walls, and is given by
 \begin{equation}
-\bm{F}_{\text{wall}}^{\te{c}}:=-2\pi z_{i}q_{i}\left[\sigma_{\text{top}}-\sigma_{\text{bot}}+\frac{(\sigma_{\text{top}}+\sigma_{\text{bot}})(\gamma_{\text{top}}-\gamma_{\text{bot}})\left(1-\gamma_{\text{top}}^{\lceil M/2 \rceil}\gamma_{\text{bot}}^{\lceil M/2 \rceil}\right)}{1-\gamma_{\text{top}}\gamma_{\text{bot}}}\right]\V{\hat e_z}.
+\bm{F}_{\text{wall}}^{\te{c}}:=-2\pi z_{i}q_{i}\left[\sigma_{\text{top}}-\sigma_{\text{bot}}+\frac{(\sigma_{\text{top}}+\sigma_{\text{bot}})(\gamma_{\text{top}}-\gamma_{d})\left(1-\gamma_{\text{top}}^{\lceil M/2 \rceil}\gamma_{d}^{\lceil M/2 \rceil}\right)}{1-\gamma_{\text{top}}\gamma_{d}}\right]\V{\hat e_z}.
 \end{equation}
 
 \section{Physical quantities evaluated in results}\label{Sec::phyquan}
@@ -192,20 +195,20 @@ The detailed parameters for simulations in Fig.~\ref{fig:den1} are listed in the
 
 \renewcommand\arraystretch{1.7}
 \begin{table}[h]
-	\caption{The systems in Figure~\ref{fig:den1} are characterized by the following details, including the numbers of cations ($N_{\emph{cation}}$) and anions ($N_{\emph{anion}}$), the dimensions $L_x$, $L_y$, and $H$ (the slab height), the extended system length $L_z$, the surface charge densities ($\sigma_{\emph{top}}$, $\sigma_{\emph{bot}}$), the factors of dielectric mismatch ($\gamma_{\emph{top}}$ and $\gamma_{\emph{bot}}$) of the bottom and top walls, the diameter of ions $r_{\emph{d}}$, and the Bjerrum length ($\ell_{\emph{B}}$). The cutoff $r_c$ is set as $10\sigma$ and $4\sigma$ for producing (A-B) and (C-D), respectively.
+	\caption{The systems in Figure~\ref{fig:den1} are characterized by the following details, including the numbers of cations ($N_{\emph{cation}}$) and anions ($N_{\emph{anion}}$), the dimensions $L_x$, $L_y$, and $H$ (the slab height), the extended system length $L_z$, the surface charge densities ($\sigma_{u}$, $\sigma_{d}$), the factors of dielectric mismatch ($\gamma_{u}$ and $\gamma_{d}$) of the bottom and top walls, the diameter of ions $r_{\emph{d}}$, and the Bjerrum length ($\ell_{\emph{B}}$). The cutoff $r_c$ is set as $10\sigma$ and $4\sigma$ for producing (A-B) and (C-D), respectively.
 }
 	\centering
 	\setlength{\tabcolsep}{0.6mm}{
 		\begin{tabular}{|c|c|c|c|c|c|c|c|c|c|c|c|}
 			\hline
-			& $N_{\text{cation}}$ & $N_{\text{anion}}$ & $L_x$ [$\sigma$] & $L_y$ [$\sigma$] & $H$ [$\sigma$] & $\sigma_1 $ [$e/\sigma^2$] & $\sigma_2$ [$e/\sigma^2$] &$\gamma_{\text{bot}}$ & $\gamma_{\text{up}}$ & $r_{\text{d}}$ $[\sigma]$ & $\ell_{\text{B}}$ [$\sigma$] \\ \hline
+			& $N_{\text{cation}}$ & $N_{\text{anion}}$ & $L_x$ [$\sigma$] & $L_y$ [$\sigma$] & $H$ [$\sigma$] & $\sigma_1 $ [$\frac{e}{\sigma^2}$] & $\sigma_2$ [$\frac{e}{\sigma^2}$] &$\gamma_{d}$ & $\gamma_{u}$ & $r_{\text{d}}$ [$\sigma$] & $\ell_{\text{B}}$ [$\sigma$] \\ \hline
       			%Fig.~\ref{fig:3_1} A-D& 750 & 2250 & 60  & 60 & 30   & -- & -- & -- & -- & 3.5 \\\hline
 			%Fig.~\ref{fig:DiscreteLow} A-D & 0 & 486 & 90  & 90  & 30  & 0  & 0.06 & -- & -- &3.5    \\\hline
 			%Fig.~\ref{fig:SurfaceCharge} A-D & 234 & 218 & 20  & 20  & 10 & -0.0008 & -0.0008 & -- & -- &0.7 \\\hline
-			Figure 5 A &109  & 218  & 100 & 100 & 50 & -- & --  & 0.939  & 0.939  & 1 & 3.5 \\ \hline
-			Figure 5 B &73  & 219 & 100 & 100 & 50 & --  & --  & 0.939  & 0.939  & 1 & 3.5 \\ \hline
-			Figure 5 C & 23 & 42 & 42.9 & 42.9 & 8.4 & 0.01 & -0.02 & 0.6 & -0.33 & 2 & 2 \\ \hline
-			Figure 5 D & 16 & 44 & 42.9 & 42.9 & 8.4 & 0.01 & -0.02  & 0.6 & -0.33 & 2 & 2 \\ \hline
+			(A) &109  & 218  & 100 & 100 & 50 & -- & --  & 0.939  & 0.939  & 1 & 3.5 \\ \hline
+			(B) &73  & 219 & 100 & 100 & 50 & --  & --  & 0.939  & 0.939  & 1 & 3.5 \\ \hline
+			(C) & 23 & 42 & 42.9 & 42.9 & 8.4 & 0.01 & -0.02 & 0.6 & -0.33 & 2 & 2 \\ \hline
+			(D) & 16 & 44 & 42.9 & 42.9 & 8.4 & 0.01 & -0.02  & 0.6 & -0.33 & 2 & 2 \\ \hline
 	\end{tabular}}
 	\label{Table::Dielec}
 \end{table}
@@ -213,7 +216,7 @@ The detailed parameters for simulations in Fig.~\ref{fig:den1} are listed in the
 \begin{figure}[!ht]
 \begin{center}
 \includegraphics[width=0.6\textwidth]{figs/Energy_3_1.pdf}
-\caption{ {The difference on the ensemble average of the total potential energy $\mathscr{P}(U)$ as a function of time step $\Delta t$ (unit: $\tau$). Data are shown for the same systems used in producing Figs.~\ref{fig:3_1} and $P=50$ and $100$. The solid lines indicate $\mathcal{O}(\Delta t)$ scaling. The $W_2$ norm is used as the measurement.}}
+\caption{ {The difference on the ensemble average of the total potential energy $\mathscr{P}(U)$ as a function of time step $\Delta t$ (unit: $\tau$). Data are shown for the same systems used in producing Figs.~\ref{fig:3_1} and $P=50$ and $100$. The solid lines indicate $O(\Delta t)$ scaling. The $W_2$ norm is used as the measurement.}}
 \label{fig:energy2d_3_1}
 \end{center} 
 \end{figure}
@@ -239,7 +242,7 @@ Note that in panel (c) the data points marked with blue circles are overlapped b
 \begin{figure}[!ht]
 \begin{center}
 \includegraphics[width=1\textwidth]{figs/time_compare_withsub.pdf}
-\caption{ {CPU time comparison between the RBE2D and ICM-PPPM methods, with the number of CPU cores set to $64$ or $1024$ ($64$ cores per node) and a batch size of $P=200$. Data are shown for the same systems as in Fig.~\ref{fig:Time}(a), but with a dielectric mismatch of $\gamma_{\emph{top}} = \gamma_{\emph{bot}} = -0.9$. The CPU time per step is provided for the real space component (Real), Fourier space component (Fourier), and total computation time (Total).
+\caption{ {CPU time comparison between the RBE2D and ICM-PPPM methods, with the number of CPU cores set to $64$ or $1024$ ($64$ cores per node) and a batch size of $P=200$. Data are shown for the same systems as in Fig.~\ref{fig:Time}(a), but with a dielectric mismatch of $\gamma_{u} = \gamma_{d} = -0.9$. The CPU time per step is provided for the real space component (Real), Fourier space component (Fourier), and total computation time (Total).
 Similarly, the results clearly show the speedup of the RBE2D method over the ICM-PPPM method, especially when the number of CPU cores is large.}}
 \label{fig:timedie}
 \end{center} 

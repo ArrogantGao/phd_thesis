@@ -220,10 +220,10 @@ Moreover, it has been reported that an excessive number of image reflection laye
 
 %Boundary element and boundary integral methods can also be applied to such systems; however, their substantial computational prefactors often result in low efficiency.
 
-%Over the past few decades, various methods have been developed for quasi-2D Coulomb systems, primarily relying on the Ewald-splitting technique~\cite{ewald1921berechnung}. A notable contribution is the Ewald2D method~\cite{parry1975electrostatic}, which directly implements Ewald-splitting for quasi-2D systems. This method scales as $\mathcal{O}(N^2)$ and exhibits slow convergence due to the oscillatory nature of the Green's function in quasi-2D geometries.  Alternative approaches approximate quasi-2D summations using 3D periodic summations with correction terms, such as the Yeh--Berkowitz (YB) correction~\cite{yeh1999ewald} and the electric layer correction (ELC)~\cite{arnold2002electrostatics}. These methods can be accelerated using FFT to achieve $\mathcal{O}(N\log N)$ complexity~\cite{hockney2021computer,darden1993particle,essmann1995smooth}. 
+%Over the past few decades, various methods have been developed for quasi-2D Coulomb systems, primarily relying on the Ewald-splitting technique~\cite{ewald1921berechnung}. A notable contribution is the Ewald2D method~\cite{parry1975electrostatic}, which directly implements Ewald-splitting for quasi-2D systems. This method scales as $O(N^2)$ and exhibits slow convergence due to the oscillatory nature of the Green's function in quasi-2D geometries.  Alternative approaches approximate quasi-2D summations using 3D periodic summations with correction terms, such as the Yeh--Berkowitz (YB) correction~\cite{yeh1999ewald} and the electric layer correction (ELC)~\cite{arnold2002electrostatics}. These methods can be accelerated using FFT to achieve $O(N\log N)$ complexity~\cite{hockney2021computer,darden1993particle,essmann1995smooth}. 
 %\tcr{primarily focues on dielectric}
 % Introduce the previous method, icm and Ewald3D elc
-%Over the past few decades, a variety of methods have been developed in the literature for quasi-2D Coulomb systems, primarily relying on the so-called "Ewald-splitting" technique~\cite{ewald1921berechnung}. A notable contribution is the Ewald2D method~\cite{parry1975electrostatic}, which directly implements the Ewald-splitting technique for quasi-2D systems. This method scales as $\mathcal{O}(N^2)$ and is characterized by slow convergence due to the oscillatory nature of the Green's function in quasi-2D geometries.  Rather than solving the quasi-2D problem exactly, some other approaches approximate the quasi-2D summations using 3D periodic summations with correction terms, such as the Yeh--Berkowitz (YB) correction~\cite{yeh1999ewald} and the electric layer correction (ELC)~\cite{arnold2002electrostatics}, so that the calculation can be accelerated by method such as FFT to reach an $\mathcal{O}(N\log N)$ complexity~\cite{hockney2021computer,darden1993particle,essmann1995smooth}.  While these methods effectively reduce computational costs, they often lack precise control over accuracy.  For systems featuring sharp dielectric interfaces, the image charge method~\cite{yuan2021particle} is a widely used technique. This method approximates the dielectric interface with an infinite series of image charges in free space, effectively transforming the system into a homogeneous one devoid of sharp interfaces, albeit with a significant increase in thickness along the $z$-direction~\cite{tyagi2007icmmm2d,tyagi2008electrostatic,dos2015electrolytes,liang2020harmonic}.
+%Over the past few decades, a variety of methods have been developed in the literature for quasi-2D Coulomb systems, primarily relying on the so-called "Ewald-splitting" technique~\cite{ewald1921berechnung}. A notable contribution is the Ewald2D method~\cite{parry1975electrostatic}, which directly implements the Ewald-splitting technique for quasi-2D systems. This method scales as $O(N^2)$ and is characterized by slow convergence due to the oscillatory nature of the Green's function in quasi-2D geometries.  Rather than solving the quasi-2D problem exactly, some other approaches approximate the quasi-2D summations using 3D periodic summations with correction terms, such as the Yeh--Berkowitz (YB) correction~\cite{yeh1999ewald} and the electric layer correction (ELC)~\cite{arnold2002electrostatics}, so that the calculation can be accelerated by method such as FFT to reach an $O(N\log N)$ complexity~\cite{hockney2021computer,darden1993particle,essmann1995smooth}.  While these methods effectively reduce computational costs, they often lack precise control over accuracy.  For systems featuring sharp dielectric interfaces, the image charge method~\cite{yuan2021particle} is a widely used technique. This method approximates the dielectric interface with an infinite series of image charges in free space, effectively transforming the system into a homogeneous one devoid of sharp interfaces, albeit with a significant increase in thickness along the $z$-direction~\cite{tyagi2007icmmm2d,tyagi2008electrostatic,dos2015electrolytes,liang2020harmonic}.
 
 % 
 %Although the Ewald summation formula and the image charge method have long been used to solve the electrostatic interaction of quasi-2D Coulomb systems with dielectric confinements, an accurate error estimation has been missing for a considerable period of time.
@@ -487,10 +487,10 @@ In what follows, we extend their approach to dielectric-confined systems.
 % \end{equation}
 % where~$s > 0$ is a constant, yields an error estimate of
 % \begin{equation} 
-%     \Delta U_{\text{Ewald}} \sim \abs{\Delta \V{F}_{\text{Ewald}}} \sim \mathcal{O}\left( \frac{e^{-s^2}}{s^2}\right), 
+%     \Delta U_{\text{Ewald}} \sim \abs{\Delta \V{F}_{\text{Ewald}}} \sim O\left( \frac{e^{-s^2}}{s^2}\right), 
 % \end{equation}
 % demonstrating exponential decay with respect to~$s$. A value of $s=6$ achieves machine precisions. 
-% However, the pairwise summation along the free direction results in a computational complexity of~$\mathcal{O}(N^2)$, which is worse than $O(N^{3/2})$ for that of the fully-periodic Ewald3D case, and can not be accelerated by fast algorithms such as the fast Fourier transform (FFT) since the pairwise interaction on the free direction is hard to be eliminated.
+% However, the pairwise summation along the free direction results in a computational complexity of~$O(N^2)$, which is worse than $O(N^{3/2})$ for that of the fully-periodic Ewald3D case, and can not be accelerated by fast algorithms such as the fast Fourier transform (FFT) since the pairwise interaction on the free direction is hard to be eliminated.
 
 %and can not be accelerated by fast algorithms such as the fast Fourier transform (FFT) since the pairwise interaction on the free direction is hard to be eliminated.
 
@@ -701,7 +701,7 @@ we observed that the error in force converge slightly faster than that of the en
 % \begin{equation}\label{eq:F_gamma_bound}
 %     \begin{split}
 %         \Delta F^i_{\gamma} & \leq \frac{2 \sqrt{3} \pi^2}{L_xL_y} \frac{\abs{q_i} Q C_\beta}{1 - \abs{\gamma_{\T u} \gamma_{\T d}} e^{- 4\pi H / \max\{L_x,L_y\}}}  \frac{\left[1 + \frac{2\pi (M - 1) H}{\max\{L_x,L_y\}}\right]}{(M - 1)^2 H^2} \abs{\gamma_{\T u} \gamma_{\T d}}^{\frac{M - 1}{2}} e^{- \frac{2\pi (M - 1) H}{\max\{L_x,L_y\}}} \\
-%         & \sim \mathcal{O}\left(\abs{\gamma_{\T u} \gamma_{\T d}}^{\frac{M - 1}{2}} e^{-\frac{2\pi H (M-1)}{\max\{L_x,L_y\}}}\right)\;,
+%         & \sim O\left(\abs{\gamma_{\T u} \gamma_{\T d}}^{\frac{M - 1}{2}} e^{-\frac{2\pi H (M-1)}{\max\{L_x,L_y\}}}\right)\;,
 %     \end{split}
 % \end{equation}
 % where the $\sqrt{3}$ comes from the contribution of three directions.
@@ -722,7 +722,7 @@ we observed that the error in force converge slightly faster than that of the en
 % \begin{theorem}\label{thm::imagetrun} 
 %     If one truncates the image reflection series in Eq.~\eqref{eq:ICM} at $l=M$, the resulting energy and force are with truncation error
 %     \begin{equation}\label{eq:E_gamma_U}
-%         \Delta U_{\gamma} \sim \abs{\Delta F_{\gamma}} \sim \mathcal{O}\left(\abs{\gamma_{\T u} \gamma_{\T d}}^{\frac{M - 1}{2}} e^{-\frac{2\pi H (M-1)}{\max\{L_x,L_y\}}}\right)\;.
+%         \Delta U_{\gamma} \sim \abs{\Delta F_{\gamma}} \sim O\left(\abs{\gamma_{\T u} \gamma_{\T d}}^{\frac{M - 1}{2}} e^{-\frac{2\pi H (M-1)}{\max\{L_x,L_y\}}}\right)\;.
 %     \end{equation}
 % \end{theorem}
 
@@ -785,7 +785,7 @@ we observed that the error in force converge slightly faster than that of the en
 %         \Delta U_{\gamma} & \leq \frac{\pi}{L_x L_y} \sum_{i,j=1}^{N} \sum_{\bm{h}\neq \bm{0}} \abs{q_i q_j \frac{e^{-\i \bm{h}\cdot\bm{r}_{ij}}}{h}} \beta_{ij}(h) \frac{\abs{\gamma_{\T u} \gamma_{\T d}}^{\lfloor \frac{M}{2} \rfloor} e^{- 2\lfloor \frac{M}{2} \rfloor hH}}{1 - \abs{\gamma_{\T u} \gamma_{\T d}} e^{- 2hH}} \\
 %         & \leq \frac{\pi}{L_x L_y} \frac{Q^2 C_\beta \abs{\gamma_{\T u} \gamma_{\T d}}^{\frac{M - 1}{2}}}{1 - \abs{\gamma_{\T u} \gamma_{\T d}} e^{- 4\pi H / \max\{L_x,L_y\}}} \sum_{\bm{h}\neq \bm{0}} \frac{e^{- (M - 1) hH}}{h}\\
 %         & \sim \frac{\pi}{L_x L_y} \frac{Q^2 C_\beta \abs{\gamma_{\T u} \gamma_{\T d}}^{\frac{M - 1}{2}}}{1 - \abs{\gamma_{\T u} \gamma_{\T d}} e^{- 4\pi H / \max\{L_x,L_y\}}} \int_{\frac{2\pi}{\max\{L_x,L_y\}}}^{\infty} 2\pi h \frac{e^{- (M - 1) hH}}{h} \, \mathrm{d}h \\
-%         & = \frac{2 \pi^2}{L_x L_y} \frac{Q^2 C_\beta \abs{\gamma_{\T u} \gamma_{\T d}}^{\frac{M - 1}{2}} e^{-\frac{2\pi H (M-1)}{\max\{L_x,L_y\}}}}{1 - \abs{\gamma_{\T u} \gamma_{\T d}} e^{- 4\pi H / \max\{L_x,L_y\}}} \sim \mathcal{O}\left(\abs{\gamma_{\T u} \gamma_{\T d}}^{\frac{M - 1}{2}} e^{-\frac{2\pi H (M-1)}{\max\{L_x,L_y\}}}\right)\;,
+%         & = \frac{2 \pi^2}{L_x L_y} \frac{Q^2 C_\beta \abs{\gamma_{\T u} \gamma_{\T d}}^{\frac{M - 1}{2}} e^{-\frac{2\pi H (M-1)}{\max\{L_x,L_y\}}}}{1 - \abs{\gamma_{\T u} \gamma_{\T d}} e^{- 4\pi H / \max\{L_x,L_y\}}} \sim O\left(\abs{\gamma_{\T u} \gamma_{\T d}}^{\frac{M - 1}{2}} e^{-\frac{2\pi H (M-1)}{\max\{L_x,L_y\}}}\right)\;,
 %     \end{split}
 % \end{equation}
 % where $Q = \sum_{i = 1}^N \abs{q_i}$ and $C_\beta$ are constants depending on the system.
@@ -813,7 +813,7 @@ we observed that the error in force converge slightly faster than that of the en
 % \begin{equation}\label{eq:F_gamma_bound}
 %     \begin{split}
 %         \Delta F^i_{\gamma} & \leq \frac{2 \sqrt{3} \pi^2}{L_xL_y} \frac{\abs{q_i} Q C_\beta}{1 - \abs{\gamma_{\T u} \gamma_{\T d}} e^{- 4\pi H / \max\{L_x,L_y\}}}  \frac{\left[1 + \frac{2\pi (M - 1) H}{\max\{L_x,L_y\}}\right]}{(M - 1)^2 H^2} \abs{\gamma_{\T u} \gamma_{\T d}}^{\frac{M - 1}{2}} e^{- \frac{2\pi (M - 1) H}{\max\{L_x,L_y\}}} \\
-%         & \sim \mathcal{O}\left(\abs{\gamma_{\T u} \gamma_{\T d}}^{\frac{M - 1}{2}} e^{-\frac{2\pi H (M-1)}{\max\{L_x,L_y\}}}\right)\;,
+%         & \sim O\left(\abs{\gamma_{\T u} \gamma_{\T d}}^{\frac{M - 1}{2}} e^{-\frac{2\pi H (M-1)}{\max\{L_x,L_y\}}}\right)\;,
 %     \end{split}
 % \end{equation}
 % where the $\sqrt{3}$ comes from the contribution of three directions.
@@ -977,21 +977,21 @@ for \( |g_{\T u}g_{\T d}| = 1 \), it grows linearly; and for \( |g_{\T u}g_{\T d
 % \end{equation}
 % From Eq.~\eqref{eq::Error_refo}, it is evident that the leading order contribution of the ELC term to the energy and force is determined by the product of the error growth factors, $G_dG_u$. Specifically, when $|G_dG_u| > 1$, the error exhibits an exponential growth trend with the increase of the number of image layers $M$, and it provides that
 % \begin{equation}\label{eq:lhs_even}
-%         \left|U_{\emph{ELC}}^{M}\right| \sim \abs{\V{F}_{\emph{ELC}}^{M}} \sim \mathcal{O} \left(2 \abs{G_u G_d}^{M/2} e^{-\frac{2\pi (L_z - H)}{\max\{L_x,L_y\}}} \right)\;,
+%         \left|U_{\emph{ELC}}^{M}\right| \sim \abs{\V{F}_{\emph{ELC}}^{M}} \sim O \left(2 \abs{G_u G_d}^{M/2} e^{-\frac{2\pi (L_z - H)}{\max\{L_x,L_y\}}} \right)\;,
 %     \end{equation}
 %     when~$M$ is even, and
 %     \begin{equation}\label{eq:lhs_odd}
-%         \left|U_{\emph{ELC}}^{M}\right| \sim \abs{\V{F}_{\emph{ELC}}^{M}} \sim\mathcal{O} \left( \left(G_u + G_d+2\right)\abs{G_u G_d}^{\frac{M-1}{2}} e^{-\frac{2\pi (L_z -H)}{\max\{L_x,L_y\}}} \right)\;,
+%         \left|U_{\emph{ELC}}^{M}\right| \sim \abs{\V{F}_{\emph{ELC}}^{M}} \simO \left( \left(G_u + G_d+2\right)\abs{G_u G_d}^{\frac{M-1}{2}} e^{-\frac{2\pi (L_z -H)}{\max\{L_x,L_y\}}} \right)\;,
 %     \end{equation}
 %     when~$M$ is odd. For the case that $|G_dG_u|=1$, the ELC error grows with a linear speed that
 %     \begin{equation}
 %         \label{eq::lhs_1}
-%     \left|U_{\emph{ELC}}^{M}\right| \sim \abs{\V{F}_{\emph{ELC}}^{M}} \sim\mathcal{O} \left( \frac{M}{2}\left(G_u+ G_d+2\right)e^{-\frac{2\pi L_z}{\max\{L_x,L_y\}}} \right)\;.
+%     \left|U_{\emph{ELC}}^{M}\right| \sim \abs{\V{F}_{\emph{ELC}}^{M}} \simO \left( \frac{M}{2}\left(G_u+ G_d+2\right)e^{-\frac{2\pi L_z}{\max\{L_x,L_y\}}} \right)\;.
 %     \end{equation}
 %     And when the product satisfies $|G_dG_u|<1$, the summation of the image layer error series converges, which yields a uniform upper bound for all layers $M$ that
 %     \begin{equation}
 %         \label{eq::lhs_less1}
-%         \left|U_{\emph{ELC}}^{M}\right| \sim \abs{\V{F}_{\emph{ELC}}^{M}} \sim \mathcal{O} \left( \left(G_u+G_d+2\right)e^{-\frac{2\pi L_z}{\max\{L_x,L_y\}}} \right).
+%         \left|U_{\emph{ELC}}^{M}\right| \sim \abs{\V{F}_{\emph{ELC}}^{M}} \sim O \left( \left(G_u+G_d+2\right)e^{-\frac{2\pi L_z}{\max\{L_x,L_y\}}} \right).
 %     \end{equation}
 % } 
 
@@ -1001,11 +1001,11 @@ for \( |g_{\T u}g_{\T d}| = 1 \), it grows linearly; and for \( |g_{\T u}g_{\T d
 % \begin{lemma}\label{lem:U_ref}
 %    The~$U_{\emph{ELC}}^{M}$ and~$\abs{\V{F}_{\emph{ELC}}^{M}}$ decay in rate of
 %     \begin{equation}\label{eq:OU_ELC}
-%         \left|U_{\emph{ELC}}^{M}\right| \sim \abs{\V{F}_{\emph{ELC}}^{M}} \sim \mathcal{O}\left(e^{-\frac{2\pi(L_z-H)}{\max\{L_x,L_y\}}}+\sum_{l=1}^{M}\left[\gamma_{+}^{(l)}+\gamma_{-}^{(l)}\right]e^{-\frac{2\pi(L_z-(l+1)H)}{\max\{L_x,L_y\}}}\right)\;.
+%         \left|U_{\emph{ELC}}^{M}\right| \sim \abs{\V{F}_{\emph{ELC}}^{M}} \sim O\left(e^{-\frac{2\pi(L_z-H)}{\max\{L_x,L_y\}}}+\sum_{l=1}^{M}\left[\gamma_{+}^{(l)}+\gamma_{-}^{(l)}\right]e^{-\frac{2\pi(L_z-(l+1)H)}{\max\{L_x,L_y\}}}\right)\;.
 %     \end{equation}
 %     % and
 %     % \begin{equation}\label{eq:OU_err}
-%     %     \left|U_{\emph{err}}^{M}\right|\sim \mathcal{O}\left(e^{-\alpha^2(L_z-H)^2}+\sum_{l=1}^{M}\left(\gamma_{+}^{(l)}+\gamma_{-}^{(l)}\right)e^{-\alpha^2(L_z-(l+1)H)^2}\right)
+%     %     \left|U_{\emph{err}}^{M}\right|\sim O\left(e^{-\alpha^2(L_z-H)^2}+\sum_{l=1}^{M}\left(\gamma_{+}^{(l)}+\gamma_{-}^{(l)}\right)e^{-\alpha^2(L_z-(l+1)H)^2}\right)
 %     % \end{equation}
 %     % respectively.
 % \end{lemma}
@@ -1016,22 +1016,22 @@ for \( |g_{\T u}g_{\T d}| = 1 \), it grows linearly; and for \( |g_{\T u}g_{\T d
 %     The contribution of the ELC term with~$M$ layers of image charges to energy and force decay in speed of
 %     \begin{itemize}
 %         \item If $\gamma_{\T u}\gamma_{\T d} \exp(4\pi H/\max\{L_x,L_y\})> 1$, then \begin{equation}\label{eq:lhs_even}
-%         \left|U_{\emph{ELC}}^{M}\right| \sim \abs{\V{F}_{\emph{ELC}}^{M}} \sim \mathcal{O} \left(2 \abs{\gamma_{\T u} \gamma_{\T d}}^{M/2} e^{-\frac{2\pi (L_z - (M+1)H)}{\max\{L_x,L_y\}}} \right)\;,
+%         \left|U_{\emph{ELC}}^{M}\right| \sim \abs{\V{F}_{\emph{ELC}}^{M}} \sim O \left(2 \abs{\gamma_{\T u} \gamma_{\T d}}^{M/2} e^{-\frac{2\pi (L_z - (M+1)H)}{\max\{L_x,L_y\}}} \right)\;,
 %     \end{equation}
 %     when~$M$ is even, and
 %     \begin{equation}\label{eq:lhs_odd}
-%         \left|U_{\emph{ELC}}^{M}\right| \sim \abs{\V{F}_{\emph{ELC}}^{M}} \sim\mathcal{O} \left( \left(\gamma_{\T u} + \gamma_{\T d}+2e^{-\frac{2\pi H}{\max\{L_x,L_y\}}}\right)\abs{\gamma_{\T u} \gamma_{\T d}}^{(M - 1)/2} e^{-\frac{2\pi (L_z - (M+1)H)}{\max\{L_x,L_y\}}} \right)\;,
+%         \left|U_{\emph{ELC}}^{M}\right| \sim \abs{\V{F}_{\emph{ELC}}^{M}} \simO \left( \left(\gamma_{\T u} + \gamma_{\T d}+2e^{-\frac{2\pi H}{\max\{L_x,L_y\}}}\right)\abs{\gamma_{\T u} \gamma_{\T d}}^{(M - 1)/2} e^{-\frac{2\pi (L_z - (M+1)H)}{\max\{L_x,L_y\}}} \right)\;,
 %     \end{equation}
 %     when~$M$ is odd.
 %     \item If $\gamma_{\T u}\gamma_{\T d} \exp(4\pi H/\max\{L_x,L_y\})= 1$, then
 %     \begin{equation}
 %         \label{eq::lhs_1}
-%     \left|U_{\emph{ELC}}^{M}\right| \sim \abs{\V{F}_{\emph{ELC}}^{M}} \sim\mathcal{O} \left( \frac{M}{2}\left(\gamma_{\T u}+ \gamma_{\T d}+2e^{-\frac{2\pi H}{\max\{L_x,L_y\}}}\right)e^{-\frac{2\pi (L_z-H)}{\max\{L_x,L_y\}}} \right)
+%     \left|U_{\emph{ELC}}^{M}\right| \sim \abs{\V{F}_{\emph{ELC}}^{M}} \simO \left( \frac{M}{2}\left(\gamma_{\T u}+ \gamma_{\T d}+2e^{-\frac{2\pi H}{\max\{L_x,L_y\}}}\right)e^{-\frac{2\pi (L_z-H)}{\max\{L_x,L_y\}}} \right)
 %     \end{equation}
 %     \item If $\gamma_{\T u}\gamma_{\T d} \exp(4\pi H/\max\{L_x,L_y\})< 1$, then
 %     \begin{equation}
 %         \label{eq::lhs_less1}
-%         \left|U_{\emph{ELC}}^{M}\right| \sim \abs{\V{F}_{\emph{ELC}}^{M}} \sim \mathcal{O} \left( \left(\gamma_{\T u}+\gamma_{\T d}+2e^{-\frac{2\pi H}{\max\{L_x,L_y\}}}\right)e^{-\frac{2\pi (L_z-H)}{\max\{L_x,L_y\}}} \right)
+%         \left|U_{\emph{ELC}}^{M}\right| \sim \abs{\V{F}_{\emph{ELC}}^{M}} \sim O \left( \left(\gamma_{\T u}+\gamma_{\T d}+2e^{-\frac{2\pi H}{\max\{L_x,L_y\}}}\right)e^{-\frac{2\pi (L_z-H)}{\max\{L_x,L_y\}}} \right)
 %     \end{equation}
 %     \end{itemize}
 % \end{theorem}
@@ -1205,23 +1205,23 @@ If this condition is not met, then $\alpha$ must be relaxed to fulfill this cons
 % \begin{equation}
 %     \frac{e^{-s^2}}{s^2} \sim \epsilon\;.
 % \end{equation}
-% Similarly, the Ewald splitting parameter~$\alpha$ can be determined based on the computational method employed, ensuring a balance between the complexities of real space and reciprocal space, which results in a complexity of $\mathcal{O}(N^2)$ for Ewald2D summation, $\mathcal{O}(N^{3/2})$ for Ewald3D summation, and $\mathcal{O}(N)$ for the FFT or random batch sampling accelerated Ewald3D summation.
+% Similarly, the Ewald splitting parameter~$\alpha$ can be determined based on the computational method employed, ensuring a balance between the complexities of real space and reciprocal space, which results in a complexity of $O(N^2)$ for Ewald2D summation, $O(N^{3/2})$ for Ewald3D summation, and $O(N)$ for the FFT or random batch sampling accelerated Ewald3D summation.
 
 % For Ewald2D summation, one select
 % \begin{equation}
 %     \alpha \sim \sqrt{\frac{1}{L_x L_y}}\;,
 % \end{equation}
-% so that the resulting complexity is $\mathcal{O}(N^2)$.
+% so that the resulting complexity is $O(N^2)$.
 % For Ewald3D summation, one select
 % \begin{equation}
 %     \alpha \sim \left(\frac{N}{L_x^2 L_y^2 L_z H}\right)^{1/6}\;,
 % \end{equation}
-% so that the resulting complexity is $\mathcal{O}(N^{3/2})$.
+% so that the resulting complexity is $O(N^{3/2})$.
 % For the FFT acceleration of Ewald3D summation, i.e., the particle-particle particle-mesh (P$^3$M) method, one select
 % \begin{equation}
 %     \alpha \sim \left(\frac{N^2}{L_x^2 L_y^2 L_z H}\right)^{1/6}\;,
 % \end{equation}
-% so that the resulting complexity is $\mathcal{O}(N)$.
+% so that the resulting complexity is $O(N)$.
 
 % For the dielectric confined system, one have to select the number of image charge layers~$M$ and the padded length of the system in the $z$ direction~$L_z$ so that the following relations hold:
 % \begin{equation}\label{eq:parameter_selection_ML}

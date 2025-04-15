@@ -1,7 +1,5 @@
-\section{Conclusion}
-
 Quasi-2D systems are ubiquitous in nature and play a crucial role in various fields, including materials science, biophysics, and electrochemistry. 
-However, the simulation of quasi-2D systems is challenging due to the strong Coulomb interactions and the complex boundary conditions.
+However, the simulation of quasi-2D systems is challenging due to the long-range Coulomb interactions and the complex boundary conditions.
 The challenges can be summarized as follows:
 \begin{itemize}
     \item[1.] The reduced symmetry of the system leads to the breakdown of the traditional Ewald summation, especially for the systems with large aspect ratios.
@@ -9,18 +7,70 @@ The challenges can be summarized as follows:
     % \item[3.] The large system size and the need for high accuracy pose significant challenges for the computational resources.
 \end{itemize}
 Due to these challenges, existing methods are largely restricted to quasi-2D systems with moderate aspect ratios and weakly polarizable interfaces, limiting their broader applicability.
+Aiming to develop a general and efficient simulation framework for quasi-2D Coulomb systems, we systematically study the confined quasi-2D Coulomb systems in this thesis, including theoretical analysis, numerical methods and applications.
 
-In this thesis, we have developed a class of novel fast algorithms for simulating quasi-2D Coulomb systems, making significant methodological advances in computational physics. 
-The main contributions can be summarized in three key aspects:
+For the theoretical part, we presented a rigorous error analysis of Ewald summation for dielectric-confined planar systems, where the polarization potential and force field are modeled using an infinitely reflected image charge series. 
+In particular, we address the truncation error of the image charge series and the error estimations associated with the ELC term involving image charges, which may introduce significant errors but are often over-looked.
+Our error estimations are validated numerically across several prototypical systems. Moreover, through analysis, we are able to elucidate the counterintuitive non-monotonic error behavior observed in previous simulation studies.
+Based on the theoretical insights, we propose an optimal parameter selection strategy, offering practical guidance for achieving efficient and accurate MD simulations the confined systems.
+
+For the numerical part, we have developed a class of novel fast algorithms for simulating quasi-2D Coulomb systems, making significant methodological advances in computational physics. 
+These methods are summarized as follows:
+
+For confined Coulomb systems, our approach (SOEwald2D) connects Ewald splitting with a sum-of-exponentials (SOE) approximation, which ensures uniform convergence along the whole non-periodic dimension. 
+We further incorporate importance sampling in Fourier space over the periodic dimensions, achieving an overall $O(N)$ simulation complexity. 
+The algorithm has distinct features over the other existing approaches:
 \begin{itemize}
-    \item[1.] Our method are mesh free and can reach the optimal $\mathcal{O}(N)$ complexity in both CPU and memory consumptions without relying on either FFT or FMM.
-    \item[2.] Our method are able to handle the anisotropy of the system. Both analysis and numerical results validate that our method is not affected by the aspect ratio of the system.
-    \item[3.] Our method are able to handle the dielectric confinement effect very efficiently, even for the case where the interfaces are stronly polarizable.
+	\item[1.] Our approach provides a well-defined computational model for both discrete free-ions and continuous surface charge densities, and is consistent under both NVT and NPT ensembles.
+	\item[2.] The simulation algorithm has linear complexity with small prefactor, and it does not depend on either FFT or FMM for its asymptotic complexity.
+	\item[3.] Instead of modifying FFT and FMM-based methods, which are originally proposed for periodic/free-space systems, our scheme is tailored for partially-periodic systems, it perfectly handles the anisotropy of such systems without any loss of efficiency.
+	\item[4.] Our method is mesh free, and can be flexibly extended to other partially-periodic lattice kernel summations in arbitrary dimensions, thanks to the SOE approximation and random batch sampling method.
 \end{itemize}
+
+For dielectrically confined Coulomb systems, we have developed a novel algorithm called the random batch Ewald2D (RBE2D) method, which is able to handle the dielectric interfaces very efficiently.
+We first present the reformulation for the quasi-2D Ewald sum into a Ewald3D sum with an ELC term and an infinite boundary correction (IBC) term. Rigorous error analysis is also presented, justifying the optimal parameter choices for a given accuracy.
+Then RBE is applied to achieve $O(N)$ complexity: the stochastic approximation has reduced variances thanks to an importance sampling strategy and coupling with a proper thermostat in MD simulations.
+For systems with dielectric mismatch, the subtle dielectric interface problem is reduced to a homogeneous problem via image charge reflection,
+we further recalibrate the structure factor coefficients for the image series in $\V k$-space, 
+enabling the computation of the polarization contributions with minimal overhead. 
+The main advantage of our method compared with existing methods is twofold: 
+\begin{itemize}
+	\item[1.] our method relies on a random batch sampling strategy in $\V k$-space to achieve linear-scaling, thus it is highly efficient and has strong scalability; 
+	\item[2.] our method is mesh-free, and can be applied to strongly confined systems with negligible extra cost.
+\end{itemize}
+
+For negatively charged systems, we have developed a novel method called the quasi-Ewald method (QEM).
+We first propose a new splitting scheme different from the traditional Ewald splitting, and then derive the QEM based on the new splitting scheme and an analytical expression for the interaction potential.
+For both short-range and long-range interactions, efficient and accurate algorithms are carefully derived, and with the help of RBE, the QEM is able to achieve linear-scaling in both CPU and memory consumptions.
+We further proposed a singularity subraction scheme to handle the divergence problem induced by the strongly polarizable interfaces, and extend the QEM to systems with negatively dielectric confinements.
+The QEM is the first method that can properly handle the divergence problem induced by the strongly polarizable interfaces and achieve linear-scaling.
+
+
+In general, our methods are mesh free and can reach the optimal $O(N)$ complexity in both CPU and memory consumptions without relying on either FFT or FMM, and are able to handle the anisotropy of the system.
+Both analysis and numerical results validate that our method is not affected by the aspect ratio of the system.
 These advantages make our method a powerful tool for simulating quasi-2D Coulomb systems, and it is expected to have broad applications in various fields.
 
+For the application part, we have applied our methods to the simulation of all-atom water models confined by slabs, and the results are in good agreement with the experimental and theoretical results, demonstrating the accuracy and efficiency of our methods.
+We also applied our methods to the simulation of negatively confined quasi-2D systems, and observed spontaneous symmetry broken solely via dielectric confinements for the first time.
+These applications showcase the potential of our methods to provide new insights into the physics of quasi-2D systems.
 
-\section{Future Directions}
+Despite the advances made, our theoretical analysis and numerical methods have several limitations that warrant discussion.
+First, our framework relies on the image charge method, which assumes planar dielectric substrates with uniform dielectric constants.
+This restricts its applicability to real-world systems where surfaces often exhibit complex geometries and spatially varying dielectric properties.
+Second, while our work focuses on point charge interactions, many physical systems involve polarizable particles with complex shapes and charge distributions.
+These characteristics can give rise to fascinating phenomena such as like-charge attraction, self-assembly, and phase separation - scenarios where our current methods cannot be directly applied.
+Third, the mathematical properties of our proposed methods, particularly regarding strong convergence and ergodicity, remain incompletely understood and represent important open problems in the field.
+These limitations constrain the broader applicability of our methods and represent critical areas for future investigation and methodological advancement.
 
-In the future, we are interested in extending our method to other interaction kernels, such as dipolar crystals, Stokesian fluids and Yukawa potentials~\cite{Messina2017PRL,Hou2009PRL}.
-Furthermore, we aim to apply the RBE2D method to other complex systems, such as membrane-protein systems and battery-electrolyte systems, where confinement effects can significantly influence their properties.
+
+Looking ahead, we envision two key directions for future research as follows.
+
+The first direction is to extend our methods to more complex systems, including systems with complex geometries such as curved surfaces and polarizable particles.
+In such cases, we anticipate that a boundary integral formulation can be incorporated -- the polarization effect can be approximated as the field due to induced surface charges, then in each field evaluations, the proposed methods may be applied to reduce the computational cost, so that it will be capable of efficiently and accurately simulate charged particles confined by structured surfaces~\cite{wu2018asymmetric}.
+
+The second direction is to extend our methods to different interaction kernels, such as the dipolar interactions~\cite{Messina2017PRL}, the Stokes interactions~\cite{barnett2018unified} and the Yukawa interactions~\cite{Hou2009PRL}, which plays important roles in many physical systems.
+There kernels are also long-range and have more complex behaviors.
+More interestingly, the recently proposed machine learning interaction potential~\cite{cheng2025latent, ji2025machinelearninginteratomicpotentialslongrange} for long-range systems can be consider as a special type of kernel, and it is expected to be a powerful tool for simulating complex systems.
+It is challenging to extend our methods to these kernels, and it is also an interesting direction for future research.
+
+While these research directions present significant theoretical and computational challenges, we believe the potential impact on our understanding of confined charged systems makes them compelling areas for future investigation.

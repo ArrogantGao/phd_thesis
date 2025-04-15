@@ -566,7 +566,7 @@ $z$-axis, ensuring the ordering
 \begin{equation*}
    0 < z_1 < z_2 <  \cdots <  z_{N - 1}<z_N < H\;.
 \end{equation*}
-Since for all  $i$, $z_i \in (0, H)$ is uniformly bounded, hence  the strategies such as the bucket sorting~\cite{corwin2004sorting} can be applied, and the computational cost can be of order~$\mathcal{O}(N \log{N})$ or even  of order~$\mathcal{O}(N)$. 
+Since for all  $i$, $z_i \in (0, H)$ is uniformly bounded, hence  the strategies such as the bucket sorting~\cite{corwin2004sorting} can be applied, and the computational cost can be of order~$O(N \log{N})$ or even  of order~$O(N)$. 
 Once all $N$ particles are sorted according to their positions along the $z$-axis, we observe that $S_0$ can be written into
 \begin{align*}
     S_0 
@@ -630,7 +630,7 @@ S_4(\V{h})= -\sum_{i=1}^Nq_i^2+ \sum_{i=1}^N q_i\exp{(\mathrm{i} \V{h} \cdot \V{
 To sum up, given fixed frequency $\V{h}^\ast$, it only takes  linear complexity to evaluate $S_0$ and $\phi(\V{h}^\ast)$, and we proceed to deal with the   summation over $\V{h}$. 
 % \subsubsection{Part Two: Random Batch Importance Sampling}
 
-% Then we introduce a stochastic algorithm designed to accelerate the Quasi-Ewald method in particle simulations, reducing the complexity to $\mathcal{O}(N)$. 
+% Then we introduce a stochastic algorithm designed to accelerate the Quasi-Ewald method in particle simulations, reducing the complexity to $O(N)$. 
 % Unlike existing methods relying on either FFT or FMM-based techniques to reduce the complexity, our idea involves adopting mini-batch stochastic approximation over Fourier modes, with importance sampling for variance reduction. 
 % More precisely, let us consider the Fourier sum over $\bm k \in \mathcal{K}^2$ for a given kernel $f(\bm{h})$,
 % one can alternatively understand the Fourier sum as an expectation
@@ -711,9 +711,9 @@ Finally, combining all these strategies, we state our Quasi-Ewald method for cal
 % \STATE{Randomly initialize the positions and velocities of charges~$\V{r}_i$ and~$\V{v}_i$ for~$1 \leq i \leq N$.}
 % \STATE{Sample sufficient number of~$\V{h}$ according to distribution $\exp{(-h^2 / (4 \alpha))} / H$, $k \neq 0$ to from a set~$\mathcal{K}$.}
 % \FOR{step in 1 : Step}
-%     \STATE{Find neighbors of each particle using cell list, then compute the short range parts of the Coulomb interaction by Eq.~\eqref{eq:F_short}, with a complexity of~$\mathcal{O}(nN)$.}
-%     \STATE{Sort all particles up in the $z$ direction, and randomly take~$p$ frequencies from the set~$\mathcal{K}$, and then estimate the long range interaction using Eq.~\eqref{eq:F_l_rbe}, with a complexity of~$\mathcal{O}(pN)$.}
-%     \STATE{Integrate Newton's equations~\eqref{eq:NewtonEquation} for time~$d t$ via velocity-Verlet method and some appropriate thermostat, with a complexity of~$\mathcal{O}(N)$.}
+%     \STATE{Find neighbors of each particle using cell list, then compute the short range parts of the Coulomb interaction by Eq.~\eqref{eq:F_short}, with a complexity of~$O(nN)$.}
+%     \STATE{Sort all particles up in the $z$ direction, and randomly take~$p$ frequencies from the set~$\mathcal{K}$, and then estimate the long range interaction using Eq.~\eqref{eq:F_l_rbe}, with a complexity of~$O(pN)$.}
+%     \STATE{Integrate Newton's equations~\eqref{eq:NewtonEquation} for time~$d t$ via velocity-Verlet method and some appropriate thermostat, with a complexity of~$O(N)$.}
 % \ENDFOR
 % \end{algorithmic}
 % \end{algorithm}
@@ -868,7 +868,7 @@ The cost of the short range interaction is given by
 \begin{equation}
     C_s \propto  N\;.
 \end{equation}
-In this way, total cost of the QEM will be of~$\mathcal{O}(N)$.
+In this way, total cost of the QEM will be of~$O(N)$.
 
 % \begin{rmk}
 %     With the~$\alpha$ selected according to Eq.~\eqref{eq:alphs-select}, the variance of force can be estimated as
@@ -1050,7 +1050,7 @@ Then CPU time for the QEM to compute the interactions between~$N$ particles is s
 The particle number surface density is fixed as~$4.36 \times 10^{-2} \tau_0^{-2}$ and thickness of the system is fixed to be~$50 \tau_0$, which are the same to the simulations above.
 The number of charged particles is increased from~$10^2$ to~$10^5$.
 For QEM, the same parameter as the previous simulations are applied; for Ewald2D method, parameter are selected so that the results are of 4-digit precision.
-The results are shown in Fig.~\ref{fig:timecost}, which indicate that complexity of QEM is of~$\mathcal{O}(N)$.
+The results are shown in Fig.~\ref{fig:timecost}, which indicate that complexity of QEM is of~$O(N)$.
 
 \begin{figure}[htb]
     \centering

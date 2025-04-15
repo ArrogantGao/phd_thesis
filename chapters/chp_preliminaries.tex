@@ -500,8 +500,9 @@ However, two significant drawbacks limit its application for large-scale simulat
 	\item The function $\xi^{\pm}(h, z_{ij})$ is ill-conditioned: It grows exponentially as $h z_{ij}$ grows, leading to catastrophic error cancellation in actual computations with prescribed machine precision.
 \end{itemize}
 
-\subsection{Extension to systems with charged slabs}\label{sec::sysslabs}
+% \subsection{Extension to systems with charged slabs}\label{sec::sysslabs}
 
+We now extend the Ewald2D summation to systems with charged slabs, which widely exist in many applications.
 In the presence of charged slabs, boundary layers naturally arise -- opposite ions accumulate near the interface, forming an electric double layer. The structure of electric double layers plays essential role for properties of interfaces and has caught much attention~\cite{messina2004effect,breitsprecher2014coarse,moreira2002simulations}. Since charges on the slabs are often represented as a continuous surface charge density, we present the Ewald2D formulation with such a situation can be well treated.
 
 Without loss of generality, one assumes that the two charged slab walls are located at $z=0$ and $z=L_z$ and with smooth surface charge densities $\sigma_{\mathrm{bot}}(\bm{\rho})$ and $\sigma_{\mathrm{top}}(\bm{\rho})$, respectively. Note that both $\sigma_{\mathrm{bot}}(\bm{\rho})$ and $\sigma_{\mathrm{top}}(\bm{\rho})$ are doubly-periodic according to the quasi-2D geometry. In such cases, the charge neutrality condition of the system reads

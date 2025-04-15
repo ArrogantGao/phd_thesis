@@ -7,11 +7,13 @@ To efficiently simulate such systems, we propose a novel method named the quasi-
 In this section, we present the quasi-Ewald splitting method, a novel decomposition strategy specifically designed for quasi-2D systems with dielectric interfaces. 
 We begin by introducing the quasi-Ewald splitting technique and deriving the Green's function in dielectric confined systems, decomposed into its short-range and long-range components.
 We then demonstrate how to efficiently compute electrostatic interactions in positively confined quasi-2D systems by combining this approach with random batch sampling, providing detailed analysis of consistency and variance.
-Finally, we extend the quasi-Ewald method to handle systems with negative dielectric constants.
+Finally, we introduce a singularity subtraction technique, and extend the QEM to handle negatively confined systems.
 
 % By integrating this approach with random batch sampling, we develop an efficient summation method that achieves linear complexity.
 \subsection{Quasi-Ewald splitting}
-Firstly, given a fixed point  $\V{r}^\prime=(x^{\prime}, y^{\prime},z^{\prime})$, we decompose   the Dirac delta function into
+
+We start by introducing the quasi-Ewald splitting technique.
+Given a fixed point  $\V{r}^\prime=(x^{\prime}, y^{\prime},z^{\prime})$, we decompose   the Dirac delta function into
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{equation}\label{eq...text...Quasi-EwaldMethod...QuasiEwaldSplitting}
 \begin{aligned}
@@ -271,7 +273,7 @@ F&=\frac{\exp{(-\mathrm{i} \V{h} \cdot \V{\rho}_0)}}{2h }\frac{\gamma_{\mrm{u}}\
 
 \begin{rmk}\label{Remark...Nonzero+larger}
     If $\gamma_u \gamma_d < 1$, the determinant of the Eq.~\eqref{proof...Matrix} is non-zero on the positive real axis.
-    However, for negatively confined systems with $\gamma_u \gamma_d > 1$, a first order pole exists at $h= \ln(\gamma_u \gamma_d)/2H$ and the Green's function diverges.
+    However, for negatively confined systems with $\gamma_u \gamma_d > 1$, a first order pole exists at $k_0 = \ln(\gamma_u \gamma_d)/2H$ and the Green's function diverges.
     Moreover, it is noteworthy that all the components in $a_{1:4}(z;z_0)$ take positive values. 
 \end{rmk}
 
@@ -377,18 +379,18 @@ to sum up, the energy $U_\ell$ reads
 \subsection{The algorithm}
 
 We first consider the case where the dielectric constants of the upper and lower regions are positive, i.e., $\gamma_{\mrm{u}} \gamma_{\mrm{d}} < 1$. 
-In this part, we develop fast algorithms for numerically evaluating both the short-range and long-range parts of the interaction energy.
+We develop fast algorithms for numerically evaluating both the short-range and long-range parts of the interaction energy.
 
 First we consider the short-range part $U_s$.
 We observe that the energy $U_s$ is constituted by the terms
 \begin{align*}
   &G_s(\V{r}_i, \V{r}_j)\\
-   =& \frac{1}{8\pi^2 }\int_{\sR^2} \frac{ \exp{(\mathrm{i} \V{h} \cdot \V{\rho}_{ij})}}{k\left(1-\gamma_{\mrm{u}}\gamma_{\mrm{d}}\exp(-2hH)\right)} \left[1-\exp\left(-\frac{h^2}{4\alpha}\right)\right]\left[\sum_{p=1}^4\Gamma_p\exp(-ha_p(z_i;z_j))\right]d \V{h}\;,  
+   =& \frac{1}{8\pi^2 }\int_{\sR^2} \frac{ \exp{(\mathrm{i} \V{h} \cdot \V{\rho}_{ij})}}{h \left(1-\gamma_{\mrm{u}}\gamma_{\mrm{d}}\exp(-2hH)\right)} \left[1-\exp\left(-\frac{h^2}{4\alpha}\right)\right]\left[\sum_{p=1}^4\Gamma_p\exp(-ha_p(z_i;z_j))\right]d \V{h}\;,  
 \end{align*}
 in which $\vr_i$ and $\vr_j$ are given, and we further notice  that all the components in $G_s(\V{r}_i, \V{r}_j)$ take the form
 \begin{equation}\label{eq::int_Gs}
     \begin{split}
-        & \int_{\sR^2} \frac{ \exp{(\mathrm{i} \V{h} \cdot \V{\rho}_{ij})}}{k\left(1-\gamma_{\mrm{u}}\gamma_{\mrm{d}}\exp(-2hH)\right)} \left[1-\exp\left(-\frac{h^2}{4\alpha}\right)\right]\exp(-ha_p(z_i;z_j))d \V{h}\\
+        & \int_{\sR^2} \frac{ \exp{(\mathrm{i} \V{h} \cdot \V{\rho}_{ij})}}{h \left(1-\gamma_{\mrm{u}}\gamma_{\mrm{d}}\exp(-2hH)\right)} \left[1-\exp\left(-\frac{h^2}{4\alpha}\right)\right]\exp(-ha_p(z_i;z_j))d \V{h}\\
         =2\pi&\int_0^{+\infty} \frac{ \exp(-ha_p(z_i;z_j))}{1-\gamma_{\mrm{u}}\gamma_{\mrm{d}}\exp(-2hH)} \left[1-\exp\left(-\frac{h^2}{4\alpha}\right)\right] J_0(\rho_{ij}k)d k\;,
     \end{split}
 \end{equation}
@@ -475,9 +477,9 @@ and
 and we finish our proof.
 \end{proof}
 
-As validations, we compared the errors in calculating the oscillatory integral $\int_0^{\infty} J_0(x \rho) \exp{(-x)} \mrm{d}x$ and $\int_{-\infty}^{\infty} J_0(x \rho) \exp{(-x^2)} \mrm{d}x$ using the Gauss-Laguerre/Gauss-Hermite quadrature or the Gauss-Legendre quadrature.
+As validations, we compared the errors in calculating the oscillatory integral $\int_0^{\infty} J_0(x \rho) \exp{(-x)} \mrm{d}x$ and $\int_{-\infty}^{\infty} J_0(x \rho) \exp{(-x^2)} \mrm{d}x$ using the Gauss-Laguerre ro Gauss-Hermite quadrature, and the Gauss-Legendre quadrature, respectively.
 First for a fixed~$\rho = 50$, as shown by Fig.~\ref{fig:Gauss_int} (a) and (b), the truncated Gauss-Legendre formula on interval~$[0, 36]$ or~$[-6, 6]$ converge much rapidly as the number of points~$n$ increase comparing to the Gauss-Laguerre or Gauss-Hermite formula.
-Then for varying~$\rho \in [0, 10]$, we set~$E = 4$, $8$ and $12$, and compute number of points needed for the truncated Gauss-Legendre formula to reach the given accuracy~$E$.
+Then for varying~$\rho \in [0, 10]$, we set the desired accuracy~$\mathcal{E}_r = 10^{-4}$, $10^{-8}$ and $10^{-12}$, and compute number of points needed for the truncated Gauss-Legendre formula to reach the given accuracy~$\mathcal{E}_r$.
 As shown in Fig.~\ref{fig:Gauss_int_n} (a) and (b), in both cases the integrals converge rapidly and only take a few tens of points the reach the accuracy.
 In this way, both~$I_1$ and~$I_2$ are transformed to be integrals on finite region and can be evaluated easily using the Gauss–Legendre formula.
 
@@ -504,7 +506,7 @@ As the long range interaction  energy $U_\ell$ reads
 \begin{align*} 
 U_\ell&=\frac{1}{4  L_xL_y}\sum_{i,j=1}^N q_iq_j\Bigg({\Abs{z_i-z_j}} +\\&~~~~+  \sum_{\V{h}\in\fK^2,\V{h}\neq\vzero} \frac{ \exp{(\mathrm{i} \V{h} \cdot \V{\rho}_{ij})}}{k\left(1-\gamma_{\mrm{u}}\gamma_{\mrm{d}}\exp(-2hH)\right)}\left[\sum_{p=1}^4\Gamma_p\exp(-ha_p(z_i;z_j))\right] \exp\left(-\frac{h^2}{4\alpha}\right)\Bigg)\;,
 \end{align*}
-and we endeavor to  reduce the $\fO(N^2)$ complexity to linear scaling by incorporating the idea of random batch sampling in combination with the technique that has been discussed in Chapter~\ref{chp_soewald2d}.
+and we endeavor to  reduce the $\fO(N^2)$ complexity to linear scaling by incorporating the idea of random batch sampling in combination with the summation-via-sorting technique that has been discussed in Chapter~\ref{chp_soewald2d}.
 
 %Firstly, we shall deal with the summation over $i$ and $j$, i.e., $\sum_{i,j=1}^N$. 
 We observe that the four components in the following summation read
@@ -516,10 +518,10 @@ We observe that the four components in the following summation read
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 To facilitate the computation, we define auxiliary functions $\beta_{1:4}(h)$ as 
 \begin{align*}
-    \beta_1(\V{h})&:= \frac{1}{4  L_xL_yk\left(1-\gamma_{\mrm{u}}\gamma_{\mrm{d}}\exp(-2hH)\right)} \;,\\
-    \beta_2(\V{h})&:= \frac{\gamma_{\mrm{d}}}{4  L_xL_yk\left(1-\gamma_{\mrm{u}}\gamma_{\mrm{d}}\exp(-2hH)\right)} \;,\\
-    \beta_3(\V{h})&:= \frac{\gamma_{\mrm{u}}\exp(-2hH)}{4  L_xL_yk\left(1-\gamma_{\mrm{u}}\gamma_{\mrm{d}}\exp(-2hH)\right)}\;,\\
-    \beta_4(\V{h})&:= \frac{\gamma_{\mrm{u}}\gamma_{\mrm{d}}\exp(-2hH)}{4  L_xL_yk\left(1-\gamma_{\mrm{u}}\gamma_{\mrm{d}}\exp(-2hH)\right)}\;,
+    \beta_1(\V{h})&:= \frac{1}{4  L_xL_yh\left(1-\gamma_{\mrm{u}}\gamma_{\mrm{d}}\exp(-2hH)\right)} \;,\\
+    \beta_2(\V{h})&:= \frac{\gamma_{\mrm{d}}}{4  L_xL_yh\left(1-\gamma_{\mrm{u}}\gamma_{\mrm{d}}\exp(-2hH)\right)} \;,\\
+    \beta_3(\V{h})&:= \frac{\gamma_{\mrm{u}}\exp(-2hH)}{4  L_xL_yh\left(1-\gamma_{\mrm{u}}\gamma_{\mrm{d}}\exp(-2hH)\right)}\;,\\
+    \beta_4(\V{h})&:= \frac{\gamma_{\mrm{u}}\gamma_{\mrm{d}}\exp(-2hH)}{4  L_xL_yh\left(1-\gamma_{\mrm{u}}\gamma_{\mrm{d}}\exp(-2hH)\right)}\;,
 \end{align*}
 and another set of auxiliary functions   $S_{0:4}(k)$ as
 %which allows us to express the summation over $i$ and $j$ in  $U_\ell$ as
@@ -564,8 +566,8 @@ $z$-axis, ensuring the ordering
 \begin{equation*}
    0 < z_1 < z_2 <  \cdots <  z_{N - 1}<z_N < H\;.
 \end{equation*}
-Since for all  $i$, $z_i \in (0, H)$ is uniformly bounded, hence  the strategies such as the bucket sorting~\cite{corwin2004sorting} can be applied, and the computational cost can be of order~$\mathcal{O}(N \log{N})$ or even  of order~$\mathcal{O}(N)$. Once all $N$ particles are sorted according to their positions along the 
-$z$-axis, we observe that $S_0$ can be written into
+Since for all  $i$, $z_i \in (0, H)$ is uniformly bounded, hence  the strategies such as the bucket sorting~\cite{corwin2004sorting} can be applied, and the computational cost can be of order~$\mathcal{O}(N \log{N})$ or even  of order~$\mathcal{O}(N)$. 
+Once all $N$ particles are sorted according to their positions along the $z$-axis, we observe that $S_0$ can be written into
 \begin{align*}
     S_0 
     & = \sum_{i = 1}^N q_i \left( \sum_{j = 1}^{i }{q_j (z_i - z_j)} \right) \\
@@ -630,13 +632,13 @@ To sum up, given fixed frequency $\V{h}^\ast$, it only takes  linear complexity 
 
 % Then we introduce a stochastic algorithm designed to accelerate the Quasi-Ewald method in particle simulations, reducing the complexity to $\mathcal{O}(N)$. 
 % Unlike existing methods relying on either FFT or FMM-based techniques to reduce the complexity, our idea involves adopting mini-batch stochastic approximation over Fourier modes, with importance sampling for variance reduction. 
-% More precisely, let us consider the Fourier sum over $\bm k \in \mathcal{K}^2$ for a given kernel $f(\bm{k})$,
+% More precisely, let us consider the Fourier sum over $\bm k \in \mathcal{K}^2$ for a given kernel $f(\bm{h})$,
 % one can alternatively understand the Fourier sum as an expectation
 % \begin{equation}
-% 	\mu:=\sum_{\bm{k}\in\mathcal{K}^2}\frac{f(\bm{k})}{g(\bm{k})}g(\bm{k})=\mathbb{E}_{\bm k\sim g(\bm{k})}\left[\frac{f(\bm{k})}{g(\bm{k})}\right],
+% 	\mu:=\sum_{\bm{h}\in\mathcal{K}^2}\frac{f(\bm{h})}{g(\bm{h})}g(\bm{h})=\mathbb{E}_{\bm k\sim g(\bm{h})}\left[\frac{f(\bm{h})}{g(\bm{h})}\right],
 % \end{equation}
-% where $g(\bm{k})$ is a probability measure defined on the lattice $\bm k \in \mathcal{K}^2$ and the expectation~$\mathbb{E}_{\bm k\sim g(\bm{k})}$ is taken with respect to the probability measure.
-% Instead of calculating the summation directly or using FFT, a mini-batch of Fourier modes (with batch size $P$) sampled from $g(\bm{k})$ are employed to estimate the expectation, resulting in an efficient stochastic algorithm.
+% where $g(\bm{h})$ is a probability measure defined on the lattice $\bm k \in \mathcal{K}^2$ and the expectation~$\mathbb{E}_{\bm k\sim g(\bm{h})}$ is taken with respect to the probability measure.
+% Instead of calculating the summation directly or using FFT, a mini-batch of Fourier modes (with batch size $P$) sampled from $g(\bm{h})$ are employed to estimate the expectation, resulting in an efficient stochastic algorithm.
 
 % It is worth noting that the random mini-batch strategy originated from stochastic gradient descent in machine learning and was first introduced in the study of interacting particle systems by Jin et al.~\cite{jin2020random}, called the random batch method. 
 Observe that the long-range interaction energy $U_\ell$ can be represented as
@@ -657,7 +659,7 @@ can be computed with linear complexity, we focus on the efficient evaluation of
 $U_\ell^{\V{h}\neq \vzero}$, for which the idea of random batch is employed.
 Based on the above expression, we find a Gaussian decay factor in $U_\ell^{\V{h}\neq \vzero}$ explicitly, which can be normalized for the  purpose of importance sampling, so that again we apply the idea of random batch sampling taking
 \begin{equation}\label{eq::hk}
-	g(\bm{k}) := \frac{1}{S} \exp\left(-\frac{h^2}{4\alpha}\right)\;, %\quad H := \sum_{\bm{k}\neq\bm{0}}e^{-h^2/(4\alpha^2)},
+	g(\bm{h}) := \frac{1}{S} \exp\left(-\frac{h^2}{4\alpha}\right)\;, %\quad H := \sum_{\bm{h}\neq\bm{0}}e^{-h^2/(4\alpha^2)},
 \end{equation}
 where \[S:= \sum_{\V{h}\in\fK^2,\V{h}\neq\vzero}\exp\left(-\frac{h^2}{4\alpha}\right)\;,\] serves as a normalization factor.
 % By application of the Poisson summation formula, $H$ can be computed as follows
@@ -673,7 +675,7 @@ where \[S:= \sum_{\V{h}\in\fK^2,\V{h}\neq\vzero}\exp\left(-\frac{h^2}{4\alpha}\r
 % 	H=-1+\frac{\alpha L_xL_y}{\pi}\sum_{m_x,m_y\in\mathbb{Z}}\exp\left({-\alpha\left(m_x^2L_x^2+m_y^2L_y^2\right)}\right)\;,
 % \end{equation}
 %
-Using the Metropolis algorithm~\cite{metropolis1953equation}, a random mini-batch of frequencies $\{\bm{k}_{\eta}\}_{\eta=1}^P$ is sampled, where~$P$ is the batch size, and $U_\ell$ can be approximated as 
+Using the Metropolis algorithm~\cite{metropolis1953equation}, a random mini-batch of frequencies $\{\bm{h}_{\eta}\}_{\eta=1}^P$ is sampled, where~$P$ is the batch size, and $U_\ell$ can be approximated as 
 \begin{equation}\label{eq::RBapp}
  U_\ell^{\V{h}\neq \vzero} \approx U_{l,\ast}^{\V{h}\neq \vzero}  :=   \frac{S}{P}\sum_{\eta=1}^P \phi(\V{h}_{\eta})=  \frac{S}{P}\sum_{\eta=1}^P \sum_{q=1}^4S_q(\V{h}_{\eta})h_q(\V{h}_{\eta})\;,
 \end{equation} 
@@ -688,13 +690,13 @@ Finally, combining all these strategies, we state our Quasi-Ewald method for cal
     \State \textbf{Input}:  Initialize the size of the simulation box $(L_x,L_y, H)$, as well as the positions, velocities, and charges of all particles. Choose a precision requirement $\varepsilon$ as well as batch size $P$.
     \State \textbf{Precomputation}:  Determine Ewald splitting parameters $\alpha$. Generate real space cutoff by $r_c$.
     \Procedure\text{Quasi-Ewald}{}       
-        \State Draw $P$ frequencies $\{\bm{k}_{\eta}\}_{\eta=1}^{P}$ using the Metropolis algorithm;
+        \State Draw $P$ frequencies $\{\bm{h}_{\eta}\}_{\eta=1}^{P}$ using the Metropolis algorithm;
         \State Sort all the particles according to their $z$ coordinates, such that $z_1 < z_2 < \cdots < z_N$;
-        \State Compute unbiased Fourier space energy $U_{l, *}^{\bm{k}\neq\bm{0}}$ by importance sampling Eq.~\eqref{eq::RBapp};
+        \State Compute unbiased Fourier space energy $U_{l, *}^{\bm{h}\neq\bm{0}}$ by importance sampling Eq.~\eqref{eq::RBapp};
         \State Compute zero-frequency part $U_{l}^{\bm{0}}$ according to Eq.~\eqref{eq::U_l0_Ulk}.
         % \State Compute $U_{\text{self}}$ and $U_{\text{p-s}}$ via Eqs.~\eqref{eq::self} and \eqref{eq:spectial}, respectively.
         \State Compute~$U_{s}^{*}$ by direct truncation in real space according to Eq.~\eqref{eq::U_s_truncated} with cutoff $r_c$. %\Comment{short-range part}
-        \State Compute $U^{*} = U_{s, *} + U_{l}^{\bm{0}} + U_{l, *}^{\bm{k}\neq\bm{0}}$.
+        \State Compute $U^{*} = U_{s, *} + U_{l}^{\bm{0}} + U_{l, *}^{\bm{h}\neq\bm{0}}$.
         \State Compute forces $\bm{F}_{i}^{*}$ via a similar procedure as that of $U^{*}$.
     \EndProcedure
 
@@ -727,43 +729,45 @@ Proposition~\ref{prop:unbaised} is obtained directly by the definition of the im
 \begin{prop}\label{prop:unbaised}
 	  $\vF_{l,i}^*$ is a  unbiased estimator, i.e.,  $\mathbb{E} \V{\chi}_{i} = \bm 0$, and its variance  can be expressed by
 % \begin{align*}
-% 		\mathbb{E}\Xi^2&=\frac{S}{P}\sum_{\bm{k}_1\in\fK^2, \bm{k}_1\neq \vzero}\exp\left(-\frac{\Norm{\V{h}_1}^2}{4\alpha}\right)\Abs{\phi(\V{h}_1)-\frac{1}{H} \sum_{\bm{k}_2\in\fK^2, \bm{k}_2\neq \vzero}\phi(\V{h}_2)\exp\left(-\frac{\Norm{\V{h}_2}^2}{4\alpha}\right)}^2\;,
+% 		\mathbb{E}\Xi^2&=\frac{S}{P}\sum_{\bm{h}_1\in\fK^2, \bm{h}_1\neq \vzero}\exp\left(-\frac{\Norm{\V{h}_1}^2}{4\alpha}\right)\Abs{\phi(\V{h}_1)-\frac{1}{H} \sum_{\bm{h}_2\in\fK^2, \bm{h}_2\neq \vzero}\phi(\V{h}_2)\exp\left(-\frac{\Norm{\V{h}_2}^2}{4\alpha}\right)}^2\;,
 %         % \\
 %         % \Bigg|\sum_{q=1}^4S_q(\V{h}_{1})h_q(\V{h}_{1})\\
-%         % &~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-\frac{1}{H} \sum_{\bm{k}_2\neq \vzero}\exp\left(-\frac{\Norm{\V{h}_2}^2}{4\alpha}\right)\sum_{q=1}^4S_q(\V{h}_{2})h_q(\V{h}_{2}) \Bigg|^2\;,
+%         % &~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-\frac{1}{H} \sum_{\bm{h}_2\neq \vzero}\exp\left(-\frac{\Norm{\V{h}_2}^2}{4\alpha}\right)\sum_{q=1}^4S_q(\V{h}_{2})h_q(\V{h}_{2}) \Bigg|^2\;,
 % \end{align*}
 % 	and
 \begin{align*}
-		\mathbb{E}\Norm{\V{\chi}_{i}}^2&=\frac{S}{P}\sum_{\bm{k}_1\in\fK^2, \bm{k}_1\neq \vzero}\exp\left(-\frac{\Norm{\V{h}_1}^2}{4\alpha}\right)\Bigg|\Bigg|\nabla_{\bm{r}_i}\phi(\V{h}_1)\\
-        &~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-\frac{1}{H} \sum_{\bm{k}_2\in\fK^2, \bm{k}_2\neq \vzero}\nabla_{\bm{r}_i}\phi(\V{h}_2)\exp\left(-\frac{\Norm{\V{h}_2}^2}{4\alpha}\right)\Bigg|\Bigg|^2\;.
+		\mathbb{E}\Norm{\V{\chi}_{i}}^2&=\frac{S}{P}\sum_{\bm{h}_1\in\fK^2, \bm{h}_1\neq \vzero}\exp\left(-\frac{\Norm{\V{h}_1}^2}{4\alpha}\right)\Bigg|\Bigg|\nabla_{\bm{r}_i}\phi(\V{h}_1)\\
+        &~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-\frac{1}{H} \sum_{\bm{h}_2\in\fK^2, \bm{h}_2\neq \vzero}\nabla_{\bm{r}_i}\phi(\V{h}_2)\exp\left(-\frac{\Norm{\V{h}_2}^2}{4\alpha}\right)\Bigg|\Bigg|^2\;.
 \end{align*}
 \end{prop}
-Furthermore, under the Debye-H$\ddot{\text{u}}$ckel approximation~\cite{levin2002electrostatic}, we have  the following~Lemma~\ref{lem::upper_bound_phiRB}, whose proof can be found in Appendix G in~\cite{gan2024fast}.
-\begin{lem} \label{lem::upper_bound_phiRB}
-  Under the assumption of the DH theory, given function of the form 
-    \begin{equation}
-       \mathscr{G}(\V{r}_i)=\sum_{j\neq i}q _i q_{j}\exp{(\mathrm{i} \V{h} \cdot \V{\rho}_{ij})}f(z_{ij}),
-    \end{equation}
- where $\abs{f(z_{ij})}$ is bounded by  a constant $C_f$ independent of $z_{ij}$, then function $ \mathscr{G}(\V{r}_i)$ is bounded above by
-    \begin{equation}
-         \mathscr{G}(\V{r}_i)\leq q_i  C_f\lambda_{\mrm{D}}^2\;,
-    \end{equation}
-    where~$\lambda_{\mrm{D}}$  represents the Debye length.
-	% Under the assumption of the DH theory, $|\phi(\bm{k})|$ and $\Norm{\nabla_{\bm{r}_i}\phi(\bm{k})}$ have their respective upper bounds
-	% \begin{equation}
-	% 	\abs{ \widetilde{\varphi}^{\emph{RB}}(\bm{k})}\leq\frac{2\sqrt{\pi}\lambda_D^2 Q}{L_xL_y k}\left(\sqrt{\pi}+\frac{\alpha \varepsilon}{k}\right),
-	% 	\quad
-	% 	\abs{\nabla_{\bm{r}_{i}} \widetilde{\varphi}^{\emph{RB}}(\bm{k})}\leq  \frac{\pi \lambda_D^2 q_{i}^2}{L_xL_y}\left[3+\frac{\alpha}{\sqrt{\pi}}\left(1+\frac{2\sqrt{2}\varepsilon}{k}\right)\right], 
-	% \end{equation}
-	% where $\lambda_{D}$ represents the Debye length
-\end{lem}
+% Furthermore, under the Debye-H$\ddot{\text{u}}$ckel approximation~\cite{levin2002electrostatic}, we have  the following~Lemma~\ref{lem::upper_bound_phiRB}, whose proof can be found in Appendix G in~\cite{gan2024fast}.
+% \begin{lem} \label{lem::upper_bound_phiRB}
+%   Under the assumption of the DH theory, given function of the form 
+%     \begin{equation}
+%        \mathscr{G}(\V{r}_i)=\sum_{j\neq i}q _i q_{j}\exp{(\mathrm{i} \V{h} \cdot \V{\rho}_{ij})}f(z_{ij}),
+%     \end{equation}
+%  where $\abs{f(z_{ij})}$ is bounded by  a constant $C_f$ independent of $z_{ij}$, then function $ \mathscr{G}(\V{r}_i)$ is bounded above by
+%     \begin{equation}
+%          \mathscr{G}(\V{r}_i)\leq q_i  C_f\lambda_{D}^2\;,
+%     \end{equation}
+%     where~$\lambda_{D}$  represents the Debye length.
+% 	% Under the assumption of the DH theory, $|\phi(\bm{h})|$ and $\Norm{\nabla_{\bm{r}_i}\phi(\bm{h})}$ have their respective upper bounds
+% 	% \begin{equation}
+% 	% 	\abs{ \widetilde{\varphi}^{\emph{RB}}(\bm{h})}\leq\frac{2\sqrt{\pi}\lambda_D^2 Q}{L_xL_y k}\left(\sqrt{\pi}+\frac{\alpha \varepsilon}{k}\right),
+% 	% 	\quad
+% 	% 	\abs{\nabla_{\bm{r}_{i}} \widetilde{\varphi}^{\emph{RB}}(\bm{h})}\leq  \frac{\pi \lambda_D^2 q_{i}^2}{L_xL_y}\left[3+\frac{\alpha}{\sqrt{\pi}}\left(1+\frac{2\sqrt{2}\varepsilon}{k}\right)\right], 
+% 	% \end{equation}
+% 	% where $\lambda_{D}$ represents the Debye length
+% \end{lem}
+
+
 Finally, we introduce the following Theorem~\ref{thm:unbaised} for the boundedness and convergence in the fluctuations originated from the random batch approximation.
 \begin{thm}\label{thm:unbaised}
-	Under the assumption of the DH theory,   the variance  of the estimators of   forces have closed upper bounds
+	Under the assumption of the DH theory, the variance of the estimators of forces have closed upper bounds
 	\begin{equation}
-		  \mathbb{E}\Norm{\V{\chi}_{i}}^2\leq\frac{ S^2q_i^2\lambda_{\mrm{D}}^4}{2P ^2 L_x^2L_y^2}\left( \frac{1+\Abs{\gamma_{\mrm{u}}}+\Abs{\gamma_{\mrm{d}}}+\Abs{\gamma_{\mrm{u}}\gamma_{\mrm{d}}}}{1-\max\{0,\gamma_{\mrm{u}}\gamma_{\mrm{d}}\}}\right)^2\;,
+		  \mathbb{E}\Norm{\V{\chi}_{i}}^2\leq\frac{ S^2q_i^2\lambda_{D}^4}{2P ^2 L_x^2L_y^2}\left( \frac{1+\Abs{\gamma_{\mrm{u}}}+\Abs{\gamma_{\mrm{d}}}+\Abs{\gamma_{\mrm{u}}\gamma_{\mrm{d}}}}{1-\max\{0,\gamma_{\mrm{u}}\gamma_{\mrm{d}}\}}\right)^2\;,
 	\end{equation}
-     where~$\lambda_{\mrm{D}}$  represents the Debye length.
+     where~$\lambda_{D}$  represents the Debye length.
 \end{thm}
 \begin{proof}
 We observe that 
@@ -781,36 +785,36 @@ thus we have,
 %
 \begin{align*}
  \nabla_{\bm{r}_i} S_1(\V{h})&=\sum_{j,j\neq i}q_iq_j   \begin{pmatrix} \mathrm{i} \V{h} \\
- \pm k  \end{pmatrix}\exp{(\mathrm{i} \V{h} \cdot \V{\rho}_{ij})}\exp(-h\Abs{z_i-z_j})\;,\\
+ \pm h  \end{pmatrix}\exp{(\mathrm{i} \V{h} \cdot \V{\rho}_{ij})}\exp(-h\Abs{z_i-z_j})\;,\\
  \nabla_{\bm{r}_i} S_2(\V{h})&=\sum_{j,j\neq i}q_iq_j   \begin{pmatrix} \mathrm{i} \V{h} \\
- -k  \end{pmatrix}\exp{(\mathrm{i} \V{h} \cdot \V{\rho}_{ij})}\exp(-h(z_i+z_j))\;,\\
+ -h  \end{pmatrix}\exp{(\mathrm{i} \V{h} \cdot \V{\rho}_{ij})}\exp(-h(z_i+z_j))\;,\\
   \nabla_{\bm{r}_i} S_3(\V{h})&=\sum_{j,j\neq i}q_iq_j   \begin{pmatrix} \mathrm{i} \V{h} \\
- k  \end{pmatrix}\exp{(\mathrm{i} \V{h} \cdot \V{\rho}_{ij})}\exp(h(z_i+z_j))\;,\\
+ h  \end{pmatrix}\exp{(\mathrm{i} \V{h} \cdot \V{\rho}_{ij})}\exp(h(z_i+z_j))\;,\\
  \nabla_{\bm{r}_i} S_4(\V{h})&=\sum_{j,j\neq i}q_iq_j   \begin{pmatrix} \mathrm{i} \V{h} \\
- \pm k  \end{pmatrix}\exp{(\mathrm{i} \V{h} \cdot \V{\rho}_{ij})}\exp(h\Abs{z_i-z_j})\;,\\
+ \pm h  \end{pmatrix}\exp{(\mathrm{i} \V{h} \cdot \V{\rho}_{ij})}\exp(h\Abs{z_i-z_j})\;,\\
 \end{align*}
 and  the choice of $+$ or $-$ depends on the choice of particle. Consequently, $\grad_{\V{r}_i} \phi(\V{h})$ takes the form
 \begin{align*}
   \grad_{\V{r}_i} \phi(\V{h})  &=\sum_{j,j\neq i}q_iq_j  \exp{(\mathrm{i} \V{h} \cdot \V{\rho}_{ij})} \begin{pmatrix} \mathrm{i} \V{h} \\
- \pm k  \end{pmatrix}g(z_{ij})\;,
+ \pm h  \end{pmatrix}g(z_{ij})\;,
 \end{align*}
 where the estimates on $g(z_{ij})$ reads
 \begin{align*}
-  \Abs{g(z_{ij})  }&\leq  \frac{1+\Abs{\gamma_{\mrm{u}}}+\Abs{\gamma_{\mrm{d}}}+\Abs{\gamma_{\mrm{u}}\gamma_{\mrm{d}}}}{4  L_xL_y k\left(1-\max\{0,\gamma_{\mrm{u}}\gamma_{\mrm{d}}\}\right)}\;,
+  \Abs{g(z_{ij})  }&\leq  \frac{1+\Abs{\gamma_{\mrm{u}}}+\Abs{\gamma_{\mrm{d}}}+\Abs{\gamma_{\mrm{u}}\gamma_{\mrm{d}}}}{4  L_xL_y h \left(1-\max\{0,\gamma_{\mrm{u}}\gamma_{\mrm{d}}\}\right)}\;,
 \end{align*}
 on the basis of Lemma \ref{lem::upper_bound_phiRB}, the upper bound of~$\abs{\grad_{\V{r}_i} \phi(\V{h})}$ can be estimated as follows 
 \begin{equation}
-  \Norm{\nabla_{\bm{r}_i}\phi(\V{h})}\leq \frac{q_i\lambda_{\mrm{D}}^2}{2  L_xL_y}    \frac{1+\Abs{\gamma_{\mrm{u}}}+\Abs{\gamma_{\mrm{d}}}+\Abs{\gamma_{\mrm{u}}\gamma_{\mrm{d}}}}{1-\max\{0,\gamma_{\mrm{u}}\gamma_{\mrm{d}}\}}\;.
+  \Norm{\nabla_{\bm{r}_i}\phi(\V{h})}\leq \frac{q_i\lambda_{D}^2}{2  L_xL_y}    \frac{1+\Abs{\gamma_{\mrm{u}}}+\Abs{\gamma_{\mrm{d}}}+\Abs{\gamma_{\mrm{u}}\gamma_{\mrm{d}}}}{1-\max\{0,\gamma_{\mrm{u}}\gamma_{\mrm{d}}\}}\;.
 \end{equation}
 Finally,  variance of force on the $i$-th particle is bounded above by
 \begin{align*}
-   	\mathbb{E}\Norm{\V{\chi}_{i}}^2&\leq   \frac{2S}{P}\sum_{\bm{k}_1\in\fK^2, \bm{k}_1\neq \vzero}\exp\left(-\frac{\Norm{\V{h}_1}^2}{4\alpha}\right)\Norm{\nabla_{\bm{r}_i}\phi(\V{h}_1)}^2\\
-    &\leq  \frac{2S^2}{P}\left(\frac{q_i\lambda_{\mrm{D}}^2}{2  L_xL_y}    \frac{1+\Abs{\gamma_{\mrm{u}}}+\Abs{\gamma_{\mrm{d}}}+\Abs{\gamma_{\mrm{u}}\gamma_{\mrm{d}}}}{1-\max\{0,\gamma_{\mrm{u}}\gamma_{\mrm{d}}\}}\right)^2\\
-    &= \frac{ S^2q_i^2\lambda_{\mrm{D}}^4}{2P ^2 L_x^2L_y^2}\left( \frac{1+\Abs{\gamma_{\mrm{u}}}+\Abs{\gamma_{\mrm{d}}}+\Abs{\gamma_{\mrm{u}}\gamma_{\mrm{d}}}}{1-\max\{0,\gamma_{\mrm{u}}\gamma_{\mrm{d}}\}}\right)^2\;.
+   	\mathbb{E}\Norm{\V{\chi}_{i}}^2&\leq   \frac{2S}{P}\sum_{\bm{h}_1\in\fK^2, \bm{h}_1\neq \vzero}\exp\left(-\frac{\Norm{\V{h}_1}^2}{4\alpha}\right)\Norm{\nabla_{\bm{r}_i}\phi(\V{h}_1)}^2\\
+    &\leq  \frac{2S^2}{P}\left(\frac{q_i\lambda_{D}^2}{2  L_xL_y}    \frac{1+\Abs{\gamma_{\mrm{u}}}+\Abs{\gamma_{\mrm{d}}}+\Abs{\gamma_{\mrm{u}}\gamma_{\mrm{d}}}}{1-\max\{0,\gamma_{\mrm{u}}\gamma_{\mrm{d}}\}}\right)^2\\
+    &= \frac{ S^2q_i^2\lambda_{D}^4}{2P ^2 L_x^2L_y^2}\left( \frac{1+\Abs{\gamma_{\mrm{u}}}+\Abs{\gamma_{\mrm{d}}}+\Abs{\gamma_{\mrm{u}}\gamma_{\mrm{d}}}}{1-\max\{0,\gamma_{\mrm{u}}\gamma_{\mrm{d}}\}}\right)^2\;.
 \end{align*}
 \end{proof}
 We remark that $S \sim L_xL_y$, then $	\mathbb{E}\Norm{\V{\chi}_{i}}^2=\fO\left(\frac{1}{P}\right)$ and independent of the particle number $N$.
-Theorem~\ref{thm:unbaised} has demonstrated that the variance of force scales as $\fO\left(\frac{1}{P}\right)$, unaffected by the growth of the system size $N$, provided the same   Debye length $\lambda_{\mrm{D}}$. 
+Theorem~\ref{thm:unbaised} has demonstrated that the variance of force scales as $\fO\left(\frac{1}{P}\right)$, unaffected by the growth of the system size $N$, provided the same   Debye length $\lambda_{D}$. 
 This is crucial for its practical usage in MD simulations, where the dynamical evolution typically relies on force calculations rather than energy. 
 We proceed to demonstrate  
 %some analysis for the strong convergence of the random batch MD, which further supports this observation. The following result indicates 
@@ -846,7 +850,7 @@ According to the discussions above, QEM should be good for~$NVT$ simulations jus
 
 Finally, the optimal time complexity of QEM is given by
 \begin{align}
-    C_s & \propto \pi r_c^2 \frac{N^2}{L_x L_y} n\;,\\
+    C_s & \propto \pi r_c^2 \frac{N^2}{L_x L_y}\;,\\
     C_\ell & \propto N P\;,
 \end{align}
 where~$C_s$ and~$C_\ell$ are the cost of computing the short range and the long range part, respectively.
@@ -862,7 +866,7 @@ Then by taking
 where~$\varrho$ represents the surface density.
 The cost of the short range interaction is given by
 \begin{equation}
-    C_s \propto  N n\;.
+    C_s \propto  N\;.
 \end{equation}
 In this way, total cost of the QEM will be of~$\mathcal{O}(N)$.
 
@@ -877,21 +881,21 @@ In this way, total cost of the QEM will be of~$\mathcal{O}(N)$.
 \subsection{QEM for negatively confined systems}
 
 We now extend the QEM to negatively confined systems, where the dielectric permittivities of the upper and lower substrates are negative, resulting in~$\gamma_u \gamma_d > 1$. 
-In such systems, the ICM leads to a divergent series of image charges, making ICM-based methods inapplicable.
-For QEM, the main challenge arises from what was discussed in Remark~\ref{Remark...Nonzero+larger}: the Green's function diverges along the positive real axis, rendering the integral in the short range interaction ill-posed.
-In this part, we demonstrate how proper singularity subtraction techniques can handle this divergence effectively, enabling us to develop an efficient method for negatively confined systems.
+In these systems, the image charge method (ICM) produces a divergent series of image charges, making ICM-based approaches inapplicable.
+As discussed in Remark~\ref{Remark...Nonzero+larger}, the key challenge for QEM arises from the divergence of the Green's function along the positive real axis, which causes the integral in the short-range interaction to become ill-posed.
+Here, we demonstrate singularity subtraction techniques can effectively handle this divergence, allowing us to develop an efficient computational method for negatively confined systems.
 
 According to Eq.~\eqref{eq::int_Gs}, the integral to be evaluated numerically can be simplified as
-\begin{equation}
-    I = \int_0^{\infty} \frac{J_0(b h) \exp{(- a h)}}{\exp{( - 2 H (h - h_0))} - 1} \mathrm{d}h\;,
+\begin{equation}\label{eq::int_I}
+    I = \int_0^{\infty} \frac{J_0(b h) \exp{(- a h)}}{\exp{( - 2 H (h - k_0))} - 1} \mathrm{d}h\;,
 \end{equation}
-where~$a$,~$H$ and~$b$ are positive constants, $J_0$ is the zeroth order Bessel function of the first kind and~$h_0 = {\ln{(\gamma_u \gamma_d)}} / {2H}$ is a 1st order pole.
+where~$a$,~$H$ and~$b$ are positive constants, $J_0$ is the zeroth order Bessel function of the first kind and~$k_0 = {\ln{(\gamma_u \gamma_d)}} / {2H}$ is a 1st order pole.
 
 To avoid the divergence, we calculate the principle value by splitting the integrand into two parts, given by
 \begin{equation}
     \begin{split}
-        f_{1} &=  \frac{J_0(b h) e^{- a h} - J_0(b h_0) e^{- a h_0}}{e^{- 2 H (h - h_0)} - 1} - J_0(b h_0) e^{- a h_0} \;, \\
-        f_{2} &= \frac{J_0(b h_0) e^{- a h_0 - 2 H (h - h_0)}}{e^{- 2 H (h - h_0)} - 1} \;,
+        f_{1} &=  \frac{J_0(b h) e^{- a h} - J_0(b k_0) e^{- a k_0}}{e^{- 2 H (h - k_0)} - 1} - J_0(b k_0) e^{- a k_0} \;, \\
+        f_{2} &= \frac{J_0(b k_0) e^{- a k_0 - 2 H (h - k_0)}}{e^{- 2 H (h - k_0)} - 1} \;,
     \end{split}
 \end{equation}
 which are smooth and singular, respectively.
@@ -906,12 +910,12 @@ which are smooth and singular, respectively.
 An example is shown in Fig.~\ref{fig:split}, where we take~$a = b = H = k_0 = 1$.
 For the smooth part, when~$k \to k_0$, both the numerator and denominator tends to zero so that
 \begin{equation}
-    \lim_{h \to h_0} \frac{J_0(bh) e^{- a h} - J_0(bh_0) e^{- a h_0}}{e^{- 2 H (h - h_0)} - 1}  = \lim_{h \to h_0} \frac{ \partial {J_0(bh) e^{- a h}}}{ \partial {e^{- 2 H (h - h_0)}}}\;,
+    \lim_{h \to k_0} \frac{J_0(bh) e^{- a h} - J_0(bk_0) e^{- a k_0}}{e^{- 2 H (h - k_0)} - 1}  = \lim_{h \to k_0} \frac{ \partial {J_0(bh) e^{- a h}}}{ \partial {e^{- 2 H (h - k_0)}}}\;,
 \end{equation}
-which is a finite value, and the integrand is a smooth function at~$h = h_0$.
+which is a finite value, and the integrand is a smooth function at~$h = k_0$.
 When~$h \gg 1$, the smooth part is rapidly decaying, 
 \begin{equation}
-    \abs{\frac{J_0(bh) e^{- a h} - J_0(bh_0) e^{- a h_0}}{e^{- 2 H (h - h_0)} - 1} + J_0(bh_0) e^{- a h_0} } \to \abs{J_0(bh) e^{- a h}}\;,
+    \abs{\frac{J_0(bh) e^{- a h} - J_0(bk_0) e^{- a k_0}}{e^{- 2 H (h - k_0)} - 1} + J_0(bk_0) e^{- a k_0} } \to \abs{J_0(bh) e^{- a h}}\;,
 \end{equation}
 so that the integral can be directly evaluated using the same method as in the previous section, given by
 \begin{equation}
@@ -919,22 +923,22 @@ so that the integral can be directly evaluated using the same method as in the p
 \end{equation}
 since we have shown that the integrand is rapidly decaying, the truncation error can be estimated by
 \begin{equation}
-    E < \int_{k_f}^{\infty} \exp{(-a h)} dh < \frac{\exp{(-a h_f)}}{a}\;.
+    \delta I < \int_{k_f}^{\infty} \exp{(-a h)} dh < \frac{\exp{(-a h_f)}}{a}\;.
 \end{equation}
 
 Integral of the singular part can be calculated analytically, given by
 \begin{equation}
     \begin{split}
-        & \int_0^{\infty} \frac{J_0(bh_0) e^{- a h_0 - 2 H (h - h_0)}}{e^{- 2 H (h - h_0)} - 1} dh\\
-        = & \frac{J_0(bh_0) e^{- a h_0}}{2H} \int_{0}^{\exp{(2 H h_0)}} \frac{1}{x - 1} dx\\
-        = & \frac{J_0(bh_0) e^{- a h_0}}{2H} \ln{(\gamma_u \gamma_d - 1)}\;,
+        & \int_0^{\infty} \frac{J_0(bk_0) e^{- a k_0 - 2 H (h - k_0)}}{e^{- 2 H (h - k_0)} - 1} dh\\
+        = & \frac{J_0(bk_0) e^{- a k_0}}{2H} \int_{0}^{\exp{(2 H k_0)}} \frac{1}{x - 1} dx\\
+        = & \frac{J_0(bk_0) e^{- a k_0}}{2H} \ln{(\gamma_u \gamma_d - 1)}\;,
     \end{split}
 \end{equation}
 which is a finite value that can be easily calculated.
 
 To verify the method above, we compared the result by the new approach shown above with a direct method given by
 \begin{equation}
-        I = \int_{0}^{2 h_0} \left[\frac{J_0(bh)e^{-ah}}{e^{-2H(h-h_0)} - 1} + \frac{J_0(bh_0)e^{-ah_0}}{2H(h - h_0)}\right] dh + \int_{2 h_0}^{\infty} \frac{J_0(bh)e^{-ah}}{e^{-2H(h-h_0)} - 1} dh\;.,\label{eq:direct}
+        I = \int_{0}^{2 k_0} \left[\frac{J_0(bh)e^{-ah}}{e^{-2H(h-k_0)} - 1} + \frac{J_0(bk_0)e^{-ak_0}}{2H(h - k_0)}\right] dh + \int_{2 k_0}^{\infty} \frac{J_0(bh)e^{-ah}}{e^{-2H(h-k_0)} - 1} dh\;.,\label{eq:direct}
 \end{equation}
 which directly subtracts the 1st order pole but take a high order of the Gaussian quadrature to reach high accuracy.
 
@@ -944,12 +948,12 @@ We set~$a = b = k_0 = H = 1$, and $k_f = 10$,~$20$ and~$30$, the relative errors
 \begin{figure}[htbp]
     \centering
     \includegraphics[width = 0.5\linewidth]{figs/int_convergence.pdf}
-    \caption{Error to the order of the quadrature.}
+    \caption{Relative error of the numiercal evaluating the integral given in Eq.~\eqref{eq::int_I} with $a = b = H = k_0 = 1$, as a function of cutoff~$k_f$ and order of the quadrature~$n$.}
     \label{fig:error}
 \end{figure}
 
-In summary, this approach provides an efficient method for handling the singularity in the short-range interaction by splitting the integrand into smooth and singular parts that can be evaluated separately with high accuracy.
-This approach enables the simulation of negatively confined Coulomb systems with high accuracy and efficiency.
+In summary, the singularity substraction tenchnique introduced above provides an efficient method for handling the singularity in the short-range interaction by splitting the integrand into smooth and singular parts that can be evaluated separately with high accuracy.
+Thus, being combined with this technique, QEM enables the simulation of negatively confined Coulomb systems with high accuracy and efficiency.
 
 \section{Numerical results}
 \label{sec:result}
@@ -957,20 +961,20 @@ This approach enables the simulation of negatively confined Coulomb systems with
 In this section, we validate the accuracy and efficiency of our proposed method by applying it to several typical scientific problems, some the results are compared with that of the previously proposed method, such as the Ewald2D method, the image charge method and the HSMA method.
 The runtime of QEM in one of the typical scenario is also tested.
 These examples indicate that the proposed method is effective and efficient.
-All calculations are performed in a Ubuntu system with AMD Ryzen Threadripper PRO 3995WX@2.2GHz, 1 CPU core.
+% All calculations are performed in a Ubuntu system with AMD Ryzen Threadripper PRO 3995WX@2.2GHz, 1 CPU core.
 Our software~\cite{QuasiEwald} is developed based on the Julia Programming Language~\cite{Julia-2017} and the open-source package \emph{CellListMap.jl}~\cite{celllistmap}.
 The figures are generated by the open-source package \emph{Makie.jl}~\cite{DanischKrumbiegel2021}.
 
-\begin{rmk}
-    In this section, we focus on systems with positive permittivity, so that existing ICM-based methods can serve as reliable benchmarks. The numerical results for negatively confined systems will be presented in Section~\ref{sec::ssb}.
-\end{rmk}
+% \begin{rmk}
+%     In this section, we focus on systems with positive permittivity, so that existing ICM-based methods can serve as reliable benchmarks. The numerical results for negatively confined systems will be presented in Section~\ref{sec::ssb}.
+% \end{rmk}
 
 \subsection{Interaction between charges}
 
 In this subsection, we validate the accuracy and convergence of our method by calculating the electrostatic interaction energy and force between charged particles distributed in quasi-2D systems.
 It is remarked that the importance sampling technique is not applied here.
 
-We first consider the electrostatic interaction between a pair of negatively charged particles, and the results are compared with that of the ICM-Ewald2D method.
+We first consider the electrostatic interaction between a pair of charged particles, and the results are compared with that of the ICM-Ewald2D method.
 We focused on two simple situations,~$\gamma_{d} = \gamma_{u} = \gamma = \pm 0.95$.
 Size of the simulation box is set as~$(100, 100, 50)$, and the particle with charge~$+1$ is fixed at~$(50, 50, 1)$, while the other one with charge~$-1$ is moved along the $x$ axis or the $z$ axis.
 For QEM, we set~$\alpha = 1.0$,~$n = 50$ and~$E = 4$.
@@ -1071,9 +1075,9 @@ We keep other parameters the same as that of the previous example.
 The spatial distribution of ions in~$z$ as shown in Fig.~\ref{fig:non_sym}.
 Both cations and anions are attracted towards the lower dielectric plate with a negative reflection coefficient, while being repelled by the upper dielectric plate with a positive dielectric coefficient, thereby forming an strongly asymmetric spatial distribution as illustrated in Fig.~\ref{fig:non_sym}.
 
-\begin{figure}[htb]
+\begin{figure}[htbp]
     \centering
-    \includegraphics[width = 0.625\linewidth]{figs/non_symm.pdf}
+    \includegraphics[width = 0.50\linewidth]{figs/non_symm.pdf}
     \caption{
         Ion density in~$z$ for symmetric electrolytes containing 218 cations and 218 anions and confined by neutral dielectric substrates with $\gamma_u = 0.95$,~$\gamma_d = -0.95$ at~$z = 0$ and~$10\tau_0$.
     }
@@ -1089,7 +1093,7 @@ The results are shown in Fig.~\ref{fig:salt3-1}, which shows that the ion distri
 For cations, due to the increase in the charge of the cations, the repulsive/attractive effects on both sides of the medium are significantly enhanced when~$\gamma$ greater or smaller than~$0$, respectively.
 The anions are influenced by the distribution of cations, exhibiting characteristics of aggregation towards the center/sides, which are consistent with expectations.
 
-\begin{figure}[htb]
+\begin{figure}[htbp]
   \centering
   \includegraphics[width = \linewidth]{figs/density_3-1.pdf}
 
@@ -1101,3 +1105,52 @@ The anions are influenced by the distribution of cations, exhibiting characteris
 \end{figure}
 
 These cases indicates that QEM can also provide significant advantages in handling systems with particle asymmetry, thinness, and strong polarization effects.
+
+
+\subsection{Oscillatory single particle field}
+
+Applying the QEM to negatively confined systems, we find that the dielectric confinement effect turns out to be physically fascinating even in the presence of a single charged particle. 
+In Fig.~\ref{fig:force_x} (a), we present the electric field in the $x$ direction generated by a cation with valence~$\nu=1$ located at~$(x_0, y_0, \tau_0)$ in a quasi-2D system with a thickness of~$10\tau_0$, as a function of the distance from the cation~$\Delta x=x-x_0$, for different reflection rates~$\gamma$ characterizing the confinement. 
+The field is defined as~$-\nu\ell_B\partial_x G(\mathbf{r}, \mathbf{r_0})$, and~$\ell_B=e_0^2/(4\pi\epsilon_0\epsilon k_B T)$ is the Bjerrum length of the solvent, with~$e_0$ the elementary charge,~$\epsilon_0$ the vacuum permittivity,~$k_B$ the Boltzmann constant, and~$T$ the temperature. 
+For~$\vert\gamma\vert<1$ cases, as illustrated by the blue ($\gamma=-0.95$) and orange ($\gamma=0.95$) lines in Fig.~\ref{fig:force_x} (a), the polarization weakens or enhances the bare Coulomb field ($\gamma=0$), but with no qualitative difference. 
+The results obtained by our method are in good agreement with those obtained by ICM, shown in dots in Fig.~\ref{fig:force_x} (a). 
+However, for~$\vert\gamma\vert>1$, the results become non-trivial and qualitatively different. 
+At short distance ($\tau_0<\Delta x < 10\tau_0$), we observe from Fig.~\ref{fig:force_x}(a) a continuous transition in the the near field interaction from like-charge attraction (LCA) into repulsion as~$\gamma$ increases from $-10$ to $+10$,
+which can be understood as a significant enhancement of the polarization effect for~$\abs{\gamma}<1$ cases.
+Even more interesting is the far field, it no longer decays monotonically but exhibits oscillatory behavior, which is rarely reported in previous studies.
+
+\begin{figure}[htbp]
+	\centering
+	\includegraphics[width=1\textwidth]{figs/fig2.pdf}
+	\caption{(a): the electric fields along~$x$ direction, generated by a cation with valence~$\nu=1$, fixed at~$z=\tau_0$, and confined by a pair of dielectric substrates located at~$z=0$ and~$10\tau_0$. Subplots depict the polarization charge density on the lower substrates. 
+    (b): the corresponding field lines for the~$\gamma=\pm10$ scenarios.
+		\label{fig:force_x}
+            }
+\end{figure}
+
+To understand the origin of field oscillations, the polarization charge density profile on the substrate at~$z=0$ is shown in the subplots of Fig.~\ref{fig:force_x} (a). 
+The charge density is defined by 
+\begin{equation}
+    \sigma(\V{r}) = \lim_{z \to 0^+} \nu \ell_B \eps_0  \left( 1 - \frac{\eps}{\eps'} \right) \partial_z G(\V{r}, \V{r_0})\;,
+\end{equation}
+and the field lines generated by $\sigma(\V r)$ are sketched in Fig.~\ref{fig:force_x} (b). 
+The field oscillation is found to be generated by the strong transverse polarization charge density waves, influencing both the near and far fields. 
+The oscillatory field lines has a very similar structure to that of a surface plasmonic resonance wave~\cite{willets2007localized}, but the physical origin is different. 
+The oscillation is due to the reflected polarization enhanced by the dielectric confinement, characterized by parameters~$\gamma_1$,~$\gamma_2$, and~$L_z$.
+We observe that the wavelength of the oscillation, defined as two times the distance between nearby zeros, satisfies 
+\begin{equation}\label{eq:wavelength}
+    \lambda \cdot k_0 = 2 \pi \;,
+\end{equation}
+where~$k_0 = \frac{\ln{\gamma_1 \gamma_2}}{2 L_z}$ is the first-order pole in the Sommerfeld integral representation of the Green's function.
+Numerical validation shows that Eq.~\eqref{eq:wavelength} is highly robust under different choices of~$\V{r}$,~$\V{r}_0$,~$\gamma$, or~$L_z$, as shown in Fig.~\ref{fig:k_wavelegth}.
+Importantly, the oscillation fields can be accurately predicted and controlled by adjusting~$k_0$. 
+A detailed quantitative analysis of this oscillatory behavior can be found in Appendix~\ref{sec::oscillation}.
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.6\textwidth]{figs/fig3.pdf}
+    \caption{
+        Numerical validations for the relationship between~$k_0$ and~$\lambda$ under various system parameter settings of~$\gamma$ and~$L_z$. For each case, $\lambda$ is approximated by averaging distances between nearby zeros of~$E_x$, and with different (randomly generated) locations in~$z$. 
+    }
+    \label{fig:k_wavelegth}
+\end{figure}

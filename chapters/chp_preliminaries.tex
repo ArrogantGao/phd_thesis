@@ -266,7 +266,7 @@ However, as have been mentioned in the Chapter~\ref{chp_intro}, recent studies h
 
 \section{Ewald summation methods}
 
-In this section, we first revisit the widely used ``Ewald splitting'' technique~\cite{ewald1921berechnung}. which is the most widely used method for evaluating the long-range interactions in periodic systems.
+In this section, we first revisit the widely used ``Ewald splitting'' technique~\cite{Ewald1921AnnPhys}. which is the most widely used method for evaluating the long-range interactions in periodic systems.
 We then introduce it applications to both fully and doubly periodic systems, i.e. the Ewald3D and Ewald2D summation, respectively.
 Finally, we will briefly introduce the random batch Ewald (RBE) method~\cite{jin2021random}, which is a powerful method to accelerate the computation of the electrostatic energy in fully periodic systems.
 
@@ -580,7 +580,7 @@ For completeness, Proposition \ref{welldefinedness} provides the result of the w
 	which is a finite constant. Thus the proof is completed.
 \end{proof}
 
-For the the particle-slab interaction formulation, we observe a constant discrepancy between Eq.~\eqref{eq:spectial} derived here and those in literature~\cite{dos2017simulations,10.1063/1.4998320}. 
+For the the particle-slab interaction formulation, we observe a constant discrepancy between Eq.~\eqref{eq:spectial} derived here and those in literature~\cite{dos2017simulations,yi2017note}. 
 It is because here one starts with the precise Ewald2D summation approach, different from the approach of employing approximation techniques to transform the original doubly-periodic problem into a triply-periodic problem first, and subsequently introducing charged surfaces. 
 This constant discrepancy makes no difference in force calculations for canonical ensembles. 
 However, for simulations under isothermal-isobaric ensembles, this $L_z$-dependent value is important for the pressure calculations~\cite{li2024noteaccuratepressurecalculations}. 

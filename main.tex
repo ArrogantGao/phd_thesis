@@ -356,7 +356,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \addcontentsline{toc}{chapter}{Bibliography}
-\bibliographystyle{IEEEtran}
+\bibliographystyle{siamplain}
 \bibliography{references}
 \newpage
 
@@ -370,19 +370,28 @@
 %                                                                       %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \appendix
-\chapter{Appendix for Chapter 2}
+
+\chapter{Supplementary Mathematical Results}
+\label{chp_math}
+\input{appendix/app_math.tex}
+
+\chapter{Supplementary Results for Chapter 2}
 \label{chp_appendix_preliminaries}
 \input{appendix/app_preliminaries.tex}
 
-\chapter{Appendix for Chapter 3}
+\chapter{Supplementary Results for Chapter 3}
+\label{chp_appendix_icm}
+\input{appendix/app_icmewald2d.tex}
+
+\chapter{Supplementary Results for Chapter 4}
 \label{chp_appendix_soe}
 \input{appendix/app_soewald2d.tex}
 
-\chapter{Appendix for Chapter 4}
+\chapter{Supplementary Results for Chapter 5}
 \label{chp_appendix_rbe}
 \input{appendix/app_rbe2d.tex}
 
-\chapter{Appendix for Chapter 5}
+\chapter{Supplementary Results for Chapter 7}
 \label{chp_appendix_quasiewald}
 \input{appendix/app_quasiewald.tex}
 

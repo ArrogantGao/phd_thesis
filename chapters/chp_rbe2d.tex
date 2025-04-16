@@ -119,7 +119,7 @@ If the forces $\bm{F}_i$ are bounded and Lipschitz, and the fluctuation of stoch
 \end{thm}
 
 Theorem~\ref{thm::2} indicates that the RBE2D approximated dynamics is capable of capturing finite time structure and dynamic properties.
-For long-time simulations, additional assumptions are needed regarding force regularity~\cite{jin2022random}. 
+For long-time simulations, additional assumptions are needed regarding force regularity~\cite{Jin2022MMS}. 
 It   {is worth} noting that, although the Coulomb potential is neither bounded nor Lipschitz at $r=0$, actual MD simulations will include the Lennard-Jones (LJ) potential, which provides a  {strong repulsive force at short inter-particle distance and prevents the particles from getting too close. As a result, the singularities in both the Coulomb and LJ potentials will not be reached in practice as long as the time step is properly chosen, allowing to satisfy the condition of Theorem~\ref{thm::2}  for MD simulations.}
 
 Additionally, following Theorem \ref{thm::2}, the fluctuations introduced by random batch approximation, $\V \Xi_{\V F,i}$,  can be physically understood as heating effects, which will cause a temperature drift for the system and is unwanted. 

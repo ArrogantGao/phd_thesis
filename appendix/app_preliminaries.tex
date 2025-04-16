@@ -1,32 +1,3 @@
-\section{Fundamental results from Fourier analysis} \label{app::Fourier}
-In this appendix, we state several fundamental results from Fourier analysis for doubly periodic functions, associated with the Fourier transform pair defined in Definition~\ref{Def::Fourier}. These results are useful for us, and their proofs are well established and can be referenced in classical literature, such as in the work of Stein and Shakarchi~\cite{stein2011fourier}.
-\begin{lem}\label{lem::Convolution}
-	(Convolution theorem) Let $f(\bm{\rho},z)$ and $g(\bm{\rho},z)$ be two functions which are periodic in $\bm{\rho}$ and non-periodic in $z$. Suppose that $f$ and $g$ have Fourier transform $\widetilde{f}$ and $\widetilde{g}$, respectively. Their convolution is defined by
-	\begin{equation}\label{eq:Q2D_cov}
-		u(\bm{\rho},z):=(f\ast g)(\bm{\rho},z)=\int_{\mathcal{R}^2}\int_{\mathbb{R}}f(\bm{\rho}-\bm{\rho}',z-z')g(\bm{\rho}',z')dz'd\bm{\rho}',
-	\end{equation}
-	satisfying
-	\begin{equation}
-		\widetilde{u}(\bm{k},\kappa)=\widetilde{f}(\bm{k},\kappa)\widetilde{g}(\bm{k},\kappa).
-	\end{equation}
-	
-\end{lem}
-\begin{lem}\label{lem::Poisson}
-	(Poisson summation formula) Let $f(\bm{\rho},z)$ be a function which is periodic in $\bm{\rho}$ and non-periodic in $z$. Suppose that $f$ has Fourier transform $\widetilde{f}$ and $\bm{r}=(\bm{\rho},z)$. Then one has
-	\begin{equation}
-		\sum_{\bm{m}\in \mathbb{Z}^2} f(\bm{r} + \V{\mathcal{M}}) = \frac{1}{2\pi L_x L_y}\sum_{\bm{k}\in \mathcal{K}^2}\int_{\mathbb{R}}\widetilde{f}(\bm{k},\kappa)e^{\m{i} \bm{k}\cdot\bm{\rho}}e^{\m{i} \kappa z}d\kappa.
-	\end{equation}
-\end{lem}
-\begin{lem}\label{lem::2dfourier}
-	(Radially symmetric functions) 
-	Suppose that $f(\rho,z)$ is periodic and radially symmetric in $\bm{\rho}$, i.e., $f(\bm{\rho},z)=f(\rho,z)$. Then its Fourier transform $\widetilde{f}$ is also radially symmetric. Indeed, one has
-	\begin{equation}
-		\widetilde{f}(\rho,z)=2\pi\int_{0}^{\infty}J_0(k\rho)f(\rho,z)\rho d\rho.
-	\end{equation}
-\end{lem}
-
-% \gao{remove the Appendix A `Derivation of Ewald2D method'}
-
 \section{Proof of Lemma~\ref{thm::SpectralExpansion}}\label{app::deriv}
 By applying the Fourier transform to Poisson's equation
 \begin{equation}\label{eq::B.1}
@@ -158,7 +129,7 @@ This result finally gives
 % 	which is a finite constant. Thus the proof is completed.
 % \end{proof}
 
-% For the the particle-slab interaction formulation, we observe a constant discrepancy between Eq.~\eqref{eq:spectial} derived here and those in literature~\cite{dos2017simulations,10.1063/1.4998320}. 
+% For the the particle-slab interaction formulation, we observe a constant discrepancy between Eq.~\eqref{eq:spectial} derived here and those in literature~\cite{dos2017simulations,yi2017note}. 
 % It is because here one starts with the precise Ewald2D summation approach, different from the approach of employing approximation techniques to transform the original doubly-periodic problem into a triply-periodic problem first, and subsequently introducing charged surfaces. 
 % This constant discrepancy makes no difference in force calculations for canonical ensembles. 
 % However, for simulations under isothermal-isobaric ensembles, this $L_z$-dependent value is important for the pressure calculations~\cite{li2024noteaccuratepressurecalculations}. 
@@ -169,25 +140,6 @@ This result finally gives
 % 	U = U_{\text{p-p}} + U_{\text{p-s}}, \quad \text{with} \quad U_{\text{p-p}} := U_{s} + \sum_{\bm{k}\neq\bm{0}}U_{\ell}^{\bm{k}}+U_{\ell}^{\bm{0}}- U_{\text{self}}\;,
 % \end{align}
 % where $U_*=\sum_{i}\phi_*$ with $*$ representing any of the subscripts used in Eq.~\eqref{eq::34}.
-
- \section{The ideal-gas assumption for error analysis}\label{app::ideal-gas}
- Let $\bm{\mathcal{\psi}}$ represent a statistical quantity in an interacting particle system, and we aim to analyze its root mean square value given by
- \begin{equation}\label{eq::deltaS}
- 	\delta \bm{\mathcal{\psi}}:=\sqrt{\frac{1}{N}\sum_{i=1}^{N}\|\bm{\mathcal{\psi}}_{i}\|^2},
- \end{equation}
- where $\bm{\mathcal{S}}_{i}$ denotes the quantity associated with particle $i$ (e.g., energy for one dimension or force for three dimensions). Assume that $\bm{\mathcal{\psi}}_{i}$ takes the form
-\begin{equation}
-	\bm{\mathcal{\psi}}_{i}=q_{i} \sum_{j \neq i} q_{j} \bm{\zeta}_{i j},
-\end{equation}
-due to the superposition principle of particle interactions, which implies that the total effect on particle $i$ can be expressed as the sum of contributions from each $i-j$ pair (including periodic images). Here, $\bm{\zeta}_{i j}$ represents the interaction between two particles. The ideal-gas assumption leads to the following relation
-\begin{equation}
-	\left\langle\boldsymbol{\zeta}_{i j} \boldsymbol{\zeta}_{i k}\right\rangle=\delta_{j k}\left\langle\boldsymbol{\zeta}_{i j}^2\right\rangle:=\delta_{j k} \zeta^2,
-\end{equation}
-where the expectation is taken over all particle configurations, and $\zeta$ is a constant. This assumption indicates that any two different particle pairs are uncorrelated, and the variance of each pair is expected to be uniform. In the context of computing the force variance of a charged system, this assumption implies that
-\begin{equation}
-	\left\langle\|\bm{\mathcal{\psi}}_{i}\|^2\right\rangle=q_{i}^2 \sum_{j, k \neq i} q_{j} q_k\left\langle\boldsymbol{\zeta}_{i j} \boldsymbol{\zeta}_{i k}\right\rangle \approx q_{i}^2 \zeta^2 Q,
-\end{equation}
-where $Q$ represents the total charge of the system. By applying the law of large numbers, one obtains $\delta\mathcal{\psi}\approx \zeta Q/\sqrt{N}$, which can be utilized for the mean-field estimation of the truncation error.
 
 \section{Proof of Theorem~\ref{thm:ewald2d_phi_error}}\label{app:phierr}
 We begin by considering the real space truncation error of electrostatic potential 

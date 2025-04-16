@@ -2,31 +2,34 @@
 
 Here we are trying to explain the oscillatory property of the integral given by
 \begin{equation}
-    I_o = \int_0^{\infty} \frac{J_0(k \D \rho) \exp{(-k a)}}{\exp{(2L_z(k_0 - k))} - 1} \text{d}k\;,
+    I_o = \int_0^{\infty} \frac{J_0(k \D \rho) \exp{(-k a)}}{\exp{(2H(k_0 - k))} - 1} \text{d}k\;,
 \end{equation}
 where~$k_0$,~$a$ and~$\rho$ are all positive constants.
 The integral can further be divided via Laurent expansion, given by
 \begin{equation}
-    I_o = \int_0^{\infty} \frac{J_0(k \D \rho) \exp{(-k a)}}{2L_z(k_0 - k)} \text{d}k + \int_0^{\infty} J_0(k \D \rho) \exp{(-k a)} E(k) \text{d}k\;,
+    I_o = \int_0^{\infty} \frac{J_0(k \D \rho) \exp{(-k a)}}{2H(k_0 - k)} \text{d}k + \int_0^{\infty} J_0(k \D \rho) \exp{(-k a)} E(k) \text{d}k\;,
 \end{equation}
-where~$1/2L_z(k_0 - k)$ is the leading order term of the Laurent series of~$1/(\exp{(2L_z(k_0 - k)} - 1))$, and~$E(k)$ is the Padé approximant of the rest part, which is a non-divergent smooth function.
+where~$1/2H(k_0 - k)$ is the leading order term of the Laurent series of~$\frac{1}{e^{2H(k_0 - k)} - 1}$, and~$E(k)$ is the Padé approximant of the rest part, which is a non-divergent smooth function.
 Due to the fast decay property of~$\exp{(-k a)}$, the second part leads to a non-oscillatory small contribution to the result, and the oscillation is contributed by the leading order term.
 
 To calculate the integral, we treat it as a function of~$a$, given by
 \begin{equation}
-    I_{o1}(a) = \int_0^{\infty} \frac{J_0(k \D \rho) \exp{(-k a)}}{2L_z(k_0 - k)} \text{d}k\;,
+    I_{o1}(a) = \int_0^{\infty} \frac{J_0(k \D \rho) \exp{(-k a)}}{2H(k_0 - k)} \text{d}k\;,
 \end{equation}
 so that we have
 \begin{equation}
-    I_{o1}^{\prime}(a) = - k I_{o1}(a) = \frac{1}{2L_z} \int_0^{\infty} J_0(k \D \rho) \exp{(-k a)} \text{d}k - k_0 I_{o1}(a) = \frac{1}{2L_z \sqrt{\D \rho^2 + a^2}} - k_0 I_{o1}(a) \;,
+    \begin{split}
+    I_{o1}^{\prime}(a) & = - k I_{o1}(a) = \frac{1}{2H} \int_0^{\infty} J_0(k \D \rho) \exp{(-k a)} \text{d}k - k_0 I_{o1}(a) \\
+    & = \frac{1}{2H \sqrt{\D \rho^2 + a^2}} - k_0 I_{o1}(a) \;,
+    \end{split}
 \end{equation}
 which forms a differential equation given by
 \begin{equation}
-    I_{o1}^{\prime}(a) + k_0 I_{o1}(a) = \frac{1}{2L_z \sqrt{\D \rho^2 + a^2}}\;.
+    I_{o1}^{\prime}(a) + k_0 I_{o1}(a) = \frac{1}{2H \sqrt{\D \rho^2 + a^2}}\;.
 \end{equation}
 Using the general solution of ODE, we have
 \begin{equation}
-    I_{o1}(a) = \exp{(-k_0 a)} \left[C_1 + \int \frac{\exp{(k_0 a)}}{2L_z \sqrt{\D \rho^2 + a^2}} \text{d}a \right] = \exp{(-k_0 a)} \left[C_1 + C_2(\rho, k_0, a) \right] \;.
+    I_{o1}(a) = \exp{(-k_0 a)} \left[C_1 + \int \frac{\exp{(k_0 a)}}{2H \sqrt{\D \rho^2 + a^2}} \text{d}a \right] = \exp{(-k_0 a)} \left[C_1 + C_2(\rho, k_0, a) \right] \;.
 \end{equation}
 Notice that
 \begin{equation}
@@ -39,15 +42,18 @@ so that
 Although here we do not know the exact result of integral~$C_2$, its contribution to~$I_{o1}$ is clearly non-oscillatory.
 Then we can focus on the first term, which contribute the oscillation, given by 
 \begin{equation}
-    I_{o2} = \frac{\exp{(-k_0 a)}}{2L_z} \int_0^{\infty} \frac{J_0(k \D \rho)}{(k_0 - k)} \text{d}k = \frac{\exp{(-k_0 a)}}{2L_z} \int_0^{\infty} \frac{J_0(k^\prime)}{k_0 \D \rho - k^\prime} \text{d}k^\prime\;,
+    I_{o2} = \frac{\exp{(-k_0 a)}}{2H} \int_0^{\infty} \frac{J_0(k \D \rho)}{(k_0 - k)} \text{d}k = \frac{\exp{(-k_0 a)}}{2H} \int_0^{\infty} \frac{J_0(k^\prime)}{k_0 \D \rho - k^\prime} \text{d}k^\prime\;,
 \end{equation}
 so that 
 \begin{equation}
-    I_o = \frac{\exp{(-k_0 a)}}{2L_z} \int_0^{\infty} \frac{J_0(k^\prime)}{k_0 \D \rho - k^\prime} \text{d}k^\prime + f(k_0, \D \rho, a)\;.
+    I_o = \frac{\exp{(-k_0 a)}}{2H} \int_0^{\infty} \frac{J_0(k^\prime)}{k_0 \D \rho - k^\prime} \text{d}k^\prime + f(k_0, \D \rho, a)\;.
 \end{equation}
 where~$f(k_0, \D \rho, a)$ is a non-oscillatory function defined by
 \begin{equation}
-    f(k_0, \D \rho, a) = \exp{(-k_0 a)} \left[ - C_2(\D \rho, k_0, 0) + C_2(\D \rho, k_0, a) \right] + \int_0^{\infty} J_0(k \D \rho) \exp{(-k a)} E(k) \text{d}k\;.
+    \begin{split}
+        f(k_0, \D \rho, a) = & \exp{(-k_0 a)} \left[ - C_2(\D \rho, k_0, 0) + C_2(\D \rho, k_0, a) \right] \\
+        & + \int_0^{\infty} J_0(k \D \rho) \exp{(-k a)} E(k) \text{d}k
+    \end{split}
 \end{equation}
 Here we define
 \begin{equation}
@@ -65,7 +71,7 @@ which is only related to~$k_0 \D \rho$, and the numerical result shows that dist
 \end{figure}
 
 
-\section{Details of MD results}
+\section{Simulation details}
 
 In the main text, we have shown that the charge oscillation can lead to lattice-like structure formation in dielectric confined quasi-2D systems, and mainly focused on the tunable lattice parameter.
 Here we will discuss more about our results.

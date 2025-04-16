@@ -441,7 +441,7 @@ The idea of the Ewald splitting technique can be understood as decomposing the s
 % 	\delta(\bm{r})=\left[\delta(\bm{r})-(\delta\ast\tau)(\bm{r})\right]+(\delta\ast\tau)(\bm{r}),
 % \end{equation}
 % where   $\ast$ stands for  the convolution operator, and $\tau(\bm{r})$ is the screening function.
-%In the standard Ewald splitting~\cite{ewald1921berechnung}, $\tau$ is chosen to be  Gaussian.
+%In the standard Ewald splitting~\cite{Ewald1921AnnPhys}, $\tau$ is chosen to be  Gaussian.
 For doubly periodic systems, the Ewald2D methods~\cite{parry1975electrostatic, heyes1977molecular, de1979electrostatic}  evaluate the interaction energy $U$ as
 \begin{equation}
     U= U_s+U_l\;.
@@ -1520,7 +1520,7 @@ If the forces $\bm{F}_i$ are bounded and Lipschitz and $\Exp \bm{\chi}_i=0$, the
 \]
 where $\Lambda$ is an upper bound for $\max_i  \Exp\Norm{\bm{\chi}_i}^2$.
 \end{thm}
-Similar proofs for interacting particle systems can be found in \cite{jin2020convergence,li2019stochastic,li2020random}, and we omit the proof for the claims here.  Due to the assumption that $\bm{F}_i$ is bounded and Lipschitz, the claims above are not helpful for our problem. Anyhow, it can give us some insight how random batch type methods work.
+Similar proofs for interacting particle systems can be found in \cite{jin2021convergence,li2019stochastic,li2020random}, and we omit the proof for the claims here.  Due to the assumption that $\bm{F}_i$ is bounded and Lipschitz, the claims above are not helpful for our problem. Anyhow, it can give us some insight how random batch type methods work.
 %Clearly, for a given configuration, a force computed using the RBE is a random approximation to the true force. A single-step evaluation of such random force definitely has no accuracy compared to the true force. The intuition why such methods work is that the effects of random forces accumulate in time. Since the random forces are unbiased, the random errors will roughly cancel out over time. This ``law of large numbers'' type mechanism in time then makes the random method work. The error bound above is the square root of  variance multiplied by $\Delta t$, which is the typical error bound given by central limit theorem.
 %Hence, our method is not aiming at computing the forces correctly for a fixed configuration. Instead, we attempt to obtain the evolution of the configurations and the equilibrium distribution with an acceptable error control. We use the RBE method only to speed up MD simulations and obtain configurations, and then use these configurations to compute the true energies, stress tensor (and pressure) using their definitions, without random batch approximation.
 

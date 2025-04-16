@@ -175,7 +175,7 @@ The difficulty of calculating Eq.~\eqref{eq:2dperiodicU} is two folds,
 1) due to the long-range nature of the Coulomb potential, the lattice sum is slowly convergent, and one can not just truncate the sum at  {a} certain finite cutoff distance; 
 2) besides the long-range part, the Coulomb potential is also singular as $\V r\to \V 0$, as a result one can not simply deal with it via Fourier transform due to the non-smoothness.
 
-To overcome these difficulties, one can use the so-called ``Ewald-splitting'' technique~\cite{ewald1921berechnung} to decompose the Coulomb kernels into the sum of two components as
+To overcome these difficulties, one can use the so-called ``Ewald-splitting'' technique~\cite{Ewald1921AnnPhys} to decompose the Coulomb kernels into the sum of two components as
 \begin{equation}\label{eq:ewald_decomposition}
 \begin{aligned}
 \frac{1}{r}=\frac{\mathrm{erf}(\alpha r)}{r}+\frac{\mathrm{erfc}(\alpha r)}{r} \;
@@ -274,7 +274,7 @@ Through the error analysis of the trapezoidal rule provided in Appendix~\ref{app
 By substituting Eq.~\eqref{eq::17} into Eq.~\eqref{eq:ewald2d-intform1}, it is observed that the first two terms on the RHS of Eq.~\eqref{eq::17} correspond to the first term and the IBC term in Eq.~\eqref{eq:ewald2d-ELC}, respectively. The third term in Eq.~\eqref{eq::17} acts as the ELC term in Eq.~\eqref{eq:ewald2d-ELC}. 
 \end{proof}
 
-Clearly, the first two terms in Eq.~\eqref{eq:ewald2d-ELC} closely resemble the Fourier component of the Ewald3D summation~\cite{ewald1921berechnung,zhonghanhu2014JCTC}. It can be understood as constructing a fully periodic system, referred to as $\Omega_{\text{3D}}$, which shares the same particle configuration, and $xy$ dimensions as the original quasi-2D system $\Omega_{\text{Q2D}}$; but extending the dimension in $z$ from $H$ to $L_z$ (see Fig.~\ref{fig:2dIllustration}(a)). This extra layer with thickness of~$L_z-H$ (containing no particles) is usually called a ``vacuum layer''.
+Clearly, the first two terms in Eq.~\eqref{eq:ewald2d-ELC} closely resemble the Fourier component of the Ewald3D summation~\cite{Ewald1921AnnPhys,zhonghanhu2014JCTC}. It can be understood as constructing a fully periodic system, referred to as $\Omega_{\text{3D}}$, which shares the same particle configuration, and $xy$ dimensions as the original quasi-2D system $\Omega_{\text{Q2D}}$; but extending the dimension in $z$ from $H$ to $L_z$ (see Fig.~\ref{fig:2dIllustration}(a)). This extra layer with thickness of~$L_z-H$ (containing no particles) is usually called a ``vacuum layer''.
 Now according to Theorem~\ref{thm::err}, one has
 \begin{equation}\label{eq::U_Q2D}
     U_{\text{Fourier}}(\Omega_{\text{Q2D}}) = U_{\text{Fourier}}(\Omega_{\text{3D}}) + U_{\text{IBC}} + U_{\text{ELC}} + U_{\text{err}}\;,
@@ -404,7 +404,7 @@ If the forces $\bm{F}_i$ are bounded and Lipschitz, and the fluctuation of stoch
 
 Theorem~\ref{thm::2} indicates that the RBE2D approximated dynamics is capable of capturing finite time structure and dynamic properties.
 %However, it is important to note that the theorem only applies to finite simulation time intervals.
-For long-time simulations, additional assumptions are needed regarding force regularity~\cite{jin2022random}. 
+For long-time simulations, additional assumptions are needed regarding force regularity~\cite{Jin2022MMS}. 
 It   {is worth} noting that, although the Coulomb potential is neither bounded nor Lipschitz at $r=0$, actual MD simulations will include the Lennard-Jones (LJ) potential, which provides a  {strong repulsive force at short inter-particle distance and prevents the particles from getting too close. As a result, the singularities in both the Coulomb and LJ potentials will not be reached in practice as long as the time step is properly chosen, allowing to satisfy the condition of Theorem~\ref{thm::2}  for MD simulations.}
 % Numerical validations are documented in Fig.~(SM1), which aligns with the conclusions of Theorem~\ref{thm::2}.} 
 %However, the rigorous justification of convergence could still be quite challenging. 

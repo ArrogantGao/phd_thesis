@@ -244,7 +244,7 @@ However, the issue of large-scale simulation of quasi-2D systems is still far fr
 A few challenges remains. First, FFT-based methods need extra techniques to properly handle the non-periodic direction, such as truncation~\cite{parry1975electrostatic}, regularization~\cite{nestler2015fast}, or periodic extension~\cite{lindbo2012fast}, which may lead to algebraic convergence or require extra zero-padding to guarantee accuracy. 
 Recent advancements by Shamshirgar \emph{et al.}~\cite{shamshirgar2021fast}, combining spectral solvers with kernel truncation methods (TKM)~\cite{vico2016fast}, have reduced the zero-padding factor from $6$ to $2$~\cite{lindbo2012fast}, which still requires doubling the number of grids with zero-padding. 
 % A similar reduction is also reported in the work of Maxian \emph{et al. }\cite{maxian2021fast}. 
-Second, the periodization of FMM needs to encompass more near-field contributions from surrounding cells~\cite{yan2018flexibly,barnett2018unified}. The recently proposed 2D-periodic FMM~\cite{PEI2023111792} may offer a promising avenue; however, it has not yet been extended to partially-periodic problems.
+Second, the periodization of FMM needs to encompass more near-field contributions from surrounding cells~\cite{yan2018flexibly,barnett2018unified}. The recently proposed 2D-periodic FMM~\cite{pei2023fast} may offer a promising avenue; however, it has not yet been extended to partially-periodic problems.
 Finally, it is worth noting that most of the aforementioned issues will become more serious when $L_z\ll \min\{L_x, L_y\}$, in which case the Ewald series summation will converge much slower~\cite{arnold2002electrostatics}, and the zero-padding issue of FFT-based methods also becomes worse~\cite{maxian2021fast}.
 
 In this work, we introduce a novel algorithm for particle-based simulations of quasi-2D systems with long-range interactions (typically, the $1/r$ Coulomb kernel). 
@@ -638,7 +638,7 @@ For completeness, Proposition \ref{welldefinedness} provides the result of the w
 	which is a finite constant. Thus the proof is completed.
 \end{proof}
 
-For the the particle-slab interaction formulation, we observe a constant discrepancy between Eq.~\eqref{eq:spectial} derived here and those in literature~\cite{dos2017simulations,10.1063/1.4998320}. 
+For the the particle-slab interaction formulation, we observe a constant discrepancy between Eq.~\eqref{eq:spectial} derived here and those in literature~\cite{dos2017simulations,yi2017note}. 
 It is because here one starts with the precise Ewald2D summation approach, different from the approach of employing approximation techniques to transform the original doubly-periodic problem into a triply-periodic problem first, and subsequently introducing charged surfaces. 
 This constant discrepancy makes no difference in force calculations for canonical ensembles. 
 However, for simulations under isothermal-isobaric ensembles, this $L_z$-dependent value is important for the pressure calculations~\cite{li2024noteaccuratepressurecalculations}. 
@@ -1031,7 +1031,7 @@ It is clearly much faster than the original Ewald2D method which scales as $O(N^
 \end{rmk}
 
 % In a $N$ particle simulation of quasi-2D Coulomb systems, to further reduce the complexity to  $O(N)$, we further introduce a stochastic approach to efficiently approximate the Fourier component in the periodic dimensions. 
-% This approach differs significantly from existing methods that rely on either FFT-~\cite{lindbo2012fast} or FMM-based methods~\cite{PEI2023111792} for handling periodicity.
+% This approach differs significantly from existing methods that rely on either FFT-~\cite{lindbo2012fast} or FMM-based methods~\cite{pei2023fast} for handling periodicity.
 
 \section{Random batch SOEwald2D method} \label{sec:rbm}
 
@@ -1331,14 +1331,14 @@ An interesting topic is whether the RBSE2D preserves the geometric ergodicity, w
 In a recent paper~\cite{jin2023ergodicity}, the authors prove the ergodicity of random batch interacting particle systems for overdamped Langevin dynamics with smooth interacting potentials. 
 Though the singularity of Coulomb potential may not be actually reached during the RBSE2D-based MD simulations, a rigorous justification of ergodicity remains a very challenging problem, which will be left open for future explorations.
 
-In line with discussions in~\cite{10.1063/5.0107140}, the RBSE2D-accelerated Langevin and NH dynamics can be extended to the NPT ensemble by incorporating the approximation of the virial tensor. Other well-known integrators, such as Berendsen~\cite{berendsen1984molecular} and Martyna-Tuckerman-Tobias-Klein~\cite{martyna1996explicit}, are also compatible with the RBSE2D. However, extending the RBSE2D to the NVE ensemble poses extra challenge since the Hamiltonian system is disrupted by the random batch sampling, which can be resolved by a modified Newtonian dynamics~\cite{liang2023energy}:
+In line with discussions in~\cite{liang2022random}, the RBSE2D-accelerated Langevin and NH dynamics can be extended to the NPT ensemble by incorporating the approximation of the virial tensor. Other well-known integrators, such as Berendsen~\cite{berendsen1984molecular} and Martyna-Tuckerman-Tobias-Klein~\cite{martyna1996explicit}, are also compatible with the RBSE2D. However, extending the RBSE2D to the NVE ensemble poses extra challenge since the Hamiltonian system is disrupted by the random batch sampling, which can be resolved by a modified Newtonian dynamics~\cite{liang2024JCP}:
 \begin{equation}\label{eq::NVE}
 	\begin{split}
 		d\V{r}_i&=\frac{\V{p}_i}{m_i}dt,\quad d \bm{p}_i=\left[\V{F}_i-\bm{\chi}_i\right]dt,\\
 		dK&=\frac{1}{\gamma}\left[\mathcal H_0-\mathcal H+\Xi\right] dt.
 	\end{split}
 \end{equation}
-Here, $\Xi$ and $\bm{\chi}_i$ represent the fluctuations of energy and force, as defined in Eq.~\eqref{eq::xichi}. $K=\sum |\bm{p}_i|^2/2m_i$ denotes the instantaneous kinetic energy, and $\mathcal H_0$ and $\mathcal H$ represent the Hamiltonian at the initial and current time steps, respectively. The parameter $\gamma$ represents the relaxation time, determining the interval between successive dissipations of artificial heat within the system. An optimal choice for $\gamma$ typically falls in the range of $10\sim 100\Delta t$. It is worth noting that the distributions obtained using Eq.~\eqref{eq::NVE} have a small deviation of $O(\Delta t^2/P)$ compared to the correct NVE ensemble~\cite{liang2023energy}.
+Here, $\Xi$ and $\bm{\chi}_i$ represent the fluctuations of energy and force, as defined in Eq.~\eqref{eq::xichi}. $K=\sum |\bm{p}_i|^2/2m_i$ denotes the instantaneous kinetic energy, and $\mathcal H_0$ and $\mathcal H$ represent the Hamiltonian at the initial and current time steps, respectively. The parameter $\gamma$ represents the relaxation time, determining the interval between successive dissipations of artificial heat within the system. An optimal choice for $\gamma$ typically falls in the range of $10\sim 100\Delta t$. It is worth noting that the distributions obtained using Eq.~\eqref{eq::NVE} have a small deviation of $O(\Delta t^2/P)$ compared to the correct NVE ensemble~\cite{liang2024JCP}.
 
 Finally, we discuss the parameter selection for the RBSE2D method. The accuracy is influenced by three key parameters: the parameter $s$, which controls the truncation error of the Ewald summation; the number of exponentials $M$ in the SOE, which governs the SOE approximation error; and the batch size $P$, which affects the variance of the random batch approximation. For a prescribed tolerance $\varepsilon$, $s$ and $M$ can be determined using Eq.~\eqref{eq:trunction_error} and the convergence rate of the SOE method~\cite{gao2021kernelindependent}, respectively. One can pick the proper $s$ and $M$ to ensure that errors from these two components are both at the $O(\varepsilon)$ level. 
 The determination of optimal batch size $P$ is system-dependent, relies on performing some numerical tests. Notably, it is empirically observed that a small $P$ is sufficient, thanks to the importance sampling strategy for variance reduction. Numerical results in Section~\ref{subsec::RBSE2D} show that choosing $P=100$ is adequate for coarse-grained electrolytes. 
@@ -1698,7 +1698,7 @@ This result finally gives
 % 	which is a finite constant. Thus the proof is completed.
 % \end{proof}
 
-% For the the particle-slab interaction formulation, we observe a constant discrepancy between Eq.~\eqref{eq:spectial} derived here and those in literature~\cite{dos2017simulations,10.1063/1.4998320}. 
+% For the the particle-slab interaction formulation, we observe a constant discrepancy between Eq.~\eqref{eq:spectial} derived here and those in literature~\cite{dos2017simulations,yi2017note}. 
 % It is because here one starts with the precise Ewald2D summation approach, different from the approach of employing approximation techniques to transform the original doubly-periodic problem into a triply-periodic problem first, and subsequently introducing charged surfaces. 
 % This constant discrepancy makes no difference in force calculations for canonical ensembles. 
 % However, for simulations under isothermal-isobaric ensembles, this $L_z$-dependent value is important for the pressure calculations~\cite{li2024noteaccuratepressurecalculations}. 

@@ -51,34 +51,7 @@ Moreover, Lemma~\ref{lem::forceerr} establishes the overall error on forces $\bm
 	\end{equation}
 \end{lem}
 
-\section{The Debye-H$\ddot{\text{u}}$ckel approximation}\label{app::Debye}
-Under the DH approximation, one is able to estimate functions associated with the $i$-th particle in the form:
-\begin{equation}
-	\mathscr{G}(\bm{r}_i)=\sum_{j\neq i}q_{j}e^{\m{i} \bm{k}\cdot\bm{\rho}_{ij}}f(z_{ij}),
-\end{equation}
-where $|f(z_{ij})|$ is bounded by a constant $C_f$ independent of $z_{ij}$. The DH theory considers the simplest model of an electrolyte solution confined to the simulation cell, where all $N$ ions are idealized as hard spheres of diameter $r_{a}$ carrying charge $\pm q$ at their centers. The charge neutrality condition requires that $N_+=N_-=N/2$. Let us fix one ion of charge $+q$ at the origin $r=0$ and consider the distribution of the other ions around it.
 
-In the region $0<r\leq r_{a}$, the electrostatic potential $\phi(\bm{r})$ satisfies the Laplace equation $-\Delta\phi(\bm{r})=0$. For $r\geq r_{a}$, the charge density of each species is described by the Boltzmann distribution $\rho_{\pm}(\bm{r})=\pm qe^{\mp\beta q\phi(\bm{r})}\rho_r/2$ with number density $\rho_r=N/V$. In this region, the electrostatic potential satisfies the linearized Poisson-Boltzmann equation~\cite{levin2002electrostatic}:
-\begin{equation}
-	-\Delta \phi(\bm{r})=2\pi\left[q \rho_r e^{-\beta q\phi(\bm{r})}-q\rho_r e^{+\beta q\phi(\bm{r})}\right]\approx -4\pi \beta q^2\rho_r\phi(\bm{r}),
-\end{equation}
-and its solution is given by
-\begin{equation}
-	\phi(\bm{r})=\begin{cases}
-		\dfrac{q}{4\pi r}-\dfrac{q\kappa}{4\pi (1+\kappa a)},& r<r_{a},\\[1em]
-		\dfrac{qe^{\kappa a}e^{-\kappa r}}{4\pi r(1+\kappa a)},&r\geq r_{a},
-	\end{cases}
-\end{equation}
-where $\kappa=\sqrt{\beta q^2\rho}$ denotes the inverse of Debye length $\lambda_{\text{D}}$. By this definition, the net charge density for $r>r_{a}$ is $\rho_>(\bm{r})=-\kappa^2\phi(\bm{r})$. Let us fix $\bm{r}_i$ at the origin. Given these considerations, for $r\geq r_a$, one obtains the following estimate:
-\begin{equation}\label{eq::E.4}
-	\begin{split}
-		|\mathscr{G}(\bm{r}_i)|&\approx \left|\int_{\mathbb{R}^3\backslash B(\bm{r}_{i}, r_a)}\rho_>(\bm{r})e^{-\m{i} \bm{k}\cdot\bm{\rho}}f(z)d\bm{r}\right|\\
-		&\leq \frac{q_iC_fe^{\kappa a}}{4\pi(1+\kappa a)}\int_{a}^{\infty}\frac{e^{-\kappa r}}{r}4\pi r^2dr\\
-		&=q_iC_f\lambda_{\text{D}}^2.
-	\end{split}
-\end{equation}
-
-It is remarked that upper bound Eq.~\eqref{eq::E.4} is derived under the continuum approximation. In the presence of surface charges, the charge distribution along the $z$-direction may lack spatial uniformity. However, due to the confinement of particle distribution between two parallel plates, the integral in Eq.~\eqref{eq::E.4} along the $z$-direction remains bounded. An upper bound in the form of $|\mathscr{G}(\bm{r}_i)|\leq C_s C_{f}q_i$ can still be expected, where $C_s$ is a constant related to the thermodynamic properties of the system.
 
 %the electrostatic potential satisfies the Poisson's equation
 %\begin{equation}
@@ -87,27 +60,3 @@ It is remarked that upper bound Eq.~\eqref{eq::E.4} is derived under the continu
 %where the charge density are expressed in terms of the charge-charge correlation functions $g_{++}(\bm{r})=g_{--}(\bm{r})(\bm{r})$ and $g_{+-}(\bm{r})=g_{-+}(\bm{r})$, and $\rho_+=\rho_-=\rho/2$ are average densities of positive and negative ions. In the work of Debye and H$\ddot{\text{u}}$ckel, the correlation functions are approximated by $g_{ij}(\bm{r})=e^{-\beta q_j\phi_i(\bm{r})}$, 
 
 %\section{The SOE approximation error of force}\label{app::forceerror}
-
-\section{The Metropolis algorithm} \label{app::Metropolis}
-
-In practice, the Metropolis algorithm~\cite{metropolis1953equation, hastings1970monte} is employed to generate a sequence $\{\bm{k}_{\eta}\}_{\eta=1}^{P}$ from $h(\bm{k})$. 
-Since $\bm{k}\circ \bm{L}=2\pi \bm{m}$ with $\bm{m}$ an integer vector, one can conveniently sample from the discrete distribution $\mathcal{H}(\bm{m})=h(\bm{k})$ to equivalently generate $\bm{k}$. 
-Once the current state of the Markov chain $\bm{m}_{\eta}=\bm{m}^{\text{old}}$ is known, the algorithm generates a random variable $\bm{m}^*$ with $m_{\xi}^*\sim \mathcal{N}[0,(\alpha L_{\xi})^2/2\pi^2]$, which is the normal distribution with mean zero and variance $(\alpha L_{\xi})^2/2\pi^2$. The new proposal is taken as $\bm{m}^{\text{new}}=\text{round}(m_{x}^*,m_{y}^*)$. To determine the acceptance rate, one obtains the proposal probability 
-\begin{equation}
-	q(\bm{m}^{\text{new}}|\bm{m}^{\text{old}})=\prod_{\xi\in\{x,y\}}q(m^{\text{new}}_{\xi}|m^{\text{old}}_{\xi})
-\end{equation}
-where
-\begin{equation}
-	\begin{split}
-		q(m^{\text{new}}_{\xi}|m^{\text{old}}_{\xi})&=\sqrt{\frac{\pi}{(\alpha L_{\xi})^2}}\int_{m^{\text{new}}_{\xi}-\frac{1}{2}}^{m^{\text{new}}_{\xi}+\frac{1}{2}}e^{-\pi^2t^2/(\alpha L_{\xi})^2}dt\\[1em]
-		&=\begin{cases}
-			\erf\left(\dfrac{\pi}{2\alpha L_{\xi}}\right),&m_{\xi}^{\text{new}}=0,\\[1.15em]
-			\dfrac{1}{2}\left[\erf\left(\dfrac{\pi(2|m_{\xi}^{\text{new}}|+1)}{2\alpha L_{\xi}}\right)-\erf\left(\dfrac{\pi(2|m_{\xi}^{\text{new}}|-1)}{2\alpha L_{\xi}}\right)\right],&m_{\xi}^{\text{new}}\neq 0.
-		\end{cases}
-	\end{split}
-\end{equation}
-It is worth noting that the proposal distribution $q(\bm{m}^{\text{new}}|\bm{m}^{\text{old}})$ in the Metropolis algorithm presented here does not depend on the current state $\bm{m}^{\text{old}}$. The Metropolis acceptance probability is computed using the formula:
-\begin{equation}
-	a(\bm{m}^{\text{new}}|\bm{m}^{\text{old}}):=\min\left\{\frac{\mathcal{H}(\bm{m}^{\text{new}})q(\bm{m}^{\text{old}}|\bm{m}^{\text{new}})}{\mathcal{H}(\bm{m}^{\text{old}})q(\bm{m}^{\text{new}}|\bm{m}^{\text{old}})},1\right\}.
-\end{equation}
-If the proposal is rejected, then $\bm{m}_{\eta+1}=\bm{m}_{\eta}$. If $\bm{m}^{\text{new}}$ is accepted, then $\bm{m}_{\eta+1}=\bm{m}^{\text{new}}$. The sampling procedure has a small error since $\mathcal{H}(\bm{m}^{\text{new}})\approx q(\bm{m}^{\text{new}}|\bm{m}^{\text{old}})$. Our numerical experiments show an average acceptance rate of over $90\%$. Additionally, one can set an integer downsampling rate $\mathscr{D}$, where only one sample is taken from every $\mathscr{D}$ samples, to reduce the correlation between batches in the Metropolis process.

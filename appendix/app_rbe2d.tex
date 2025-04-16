@@ -1,117 +1,4 @@
-\section{Numerical validations for error estimations in energy}\label{sec:numeric_energy}
-
-In this section, we present supplementary results for the numerical validations for error estimations in electrostatic energy, complementing the main text. Figures~\ref{fig:icm_error} to~\ref{fig:error_icm_pad_gamma_1} correspond one-to-one with Figures 1 to 4 in the main text, maintaining the same systems and parameter settings as those used in the force calculation results. The dashed lines in these figures represent the fitted curves based on our theoretical estimation given in Eq.~(52) of the main text. The energy error results exhibit similar trends to the force errors and align well with our theoretical predictions.
-
-
-\begin{figure}[htbp]
-    \centering
-    \includegraphics[width=0.98\linewidth]{figs/icm_error.pdf}
-    \caption{
-        Relative errors of energy due to truncation of image charges are presented. The dashed lines represent the fitted decay rate, as described in Eq. (54) in the main text. In panel (a) we set $\gamma_{\T u} = \gamma_{\T d} = 1$ and consider system heights of $H = 0.5, 1$ and $5$. In panel (b), we set $H = 1$ while varying $\gamma_{\T u} = \gamma_{\T d} = \gamma = 0.3, 0.6$ and $1$. 
-        %The scope of the fitted lines are fixed to be $\lg(\gamma e^{-2\pi H / L_x})$, which is the theoretical value.
-    }
-    \label{fig:icm_error}
-\end{figure}
-
-
-\begin{figure}[htbp]
-    \centering
-    \includegraphics[width=0.49\linewidth]{figs/elc_error.pdf}
-    \caption{Relative error of energy of reformulating the Ewald2D summation as 3D ones are presented. We set $\gamma_{\T u} = \gamma_{\T d} = 0$ and consider system heights of $H = 0.5, 1, 5$. Here $P = (L_z - H) / L_x$ denotes the padding ratio.}
-    \label{fig:elc_error}
-\end{figure}
-
-\begin{figure}[htbp]
-    \centering
-    \includegraphics[width=0.98\linewidth]{figs/error_icm_pad_gamma_0.6.pdf}
-    \caption{Relative error of energy in dielectric-confined Coulomb system with parameters $\gamma_{\T u} = \gamma_{\T d} = \gamma = 0.6$ and $H = 0.5$. Panel (a) illustrates error evolution with fixed image charge layers ($M = 5,~15,~25$) under varying padding ratios ($P$), whereas panel (b) demonstrates error progression with fixed $P = 1,~3,~5$ across increasing $M$.}
-    \label{fig:error_icm_pad_gamma_0.6}
-\end{figure}
-
-\begin{figure}[htbp]
-    \centering
-    \includegraphics[width=0.98\linewidth]{figs/error_icm_pad_gamma_1.pdf}
-    \caption{Relative error of energy in dielectric-confined Coulomb system with parameters $\gamma_{\T u} = \gamma_{\T d} = \gamma = 1$ and $H = 0.5$. Panel (a) illustrates error evolution with fixed image charge layers ($M = 5,~15,~25$) under varying padding ratios ($P$), whereas panel (b) demonstrates error progression with fixed $P = 1,~3,~5$ across increasing $M$.}
-    \label{fig:error_icm_pad_gamma_1}
-\end{figure}
-
-\section{Challenge associated with strongly-confined systems}
-In practical simulations, such as when studying thin membranes, ion transport in slit channels and supercapacitors, accurately capturing the effects of nanoconfinement, i.e., when $L_{x,y} / H\gg 1$, is crucial.
-Previous numerical studies have found that more image layers are needed to achieve satisfactory accuracy for confined systems~\cite{dos2015electrolytes}. 
-To further investigate the numerical properties of strongly-confined systems, we present the errors in force in Fig.~\ref{fig:icm_elc_error_force}, where we fix $L_x=L_y=10$, $P=(L_z-H)/L_x = 5$ and consider system heights $H = 0.5, 1, 5$ while varying the number of image charge layers $M$. 
-In Fig.~\ref{fig:icm_elc_error_force} (a), for $\gamma = 0.6$, we observe that the error decays exponentially as $M$ increases for $H = 0.5$ and $H = 1$. 
-However, for $H = 5$, where $|g_{\T u}g_{\T d}|>1$, the error becomes non-monotonic as $M$ increases, 
-which is consistent with our theoretical predictions as discussed in the main text.
-In Fig.~\ref{fig:icm_elc_error_force} (b), with $\gamma = 1$, we observe a similar non-monotonic pattern for all aspect ratios. 
-It is important to note that, the rate of error decrease/increase depends on the aspect ratio $L_x/H$. 
-A higher aspect ratio leads to a slower increase or decrease in errors, as $M$ is less or greater than the critical value that minimizes the error, respectively. 
-This also highlights the computational challenge associated with strongly-confined systems -- to achieve the same accuracy, a much larger $M$ is required compared to non-confined systems.
-Same conclusions hold for the errors in energy, as shown in Fig.~\ref{fig:icm_elc_error}.
-
-\begin{figure}[htbp]
-    \centering
-    \includegraphics[width=0.98\linewidth]{figs/icm_elc_error_force.pdf}
-    \caption{Relative error of force ($\mathcal{E}_r$) in a dielectric-confined Coulomb system with parameters $P = 5$ and $H = 0.5, 1, 5$. In panels (a) and (b), the dielectric contrasts are set to $\gamma_{\T u} = \gamma_{\T d} = \gamma = 0.6$ and $\gamma_{\T u} = \gamma_{\T d} = \gamma = 1$, respectively.}
-    \label{fig:icm_elc_error_force}
-\end{figure}
-
-\begin{figure}[htbp]
-    \centering
-    \includegraphics[width=0.98\linewidth]{figs/icm_elc_error.pdf}
-    \caption{Relative error of energy in a dielectric-confined Coulomb system with parameters $P = 5$ and $H = 0.5, 1, 5$. In panels (a) and (b), the dielectric contrasts are set to $\gamma_{\T u} = \gamma_{\T d} = \gamma = 0.6$ and $\gamma_{\T u} = \gamma_{\T d} = \gamma = 1$, respectively.}
-    \label{fig:icm_elc_error}
-\end{figure}
-
-\section{Quadrature error of the trapezoidal rule}\label{app::trapezoidal}
-We employ the method of contour integrals~\cite{Donaldson1972SINUA,trefethen2014Rev} to derive a precise estimation for the error in  {the} trapezoidal rule when discretizing Eqs.~\eqref{eq:ewald2d-intform1} and \eqref{eq::J02}. Consider the integral
-\begin{equation}\label{eq::A.1}
-I=\int_{-\infty}^{\infty }\frac{e^{-(a^2+t^2)}}{a^2+t^2}e^{\i b t}dt,
-\end{equation}
-where $a\geq 0$ and $b\in\mathbb{R}$. We approximate $I$ using a $(2M+1)$-point trapezoidal rule:
-\begin{equation}
-I_{M,\xi}=\xi\sum_{j=-M}^{M}\frac{e^{-a^2-(j\xi)^2}}{a^2+(j\xi)^2}e^{\i b j\xi},
-\end{equation}
-where $\xi>0$ is the step size, and we define the remainder as $E_{M,\xi}:=I-I_{M,\xi}$. Note that the integrand of $I$ has two simple poles at $t_{\pm}=\pm \i a$. Let $\Gamma_{\pm}$ be two positively/negatively oriented rectangular contours with vertices $(M+1/2)\xi\pm\i a^*$, $-(M+1/2)\xi\pm\i a^*$, $(M+1/2)\xi$, and $-(M+1/2)\xi$ (see Fig.~\ref{fig:Trapezoidal}). We enforce $a^*>a$ so that $\Gamma_{\pm}$ encloses both the interval $[-M \xi,M \xi]$ and the pole $t_{\pm}$. By following the approach given in~\cite{Donaldson1972SINUA} and applying Cauchy's theorem, we can derive an estimate for $E_{M,\xi}$ in the limit $M\rightarrow \infty$:
-\begin{equation}
-E_{M,\xi}=\int_{\Gamma_++\Gamma_-}\frac{e^{-(a^2+t^2)+\i b t}}{a^2+t^2}\varphi(t)dt-2\pi\i \text{Res}\left[\frac{e^{-(a^2+t^2)+\i b t}}{a^2+t^2}\varphi(t),\pm \i a\right],
-\end{equation}
-where
-\begin{align}
-\varphi(t)=\begin{cases}
-\dfrac{1}{1-e^{2\pi\i t/\xi}},\,\quad &\text{Im}(t)<0,\\[1em]
--\dfrac{1}{1-e^{-2\pi\i t/\xi}},\,\quad&\text{Im}(t)>0,
-\end{cases}
-\end{align}
-is related to the characteristic function of the trapezoidal rule, and $\text{Res}[f(t),t_0]$ denotes the residue of a function $f$ at a pole $t_0$. Since the contributions from the vertical sides of $\Gamma_{\pm}$ vanish in the limit $M\rightarrow \infty$ and by using residue calculus, we have
-\begin{equation}\label{eq::A.5}
-E_{M,\xi}=\left(\int_{-\infty+\i a^*}^{\infty+\i a^*}-\int_{-\infty-\i a^*}^{\infty-\i a^*}\right)\frac{e^{-(a^2+t^2)+\i b t}}{a^2+t^2}\varphi(t)dt+\frac{\pi}{a}\frac{e^{-ab}+e^{ab}}{1-e^{2\pi a/\xi}}.
-\end{equation}
-In Eq.~\eqref{eq::A.5}, the last term can be considered as the residue correction of the rule, while the remainder integral along $\text{Im}(t)=a^*$ can be estimated as
-\begin{equation}
-\begin{split}
-\left|\int_{-\infty+\i a^*}^{\infty+\i a^*}\frac{e^{-(a^2+t^2)+\i b t}}{a^2+t^2}\varphi(t)dt\right|&\leq e^{(a^*)^2-a^2-a^*b-2\pi a^*/\xi}\int_{-\infty}^{\infty}\frac{|a^2+(t+\i a^*)^2|^{-1}e^{-t^2}}{\left|1-e^{2\pi\i t/\xi-2\pi a^*/\xi}\right|}dt\\
-&\leq\frac{\sqrt{\pi}e^{(a^*)^2-a^2-a^*b-2\pi a^*/\xi}}{(a^*)^2-a^2}.
-\end{split}
-\end{equation}
-
-To obtain a closed formula, it is necessary to determine the extremum of the exponent under the condition $a^*>a>0$. Since the range of $a$ is not specified, we can safely choose $a^*=\pi/\xi+b/2$ if $\pi/\xi+b/2>a$, and $a^*=\sqrt{a^2+1}$ otherwise. This choice ensures a decay rate of at least $\sim O(e^{-\text{sign}(\pi/\xi+b/2)|\pi/\xi+b/2|^2})$, where $\text{sign}(t)=1$ if $t> 0$, $\text{sign}(t)=0$ if $t=0$, and $\text{sign}(t)=-1$ otherwise. By following a similar procedure, we can derive that the integral along $\text{Im}(t)=-a^*$ in Eq.~\eqref{eq::A.5} decays with order $O(e^{-\text{sign}(\pi/\xi-b/2)|\pi/\xi-b/2|^2})$. Consequently, we can conclude that
-\begin{equation}
-E_{M,\xi}=\frac{\pi}{a}\frac{e^{-ab}+e^{ab}}{1-e^{2\pi a/\xi}}+E_{\text{err}},
-\end{equation}
-where the remainder error term can be estimated as 
-\begin{equation}\label{eq::A.8}
-|E_{\text{err}}|\sim O(e^{-\text{sign}(\pi/\xi-|b|/2)\left|\pi/\xi-|b|/2\right|^2}).
-\end{equation}
-
-\begin{figure}[!ht]
-    \begin{center}
-    \includegraphics[width=0.8\textwidth]{figs/Trapezoidal.pdf}
-    \caption{Integration contours in the error estimation of trapezoidal rule.}
-    \label{fig:Trapezoidal}
-    \end{center} 
-\end{figure}
-
-\section{Quasi-2D systems with charged slab walls}\label{app::surfacecharge}
+\section{Dielectric-confined systems with charged slabs}\label{app::surfacecharge}
 
 In this section, we will discuss the extension of the developed RBE algorithm to handle systems that involve both continuous surface charges and free ions. Without loss of generality, we assume two charged interfaces are located at $z=0$ and $z=H$ and with uniform surface charge density $\sigma_{\text{bot}}$ and $\sigma_{\text{top}}$. The system satisfies the charge neutrality condition \begin{equation}\label{eq::chargeneutrality}
     \sum_{i=1}^N q_i+(\sigma_{\text{bot}}+\sigma_{\text{top}})L_xL_y=0\;,
@@ -156,26 +43,6 @@ The ion-wall component represents the force exerts on the mobile ions due to the
 \bm{F}_{\text{wall}}^{\te{c}}:=-2\pi z_{i}q_{i}\left[\sigma_{\text{top}}-\sigma_{\text{bot}}+\frac{(\sigma_{\text{top}}+\sigma_{\text{bot}})(\gamma_{\text{top}}-\gamma_{d})\left(1-\gamma_{\text{top}}^{\lceil M/2 \rceil}\gamma_{d}^{\lceil M/2 \rceil}\right)}{1-\gamma_{\text{top}}\gamma_{d}}\right]\V{\hat e_z}.
 \end{equation}
 
-\section{Physical quantities evaluated in results}\label{Sec::phyquan}
-
-In this section, we will briefly describe how to calculate the physical quantities of interest in this paper.
-
-To calculate the average concentration of the system along the $z$-direction, we first divide the interval $[0,H]$ into $250$ equally spaced bins. Then, every $100$ steps, we count the number of particles whose $z$-coordinate $r_z$ falls within each bin and calculate the ensemble average. After the simulation is completed, we divide the accumulated values by the length of each bin to obtain the average concentration. The MSD along $z$-direction, $\eta_{\text{msd},z}(t)$ at time $t$ is defined as
-\begin{equation}
-\eta_{\mathrm{msd},z}(t)=\left\langle\left|r_z\left(t+t_0\right)-r_z\left(t_0\right)\right|^2\right\rangle,
-\end{equation}
-with the bracket representing the ensemble average over $t_0$. The VACF along $z$-direction, $\eta_{\text{vacf},z}(t)$ at time $t$ is defined as
-\begin{equation}
-\eta_{\text {vacf},z}(t)=\left\langle v_z\left(t_0\right) v_z(t)\right\rangle,
-\end{equation}
-with the bracket representing the ensemble average over $t_0$. The total energy is defined as the sum of potential energy and kinetic energy. The potential energy is the sum of bond, angle, Coulomb, LJ and  {constraint} components, where the first two and the last one are not required for electrolyte solutions. 
-
-Let $N$ is the number of particles, $\bm{r}_i=(r_{i,x},r_{i,y},r_{i,z})$, $\bm{v}_i=(v_{i,x},v_{i,y},v_{i,z})$ and $\bm{f}_i=(f_{i,x},f_{i,y},f_{i,z})$ represent the position, velocity and force of $i$th particle along each of three dimensions, respectively. The $z$-$z$ component subtracted from pressure tensor is computed by the formula
-\begin{equation}
-P_{zz}=\frac{1}{V} \sum_{i=1}^N\left(m_i v_{i,z} v_{i, z}+r_{i,z} f_{i,z}\right),
-\end{equation}
-where the two components in each term come from the kinetic energy and the virial contributions, respectively. It is remarked that the far-field component of  {the} virial associated with the Ewald decomposition requires the use of specialized methods~\cite{liang2022random}. 
-
 % \section{High-performance implementation}\label{sec::ImpleStr}
 % The RBE2D method is highly suitable for parallelization and vectorization. In this section, we present our implementation strategy for the RBE2D, incorporating MPI parallelization and Intel 512-bit SIMD (AVX-512 architecture) for vectorization. The latter enables simultaneous calculations of sixteen neighbors for single-precision floating-point operations (or eight for double precision). Intel One-API is employed for parallelization, encompassing MPI and AVX-512 instructions. The approach presented here is equally applicable to other parallelization models and vectorization instructions.
 
@@ -189,7 +56,7 @@ where the two components in each term come from the kinetic energy and the viria
 
 % In many works that employ FFT-based methods as their electrostatic solvers, the real-space cutoff is balanced to ensure that the costs of the real and Fourier spaces are approximately equal. For the RBE2D, the real-space cutoff should be made smaller when accelerating calculations in the Fourier space. By combining other optimized techniques for real-space cutoffs with the RBE2D, even better acceleration can be achieved. Our ongoing project involves the combination of RBE2D with the random batch list algorithm \cite{liang2021random}, which is a recently developed acceleration technique for the real-space part.
 
-\section{Simulation details and supplementary results}
+\section{Simulation details}
 The detailed parameters for simulations in Fig.~\ref{fig:den1} are listed in the following Table~\ref{Table::Dielec}.  {The log-log plots of the $W_2$ norm of difference on $\mathscr{P}(U)$ for simulations in Fig.~\ref{fig:3_1} and Figs.~\ref{fig:den1}(c-d) and~\ref{fig:den2} are shown in Figs.~\ref{fig:energy2d_3_1} and~\ref{fig:energy2d}, respectively.}
  {The time comparison between the RBE2D and PPPM methods are shown in Figs.~\ref{fig:timenondie} and~\ref{fig:timedie}, where the number of CPU cores is set to $64$ or $1024$ ($64$ cores per node) and the batch size is $P=200$.}
 

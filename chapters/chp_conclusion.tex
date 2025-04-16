@@ -35,8 +35,8 @@ we further recalibrate the structure factor coefficients for the image series in
 enabling the computation of the polarization contributions with minimal overhead. 
 The main advantage of our method compared with existing methods is twofold: 
 \begin{itemize}
-	\item[1.] our method relies on a random batch sampling strategy in $\V k$-space to achieve linear-scaling, thus it is highly efficient and has strong scalability; 
-	\item[2.] our method is mesh-free, and can be applied to strongly confined systems with negligible extra cost.
+	\item[1.] Our method relies on a random batch sampling strategy in $\V k$-space to achieve linear-scaling, thus it is highly efficient and has strong scalability.
+	\item[2.] Our method is mesh-free, and can be applied to strongly confined systems with negligible extra cost.
 \end{itemize}
 
 For negatively charged systems, we have developed a novel method called the quasi-Ewald method (QEM).
@@ -55,7 +55,7 @@ We also applied our methods to the simulation of negatively confined quasi-2D sy
 These applications showcase the potential of our methods to provide new insights into the physics of quasi-2D systems.
 
 Despite the advances made, our theoretical analysis and numerical methods have several limitations that warrant discussion.
-First, our framework relies on the image charge method, which assumes planar dielectric substrates with uniform dielectric constants.
+First, our framework relies on the assumption of planar substrates with uniform dielectric constants.
 This restricts its applicability to real-world systems where surfaces often exhibit complex geometries and spatially varying dielectric properties.
 Second, while our work focuses on point charge interactions, many physical systems involve polarizable particles with complex shapes and charge distributions.
 These characteristics can give rise to fascinating phenomena such as like-charge attraction, self-assembly, and phase separation - scenarios where our current methods cannot be directly applied.
@@ -69,7 +69,7 @@ The first direction is to extend our methods to more complex systems, including 
 In such cases, we anticipate that a boundary integral formulation can be incorporated -- the polarization effect can be approximated as the field due to induced surface charges, then in each field evaluations, the proposed methods may be applied to reduce the computational cost, so that it will be capable of efficiently and accurately simulate charged particles confined by structured surfaces~\cite{wu2018asymmetric}.
 
 The second direction is to extend our methods to different interaction kernels, such as the dipolar interactions~\cite{Messina2017PRL}, the Stokes interactions~\cite{barnett2018unified} and the Yukawa interactions~\cite{Hou2009PRL}, which plays important roles in many physical systems.
-There kernels are also long-range and have more complex behaviors.
+These kernels are also long-ranged and have more complex behaviors.
 More interestingly, the recently proposed machine learning interaction potential~\cite{cheng2025latent, ji2025machinelearninginteratomicpotentialslongrange} for long-range systems can be consider as a special type of kernel, and it is expected to be a powerful tool for simulating complex systems.
 It is challenging to extend our methods to these kernels, and it is also an interesting direction for future research.
 

@@ -406,8 +406,57 @@ The detailed formulation for the 2D Fourier expansion of $\phi_{\ell}$ is provid
 	\end{align}
 \end{lem}
 
+\begin{proof}
+	By applying the Fourier transform to Poisson's equation
+	\begin{equation}\label{eq::B.1}
+		-\Delta\phi_{\ell}(\bm{\rho},z)=4\pi g(\bm{\rho},z)\ast\tau(\bm{\rho},z),
+	\end{equation}
+	one obtains  
+	\begin{equation}\label{eq::B2}
+		\widetilde{\phi}_{\ell}(\bm{h},\kappa)=\frac{4\pi}{h^2+\kappa^2}\widetilde{g}(\bm{h},\kappa)\widetilde{\tau}(\bm{h},\kappa)\quad\text{with}\quad \widetilde{g}(\bm{h},\kappa)=\sum_{j=1}^{N}q_{j} e^{-\m{i} \bm{h}\cdot\bm{\rho}_{j}}e^{-\m{i} \kappa z_{j}}
+	\end{equation}
+	via the convolution theorem and the Poisson summation formula (see Lemmas~\ref{lem::Convolution} and \ref{lem::Poisson}, respectively). Applying the inverse Fourier transform to Eq.~\eqref{eq::B2} yields
+	\begin{equation}\label{eq::phil}
+		\phi_{\ell}(\bm{\rho},z)=\frac{2}{L_xL_y}\sum_{j=1}^{N}q_{j}\sum_{\bm{h}\neq\bm{0}}\int_{\mathbb{R}}\frac{e^{-(h^2+\kappa^2)/(4\alpha^2)}}{h^2+\kappa^2}e^{-\m{i} \bm{h}\cdot(\bm{\rho}-\bm{\rho}_{j})}e^{-\m{i} \kappa(z-z_{j})}d\kappa + \phi^{\bm{0}}_{\ell}(z),
+	\end{equation}
+	where $\phi^{\bm{0}}_{\ell}(z)$ is the contribution from zero mode. From \cite{oberhettinger2012tables}, one has 
+	\begin{equation}\label{eq::integral}
+		\int_{\mathbb{R}} \frac{e^{-(h^2+\kappa^2)/(4\alpha^2)}}{h^2+\kappa^2} e^{-\m{i} \kappa z} d\kappa = \frac{\pi}{2h} \left[\xi^{+}(h,z)+\xi^{-}(h,z)\right]
+	\end{equation}
+	for $\bm{h}\neq\bm{0}$, where $\xi^{\pm}(h,z)$ are defined via Eq.~\eqref{eq::xi20}. Substituting Eq.~\eqref{eq::integral} into the first term of Eq.~\eqref{eq::phil} yields $\phi_{\ell}^{\bm{h}}(\bm{r})$ defined via Eq.~\eqref{eq:philk}.
+
+	By Theorem~\ref{order}, the zero-frequency term $\phi^{\bm{0}}_{\ell}(z)$ always exists and its derivation is very subtle. Let us apply the 2D Fourier transform (see Lemma~\ref{lem::2dfourier}) to Poisson's equation Eq.~\eqref{eq::B.1} only on periodic dimensions, and then obtain
+	\begin{equation}\label{eq::B.5}
+		(-\partial_z^2+h^2)\widehat{\phi}_{\ell}(\bm{h},z)=4\pi\widehat{g}(\bm{h},z)\ast_{z}\widehat{\tau}(\bm{h},z),
+	\end{equation}
+	where $\ast_z$ indicates the convolution operator along $z$ dimension. Simple calculations suggest
+	\begin{equation}
+		\widehat{g}(\bm{h},z)=\sum_{j=1}^{N}q_{j} e^{-\m{i} \bm{h}\cdot\bm{\rho}_{j}}\delta(z-z_{j}),\quad\text{and}\quad \widehat{\tau}(\bm{h},z)=\frac{\alpha}{\sqrt{\pi}} e^{-h^2/(4\alpha^2)}e^{-\alpha^2z^2}.
+	\end{equation}
+	The solution of Eq.~\eqref{eq::B.5} for $\bm{k}=\bm{0}$ can be written as the form of double integral that is only correct up to a linear mode,
+	\begin{equation}\begin{split}
+			\phi_{\ell}^{\bm{0}}(z)&=-\frac{4\pi}{L_xL_y}\int_{-\infty}^{z}\int_{-\infty}^{z_1}\widehat{g}(\bm{0},z_2)\ast_{z_2}\widehat{\tau}(\bm{0},z_2)dz_2dz_1+A_0z+B_0\\
+			&=-\frac{2\pi}{L_xL_y}\sum_{j=1}^{N}q_{j}\left[z-z_{j}+(z-z_{j})\erf\left(\alpha(z-z_{j})\right)+\frac{e^{-\alpha^2(z-z_{j})^2}}{\sqrt{\pi}\alpha}\right]+A_0z+B_0.
+		\end{split}
+	\end{equation}
+	To analyze the short-range component $\phi_{s}(\bm{\rho},z)$ using a procedure similar to Eqs.~\eqref{eq::B.1}-\eqref{eq::integral}, one obtains
+	\begin{equation}\begin{split}
+			\phi_{s}^{\bm{0}}(z) =& \frac{\pi}{L_x L_y} \sum_{j=1}^{N} \lim_{\bm{h}\rightarrow\bm{0}} \frac{1}{h} \left[2e^{-h|z|}-\xi^{+}(\bm{h},z) - \xi^{-}(\bm{h},z)\right]\\
+			=& \frac{2\pi}{L_xL_y}\sum_{j=1}^{N}q_{j}\left[-|z-z_{j}|+(z-z_{j})\erf\left(\alpha(z-z_{j})\right)+\frac{e^{-\alpha^2(z-z_{j})^2}}{\sqrt{\pi}\alpha}\right].
+		\end{split}
+	\end{equation}
+	Since $\phi_{s}^{\bm{0}}(z)+\phi_{\ell}^{\bm{0}}(z)$ matches the boundary condition Eq.~\eqref{eq::boundary1} as $z\rightarrow \pm\infty$ and by the charge neutrality condition, one solves 
+	\begin{equation}
+		A_0 = \frac{2\pi}{L_xL_y}\sum_{j=1}^{N}q_{j}z \equiv 0,\quad \text{and}\quad B_0=-\frac{2\pi}{L_xL_y}\sum_{j=1}^{N}q_{j}z_{j}.
+	\end{equation}
+	This result finally gives 
+	\begin{equation}
+		\phi_{\ell}^{\bm{0}}(z)=-\frac{2\pi}{L_xL_y}\sum_{j=1}^{N}q_{j}\left[(z-z_{j})\erf\left(\alpha(z-z_{j})\right)+\frac{e^{-\alpha^2(z-z_{j})^2}}{\sqrt{\pi}\alpha}\right].
+	\end{equation}
+\end{proof}
+
 Eqs.~\eqref{eq:phi_s}, \eqref{eq::self} and \eqref{eq::7} constitute the well-known Ewald2D summation, which has been derived through various methods~\cite{parry1975electrostatic,tornberg2016ewald,heyes1977molecular,de1979electrostatic,PhysRevB.61.6706}.
-An alternative derivation is provided in ~\ref{app::deriv}.
+% An alternative derivation is provided in ~\ref{app::deriv}.
 The total interaction energy can be computed as
 \begin{equation}\label{eq::Us_Ewald2D}
     U_{s} =  \frac{1}{2} \sum_{i,j=1}^N \sum_{\bm{m}}{}^\prime q_i q_{j} \frac{\te{erfc}\left(\alpha \left|\bm{r}_i - \bm{r}_{j} + \V{\mathcal{M}}\right|\right)}{\left|\bm{r}_i-\bm{r}_{j} + \V{\mathcal{M}}\right|}\;,
@@ -452,7 +501,38 @@ Our main findings are summarized as follows.
 		\mathscr{Q}_{s}(\alpha,r_c)\rightarrow\frac{1}{4\pi}\alpha^{-4} r_c^{-3}e^{-2\alpha^2r_c^2}~\text{as}~\alpha r_c\rightarrow \infty\;. 
 	\end{equation}
 \end{thm}
-The proof of Theorem~\ref{thm:ewald2d_phi_error} is provided in~\ref{app:phierr}.
+
+\begin{proof}
+	We begin by considering the real space truncation error of electrostatic potential 
+	\begin{equation}
+		\mathscr{E}_{\phi_{s}}(r_c,\alpha)(\bm{r}_{i}) = \sum_{|\bm{r}_{ij} + \V{\mathcal{M}}|>r_c}q_{j} \frac{\erfc(\alpha|\bm{r}_{ij} + \V{\mathcal{M}}|)}{|\bm{r}_{ij} + \V{\mathcal{M}}|}
+	\end{equation}
+	for $i$th particle, which involves neglecting interactions beyond $r_c$. By the analysis in \ref{app::ideal-gas}, this part of error can be approximated by $\delta\mathscr{E}_{\phi_{s}}$ with 
+	\begin{equation}\label{eq::delta^2phi}
+		\delta^2\mathscr{E}_{\phi_{s}}=  \frac{1}{V}\sum_{j=1}^{N}q_{j}^2\int_{r_c}^{\infty}\frac{\erfc(\alpha r)^2}{r^2}4\pi r^2dr=\frac{4\pi Q}{V}\mathscr{Q}_{\emph{s}}(\alpha,r_c),
+	\end{equation}
+	where $\mathscr{Q}_{\emph{s}}(\alpha,r_c)$ is defined via Eq.~\eqref{eq::Qs2}. Note that the $\erfc(r)$ function satisfies (\cite{olver1997asymptotics}, pp. 109-112)
+	\begin{equation}\label{eq::asyerfc}
+		\erfc(r)=\frac{e^{-r^2}}{\sqrt{\pi}}\sum_{m=0}^{\infty}(-1)^{m}\left(\frac{1}{2}\right)_mz^{-(2m+1)}
+	\end{equation}
+	as $r\rightarrow \infty$, where $(x)_m=x(x-1)\cdots(x-m+1)=x!/(x-m)!$ denotes the Pochhammer's symbol. Substituting Eq.~\eqref{eq::asyerfc} into Eq.~\eqref{eq::delta^2phi} and truncating at $m=1$ yields Eq.~\eqref{eq::Qs}. 
+
+	The Fourier space error, by~\ref{app::deriv}, is given by
+	\begin{equation}
+		\mathscr{E}_{\phi_{\ell}}(k_c,\alpha)(\bm{r}_{i})=\frac{2}{L_xL_y}\sum_{j=1}^{N}q_{j}\sum_{|\bm{h}|>k_c}\int_{\mathbb{R}}\frac{e^{-(h^2+\kappa^2)/(4\alpha^2)}}{h^2+\kappa^2}e^{-\m{i} \bm{h}\cdot(\bm{\rho}-\bm{\rho}_{j})}e^{-\m{i} \kappa(z-z_{j})}d\kappa.
+	\end{equation}
+	For a large $k_c$, one can safely replace the truncation condition with $|\bm{h}+\kappa|>k_c$, resulting in
+	\begin{equation}
+		\begin{split}
+			\mathscr{E}_{\phi_{\ell}}(k_c,\alpha)(\bm{r}_{i})&\approx \frac{1}{2\pi^2}\sum_{j=1}^{N}q_{j} \int_{k_c}^{\infty}\int_{-1}^{1}\int_{0}^{2\pi}e^{-h^2/(4\alpha^2)}e^{-i h r_{ij}\cos\varphi}d\theta d\cos\varphi dh\\
+			&=\frac{2}{\pi}\int_{k_c}^{\infty}\sum_{j=1}^{N}q_{j}\frac{\sin(h r_{ij})}{h r_{ij}}e^{-h^2/(4\alpha^2)}dh.
+		\end{split}
+	\end{equation}
+	Here, the summation over Fourier modes is approximated using an integral similar to Eq.~\eqref{eq::integral2}, and one chooses a specific $(h,\theta,\varphi)$ so that the coordinate along $\cos\theta$ of $\bm{h}$ is in the direction of a specific vector $\bm{r}$, and $\bm{h}\cdot\bm{r}=h r \cos\varphi$.
+	The resulting formula is identical to Eq.~(21) in \cite{kolafa1992cutoff} for the fully-periodic case, and $\delta \mathscr{E}_{\phi_{\ell}}$ can be derived following the approach in \cite{kolafa1992cutoff}. 
+\end{proof}
+
+% The proof of Theorem~\ref{thm:ewald2d_phi_error} is provided in~\ref{app:phierr}.
 An interesting observation is that at the limit $\alpha r_c\rightarrow \infty$, the truncation error estimates for Ewald2D sum become identical as that for Ewald3D derived in~\cite{kolafa1992cutoff}.
 Same observation has been made by Tornberg and her coworkers through numerical tests~\cite{lindbo2012fast,shamshirgar2021fast}. 
 Here, Theorem~\ref{thm:ewald2d_phi_error} justifies this phenomenon.

@@ -1,77 +1,137 @@
-\section{Oscillation analyzed via the principal value integral}\label{sec::oscillation}
+% \section{Oscillation analyzed via the principal value integral}\label{sec::oscillation}
 
-Here we are trying to explain the oscillatory property of the integral given by
-\begin{equation}
-    I_o = \int_0^{\infty} \frac{J_0(k \D \rho) \exp{(-k a)}}{\exp{(2H(k_0 - k))} - 1} \text{d}k\;,
-\end{equation}
-where~$k_0$,~$a$ and~$\rho$ are all positive constants.
-The integral can further be divided via Laurent expansion, given by
-\begin{equation}
-    I_o = \int_0^{\infty} \frac{J_0(k \D \rho) \exp{(-k a)}}{2H(k_0 - k)} \text{d}k + \int_0^{\infty} J_0(k \D \rho) \exp{(-k a)} E(k) \text{d}k\;,
-\end{equation}
-where~$1/2H(k_0 - k)$ is the leading order term of the Laurent series of~$\frac{1}{e^{2H(k_0 - k)} - 1}$, and~$E(k)$ is the Padé approximant of the rest part, which is a non-divergent smooth function.
-Due to the fast decay property of~$\exp{(-k a)}$, the second part leads to a non-oscillatory small contribution to the result, and the oscillation is contributed by the leading order term.
+% Here we are trying to explain the oscillatory property of the integral given by
+% \begin{equation}
+%     I_o = \int_0^{\infty} \frac{J_0(k \D \rho) \exp{(-k a)}}{\exp{(2H(k_0 - k))} - 1} \text{d}k\;,
+% \end{equation}
+% where~$k_0$,~$a$ and~$\rho$ are all positive constants.
+% The integral can further be divided via Laurent expansion, given by
+% \begin{equation}
+%     I_o = \int_0^{\infty} \frac{J_0(k \D \rho) \exp{(-k a)}}{2H(k_0 - k)} \text{d}k + \int_0^{\infty} J_0(k \D \rho) \exp{(-k a)} E(k) \text{d}k\;,
+% \end{equation}
+% where~$1/2H(k_0 - k)$ is the leading order term of the Laurent series of~$\frac{1}{e^{2H(k_0 - k)} - 1}$, and~$E(k)$ is the Padé approximant of the rest part, which is a non-divergent smooth function.
+% Due to the fast decay property of~$\exp{(-k a)}$, the second part leads to a non-oscillatory small contribution to the result, and the oscillation is contributed by the leading order term.
 
-To calculate the integral, we treat it as a function of~$a$, given by
-\begin{equation}
-    I_{o1}(a) = \int_0^{\infty} \frac{J_0(k \D \rho) \exp{(-k a)}}{2H(k_0 - k)} \text{d}k\;,
-\end{equation}
-so that we have
-\begin{equation}
-    \begin{split}
-    I_{o1}^{\prime}(a) & = - k I_{o1}(a) = \frac{1}{2H} \int_0^{\infty} J_0(k \D \rho) \exp{(-k a)} \text{d}k - k_0 I_{o1}(a) \\
-    & = \frac{1}{2H \sqrt{\D \rho^2 + a^2}} - k_0 I_{o1}(a) \;,
-    \end{split}
-\end{equation}
-which forms a differential equation given by
-\begin{equation}
-    I_{o1}^{\prime}(a) + k_0 I_{o1}(a) = \frac{1}{2H \sqrt{\D \rho^2 + a^2}}\;.
-\end{equation}
-Using the general solution of ODE, we have
-\begin{equation}
-    I_{o1}(a) = \exp{(-k_0 a)} \left[C_1 + \int \frac{\exp{(k_0 a)}}{2H \sqrt{\D \rho^2 + a^2}} \text{d}a \right] = \exp{(-k_0 a)} \left[C_1 + C_2(\rho, k_0, a) \right] \;.
-\end{equation}
-Notice that
-\begin{equation}
-    I_{o1}(0) = C_1 + C_2(\D \rho, k_0, 0)\;,
-\end{equation}
-so that
-\begin{equation}
-    I_{o1}(a) = \exp{(-k_0 a)} \left[ I_1(0) - C_2(\D \rho, k_0, 0) + C_2(\D \rho, k_0, a) \right]\;.
-\end{equation}
-Although here we do not know the exact result of integral~$C_2$, its contribution to~$I_{o1}$ is clearly non-oscillatory.
-Then we can focus on the first term, which contribute the oscillation, given by 
-\begin{equation}
-    I_{o2} = \frac{\exp{(-k_0 a)}}{2H} \int_0^{\infty} \frac{J_0(k \D \rho)}{(k_0 - k)} \text{d}k = \frac{\exp{(-k_0 a)}}{2H} \int_0^{\infty} \frac{J_0(k^\prime)}{k_0 \D \rho - k^\prime} \text{d}k^\prime\;,
-\end{equation}
-so that 
-\begin{equation}
-    I_o = \frac{\exp{(-k_0 a)}}{2H} \int_0^{\infty} \frac{J_0(k^\prime)}{k_0 \D \rho - k^\prime} \text{d}k^\prime + f(k_0, \D \rho, a)\;.
-\end{equation}
-where~$f(k_0, \D \rho, a)$ is a non-oscillatory function defined by
-\begin{equation}
-    \begin{split}
-        f(k_0, \D \rho, a) = & \exp{(-k_0 a)} \left[ - C_2(\D \rho, k_0, 0) + C_2(\D \rho, k_0, a) \right] \\
-        & + \int_0^{\infty} J_0(k \D \rho) \exp{(-k a)} E(k) \text{d}k
-    \end{split}
-\end{equation}
-Here we define
-\begin{equation}
-    I_{m} = \int_0^{\infty} \frac{J_0(k^\prime)}{k_0 \D \rho - k^\prime} \text{d}k^\prime\;,
-\end{equation}
-which is only related to~$k_0 \D \rho$, and the numerical result shows that distance between ~$I_{m}$ converge rapidly to~$\pi$, as shown in Fig.~\ref{fig:I_3}.
+% To calculate the integral, we treat it as a function of~$a$, given by
+% \begin{equation}
+%     I_{o1}(a) = \int_0^{\infty} \frac{J_0(k \D \rho) \exp{(-k a)}}{2H(k_0 - k)} \text{d}k\;,
+% \end{equation}
+% so that we have
+% \begin{equation}
+%     \begin{split}
+%     I_{o1}^{\prime}(a) & = - k I_{o1}(a) = \frac{1}{2H} \int_0^{\infty} J_0(k \D \rho) \exp{(-k a)} \text{d}k - k_0 I_{o1}(a) \\
+%     & = \frac{1}{2H \sqrt{\D \rho^2 + a^2}} - k_0 I_{o1}(a) \;,
+%     \end{split}
+% \end{equation}
+% which forms a differential equation given by
+% \begin{equation}
+%     I_{o1}^{\prime}(a) + k_0 I_{o1}(a) = \frac{1}{2H \sqrt{\D \rho^2 + a^2}}\;.
+% \end{equation}
+% Using the general solution of ODE, we have
+% \begin{equation}
+%     I_{o1}(a) = \exp{(-k_0 a)} \left[C_1 + \int \frac{\exp{(k_0 a)}}{2H \sqrt{\D \rho^2 + a^2}} \text{d}a \right] = \exp{(-k_0 a)} \left[C_1 + C_2(\rho, k_0, a) \right] \;.
+% \end{equation}
+% Notice that
+% \begin{equation}
+%     I_{o1}(0) = C_1 + C_2(\D \rho, k_0, 0)\;,
+% \end{equation}
+% so that
+% \begin{equation}
+%     I_{o1}(a) = \exp{(-k_0 a)} \left[ I_1(0) - C_2(\D \rho, k_0, 0) + C_2(\D \rho, k_0, a) \right]\;.
+% \end{equation}
+% Although here we do not know the exact result of integral~$C_2$, its contribution to~$I_{o1}$ is clearly non-oscillatory.
+% Then we can focus on the first term, which contribute the oscillation, given by 
+% \begin{equation}
+%     I_{o2} = \frac{\exp{(-k_0 a)}}{2H} \int_0^{\infty} \frac{J_0(k \D \rho)}{(k_0 - k)} \text{d}k = \frac{\exp{(-k_0 a)}}{2H} \int_0^{\infty} \frac{J_0(k^\prime)}{k_0 \D \rho - k^\prime} \text{d}k^\prime\;,
+% \end{equation}
+% so that 
+% \begin{equation}
+%     I_o = \frac{\exp{(-k_0 a)}}{2H} \int_0^{\infty} \frac{J_0(k^\prime)}{k_0 \D \rho - k^\prime} \text{d}k^\prime + f(k_0, \D \rho, a)\;.
+% \end{equation}
+% where~$f(k_0, \D \rho, a)$ is a non-oscillatory function defined by
+% \begin{equation}
+%     \begin{split}
+%         f(k_0, \D \rho, a) = & \exp{(-k_0 a)} \left[ - C_2(\D \rho, k_0, 0) + C_2(\D \rho, k_0, a) \right] \\
+%         & + \int_0^{\infty} J_0(k \D \rho) \exp{(-k a)} E(k) \text{d}k
+%     \end{split}
+% \end{equation}
+% Here we define
+% \begin{equation}
+%     I_{m} = \int_0^{\infty} \frac{J_0(k^\prime)}{k_0 \D \rho - k^\prime} \text{d}k^\prime\;,
+% \end{equation}
+% which is only related to~$k_0 \D \rho$, and the numerical result shows that distance between ~$I_{m}$ converge rapidly to~$\pi$, as shown in Fig.~\ref{fig:I_3}.
 
-\begin{figure}[htbp]
-\centering
-\includegraphics[width=  \linewidth]{figs/I_3.pdf}
-\caption{
-    Numerical results of~$I_{m}$ is shown in (a), and the position of the zero points are shown in (b).
+% \begin{figure}[htbp]
+% \centering
+% \includegraphics[width=  \linewidth]{figs/I_3.pdf}
+% \caption{
+%     Numerical results of~$I_{m}$ is shown in (a), and the position of the zero points are shown in (b).
+% }
+% \label{fig:I_3}
+% \end{figure}
+
+
+\section{Simulation details of RBE2D}
+
+The detailed parameters for simulations in Fig.~\ref{fig:den1} are listed in the following Table~\ref{Table::Dielec}.  {The log-log plots of the $W_2$ norm of difference on $\mathscr{P}(U)$ for simulations in Fig.~\ref{fig:3_1} and Figs.~\ref{fig:den1}(c-d) and~\ref{fig:den2} are shown in Figs.~\ref{fig:energy2d_3_1} and~\ref{fig:energy2d}, respectively.}
+ {The time comparison between the RBE2D and PPPM methods are shown in Figs.~\ref{fig:timenondie} and~\ref{fig:timedie}, where the number of CPU cores is set to $64$ or $1024$ ($64$ cores per node) and the batch size is $P=200$.}
+
+\renewcommand\arraystretch{1.7}
+\begin{table}[h]
+	\caption{The systems in Figure~\ref{fig:den1} are characterized by the following details, including the numbers of cations ($N_{\emph{cation}}$) and anions ($N_{\emph{anion}}$), the dimensions $L_x$, $L_y$, and $H$ (the slab height), the extended system length $L_z$, the surface charge densities ($\sigma_{u}$, $\sigma_{d}$), the factors of dielectric mismatch ($\gamma_{u}$ and $\gamma_{d}$) of the bottom and top walls, the diameter of ions $r_{\emph{d}}$, and the Bjerrum length ($\ell_{\emph{B}}$). The cutoff $r_c$ is set as $10\sigma$ and $4\sigma$ for producing (A-B) and (C-D), respectively.
 }
-\label{fig:I_3}
+	\centering
+	\setlength{\tabcolsep}{0.6mm}{
+		\begin{tabular}{|c|c|c|c|c|c|c|c|c|c|c|c|}
+			\hline
+			& $N_{\text{cation}}$ & $N_{\text{anion}}$ & $L_x$ [$\sigma$] & $L_y$ [$\sigma$] & $H$ [$\sigma$] & $\sigma_1 $ [$\frac{e}{\sigma^2}$] & $\sigma_2$ [$\frac{e}{\sigma^2}$] &$\gamma_{d}$ & $\gamma_{u}$ & $r_{\text{d}}$ [$\sigma$] & $\ell_{\text{B}}$ [$\sigma$] \\ \hline
+      			%Fig.~\ref{fig:3_1} A-D& 750 & 2250 & 60  & 60 & 30   & -- & -- & -- & -- & 3.5 \\\hline
+			%Fig.~\ref{fig:DiscreteLow} A-D & 0 & 486 & 90  & 90  & 30  & 0  & 0.06 & -- & -- &3.5    \\\hline
+			%Fig.~\ref{fig:SurfaceCharge} A-D & 234 & 218 & 20  & 20  & 10 & -0.0008 & -0.0008 & -- & -- &0.7 \\\hline
+			(A) &109  & 218  & 100 & 100 & 50 & -- & --  & 0.939  & 0.939  & 1 & 3.5 \\ \hline
+			(B) &73  & 219 & 100 & 100 & 50 & --  & --  & 0.939  & 0.939  & 1 & 3.5 \\ \hline
+			(C) & 23 & 42 & 42.9 & 42.9 & 8.4 & 0.01 & -0.02 & 0.6 & -0.33 & 2 & 2 \\ \hline
+			(D) & 16 & 44 & 42.9 & 42.9 & 8.4 & 0.01 & -0.02  & 0.6 & -0.33 & 2 & 2 \\ \hline
+	\end{tabular}}
+	\label{Table::Dielec}
+\end{table}
+
+\begin{figure}[!ht]
+\begin{center}
+\includegraphics[width=0.6\textwidth]{figs/Energy_3_1.pdf}
+\caption{ {The difference on the ensemble average of the total potential energy $\mathscr{P}(U)$ as a function of time step $\Delta t$ (unit: $\tau$). Data are shown for the same systems used in producing Figs.~\ref{fig:3_1} and $P=50$ and $100$. The solid lines indicate $O(\Delta t)$ scaling. The $W_2$ norm is used as the measurement.}}
+\label{fig:energy2d_3_1}
+\end{center} 
 \end{figure}
 
+\begin{figure}[htb]
+\begin{center}
+\includegraphics[width=0.6\textwidth]{figs/Energy.pdf}
+\caption{The difference on the ensemble average of the total potential energy $\mathscr{P}(U)$ as a function of batch size $P$. Data are shown for the same systems used in producing Figs.~\ref{fig:den1}(c-d) and \ref{fig:den2}. The $W_2$ norm is used as the measurement.}
+\label{fig:energy2d}
+\end{center} 
+\end{figure}
 
-\section{Simulation details}
+\begin{figure}[!ht]
+\begin{center}
+\includegraphics[width=1\textwidth]{figs/time_compare_nonsub.pdf}
+\caption{CPU time comparison between the RBE2D and PPPM methods, with the number of CPU cores set to $64$ or $1024$ ($64$ cores per node) and a batch size of $P=200$. Data are shown for the same systems used in producing Fig.~\ref{fig:Time}(a), including CPU time per step of the real space component (Real), the Fourier space component (Fourier), and the total computation time (Total).
+The results indicate that while the speedup achieved by the RBE2D method is minimal when the number of CPU cores is small ($N_{\mathrm{core}} = 64$), it becomes significantly more effective at reducing CPU time costs compared to the PPPM method when $N_{\mathrm{core}} = 1024$, primarily due to its lower communication overhead.
+Note that in panel (c) the data points marked with blue circles are overlapped by those marked with orange squares.}
+\label{fig:timenondie}
+\end{center} 
+\end{figure}
+
+\begin{figure}[!ht]
+\begin{center}
+\includegraphics[width=1\textwidth]{figs/time_compare_withsub.pdf}
+\caption{ {CPU time comparison between the RBE2D and ICM-PPPM methods, with the number of CPU cores set to $64$ or $1024$ ($64$ cores per node) and a batch size of $P=200$. Data are shown for the same systems as in Fig.~\ref{fig:Time}(a), but with a dielectric mismatch of $\gamma_{u} = \gamma_{d} = -0.9$. The CPU time per step is provided for the real space component (Real), Fourier space component (Fourier), and total computation time (Total).
+Similarly, the results clearly show the speedup of the RBE2D method over the ICM-PPPM method, especially when the number of CPU cores is large.}}
+\label{fig:timedie}
+\end{center} 
+\end{figure}
+
+\section{Simulation details of QEM}
 
 In the main text, we have shown that the charge oscillation can lead to lattice-like structure formation in dielectric confined quasi-2D systems, and mainly focused on the tunable lattice parameter.
 Here we will discuss more about our results.
@@ -83,7 +143,7 @@ Here we will discuss more about our results.
     \label{fig:balls}
 \end{figure}
 
-The MD results for the systems which contain~$600$ particles is shown in Fig.~\ref{fig:balls} (a) and (b), and the related videos are given as video1 and video2.
+The MD results for the systems which contain~$600$ particles is shown in Fig.~\ref{fig:balls} (a) and (b).
 For both simulations, it costs $2 \times 10^6$ time steps in total, and each step takes~$\Delta t = 0.005 t_0$, where~$t_0 = \tau_0 \sqrt{\frac{m_0}{k_B T}}$ is the reduced time scale.
 The first $1.5\times 10^6$ steps are performed using the simulated annealing technique to avoid trapping in a metastable state. We start with $T_r=10$ and slowly cooling down the system until it reaches equilibrium at $T_r=1$, after which we continue the simulation for $5 \times 10^5$ time steps for sampling.
 

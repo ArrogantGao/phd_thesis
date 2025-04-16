@@ -96,7 +96,7 @@ The detailed parameters for simulations in Fig.~\ref{fig:den1} are listed in the
 	\label{Table::Dielec}
 \end{table}
 
-\begin{figure}[!ht]
+\begin{figure}[htbp]
 \begin{center}
 \includegraphics[width=0.6\textwidth]{figs/Energy_3_1.pdf}
 \caption{ {The difference on the ensemble average of the total potential energy $\mathscr{P}(U)$ as a function of time step $\Delta t$ (unit: $\tau$). Data are shown for the same systems used in producing Figs.~\ref{fig:3_1} and $P=50$ and $100$. The solid lines indicate $O(\Delta t)$ scaling. The $W_2$ norm is used as the measurement.}}
@@ -104,7 +104,7 @@ The detailed parameters for simulations in Fig.~\ref{fig:den1} are listed in the
 \end{center} 
 \end{figure}
 
-\begin{figure}[htb]
+\begin{figure}[htbp]
 \begin{center}
 \includegraphics[width=0.6\textwidth]{figs/Energy.pdf}
 \caption{The difference on the ensemble average of the total potential energy $\mathscr{P}(U)$ as a function of batch size $P$. Data are shown for the same systems used in producing Figs.~\ref{fig:den1}(c-d) and \ref{fig:den2}. The $W_2$ norm is used as the measurement.}
@@ -112,7 +112,7 @@ The detailed parameters for simulations in Fig.~\ref{fig:den1} are listed in the
 \end{center} 
 \end{figure}
 
-\begin{figure}[!ht]
+\begin{figure}[htbp]
 \begin{center}
 \includegraphics[width=1\textwidth]{figs/time_compare_nonsub.pdf}
 \caption{CPU time comparison between the RBE2D and PPPM methods, with the number of CPU cores set to $64$ or $1024$ ($64$ cores per node) and a batch size of $P=200$. Data are shown for the same systems used in producing Fig.~\ref{fig:Time}(a), including CPU time per step of the real space component (Real), the Fourier space component (Fourier), and the total computation time (Total).
@@ -122,7 +122,7 @@ Note that in panel (c) the data points marked with blue circles are overlapped b
 \end{center} 
 \end{figure}
 
-\begin{figure}[!ht]
+\begin{figure}[htbp]
 \begin{center}
 \includegraphics[width=1\textwidth]{figs/time_compare_withsub.pdf}
 \caption{ {CPU time comparison between the RBE2D and ICM-PPPM methods, with the number of CPU cores set to $64$ or $1024$ ($64$ cores per node) and a batch size of $P=200$. Data are shown for the same systems as in Fig.~\ref{fig:Time}(a), but with a dielectric mismatch of $\gamma_{u} = \gamma_{d} = -0.9$. The CPU time per step is provided for the real space component (Real), Fourier space component (Fourier), and total computation time (Total).
@@ -136,7 +136,7 @@ Similarly, the results clearly show the speedup of the RBE2D method over the ICM
 In the main text, we have shown that the charge oscillation can lead to lattice-like structure formation in dielectric confined quasi-2D systems, and mainly focused on the tunable lattice parameter.
 Here we will discuss more about our results.
 
-\begin{figure}[ht]
+\begin{figure}[htbp]
     \centering
     \includegraphics[width = \linewidth]{figs/MD_ball.pdf}
     \caption{The lattice-like structure and the cluster for~$\gamma = \pm 10$ cases are shown in (a) and (b), respectively. Force in~$z$ direction on particles at different position are shown in (b).}

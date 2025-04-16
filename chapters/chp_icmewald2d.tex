@@ -234,7 +234,7 @@ The results for relative errors in energy are documented in Section~\ref{sec:num
     \label{fig:icm_error_force}
 \end{figure}
 
-\subsection{Estimations of electrostatic layer correction (ELC) with image charges}\label{sec:error_reform}
+\subsection{Estimations of ELC term with image charges}\label{sec:error_reform}
 
 Another often-overlooked source of error in existing algorithms stems from the omission of the ELC term in Eq.~\eqref{eq:U^M_ELC} and the discretization error using the trapezoidal rule, which has been discussed in Section~\ref{sec::icm_ewald2d}. 
 In this section, we focus on deriving estimations of the ELC term with image charges.
@@ -307,7 +307,7 @@ As before, by omitting all the prefactors, we arrive at the following estimation
 \end{equation}
 Clearly, comparing Eq.~\eqref{eq::ForceError} and Eq.~\eqref{eq::U_ELC}, we find that the ELC contribution behaves asymptotically the same for both energy and force calculations.
 
-\subsection{Leading-order analysis of the ELC term and numerical validations}\label{sec::leadingerr}
+\subsection{Leading-order analysis of the ELC term}\label{sec::leadingerr}
 The theoretical estimations of the ELC term, as presented in Eqs.~\eqref{eq::ForceError} and~\eqref{eq::U_ELC}, behave differently under different system aspect ratios and reflection factors.
 In this section, we conduct a detailed analysis of the leading-order contribution of the ELC term across different system parameter scenarios. 
 Our focus will be on the analysis of force calculations, a similar approach can be applied to the energy.

@@ -1,14 +1,14 @@
 \section{Background}
 
-Confined quasi two dimensional (quasi-2D) Coulomb systems~\cite{mazars2011long}, which are macroscopic in two dimensions but with atomic-size thickness in the other, have caught much attention in studies of magnetic and liquid crystal films, super-capacitors, crystal phase transitions, dusty plasmas, ion channels, superconductive materials and quantum devices~\cite{kawamoto2002history, hille2001ionic, teng2003microscopic, Messina2017PRL, mazars2011long, saito2016highly, liu20192d}. 
+Confined quasi two-dimensional (quasi-2D) Coulomb systems~\cite{mazars2011long}, which are macroscopic in two dimensions but with atomic-size thickness in the other, have caught much attention in studies of magnetic and liquid crystal films, supercapacitors, crystal phase transitions, dusty plasmas, ion channels, superconductive materials, and quantum devices~\cite{kawamoto2002history, hille2001ionic, teng2003microscopic, Messina2017PRL, mazars2011long, saito2016highly, liu20192d}. 
 Typically, such systems possess a nano-sized longitudinal thickness in the $z$ direction, achieved through confinement, bulk-like and modeled as periodic in the transverse $xy$ directions, hence endowed with an inherent multi-scale nature.
 Due to the confinement effect, such systems can exhibit various interesting behaviors for future nanotechnologies; prototype examples include graphene~\cite{novoselov2004electric}, metal dichalcogenide monolayers~\cite{kumar2012tunable}, and colloidal monolayers~\cite{mangold2003phase}.
 
 Among quasi-2D systems, charged particles confined by materials with different dielectric constants are of particular interest. 
-The so-called \emph{dielectric confinement effect} can further lead to inhomogeneous screening, as compared to bulk systems, or even broken symmetries near interfaces~\cite{C0NR00698J,wang2016inhomogeneous,gao2024broken}.
-These effects are crucial in a wide range of applications, including the behavior of water, electrolytes, and ionic liquids confined within thin films~\cite{raviv2001fluidity}, ion transport in nanochannels~\cite{zhu2019ion}, and the self-assembly of colloidal and polymer monolayers~\cite{kim2017imaging}.
-In these systems, substrate materials used for nanoscale confinement can range from dielectric to metallic, and nowadays, electromagnetic metamaterials, which have been developed with permittivities that can take negative values~\cite{veselago1967electrodynamics, smith2004metamaterials, cheng2017tunable, xie2022recent, xu2020polyaniline} when excited by electromagnetic waves of specific frequencies.  
-Noteworthy is that materials with \emph{negative static permittivity}  has drawn a considerable attention, though rarely seen, its existence has been predicted in materials such as metals and non-ideal plasma~\cite{Dolgov1918admissible,homes2001optical}. More recently, it has been experimentally achieved in a wide range of materials such as VO$_2$ films~\cite{kana2016thermally}, graphene~\cite{nazarov2015negative}, nanocolloids~\cite{shulman2007plasmalike}, and polymeric systems~\cite{yan2013negative}.
+The so-called \emph{dielectric confinement effect} can further lead to inhomogeneous screening, compared to bulk systems, or even broken symmetries near interfaces~\cite{C0NR00698J,wang2016inhomogeneous,gao2024broken}.
+These effects are crucial in a wide range of applications, including the behavior of water, electrolytes, and ionic liquids confined within thin films~\cite{raviv2001fluidity}, ion transport in nanochannels~\cite{zhu2019ion}, and self-assembly of colloidal and polymer monolayers~\cite{kim2017imaging}.
+In these systems, substrate materials used for nanoscale confinement can range from dielectric to metallic, and nowadays electromagnetic metamaterials, which have been developed with permittivities that can take negative values~\cite{veselago1967electrodynamics, smith2004metamaterials, cheng2017tunable, xie2022recent, xu2020polyaniline} when excited by electromagnetic waves of specific frequencies.  
+It should be noted that materials with \emph{negative static permittivity} have drawn considerable attention, although rarely seen, their existence has been predicted in materials such as metals and nonideal plasma~\cite{Dolgov1918admissible,homes2001optical}. More recently, it has been experimentally achieved in a wide range of materials such as VO$_2$ films~\cite{kana2016thermally}, graphene~\cite{nazarov2015negative}, nanocolloids~\cite{shulman2007plasmalike}, and polymeric systems~\cite{yan2013negative}.
 Interestingly, even for water, the perpendicular component of its tensorial dielectric function has been observed to be negative within sub-Angstrom distances from the surface by nano confinement~\cite{Kornyshev1996Static, Schlaich2016Water, Kornyshev2021Nonlocal}.
 
 
@@ -29,12 +29,12 @@ For such long-range interactions, the computational cost scales as $O(N^2)$ in t
 
 
 For fully-periodic or free-space Coulomb systems, various fast algorithms have been developed to reduce the computational cost, such as the fast multipole methods (FMM)~\cite{greengard1987fast,cheng1999fast,ying2004kernel}, fast Fourier transform (FFT) based Ewald-splitting methods~\cite{hockney2021computer,darden1993particle,essmann1995smooth} and the recently proposed random batch Ewald (RBE) method~\cite{jin2021random, liang2022superscalability,liang2024JCP}.
-These fast algorithms have been successfully applied to large-scale simulations of Coulomb systems under various ensembles and reaching complexity of $O(N\log N)$ or even $O(N)$.
+These fast algorithms have been successfully applied to large-scale simulations of Coulomb systems in various ensembles and have reached the complexity of $O(N\log N)$ or even $O(N)$.
  
-For quasi-2D systems,  numerous methods have also been developed over the past decades, mostly rely on modifications to the FMM and FFT-based Ewald methods to achieve $O(N\log N)$ or even $O(N)$ complexity.
+For quasi-2D systems,  numerous methods have also been developed over the past decades, mostly relyinging on modifications to the FMM and FFT-based Ewald methods to achieve $O(N\log N)$ or even $O(N)$ complexity.
 One important work is the Ewald2D method~\cite{parry1975electrostatic}, which directly applies the Ewald-splitting technique for quasi-2D systems, it scales as $O(N^2)$ and is found to be slowly convergent due to the oscillatory nature of the Green's function for quasi-2D geometry.
 To further accelerate the convergence of the quasi-2D lattice summation, more methods have been proposed, including the MMM2D method~\cite{arnold2002mmm2d}, the periodic FMM method~\cite{yan2018flexibly}, and the spectral Ewald method~\cite{lindbo2012fast}.
-Instead of exactly solving the quasi-2D problem, alternative approaches are to approximate the quasi-2D summations by 3D periodic summations with correction terms, such as the Yeh--Berkowitz (YB) correction~\cite{yeh1999ewald} and the  {electric layer correction (ELC)~\cite{arnold2002electrostatics}.}
+Instead of exactly solving the quasi-2D problem, alternative approaches are to approximate the quasi-2D summations by 3D periodic summations with correction terms, such as the Yeh--Berkowitz (YB) correction~\cite{yeh1999ewald} and the electric layer correction (ELC)~\cite{arnold2002electrostatics}.
 These correction methods effectively reduce the computational cost and are simple to implement, but lack control of accuracy.
 
 The methods mentioned above encounter challenges when addressing sharp dielectric interfaces. In recent years, various strategies have been developed to effectively simulate quasi-2D systems under dielectric confinements.
@@ -113,10 +113,10 @@ We first provide a rigorous error analysis for the combination of the image char
 Then, we introduce a novel algorithm called the random batch Ewald2D (RBE2D) method, which efficiently handles quasi-2D Coulomb systems with dielectric confinements while maintaining excellent scalability for large-scale simulations on modern supercomputing architectures.
 Detailed numerical results are provided to validate the accuracy and efficiency of the proposed method.
 
-In Chapter~\ref{chp_quasiewald}, we investigate quasi-2D systems with negative dielectric confinements, where the polarizable materials possess negative dielectric constants, which results in failure of the ICM-based methods.
+In Chapter~\ref{chp_quasiewald}, we investigate quasi-2D systems with negative dielectric confinements, where the polarizable materials possess negative dielectric constants, which results in failure of ICM-based methods.
 % The previous methods based on the image charge method break down in such systems due to the unusual polarization effects.
 To overcome the numerical challenges, we develop the quasi-Ewald method (QEM), which introduces a novel quasi-Ewald splitting technique.
-We show that with properly singluarity subtraction, the QEM can be extended to handle the negative dielectric confinements.
+We show that with proper singularity subtraction, the QEM can be extended to handle negative dielectric confinements.
 Numerical results are also provided for validation.
 % Using this method, we explore the behavior of negatively confined quasi-2D charged systems and discover remarkable spontaneous symmetry breaking (SSB) phenomena emerging in symmetrically charged binary particle systems.
 
@@ -126,4 +126,4 @@ These simulations validate the efficiency, accuracy, and scalability of our meth
 Second, we investigate negatively confined electrolytes, revealing a fascinating spontaneous symmetry breaking (SSB) phenomenon that emerges in symmetrically charged binary particle systems purely through confinement effects.
 
 Finally, Chapter~\ref{chp_conclusion} concludes this thesis with a comprehensive summary of our methodological contributions. 
-We critically evaluate the strengths and limitations of our proposed algorithms, and outline promising future research directions for both theoretical developments and practical applications in computational physics and materials science.
+We critically evaluate the strengths and limitations of our proposed algorithms and outline promising future research directions for both theoretical developments and practical applications in computational physics and materials science.

@@ -596,7 +596,7 @@
 \typeout{Copyright}
 \begin{center}
 {Copyright \copyright\ by \@author \year}
-\thepage{}
+% \thepage{}
 \end{center}
 }
 
@@ -1780,17 +1780,16 @@ scholarly research.}
       {\normalsize \Copyright}
     \end{center}
     \addcontentsline{toc}{chapter}{Title Page}
-    \newpage
 
-\newpage
-\thispagestyle{empty}  
-\begin{center}
-    \null 
-    \vfill 
-    \emph{``An algorithm is a finite answer to an infinite number of questions.''}\\[0.5cm]
-    Stephen Kleene
-    \vfill
-\end{center}
+    \newpage
+    \thispagestyle{empty}  
+    \begin{center}
+        \null 
+        \vfill 
+        \emph{``An algorithm is a finite answer to an infinite number of questions.''}\\[0.5cm]
+        Stephen Kleene
+        \vfill
+    \end{center}
 
 % End of Page 1
     \newpage

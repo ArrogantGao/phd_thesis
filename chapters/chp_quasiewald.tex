@@ -477,7 +477,15 @@ and
 and we finish our proof.
 \end{proof}
 
-As validations, we compared the errors in calculating the oscillatory integral $\int_0^{\infty} J_0(x \rho) \exp{(-x)} \mrm{d}x$ and $\int_{-\infty}^{\infty} J_0(x \rho) \exp{(-x^2)} \mrm{d}x$ using the Gauss-Laguerre ro Gauss-Hermite quadrature, and the Gauss-Legendre quadrature, respectively.
+As validations, we compared the errors in calculating the oscillatory integrals
+\begin{equation}\label{eq:I1}
+    I_1=\int_0^{\infty} J_0(x \rho) \exp{(-x)} \mrm{d}x\;,
+\end{equation}
+and
+\begin{equation}\label{eq:I2}
+    I_2=\int_{-\infty}^{\infty} J_0(x \rho) \exp{(-x^2)} \mrm{d}x\;,
+\end{equation}
+using the Gauss-Laguerre ro Gauss-Hermite quadrature, and the Gauss-Legendre quadrature, respectively.
 First for a fixed~$\rho = 50$, as shown by Fig.~\ref{fig:Gauss_int} (a) and (b), the truncated Gauss-Legendre formula on interval~$[0, 36]$ or~$[-6, 6]$ converge much rapidly as the number of points~$n$ increase comparing to the Gauss-Laguerre or Gauss-Hermite formula.
 Then for varying~$\rho \in [0, 10]$, we set the desired accuracy~$\mathcal{E}_r = 10^{-4}$, $10^{-8}$ and $10^{-12}$, and compute number of points needed for the truncated Gauss-Legendre formula to reach the given accuracy~$\mathcal{E}_r$.
 As shown in Fig.~\ref{fig:Gauss_int_n} (a) and (b), in both cases the integrals converge rapidly and only take a few tens of points the reach the accuracy.
@@ -487,7 +495,7 @@ In this way, both~$I_1$ and~$I_2$ are transformed to be integrals on finite regi
     \centering
     \includegraphics[width = \linewidth]{figs/integral_n.pdf}
     \caption{
-        The relative error of numerical evaluation of integrals~$\int_0^{\infty} J_0(50 x) \exp{(-x)} \mrm{d}x$ and~$\int_{-\infty}^{\infty} J_0(50 x) \exp{(-x^2)} \mrm{d}x$ via (a) Gauss–Laguerre quadrature and (b) Gauss–Hermite quadrature on infinite interval or Gauss-Legendre quadrature on truncated interval,~$n$ is the order of the quadrature.
+        The relative error of numerical evaluation of integrals (a) Eq.~\eqref{eq:I1} via Gauss–Laguerre quadrature and (b) Eq.~\eqref{eq:I2} via Gauss–Hermite quadrature on infinite interval or Gauss-Legendre quadrature on truncated interval, respectively,~$n$ is the order of the quadrature.
     }
     \label{fig:Gauss_int}
 \end{figure}
@@ -496,7 +504,7 @@ In this way, both~$I_1$ and~$I_2$ are transformed to be integrals on finite regi
     \centering
     \includegraphics[width = \linewidth]{figs/integral_r.pdf}
     \caption{
-    Order of quadrature~$n$, needed to numerically evaluate (a)~$\int_0^{\infty} J_0(\rho x) \exp{(-x)} \mrm{d}x$ and (b)~$\int_{-\infty}^{\infty} J_0(\rho x) \exp{(-x^2)} \mrm{d}x$ to reach the given relative accuracy~$\mathcal{E}_r$ using the Gauss-Legendre quadrature on truncated interval~$[0, k_{c1}]$ and~$[-k_{c2}, k_{c2}]$, respectively, where~$\rho \in [0, 10]$ determine the strength of the oscillation and~$k_{c1/2}$ are determined by~$E$.
+    Order of quadrature~$n$, needed to numerically evaluate the integrals (a) Eq.~\eqref{eq:I1} and (b) Eq.~\eqref{eq:I2} to reach the given relative accuracy~$\mathcal{E}_r$ using the Gauss-Legendre quadrature on truncated interval~$[0, k_{c1}]$ and~$[-k_{c2}, k_{c2}]$, respectively.
     }
     \label{fig:Gauss_int_n}
 \end{figure}
@@ -892,7 +900,7 @@ According to Eq.~\eqref{eq::int_Gs}, the integral to be evaluated numerically ca
 where~$a$,~$H$ and~$b$ are positive constants, $J_0$ is the zeroth order Bessel function of the first kind and~$k_0 = {\ln{(\gamma_u \gamma_d)}} / {2H}$ is a 1st order pole.
 
 To avoid the divergence, we calculate the principle value by splitting the integrand into two parts, given by
-\begin{equation}
+\begin{equation}\label{eq::split}
     \begin{split}
         f_{1} &=  \frac{J_0(b h) e^{- a h} - J_0(b k_0) e^{- a k_0}}{e^{- 2 H (h - k_0)} - 1} - J_0(b k_0) e^{- a k_0} \;, \\
         f_{2} &= \frac{J_0(b k_0) e^{- a k_0 - 2 H (h - k_0)}}{e^{- 2 H (h - k_0)} - 1} \;,
@@ -903,7 +911,7 @@ which are smooth and singular, respectively.
 \begin{figure}[ht]
     \centering
     \includegraphics[width = 0.5\linewidth]{figs/fi.pdf}
-    \caption{Split the integrand into smooth and singular parts.}
+    \caption{Illustration of the splitting of the integrand into smooth and singular parts as shown in Eq.~\eqref{eq::split}.}
     \label{fig:split}
 \end{figure}
 

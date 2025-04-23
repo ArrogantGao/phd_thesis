@@ -31,6 +31,11 @@
     citecolor=blue,
 }
 
+\usepackage{tocloft}
+% \renewcommand{\cftfigindent}{0pt}
+% \renewcommand{\cftfignumwidth}{2em}
+
+
 \usepackage{pdflscape}
 \DeclareMathOperator*{\argmax}{argmax}      % for argmax
 
@@ -248,6 +253,8 @@
 %                                                                       %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+\newpage
+\addcontentsline{toc}{chapter}{List of Figures}
 \listoffigures
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -256,6 +263,8 @@
 %                                                                       %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+\newpage
+\addcontentsline{toc}{chapter}{List of Tables}
 \listoftables
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

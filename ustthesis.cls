@@ -677,7 +677,7 @@ scholarly research.}
   \newpage
   %\pagenumbering{arabic}
   %\setcounter{page}{1}
-    \textspace
+    % \textspace
     \addcontentsline{toc}{chapter}{Abstract}
     \null
     \parskip=0pt
@@ -701,7 +701,7 @@ scholarly research.}
 % dfk 4/1/91: added \par to force end of paragraph before undoing
 % double spacing
 \def\endabstract{
- \par\textspaceundo
+%  \par\textspaceundo
 % \setcounter{footnote}{0}
 }
 

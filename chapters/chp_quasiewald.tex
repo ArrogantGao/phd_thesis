@@ -1016,13 +1016,21 @@ The results show that as $E$ increases, the relative error decreases rapidly, de
 
 \subsection{Simulating electrolytes confined by dielectric interfaces}
 
-To demonstrate the accuracy of the QEM for planar dielectric interfaces in a MD simulation, we study a few electrolytes modeled as the restricted primitive model, confined between two dielectric interfaces.
-In all simulations, the box size is set as $(100 \tau_0, 100\tau_0, H)$, and consists of 436 particles immersed in continuum solvent characterized by a Bjerrum length $\ell_{\mathrm B} = e_0^2/(4 \pi \eps_c k_B T) = 3.5 \tau_0$, where~$e_0$ is the unit of smallest charge.
-The ions are modeled as soft spheres of diameter~$\tau_0$ that have an excluded-volume interaction represented by a purely repulsive shifted-truncated Lennard-Jones (LJ) potential with energy scale~$\eps_{LJ} = k_B T$, where~$k_B$ is the Boltzmann constant and~$T$ is the absolute temperature.
-The ions are confined by purely repulsive shifted-trunacted LJ walls ($\eps_\text{ion-wall} = k_B T$; $\tau_\text{ion-wall} = 0.5 \tau_0$) at $z = 0$ and $z = H$. 
-The MD simulations is utilize a time step $0.001 t_0$, where $t_0 = \tau_0 m_0 / k_B T$ is the unit of time with $m_0 = 1$~(LJ unit), the ion mass, and temperature is controlled via Nosé–Hoover thermostat.
-When evaluating the electrostatic interaction using the QEM, we set~$E = 4$,~$p = 30$ and~$n = 40$.
-In all simulations, it takes~$2 \times 10^6$ time steps to reach equilibrium, after which we continue the simulation for $3 \times 10^6$ time steps for sampling.
+% To demonstrate the accuracy of the QEM for planar dielectric interfaces in a MD simulation, we study a few electrolytes modeled as the restricted primitive model, confined between two dielectric interfaces.
+% In all simulations, the box size is set as $(100 \tau_0, 100\tau_0, H)$, and consists of 436 particles immersed in continuum solvent characterized by a Bjerrum length $\ell_{\mathrm B} = e_0^2/(4 \pi \eps_c k_B T) = 3.5 \tau_0$, where~$e_0$ is the unit of smallest charge.
+% The ions are modeled as soft spheres of diameter~$\tau_0$ that have an excluded-volume interaction represented by a purely repulsive shifted-truncated Lennard-Jones (LJ) potential with energy scale~$\eps_{LJ} = k_B T$, where~$k_B$ is the Boltzmann constant and~$T$ is the absolute temperature.
+% The ions are confined by purely repulsive shifted-trunacted LJ walls ($\eps_\text{ion-wall} = k_B T$; $\tau_\text{ion-wall} = 0.5 \tau_0$) at $z = 0$ and $z = H$. 
+% The MD simulations is utilize a time step $0.001 t_0$, where $t_0 = \tau_0 m_0 / k_B T$ is the unit of time with $m_0 = 1$~(LJ unit), the ion mass, and temperature is controlled via Nosé–Hoover thermostat.
+% When evaluating the electrostatic interaction using the QEM, we set~$E = 4$,~$p = 30$ and~$n = 40$.
+% In all simulations, it takes~$2 \times 10^6$ time steps to reach equilibrium, after which we continue the simulation for $3 \times 10^6$ time steps for sampling.
+% We sample every 100 steps, which yields~$3 \times 10^{4}$ independent and equilibrated configurations.
+
+A few dielectrically confined electrolytes are studied to validate the accuracy of the QEM.
+In all simluations, we use the reduced unit and set~$L_x = L_y = 100 \tau_0$, and~$H = 50 \tau_0$.
+The system contains 218 cations and 218 anions carrying charge~$\pm e_0$, respectively.
+The charges are immersed in continuum solvent characterized by a Bjerrum length $\ell_{\mathrm B} = 3.5 \tau_0$.
+The walls are purely repulsive shifted-trunacted LJ walls ($\eps_\text{ion-wall} = k_B T$; $\tau_\text{ion-wall} = 0.5 \tau_0$) at $z = 0$ and $z = H$.
+In all simulations, it takes~$2 \times 10^6$ time steps ($\Delta t = 0.001$) to reach equilibrium, after which we continue the simulation for $3 \times 10^6$ time steps for sampling.
 We sample every 100 steps, which yields~$3 \times 10^{4}$ independent and equilibrated configurations.
 
 \subsubsection{MD simulations of symmetric systems}

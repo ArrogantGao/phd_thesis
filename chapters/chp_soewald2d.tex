@@ -265,7 +265,7 @@ We finally summarize the SOEwald2D  in Algorithm~\ref{alg:SOEwald2D}. Its error 
 	\end{algorithmic}\label{alg:SOEwald2D}
 \end{algorithm}
 
-\subsection{Error analysis for the SOEwald2D algorithm}\label{subsec::errSOEwald2D}
+\subsection{Error analysis}\label{subsec::errSOEwald2D}
 Here we derive error estimates for the SOEwald2D summation. 
 The total error in the interaction energy $U$ consists of the truncation error and the SOE approximation error:
 \begin{equation}
@@ -333,7 +333,7 @@ Notably, for systems sharing the same charge distribution, the Coulomb interacti
 Thus we anticipate that our method will maintain a fixed relative error in $U$. 
 This will be verified through numerical tests in Section~\ref{subsec::errSOE}.
 
-\subsection{Complexity analysis for the SOEwald2D}
+\subsection{Complexity analysis}
 
 Next we analyze the complexity of the SOEwald2D method summarized in Algorithm~\ref{alg:SOEwald2D}. 
 The main computational cost is contributed by the following steps: $N$ particle sorting in $z$, the real and reciprocal space summations.

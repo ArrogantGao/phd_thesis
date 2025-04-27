@@ -824,38 +824,36 @@ Finally,  variance of force on the $i$-th particle is bounded above by
 We remark that $S \sim L_xL_y$, then $	\mathbb{E}\Norm{\V{\chi}_{i}}^2=\fO\left(\frac{1}{P}\right)$ and independent of the particle number $N$.
 Theorem~\ref{thm:unbaised} has demonstrated that the variance of force scales as $\fO\left(\frac{1}{P}\right)$, unaffected by the growth of the system size $N$, provided the same   Debye length $\lambda_{D}$. 
 This is crucial for its practical usage in MD simulations, where the dynamical evolution typically relies on force calculations rather than energy. 
-We proceed to demonstrate  
-%some analysis for the strong convergence of the random batch MD, which further supports this observation. The following result indicates 
-that random mini-batch methods can be valid for capturing the finite time dynamics
-(we take the Langevin thermostat for illustration). Before that, we shall introduce  some additional notations.
-Let $d t$ be the discretized time step, and $\bm{r}_i$, $m_i$, and $\bm{p}_i$ represent the position, mass, and momentum of the $i$th particle, respectively. 
-\begin{thm}(Strong convergence)
-Let $(\bm{r}_i, \bm{v}_i)$ be the solutions to
-\[
-\begin{split}
-&d\bm{r}_i=\bm{v}_i\,d t\;,\\
-&m_i d\bm{v}_i=\left[\bm{F}_i-\gamma \bm{v}_i\right]\,d t+\sqrt{\frac{2\gamma}{\beta}}d \bm{W}_i\;,
-\end{split}
-\]
-where $\{\bm{W}_i\}_{i=1}^N$ are i.i.d. Wiener processes. Let $(\widetilde{\bm{r}}_i, \widetilde{\bm{v}}_i)$ be the solutions to
-\[
-\begin{split}
-&d \widetilde{\bm{r}}_i=\widetilde{\bm{v}}_i\,d t\;,\\
-&m_i d\widetilde{\bm{v}}_i=\left[\bm{F}_i +\bm{\chi}_i-\gamma \widetilde{\bm{v}}_i\right]\,d t+\sqrt{\frac{2\gamma}{\beta}}d \bm{W}_i\;,
-\end{split}
-\]
-with the same initial values as $(\bm{r}_i, \bm{v}_i)$. Suppose that the masses $m_i$'s are bounded uniformly from above and below.
-If the forces $\bm{F}_i$ are bounded and Lipschitz and $\Exp \bm{\chi}_i=0$, then for any $T>0$, there exists $C(T)>0$ such that
-\[
-\Exp\left[\frac{1}{N}\sum_i (\Norm{\bm{r}_i-\widetilde{\bm{r}}_i}^2
-+\Norm{\bm{v}_i-\widetilde{\bm{v}}_i}^2) \right] \leq C(T)\sqrt{\Lambda dt}\;,
-\]
-where $\Lambda$ is an upper bound for $\max_i  \Exp\Norm{\bm{\chi}_i}^2$.
-\end{thm}
+% We proceed to demonstrate that random mini-batch methods can be valid for capturing the finite time dynamics (we take the Langevin thermostat for illustration).
+% Before that, we shall introduce  some additional notations.
+% Let $d t$ be the discretized time step, and $\bm{r}_i$, $m_i$, and $\bm{p}_i$ represent the position, mass, and momentum of the $i$th particle, respectively. 
+% \begin{thm}(Strong convergence)
+% Let $(\bm{r}_i, \bm{v}_i)$ be the solutions to
+% \[
+% \begin{split}
+% &d\bm{r}_i=\bm{v}_i\,d t\;,\\
+% &m_i d\bm{v}_i=\left[\bm{F}_i-\gamma \bm{v}_i\right]\,d t+\sqrt{\frac{2\gamma}{\beta}}d \bm{W}_i\;,
+% \end{split}
+% \]
+% where $\{\bm{W}_i\}_{i=1}^N$ are i.i.d. Wiener processes. Let $(\widetilde{\bm{r}}_i, \widetilde{\bm{v}}_i)$ be the solutions to
+% \[
+% \begin{split}
+% &d \widetilde{\bm{r}}_i=\widetilde{\bm{v}}_i\,d t\;,\\
+% &m_i d\widetilde{\bm{v}}_i=\left[\bm{F}_i +\bm{\chi}_i-\gamma \widetilde{\bm{v}}_i\right]\,d t+\sqrt{\frac{2\gamma}{\beta}}d \bm{W}_i\;,
+% \end{split}
+% \]
+% with the same initial values as $(\bm{r}_i, \bm{v}_i)$. Suppose that the masses $m_i$'s are bounded uniformly from above and below.
+% If the forces $\bm{F}_i$ are bounded and Lipschitz and $\Exp \bm{\chi}_i=0$, then for any $T>0$, there exists $C(T)>0$ such that
+% \[
+% \Exp\left[\frac{1}{N}\sum_i (\Norm{\bm{r}_i-\widetilde{\bm{r}}_i}^2
+% +\Norm{\bm{v}_i-\widetilde{\bm{v}}_i}^2) \right] \leq C(T)\sqrt{\Lambda dt}\;,
+% \]
+% where $\Lambda$ is an upper bound for $\max_i  \Exp\Norm{\bm{\chi}_i}^2$.
+% \end{thm}
 
-Proofs for similar interacting particle systems can be found in \cite{jin2021convergence,li2019stochastic,li2020random}, and thus, we do not include the proof for the claims here. Given the assumption that $\bm{F}_i$ is bounded and Lipschitz, the claims above are not directly applicable to our problem. Nevertheless, they provide valuable insights into the functioning of random batch methods.
+% Proofs for similar interacting particle systems can be found in \cite{jin2021convergence,li2019stochastic,li2020random}, and thus, we do not include the proof for the claims here. Given the assumption that $\bm{F}_i$ is bounded and Lipschitz, the claims above are not directly applicable to our problem. Nevertheless, they provide valuable insights into the functioning of random batch methods.
 
-According to the discussions above, QEM should be good for~$NVT$ simulations just like other random batch methods \cite{jin2020random, jin2021random}, since the error caused by sampling can be regarded as a type of thermal fluctuation, and can be properly canceled via coupling the system with a heat bath by applying proper thermostats.
+According to the discussions above, QEM should be good for~$NVT$ simulations just like other random batch methods \cite{jin2020random, jin2021random} as been discussed in previous works~\cite{jin2021convergence,li2019stochastic,li2020random}, since the error caused by sampling can be regarded as a type of thermal fluctuation, and can be properly canceled via coupling the system with a heat bath by applying proper thermostats.
 
 Finally, the optimal time complexity of QEM is given by
 \begin{align}

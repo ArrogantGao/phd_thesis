@@ -209,7 +209,7 @@ where
     By applying Fourier transform on both sides of Eq.~\eqref{eq:Poisson_G}, then for $\V{h}\neq \vzero$, i.e., $k>0$, we obtain that
     \begin{equation*} 
         \begin{split}
-            \frac{\partial^2 \Hat{G}_{\mrm{c}}(\V{h}, z; z_0)}{{\partial z}^2} - h^2 \Hat{G}_{\mrm{c}}(\V{h}, z; z_0) = - \frac{ \exp{(-\mathrm{i} \V{h} \cdot \V{\rho}_0)}\delta (z- z_0)}{ }&,~z \in [0, H],\\
+            \frac{\partial^2 \Hat{G}_{\mrm{c}}(\V{h}, z; z_0)}{{\partial z}^2} - h^2 \Hat{G}_{\mrm{c}}(\V{h}, z; z_0) = - \exp{(-\mathrm{i} \V{h} \cdot \V{\rho}_0)}\delta (z- z_0)&,~z \in [0, H],\\
             \frac{\partial^2 \hat{G}_{\mrm{u}}(\V{h}, z; z_0)}{{\partial z}^2} - h^2 \hat{G}_{\mrm{u}}(\V{h}, z; z_0) = 0&,~z > H,\\
             \frac{\partial^2 \hat{G}_{\mrm{d}}(\V{h}, z; z_0)}{{\partial z}^2} - h^2 \hat{G}_{\mrm{d}}(\V{h}, z; z_0) = 0&,~z < 0,
         \end{split}
@@ -236,8 +236,8 @@ therefore, we have
 \end{align*}
 hence the boundary condition can be  simplified into
 \begin{align*}
-  \partial_z\Hat{G}_{\mrm{c}}(\V{h}, 0; z_0)&=\epsilon_{\mrm{d}} \partial_z\Hat{G}_{\mrm{d}}(\V{h}, 0; z_0)=k\epsilon_{\mrm{d}} \Hat{G}_{\mrm{d}}(\V{h}, 0; z_0)=k\epsilon_{\mrm{d}} \Hat{G}_{\mrm{c}}(\V{h}, 0; z_0)\;,\\
-   \partial_z\Hat{G}_{\mrm{c}}(\V{h}, H; z_0)&=\epsilon_{\mrm{u}} \partial_z\Hat{G}_{\mrm{u}}(\V{h}, H; z_0)=-k\epsilon_{\mrm{u}} \Hat{G}_{\mrm{u}}(\V{h}, H; z_0)=-k\epsilon_{\mrm{u}} \Hat{G}_{\mrm{c}}(\V{h}, H; z_0)\;.
+  \partial_z\Hat{G}_{\mrm{c}}(\V{h}, 0; z_0)&=\epsilon_{\mrm{d}} \partial_z\Hat{G}_{\mrm{d}}(\V{h}, 0; z_0)= h \epsilon_{\mrm{d}} \Hat{G}_{\mrm{d}}(\V{h}, 0; z_0)= h\epsilon_{\mrm{d}} \Hat{G}_{\mrm{c}}(\V{h}, 0; z_0)\;,\\
+   \partial_z\Hat{G}_{\mrm{c}}(\V{h}, H; z_0)&=\epsilon_{\mrm{u}} \partial_z\Hat{G}_{\mrm{u}}(\V{h}, H; z_0)=- h \epsilon_{\mrm{u}} \Hat{G}_{\mrm{u}}(\V{h}, H; z_0)=-h\epsilon_{\mrm{u}} \Hat{G}_{\mrm{c}}(\V{h}, H; z_0)\;.
 \end{align*} 
 Finally, for $z\in[0, z_0]$, $\Hat{G}_{\mrm{c}}(\V{h}, z; z_0)$ takes the form
 \begin{equation*}
@@ -391,10 +391,10 @@ in which $\vr_i$ and $\vr_j$ are given, and we further notice  that all the comp
 \begin{equation}\label{eq::int_Gs}
     \begin{split}
         & \int_{\sR^2} \frac{ \exp{(\mathrm{i} \V{h} \cdot \V{\rho}_{ij})}}{h \left(1-\gamma_{\mrm{u}}\gamma_{\mrm{d}}\exp(-2hH)\right)} \left[1-\exp\left(-\frac{h^2}{4\alpha}\right)\right]\exp(-ha_p(z_i;z_j))d \V{h}\\
-        =2\pi&\int_0^{+\infty} \frac{ \exp(-ha_p(z_i;z_j))}{1-\gamma_{\mrm{u}}\gamma_{\mrm{d}}\exp(-2hH)} \left[1-\exp\left(-\frac{h^2}{4\alpha}\right)\right] J_0(\rho_{ij}k)d k\;,
+        =2\pi&\int_0^{+\infty} \frac{ \exp(-ha_p(z_i;z_j))}{1-\gamma_{\mrm{u}}\gamma_{\mrm{d}}\exp(-2hH)} \left[1-\exp\left(-\frac{h^2}{4\alpha}\right)\right] J_0(\rho_{ij} h)d h\;,
     \end{split}
 \end{equation}
-where $\rho_{ij}:=\Norm{\vrho_{ij}}=\Norm{\vrho_i-\vrho_j}$, and $ J_0(\cdot)$ is the zeroth-order Bessel function,  which  can   be expressed as a complex contour integral over a full period.
+where $\rho_{ij}:=\Norm{\vrho_{ij}}=\Norm{\vrho_i-\vrho_j}$, and $ J_0(\cdot)$ is the zeroth-order Bessel function,  which can be expressed as a complex contour integral over a full period.
 \begin{defination}
     The zeroth-order Bessel function of the first kind, denoted by $ J_0(r)$, is formally defined via the integral representation
 \begin{equation}
@@ -403,19 +403,19 @@ where $\rho_{ij}:=\Norm{\vrho_{ij}}=\Norm{\vrho_i-\vrho_j}$, and $ J_0(\cdot)$ i
 \end{defination}
 We proceed to evaluate the following integral
 \begin{equation}\label{eq...text...InfiniteIntegral}
-\int_0^{+\infty} \frac{ \exp(-ah)}{1-\gamma_{\mrm{u}}\gamma_{\mrm{d}}\exp(-2hH)} \left[1-\exp\left(-\frac{h^2}{4\alpha}\right)\right] J_0(\rho h)d k\;,    
+\int_0^{+\infty} \frac{ \exp(-ah)}{1-\gamma_{\mrm{u}}\gamma_{\mrm{d}}\exp(-2hH)} \left[1-\exp\left(-\frac{h^2}{4\alpha}\right)\right] J_0(\rho h)d h\;,    
 \end{equation}
 where $a>0$ and $\rho>0$ are fixed constants. Firstly, we observe that Eq. \eqref{eq...text...InfiniteIntegral} can be written into
 \begin{align*}
-   & \int_0^{+\infty} \frac{ \exp(-ah)}{1-\gamma_{\mrm{u}}\gamma_{\mrm{d}}\exp(-2hH)} \left[1-\exp\left(-\frac{h^2}{4\alpha}\right)\right] J_0(\rho h)d k\\
-   =&\underbrace{\int_0^{+\infty} \frac{1}{1-\gamma_{\mrm{u}}\gamma_{\mrm{d}}\exp(-2hH)}  \exp(-ah)  J_0(\rho h)d k}_{\text{Term}~\mathrm{I}}\\
-   &-\underbrace{\int_0^{+\infty} \frac{1}{1-\gamma_{\mrm{u}}\gamma_{\mrm{d}}\exp(-2hH)}\exp\left(-\frac{h^2}{4\alpha}\right)  \exp(-ah)  J_0(\rho h)d k}_{\text{Term}~\mathrm{II}}\;.
+   & \int_0^{+\infty} \frac{ \exp(-ah)}{1-\gamma_{\mrm{u}}\gamma_{\mrm{d}}\exp(-2hH)} \left[1-\exp\left(-\frac{h^2}{4\alpha}\right)\right] J_0(\rho h)d h\\
+   =&\underbrace{\int_0^{+\infty} \frac{1}{1-\gamma_{\mrm{u}}\gamma_{\mrm{d}}\exp(-2hH)}  \exp(-ah)  J_0(\rho h)d h}_{\text{Term}~\mathrm{I}}\\
+   &-\underbrace{\int_0^{+\infty} \frac{1}{1-\gamma_{\mrm{u}}\gamma_{\mrm{d}}\exp(-2hH)}\exp\left(-\frac{h^2}{4\alpha}\right)  \exp(-ah)  J_0(\rho h)d h}_{\text{Term}~\mathrm{II}}\;.
 \end{align*}
 Secondly, we observe further that Term $\mathrm{I}$ can be decomposed into
 \begin{align*}
-&\int_0^{+\infty} \frac{1}{1-\gamma_{\mrm{u}}\gamma_{\mrm{d}}\exp(-2hH)}  \exp(-ah)  J_0(\rho h)d k\\
-=&\underbrace{\int_0^{+\infty}   \exp(-ah)  J_0(\rho h)d k}_{\text{Term}~\mathrm{I(a)}}\\
-&+\underbrace{\int_0^{+\infty} \frac{\gamma_{\mrm{u}}\gamma_{\mrm{d}}}{1-\gamma_{\mrm{u}}\gamma_{\mrm{d}}\exp(-2hH)}  \exp(-2hH)\exp(-ah)  J_0(\rho h)d k}_{\text{Term}~\mathrm{I(b)}}\;,
+&\int_0^{+\infty} \frac{1}{1-\gamma_{\mrm{u}}\gamma_{\mrm{d}}\exp(-2hH)}  \exp(-ah)  J_0(\rho h)d h\\
+=&\underbrace{\int_0^{+\infty}   \exp(-ah)  J_0(\rho h)d h}_{\text{Term}~\mathrm{I(a)}}\\
+&+\underbrace{\int_0^{+\infty} \frac{\gamma_{\mrm{u}}\gamma_{\mrm{d}}}{1-\gamma_{\mrm{u}}\gamma_{\mrm{d}}\exp(-2hH)}  \exp(-2hH)\exp(-ah)  J_0(\rho h)d h}_{\text{Term}~\mathrm{I(b)}}\;,
 \end{align*}
 on the basis of the identity
 \begin{equation*}
@@ -423,7 +423,7 @@ on the basis of the identity
 \end{equation*}
 then Term $\mathrm{I(a)}$ can be simplified into 
 \begin{equation}\label{eq...text...TermI(A)}
-    \int_0^{+\infty}   \exp(-ah)  J_0(\rho h)d k=\frac{1}{\sqrt{a^2+\rho^2}}\;.
+    \int_0^{+\infty}   \exp(-ah)  J_0(\rho h)d h=\frac{1}{\sqrt{a^2+\rho^2}}\;.
 \end{equation}
 It is observed that Term $\mathrm{I(b)}$ and Term $\mathrm{II}$  comprise infinite integrals involving rapidly decaying functions coupled with oscillatory components. To efficiently evaluate such integrals over an infinite domain, we employ the method proposed in \cite{trefethen2022exactness}, which facilitates numerical computation by truncating the integration region to a finite domain. 
 % \begin{thm}[Theorem 5.1 in \cite{trefethen2022exactness}]\label{Thm...Truncation}
@@ -442,15 +442,15 @@ then the first part of the integral can be efficiently evaluated  using  Gauss-L
 %
 % \begin{equation}\label{eq...text...TruncationError(Term1(b))}
 % \begin{aligned}
-%     &\Abs{\int_M^{+\infty} \frac{\gamma_{\mrm{u}}\gamma_{\mrm{d}}}{1-\gamma_{\mrm{u}}\gamma_{\mrm{d}}\exp(-2hH)}  \exp(-2hH)\exp(-ah)  J_0(\rho h)d k}\\
-%     \leq &  \frac{\Abs{\gamma_{\mrm{u}}\gamma_{\mrm{d}}}}{1-\max\{0,\gamma_{\mrm{u}}\gamma_{\mrm{d}}\}}\int_M^{+\infty}  \exp(-2hH)) \Abs{ J_0(\rho h)}d k
+%     &\Abs{\int_M^{+\infty} \frac{\gamma_{\mrm{u}}\gamma_{\mrm{d}}}{1-\gamma_{\mrm{u}}\gamma_{\mrm{d}}\exp(-2hH)}  \exp(-2hH)\exp(-ah)  J_0(\rho h)d h}\\
+%     \leq &  \frac{\Abs{\gamma_{\mrm{u}}\gamma_{\mrm{d}}}}{1-\max\{0,\gamma_{\mrm{u}}\gamma_{\mrm{d}}\}}\int_M^{+\infty}  \exp(-2hH)) \Abs{ J_0(\rho h)}d h
 % \end{aligned}    
 % \end{equation}
 \begin{prop}
 We denote the     truncation errors of Term $\mathrm{I(b)}$ and Term $\mathrm{II}$ respectively by
 \begin{align*}
-  \delta \mathrm{I}_b(M)&:=\int_M^{+\infty} \frac{\gamma_{\mrm{u}}\gamma_{\mrm{d}}}{1-\gamma_{\mrm{u}}\gamma_{\mrm{d}}\exp(-2hH)}  \exp(-2hH)\exp(-ah)  J_0(\rho h)d k \;,\\  
-  \delta \mathrm{II}(M)&:=\int_M^{+\infty}  \frac{1}{1-\gamma_{\mrm{u}}\gamma_{\mrm{d}}\exp(-2hH)}\exp\left(-\frac{h^2}{4\alpha}\right)  \exp(-ah)  J_0(\rho h)d k \;,
+  \delta \mathrm{I}_b(M)&:=\int_M^{+\infty} \frac{\gamma_{\mrm{u}}\gamma_{\mrm{d}}}{1-\gamma_{\mrm{u}}\gamma_{\mrm{d}}\exp(-2hH)}  \exp(-2hH)\exp(-ah)  J_0(\rho h)d h \;,\\  
+  \delta \mathrm{II}(M)&:=\int_M^{+\infty}  \frac{1}{1-\gamma_{\mrm{u}}\gamma_{\mrm{d}}\exp(-2hH)}\exp\left(-\frac{h^2}{4\alpha}\right)  \exp(-ah)  J_0(\rho h)d h \;,
 \end{align*}
 whose estimates read
 \begin{align}
@@ -465,14 +465,14 @@ We obtain immediately that for $r>0$ large enough,
 \end{equation*}
 thus we have 
 \begin{align*}
-   & \int_M^{+\infty}  \exp(-2hH)\exp(-ah)  J_0(\rho h)d k \\
-\leq & \int_M^{+\infty}  \exp(-2hH)\sqrt{\frac{2}{\pi}} \frac{1}{\sqrt{\rho h}} d k=\frac{1}{\sqrt{\rho H}}\mrm{erfc}(\sqrt{2HM})\;,
+   & \int_M^{+\infty}  \exp(-2hH)\exp(-ah)  J_0(\rho h)d h \\
+\leq & \int_M^{+\infty}  \exp(-2hH)\sqrt{\frac{2}{\pi}} \frac{1}{\sqrt{\rho h}} d h=\frac{1}{\sqrt{\rho H}}\mrm{erfc}(\sqrt{2HM})\;,
 \end{align*}
 and 
 \begin{align*}
-  &\int_M^{+\infty}  \exp\left(-\frac{h^2}{4\alpha}\right)  \exp(-ah)  J_0(\rho h)d k \\
-  \leq &\int_M^{+\infty} \exp\left(-\frac{h^2}{4\alpha}\right)\sqrt{\frac{2}{\pi}} \frac{1}{\sqrt{\rho h}} d k\\ 
-  \leq &\int_M^{+\infty} \exp\left(-\frac{h^2}{4\alpha}\right)\sqrt{\frac{2}{\pi}} d k=\sqrt{2\alpha} \mrm{erfc}\left(\frac{M}{2\sqrt{\alpha}}\right)\;,
+  &\int_M^{+\infty}  \exp\left(-\frac{h^2}{4\alpha}\right)  \exp(-ah)  J_0(\rho h)d h \\
+  \leq &\int_M^{+\infty} \exp\left(-\frac{h^2}{4\alpha}\right)\sqrt{\frac{2}{\pi}} \frac{1}{\sqrt{\rho h}} d h\\ 
+  \leq &\int_M^{+\infty} \exp\left(-\frac{h^2}{4\alpha}\right)\sqrt{\frac{2}{\pi}} d h=\sqrt{2\alpha} \mrm{erfc}\left(\frac{M}{2\sqrt{\alpha}}\right)\;,
 \end{align*}
 and we finish our proof.
 \end{proof}

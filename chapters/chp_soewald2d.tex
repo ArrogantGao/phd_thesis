@@ -748,6 +748,7 @@ Figure~\ref{fig:error_ef}(b) indicates that for such non-neutral slabs case, the
 	\caption{
 		The absolute error in the pointwise electrostatic forces calculated using the SOEwald2D versus particles' $z$-coordinates. 
 		Two different scenarios are considered: (a) uniformly distributed 50 anions and 50 cations and (b) uniformly distributed 100 cations with surface charge densities $\sigma_{\mathrm{top}}= \sigma_{\mathrm{bot}} = -0.005$.
+		\rev{The unit for $z$ is $\sigma$.}
 	}\label{fig:error_ef}
 \end{figure}
 
@@ -772,6 +773,7 @@ Therefore, we conduct a series of MD simulations to validate the accuracy of the
 	\caption{
 		(a) The concentration of cations along $z$, with subplot indicating the convergence in the relative error of the average electrostatic energy as a function of batch size~$P$; (b) and (c) the MSD profiles in~$xy$ and~$z$ against time for a $1:1$ electrolyte confined by neutral slabs. 
 		Results by using different batch sizes $P=20, 30, 60, 120$ are shown. 
+		\rev{The unit for $z$ is $\sigma$, the unit for concentration is $\sigma^{-2}$, the unit of time is $\tau$ and the unit of MSD is $\sigma^2$.}
 	}
 	\label{fig:norm}
 \end{figure}
@@ -809,6 +811,7 @@ Clearly, the RBSE2D method successfully captures this anisotropic collective phe
 	\includegraphics[width=0.49\textwidth]{figs/hist_cation.pdf}
 	\caption{
 		Concentration of cations in $z$ for (a) a $1:1$ electrolyte confined between two charged slabs and (b) a cations-only system confined between two slabs, one of which is charged to neutralize the system. 
+		\rev{The unit for $z$ is $\sigma$, and the unit for concentration is $\sigma^{-2}$.}
 	}
 	\label{fig:Ez_density}
 \end{figure}

@@ -1,4 +1,16 @@
-\section{Software packages}
+In this appendix, we present several software packages developed by our team, which are utilized in this thesis. These packages are written in the Julia programming language~\cite{Bezanson_Julia_A_fresh_2017} and are available on GitHub under my account \url{https://github.com/ArrogantGao} or the organization \url{https://github.com/HPMolSim/}.
 
-In this appendix, we introduce servel software packages developed by us, which are used in this thesis.
-There packages are developed in the Julia programming language~\cite{Bezanson_Julia_A_fresh_2017}, and are available on the GitHub under my account \url{https://github.com/ArrogantGao} or the organization \url{https://github.com/HPMolSim/}.
+\textbf{ExTinyMD.jl} (\url{https://github.com/HPMolSim/ExTinyMD.jl}) is a package designed for conducting all-atom molecular dynamics simulations of charged systems. It is built upon the open-source package CellListMap.jl~\cite{MARTINEZ2022108452}. This package offers a framework for executing MD simulations, including the calculation of potential energy and forces, integration of equations of motion, and thermostats for NVT ensembles. It is highly extensible, allowing users to implement more complex interactions and integrators tailored to their specific requirements.
+
+\textbf{EwaldSummations.jl} (\url{https://github.com/HPMolSim/EwaldSummations.jl}) is a package for performing Ewald summation for charged systems. This package implements the basic Ewald summation for both 3D and quasi-2D (Q2D) charged systems, including methods such as Ewald3D, Ewald2D, EwaldELC, ICM-Ewald2D, and ICM-EwaldELC. Additionally, direct summation is also implemented for comparison. This package is valuable for researchers interested in simulating charged systems, providing a toolbox for parameter selection and error estimation. For those developing new methods for charged systems, it offers a standard toolbox for comparison.
+
+\textbf{ChebParticleMesh.jl} (\url{https://github.com/HPMolSim/ChebParticleMesh.jl}) is a package for solving differential equations using the particle-mesh method. The Particle-Mesh process in this package is divided into six distinct steps:
+\begin{enumerate}
+    \item Pre-computation: Generating the grid, window function, and scaling factors
+    \item Interpolation: Mapping the point sources onto the grids
+    \item FFT: Applying FFT to transform the grid density into reciprocal space
+    \item Scaling: Scaling the Fourier modes with the Green's function
+    \item IFFT: Applying IFFT to transform the grid back to real space
+    \item Gathering: Integrating the potential on the grid back to the particles
+\end{enumerate}
+This package can be used to solve differential equations with translation-invariant Green's functions, such as Poisson's and Helmholtz equations, in arbitrary dimensions and with arbitrary periodic boundary conditions. With minor modifications, it can also be used as a long-range solver for PPPM.

@@ -38,11 +38,16 @@ Instead of exactly solving the quasi-2D problem, alternative approaches are to a
 These correction methods effectively reduce the computational cost and are simple to implement, but lack control of accuracy.
 
 The methods mentioned above encounter challenges when addressing sharp dielectric interfaces. In recent years, various strategies have been developed to effectively simulate quasi-2D systems under dielectric confinements.
+\rev{Servial approaches have been developed to effectively simulate quasi-2D systems under dielectric confinements.}
 A common approach is by combining the image charge method (ICM)~\cite{jackson1999classical,frenkel2023understanding}, where the polarization effects induced by dielectric planar interfaces are modeled through an infinite series of reflected image charges in homogeneous space.
 Specifically, this approach truncates the infinitely reflected image charge series along the $z$-direction to a finite number of reflection layers. 
 This reduction transforms the original dielectrically inhomogeneous system into a homogeneous one, albeit with an expanded dimension in $z$.
 The remaining computational tasks can be effectively handled using the Ewald2D summation method~\cite{parry1975electrostatic,zhonghanhu2014JCTC}. While conceptually straightforward, this ICM-Ewald2D approach is computationally inefficient due to its $O(N^2)$ complexity.
-Several alternative approaches have been developed over recent years, including the fast Fourier-Chebyshev spectral method~\cite{maxian2021fast,gao2024fast}, the harmonic surface mapping method~\cite{liang2020harmonic,liang2022hsma}, and boundary element methods~\cite{barros2014efficient,nguyen2019incorporating}.
+\rev{
+	Another approach is the boundary element method (BEM)~\cite{barros2014efficient,nguyen2019incorporating}, which solves the potential on the boundary of the system and then extends it to the interior using the Green's function. 
+	This approach is very flexiable and can be applied to various geometries, but it is computationally expensive due to the need to solve a large linear system.
+}
+Several alternative approaches have been developed over recent years, including the fast Fourier-Chebyshev spectral method~\cite{maxian2021fast,gao2024fast}, and the harmonic surface mapping method~\cite{liang2020harmonic,liang2022hsma}.
 When combined with the fast multipole method (FMM)~\cite{greengard1987fast,kohnke2020gpu}, or the fast Fourier-Chebyshev transform~\cite{trefethen2000spectral}, these methods can achieve computational complexities of $ O(N\log N)$ or even $ O(N)$.
 
 Among existing approaches, a widely adopted technique involves reformulating the exact Ewald2D summation in terms of 3D Ewald summation, effectively approximating the quasi-2D problem with a fully periodic one.

@@ -2094,7 +2094,8 @@ scholarly research.}
     \ifactingdefined
       \member{#1, Acting Head of Department}
     \else
-      \member{#1, Head of Department}
+      % \member{#1, Head of Department}
+      \member{#1, Head of Division}
     \fi
     \dheaddefinedtrue
   \fi

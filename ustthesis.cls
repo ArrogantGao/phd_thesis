@@ -1577,11 +1577,14 @@ scholarly research.}
 %	name of a committee member (sole argument) below the line.
 \newcommand{\@member}[1]{
   \textspace
-  \raisebox{-8pt}[0pt][17pt]{\rule{5in}{.5pt}}\par	% Print line.
+  % \raisebox{-8pt}[0pt][12pt]{\rule{5in}{.5pt}}\par	% Print line.
+  \rule{5in}{.5pt}
+  \vglue 0ex
+  \expandafter{#1}
 %  \raisebox{-8pt}[0pt][17pt]{\rule{\maxmem}{.5pt}}\par	% Print line.
-  \raisebox{0pt}[0pt][0pt]{\expandafter{#1}}\par	% Print member name below.
+  % \raisebox{0pt}[0pt][0pt]{\expandafter{#1}}\par	% Print member name below.
   \textspaceundo
-  \vglue 6ex
+  \vglue 1ex
 }
 
 \newlength{\maxmem}	       	% Max length of member text
@@ -1846,6 +1849,7 @@ scholarly research.}
       {	% @membersprinted counts the number of committee members printed so far
  	\newcounter{@membersprinted}\setcounter{@membersprinted}{0}
  	% Print the committee members defined by the user.
+  \vglue 1.5ex
  	\loop
  	\ifnum \value{@membersprinted} < \value{@members} 
  	  \addtocounter{@membersprinted}{1}
@@ -1872,7 +1876,9 @@ scholarly research.}
       }
  %   }
     \par
-    {\normalsize \@department\par}
+    % {\normalsize \@department\par}
+    \vglue 1ex
+    {\normalsize Division of Emerging Interdisciplinary Areas (EMIA) under Academy of Interdisciplinary Studies (AIS), HKUST \par}
 %    \vglue 3ex plus 1fill
     {\normalsize \today\par}
 %   {\normalsize Date:\hfill\rule[-.4ex]{2.35in}{.5pt}}
@@ -2095,7 +2101,7 @@ scholarly research.}
       \member{#1, Acting Head of Department}
     \else
       % \member{#1, Head of Department}
-      \member{#1, Head of Division}
+      \member{#1, Head, Division of Emerging Interdisciplinary Areas (EMIA)}
     \fi
     \dheaddefinedtrue
   \fi

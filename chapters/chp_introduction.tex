@@ -1,15 +1,15 @@
 \section{Background}
 
-Confined quasi two-dimensional (quasi-2D) Coulomb systems~\cite{mazars2011long}, which are macroscopic in two dimensions but with atomic-size thickness in the other, have caught much attention in studies of magnetic and liquid crystal films, supercapacitors, crystal phase transitions, dusty plasmas, ion channels, superconductive materials, and quantum devices~\cite{kawamoto2002history, hille2001ionic, teng2003microscopic, Messina2017PRL, mazars2011long, saito2016highly, liu20192d}. 
-Typically, such systems possess a nano-sized longitudinal thickness in the $z$ direction, achieved through confinement, bulk-like and modeled as periodic in the transverse $xy$ directions, hence endowed with an inherent multi-scale nature.
+Confined quasi-two-dimensional (quasi-2D) Coulomb systems~\cite{mazars2011long}, which are macroscopic in two dimensions but with atomic-size thickness in the other, have caught much attention in studies of magnetic and liquid crystal films, supercapacitors, crystal phase transitions, dusty plasmas, ion channels, superconductive materials, and quantum devices~\cite{kawamoto2002history, hille2001ionic, teng2003microscopic, Messina2017PRL, mazars2011long, saito2016highly, liu20192d}. 
+Typically, such systems possess a nano-sized longitudinal thickness in the $z$ direction, achieved through confinement, bulk-like, and are modeled as periodic in the transverse $xy$ directions, hence endowed with an inherent multi-scale nature.
 Due to the confinement effect, such systems can exhibit various interesting behaviors for future nanotechnologies; prototype examples include graphene~\cite{novoselov2004electric}, metal dichalcogenide monolayers~\cite{kumar2012tunable}, and colloidal monolayers~\cite{mangold2003phase}.
 
 Among quasi-2D systems, charged particles confined by materials with different dielectric constants are of particular interest. 
 The so-called \emph{dielectric confinement effect} can further lead to inhomogeneous screening, compared to bulk systems, or even broken symmetries near interfaces~\cite{C0NR00698J,wang2016inhomogeneous,gao2024broken}.
 These effects are crucial in a wide range of applications, including the behavior of water, electrolytes, and ionic liquids confined within thin films~\cite{raviv2001fluidity}, ion transport in nanochannels~\cite{zhu2019ion}, and self-assembly of colloidal and polymer monolayers~\cite{kim2017imaging}.
-In these systems, substrate materials used for nanoscale confinement can range from dielectric to metallic, and nowadays electromagnetic metamaterials, which have been developed with permittivities that can take negative values~\cite{veselago1967electrodynamics, smith2004metamaterials, cheng2017tunable, xie2022recent, xu2020polyaniline} when excited by electromagnetic waves of specific frequencies.  
+In these systems, substrate materials used for nanoscale confinement can range from dielectric to metallic, and more recently electromagnetic metamaterials, which have been developed with permittivities that can take negative values~\cite{veselago1967electrodynamics, smith2004metamaterials, cheng2017tunable, xie2022recent, xu2020polyaniline} when excited by electromagnetic waves of specific frequencies.  
 It should be noted that materials with \emph{negative static permittivity} have drawn considerable attention, although rarely seen, their existence has been predicted in materials such as metals and nonideal plasma~\cite{Dolgov1918admissible,homes2001optical}. More recently, it has been experimentally achieved in a wide range of materials such as VO$_2$ films~\cite{kana2016thermally}, graphene~\cite{nazarov2015negative}, nanocolloids~\cite{shulman2007plasmalike}, and polymeric systems~\cite{yan2013negative}.
-Interestingly, even for water, the perpendicular component of its tensorial dielectric function has been observed to be negative within sub-Angstrom distances from the surface by nano confinement~\cite{Kornyshev1996Static, Schlaich2016Water, Kornyshev2021Nonlocal}.
+Interestingly, even for water, the perpendicular component of its tensorial dielectric function has been observed to be negative within sub-Angstrom distances from the surface by nanoconfinement~\cite{Kornyshev1996Static, Schlaich2016Water, Kornyshev2021Nonlocal}.
 
 
 % To study the behavior of quasi-2D Coulomb systems, molecular dynamics (MD) simulations is one of the most powerful tools.
@@ -19,33 +19,33 @@ Interestingly, even for water, the perpendicular component of its tensorial diel
 % For the short-range potential such as the Lennard-Jones potential, the computational cost scales as $O(N)$ with the number of particles $N$ based on the neighbor list algorithm and the real space truncation.
 % For long-range interactions such as the Coulomb interaction, the potential energy can be generally expressed as the lattice kernel summations in the form of
 
-For numerical simulation of quasi-2D Coulomb systems, it is of great importance to evaluate lattice kernel summations in the form of
+For numerical simulations of quasi-2D Coulomb systems, it is of great importance to evaluate lattice kernel summations in the form of
 \begin{equation}\label{eq::phi12}
 	\phi(\V x) = \sum_{\V{m}} \sum_{j = 1}^{N} \rho_j K(\V{x} - \V{y}_j + \V{m} \circ \V{L})\;,
 \end{equation}
-where~$\V{x}, \V{y}_j \in \mathbb{R}^3$ are $3$-dimensional vectors in a rectangular box $\Omega$ with $\V{L}$ the vector of its edge lengths, $\rho_j$ refers to the density or weight, $\V{m} \in \mathbb{Z}^2 \otimes \{0\}$ exerts periodicity in the first $2$ directions, ``$\circ$'' represents the Hadamard product, and~$K(\V{x})$ is the kernel function whose form depends on the interested physical problem. 
-For homogeneous systems without dielectric confinements, the kernel function is given by $K(\V{x}) = \abs{\V{x}}^{-1}$.
+where~$\V{x}, \V{y}_j \in \mathbb{R}^3$ are $3$-dimensional vectors in a rectangular box $\Omega$ with $\V{L}$ the vector of its edge lengths, $\rho_j$ refers to the density or weight, $\V{m} \in \mathbb{Z}^2 \otimes \{0\}$ exerts periodicity in the first $2$ directions, ``$\circ$'' represents the Hadamard product, and~$K(\V{x})$ is the kernel function whose form depends on the physical problem of interest. 
+For homogeneous systems without dielectric confinement, the kernel function is given by $K(\V{x}) = \abs{\V{x}}^{-1}$.
 For such long-range interactions, the computational cost scales as $O(N^2)$ in the naive pair-wise implementation, which greatly limits the size of the system that can be studied.
 
 
 For fully-periodic or free-space Coulomb systems, various fast algorithms have been developed to reduce the computational cost, such as the fast multipole methods (FMM)~\cite{greengard1987fast,cheng1999fast,ying2004kernel}, fast Fourier transform (FFT) based Ewald-splitting methods~\cite{hockney2021computer,darden1993particle,essmann1995smooth} and the recently proposed random batch Ewald (RBE) method~\cite{jin2021random, liang2022superscalability,liang2024JCP}.
 These fast algorithms have been successfully applied to large-scale simulations of Coulomb systems in various ensembles and have reached the complexity of $O(N\log N)$ or even $O(N)$.
  
-For quasi-2D systems,  numerous methods have also been developed over the past decades, mostly relyinging on modifications to the FMM and FFT-based Ewald methods to achieve $O(N\log N)$ or even $O(N)$ complexity.
-One important work is the Ewald2D method~\cite{parry1975electrostatic}, which directly applies the Ewald-splitting technique for quasi-2D systems, it scales as $O(N^2)$ and is found to be slowly convergent due to the oscillatory nature of the Green's function for quasi-2D geometry.
+For quasi-2D systems,  numerous methods have also been developed over the past decades, mostly relying on modifications to the FMM and FFT-based Ewald methods to achieve $O(N\log N)$ or even $O(N)$ complexity.
+One important work is the Ewald2D method~\cite{parry1975electrostatic}, which directly applies the Ewald-splitting technique for quasi-2D systems; it scales as $O(N^2)$ and is found to be slowly convergent due to the oscillatory nature of the Green's function for quasi-2D geometry.
 To further accelerate the convergence of the quasi-2D lattice summation, more methods have been proposed, including the MMM2D method~\cite{arnold2002mmm2d}, the periodic FMM method~\cite{yan2018flexibly}, and the spectral Ewald method~\cite{lindbo2012fast}.
-Instead of exactly solving the quasi-2D problem, alternative approaches are to approximate the quasi-2D summations by 3D periodic summations with correction terms, such as the Yeh--Berkowitz (YB) correction~\cite{yeh1999ewald} and the electric layer correction (ELC)~\cite{arnold2002electrostatics}.
+Instead of exactly solving the quasi-2D problem, alternative approaches approximate the quasi-2D summations by 3D periodic summations with correction terms, such as the Yeh--Berkowitz (YB) correction~\cite{yeh1999ewald} and the electric layer correction (ELC)~\cite{arnold2002electrostatics}.
 These correction methods effectively reduce the computational cost and are simple to implement, but lack control of accuracy.
 
-The methods mentioned above encounter challenges when addressing sharp dielectric interfaces. In recent years, various strategies have been developed to effectively simulate quasi-2D systems under dielectric confinements.
-\rev{Servial approaches have been developed to effectively simulate quasi-2D systems under dielectric confinements.}
+The methods mentioned above encounter challenges when addressing sharp dielectric interfaces. In recent years, various strategies have been developed to effectively simulate quasi-2D systems under dielectric confinement.
+\rev{Several approaches have been developed to effectively simulate quasi-2D systems under dielectric confinement.}
 A common approach is by combining the image charge method (ICM)~\cite{jackson1999classical,frenkel2023understanding}, where the polarization effects induced by dielectric planar interfaces are modeled through an infinite series of reflected image charges in homogeneous space.
 Specifically, this approach truncates the infinitely reflected image charge series along the $z$-direction to a finite number of reflection layers. 
 This reduction transforms the original dielectrically inhomogeneous system into a homogeneous one, albeit with an expanded dimension in $z$.
 The remaining computational tasks can be effectively handled using the Ewald2D summation method~\cite{parry1975electrostatic,zhonghanhu2014JCTC}. While conceptually straightforward, this ICM-Ewald2D approach is computationally inefficient due to its $O(N^2)$ complexity.
 \rev{
 	Another approach is the boundary element method (BEM)~\cite{barros2014efficient,nguyen2019incorporating}, which solves the potential on the boundary of the system and then extends it to the interior using the Green's function. 
-	This approach is very flexiable and can be applied to various geometries, but it is computationally expensive due to the need to solve a large linear system.
+	This approach is very flexible and can be applied to various geometries, but it is computationally expensive due to the need to solve a large linear system.
 }
 Several alternative approaches have been developed over recent years, including the fast Fourier-Chebyshev spectral method~\cite{maxian2021fast,gao2024fast}, and the harmonic surface mapping method~\cite{liang2020harmonic,liang2022hsma}.
 When combined with the fast multipole method (FMM)~\cite{greengard1987fast,kohnke2020gpu}, or the fast Fourier-Chebyshev transform~\cite{trefethen2000spectral}, these methods can achieve computational complexities of $ O(N\log N)$ or even $ O(N)$.
@@ -80,16 +80,16 @@ and (c) the minimal modifications needed to integrate these quasi-2D electrostat
 % By combining with either FFT or FMM, these methods achieve $O(N\log N)$ or even $O(N)$ complexity. 
 
 However, the issue of large-scale simulation of quasi-2D systems is still far from settled.
-A few challenges remains. First, FFT-based methods need extra techniques to properly handle the non-periodic direction, such as truncation~\cite{parry1975electrostatic}, regularization~\cite{nestler2015fast}, or periodic extension~\cite{lindbo2012fast}, which may lead to algebraic convergence or require extra zero-padding to guarantee accuracy. 
+A few challenges remain. First, FFT-based methods need extra techniques to properly handle the non-periodic direction, such as truncation~\cite{parry1975electrostatic}, regularization~\cite{nestler2015fast}, or periodic extension~\cite{lindbo2012fast}, which may lead to algebraic convergence or require extra zero-padding to guarantee accuracy. 
 Recent advancements by Shamshirgar \emph{et al.}~\cite{shamshirgar2021fast}, combining spectral solvers with kernel truncation methods (TKM)~\cite{vico2016fast}, have reduced the zero-padding factor from $6$ to $2$~\cite{lindbo2012fast}, which still requires doubling the number of grids with zero-padding. 
 % A similar reduction is also reported in the work of Maxian \emph{et al. }\cite{maxian2021fast}. 
 Second, the periodization of FMM needs to encompass more near-field contributions from surrounding cells~\cite{yan2018flexibly,barnett2018unified}. The recently proposed 2D-periodic FMM~\cite{pei2023fast} may offer a promising avenue; however, it has not yet been extended to partially-periodic problems.
-Finally, it is worth noting that most of the aforementioned issues will become more serious when the aspect ratio of the simulation box is large, in which case the Ewald series summation will converge much slower~\cite{arnold2002electrostatics}, and the zero-padding issue of FFT-based methods also becomes worse~\cite{maxian2021fast}.
+Finally, it is worth noting that most of the aforementioned issues will become more serious when the aspect ratio of the simulation box is large, in which case the Ewald series summation will converge much more slowly~\cite{arnold2002electrostatics}, and the zero-padding issue of FFT-based methods also becomes worse~\cite{maxian2021fast}.
 Thus, efficient and accurate simulation of quasi-2D systems is still an open problem and a great challenge, especially for systems with large aspect ratios and strongly polarizable interfaces.
 
 
-In this thesis, we focus on the study of confined quasi-2D Coulomb systems, including theoretical analysis, algorithm development and applications.
-We provide comprehensive theoretical analysis including rigorous error estimates and complexity bounds, which are thoroughly validated through extensive numerical experiments.
+In this thesis, we focus on the study of confined quasi-2D Coulomb systems, including theoretical analysis, algorithm development, and applications.
+We provide a comprehensive theoretical analysis, including rigorous error estimates and complexity bounds, which are thoroughly validated through extensive numerical experiments.
 We introduce a novel class of fast summation methods for quasi-2D Coulomb systems that synergistically combines the Ewald splitting technique with random batch sampling. 
 Our proposed methods achieve optimal $O(N)$ computational complexity while maintaining high efficiency for strongly confined quasi-2D systems, even in challenging scenarios involving large aspect ratios and sharp dielectric interfaces. 
 We also show a few applications of our methods to the simulation of quasi-2D Coulomb systems, including the study of broken symmetry in quasi-2D Coulomb systems and the simulation of electrolytes confined by dielectric interfaces.
@@ -98,30 +98,30 @@ We also show a few applications of our methods to the simulation of quasi-2D Cou
 
 The content of this thesis can be roughly divided into three parts, which are summarized as follows.
 
-The first part focuses on the theoretical analysis about long-range interactions in quasi-2D Coulomb systems.
+The first part focuses on the theoretical analysis of long-range interactions in quasi-2D Coulomb systems.
 
-In Chapter~\ref{chp_preliminaries}, we introduce the physical model and mathematical notations for dielectric confined quasi-2D Coulomb systems.
+In Chapter~\ref{chp_preliminaries}, we introduce the physical model and mathematical notations for dielectric-confined quasi-2D Coulomb systems.
 Then we revisit the Ewald summation methods for both triply-periodic and doubly-periodic Coulomb systems.
 We also provide a brief introduction to the random batch sampling method for fully-periodic Coulomb systems.
 
-In Chapter~\ref{chp_icmewald2d}, we first introduce the Ewald summation method for dielectrically confined quasi-2D Coulomb systems, focusing on the ICM-Ewald2D method and its reformulation.
+In Chapter~\ref{chp_icmewald2d}, we first introduce the Ewald summation method for dielectric-confined quasi-2D Coulomb systems, focusing on the ICM-Ewald2D method and its reformulation.
 Then we provide detailed error analysis and guidelines for optimal parameter selection in these methods, along with extensive numerical validation of their performance for dielectrically confined quasi-2D systems.
 
 In the second part, we introduce a novel class of fast summation methods for quasi-2D Coulomb systems.
 
 In Chapter~\ref{chp_soewald2d}, we first introduce the kernel approximation technique called the sum-of-exponential (SOE) approximation, which approximates an arbitrary kernel function by a linear combination of exponential functions.
-Then, based on the SOE approximation, we propose an algorithm named the sum-of-exponential Ewald2D (SOEwald2D) method, which utilizes the SOE approximation and the random batch sampling method to accelerate the Ewald2D summation for quasi-2D Coulomb systems without dielectric confinements.
+Then, based on the SOE approximation, we propose an algorithm named the sum-of-exponential Ewald2D (SOEwald2D) method, which utilizes the SOE approximation and the random batch sampling method to accelerate the Ewald2D summation for quasi-2D Coulomb systems without dielectric confinement.
 Numerical results are provided to validate the accuracy and efficiency of the proposed method.
 
-In Chapter~\ref{chp_rbe2d}, we focus on the quasi-2D Coulomb systems with dielectric confinements.
+In Chapter~\ref{chp_rbe2d}, we focus on the quasi-2D Coulomb systems with dielectric confinement.
 We first provide a rigorous error analysis for the combination of the image charge method and the Ewald summation formula.
-Then, we introduce a novel algorithm called the random batch Ewald2D (RBE2D) method, which efficiently handles quasi-2D Coulomb systems with dielectric confinements while maintaining excellent scalability for large-scale simulations on modern supercomputing architectures.
+Then, we introduce a novel algorithm called the random batch Ewald2D (RBE2D) method, which efficiently handles quasi-2D Coulomb systems with dielectric confinement while maintaining excellent scalability for large-scale simulations on modern supercomputing architectures.
 Detailed numerical results are provided to validate the accuracy and efficiency of the proposed method.
 
-In Chapter~\ref{chp_quasiewald}, we investigate quasi-2D systems with negative dielectric confinements, where the polarizable materials possess negative dielectric constants, which results in failure of ICM-based methods.
+In Chapter~\ref{chp_quasiewald}, we investigate quasi-2D systems with negative dielectric confinement, where the polarizable materials possess negative dielectric constants, which results in failure of ICM-based methods.
 % The previous methods based on the image charge method break down in such systems due to the unusual polarization effects.
 To overcome the numerical challenges, we develop the quasi-Ewald method (QEM), which introduces a novel quasi-Ewald splitting technique.
-We show that with proper singularity subtraction, the QEM can be extended to handle negative dielectric confinements.
+We show that with proper singularity subtraction, the QEM can be extended to handle negative dielectric confinement.
 Numerical results are also provided for validation.
 % Using this method, we explore the behavior of negatively confined quasi-2D charged systems and discover remarkable spontaneous symmetry breaking (SSB) phenomena emerging in symmetrically charged binary particle systems.
 

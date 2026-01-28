@@ -111,7 +111,7 @@ and  depiction of the decomposition process is provided in Fig.~\ref{fig:QuasiEw
     \label{fig:QuasiEwaldSplitting}
 \end{figure}
 Throughout this paper, we will extensively use 2D-Fourier transforms, whose definition is given by
-\begin{defination}
+\begin{defn}
     Given function $f(\V{\rho}, z)$, its 2D-Fourier transform is defined by
     \begin{equation}
         \Hat{f}(\V{h}, z):=\int_{\sR^2}f(\V{\rho},z)\exp{(-\mathrm{i} \V{h} \cdot \V{\rho})} d \V{\rho} \;.
@@ -120,7 +120,7 @@ Throughout this paper, we will extensively use 2D-Fourier transforms, whose defi
     \begin{equation} 
         f(\V{\rho}, z)=\frac{1}{4\pi^2}\int_{\sR^2}\Hat{f}(\V{h}, z)\exp{(\mathrm{i} \V{h} \cdot \V{\rho})} d \V{h} \;.
     \end{equation}
-\end{defination} 
+\end{defn} 
 % \begin{equation}\label{eq...text...FourierTransformKernels}
 %     \begin{split}   
 %  \hat{\sigma}_{s}(\V{h},z) &=\delta(z)\left[1-\exp\left(-\frac{h^2}{4\alpha}\right)\right]\;,\\
@@ -395,12 +395,12 @@ in which $\vr_i$ and $\vr_j$ are given, and we further notice  that all the comp
     \end{split}
 \end{equation}
 where $\rho_{ij}:=\Norm{\vrho_{ij}}=\Norm{\vrho_i-\vrho_j}$, and $ J_0(\cdot)$ is the zeroth-order Bessel function,  which can be expressed as a complex contour integral over a full period.
-\begin{defination}
+\begin{defn}
     The zeroth-order Bessel function of the first kind, denoted by $ J_0(r)$, is formally defined via the integral representation
 \begin{equation}
        J_0(r):=\frac{1}{2\pi} \int_0^{2\pi} \exp(\mathrm{i} r\sin \theta) d \theta\;.  
     \end{equation}
-\end{defination}
+\end{defn}
 We proceed to evaluate the following integral
 \begin{equation}\label{eq...text...InfiniteIntegral}
 \int_0^{+\infty} \frac{ \exp(-ah)}{1-\gamma_{\mrm{u}}\gamma_{\mrm{d}}\exp(-2hH)} \left[1-\exp\left(-\frac{h^2}{4\alpha}\right)\right] J_0(\rho h)d h\;,    
@@ -485,17 +485,17 @@ and
 \begin{equation}\label{eq:I2}
     I_2=\int_{-\infty}^{\infty} J_0(x \rho) \exp{(-x^2)} \mrm{d}x\;,
 \end{equation}
-using the Gauss-Laguerre ro Gauss-Hermite quadrature, and the Gauss-Legendre quadrature, respectively.
-First for a fixed~$\rho = 50$, as shown by Fig.~\ref{fig:Gauss_int} (a) and (b), the truncated Gauss-Legendre formula on interval~$[0, 36]$ or~$[-6, 6]$ converge much rapidly as the number of points~$n$ increase comparing to the Gauss-Laguerre or Gauss-Hermite formula.
-Then for varying~$\rho \in [0, 10]$, we set the desired accuracy~$\mathcal{E}_r = 10^{-4}$, $10^{-8}$ and $10^{-12}$, and compute number of points needed for the truncated Gauss-Legendre formula to reach the given accuracy~$\mathcal{E}_r$.
-As shown in Fig.~\ref{fig:Gauss_int_n} (a) and (b), in both cases the integrals converge rapidly and only take a few tens of points the reach the accuracy.
-In this way, both~$I_1$ and~$I_2$ are transformed to be integrals on finite region and can be evaluated easily using the Gauss–Legendre formula.
+using the Gauss-Laguerre or Gauss-Hermite quadrature, and the Gauss-Legendre quadrature, respectively.
+First for a fixed~$\rho = 50$, as shown by Fig.~\ref{fig:Gauss_int} (a) and (b), the truncated Gauss-Legendre formula on interval~$[0, 36]$ or~$[-6, 6]$ converges much more rapidly as the number of points~$n$ increases compared to the Gauss-Laguerre or Gauss-Hermite formula.
+Then for varying~$\rho \in [0, 10]$, we set the desired accuracy~$\mathcal{E}_r = 10^{-4}$, $10^{-8}$ and $10^{-12}$, and compute the number of points needed for the truncated Gauss-Legendre formula to reach the given accuracy~$\mathcal{E}_r$.
+As shown in Fig.~\ref{fig:Gauss_int_n} (a) and (b), in both cases the integrals converge rapidly and only take a few tens of points to reach the accuracy.
+In this way, both~$I_1$ and~$I_2$ are transformed into integrals on a finite region and can be evaluated easily using the Gauss–Legendre formula.
 
 \begin{figure}[htbp]
     \centering
     \includegraphics[width = \linewidth]{figs/integral_n.pdf}
     \caption{
-        The relative error of numerical evaluation of integrals (a) Eq.~\eqref{eq:I1} via Gauss–Laguerre quadrature and (b) Eq.~\eqref{eq:I2} via Gauss–Hermite quadrature on infinite interval or Gauss-Legendre quadrature on truncated interval, respectively,~$n$ is the order of the quadrature.
+        The relative error of numerical evaluation of integrals (a) Eq.~\eqref{eq:I1} via Gauss–Laguerre quadrature and (b) Eq.~\eqref{eq:I2} via Gauss–Hermite quadrature on an infinite interval or Gauss-Legendre quadrature on a truncated interval, respectively;~$n$ is the order of the quadrature.
     }
     \label{fig:Gauss_int}
 \end{figure}
@@ -504,7 +504,7 @@ In this way, both~$I_1$ and~$I_2$ are transformed to be integrals on finite regi
     \centering
     \includegraphics[width = \linewidth]{figs/integral_r.pdf}
     \caption{
-    Order of quadrature~$n$, needed to numerically evaluate the integrals (a) Eq.~\eqref{eq:I1} and (b) Eq.~\eqref{eq:I2} to reach the given relative accuracy~$\mathcal{E}_r$ using the Gauss-Legendre quadrature on truncated interval~$[0, k_{c1}]$ and~$[-k_{c2}, k_{c2}]$, respectively.
+    Order of quadrature~$n$ needed to numerically evaluate the integrals (a) Eq.~\eqref{eq:I1} and (b) Eq.~\eqref{eq:I2} to reach the given relative accuracy~$\mathcal{E}_r$ using the Gauss-Legendre quadrature on a truncated interval~$[0, k_{c1}]$ and~$[-k_{c2}, k_{c2}]$, respectively.
     }
     \label{fig:Gauss_int_n}
 \end{figure}
@@ -666,7 +666,7 @@ $ U_\ell^{\vzero}$
 can be computed with linear complexity, we focus on the efficient evaluation of 
 $U_\ell^{\V{h}\neq \vzero}$, for which the idea of random batch is employed.
 Based on the above expression, we find a Gaussian decay factor in $U_\ell^{\V{h}\neq \vzero}$ explicitly, which can be normalized for the  purpose of importance sampling, so that again we apply the idea of random batch sampling taking
-\begin{equation}\label{eq::hk}
+\begin{equation}\label{eq::hk_qem_qem}
 	g(\bm{h}) := \frac{1}{S} \exp\left(-\frac{h^2}{4\alpha}\right)\;, %\quad H := \sum_{\bm{h}\neq\bm{0}}e^{-h^2/(4\alpha^2)},
 \end{equation}
 where \[S:= \sum_{\V{h}\in\fK^2,\V{h}\neq\vzero}\exp\left(-\frac{h^2}{4\alpha}\right)\;,\] serves as a normalization factor.
@@ -679,12 +679,12 @@ where \[S:= \sum_{\V{h}\in\fK^2,\V{h}\neq\vzero}\exp\left(-\frac{h^2}{4\alpha}\r
 %
 % hence
 %
-% \begin{equation}\label{eq::Happ}
+% \begin{equation}\label{eq::Happ_qem}
 % 	H=-1+\frac{\alpha L_xL_y}{\pi}\sum_{m_x,m_y\in\mathbb{Z}}\exp\left({-\alpha\left(m_x^2L_x^2+m_y^2L_y^2\right)}\right)\;,
 % \end{equation}
 %
 Using the Metropolis algorithm~\cite{metropolis1953equation}, a random mini-batch of frequencies $\{\bm{h}_{\eta}\}_{\eta=1}^P$ is sampled, where~$P$ is the batch size, and $U_\ell$ can be approximated as 
-\begin{equation}\label{eq::RBapp}
+\begin{equation}\label{eq::RBapp_qem_qem}
  U_\ell^{\V{h}\neq \vzero} \approx U_{l,\ast}^{\V{h}\neq \vzero}  :=   \frac{S}{P}\sum_{\eta=1}^P \phi(\V{h}_{\eta})=  \frac{S}{P}\sum_{\eta=1}^P \sum_{q=1}^4S_q(\V{h}_{\eta})h_q(\V{h}_{\eta})\;,
 \end{equation} 
 and the corresponding estimator of the force in Fourier space is given by
@@ -700,7 +700,7 @@ Finally, combining all these strategies, we state our Quasi-Ewald method for cal
     \Procedure\text{Quasi-Ewald}{}       
         \State Draw $P$ frequencies $\{\bm{h}_{\eta}\}_{\eta=1}^{P}$ using the Metropolis algorithm;
         \State Sort all the particles according to their $z$ coordinates, such that $z_1 < z_2 < \cdots < z_N$;
-        \State Compute unbiased Fourier space energy $U_{l, *}^{\bm{h}\neq\bm{0}}$ by importance sampling Eq.~\eqref{eq::RBapp};
+        \State Compute unbiased Fourier space energy $U_{l, *}^{\bm{h}\neq\bm{0}}$ by importance sampling Eq.~\eqref{eq::RBapp_qem};
         \State Compute zero-frequency part $U_{l}^{\bm{0}}$ according to Eq.~\eqref{eq::U_l0_Ulk}.
         % \State Compute $U_{\text{self}}$ and $U_{\text{p-s}}$ via Eqs.~\eqref{eq::self} and \eqref{eq:spectial}, respectively.
         \State Compute~$U_{s}^{*}$ by direct truncation in real space according to Eq.~\eqref{eq::U_s_truncated} with cutoff $r_c$. %\Comment{short-range part}
@@ -729,12 +729,12 @@ Finally, combining all these strategies, we state our Quasi-Ewald method for cal
 \subsection{Consistency and variance analysis}
 In this section, we provide theoretical analysis for the Quasi-Ewald method. We start with considering the fluctuations, i.e., the stochastic error introduced by the importance sampling at each time step.
 The fluctuations for the Fourier space components of   the force acting on the $i$th particle are defined as follows 
-\begin{equation}\label{eq::xichi}
+\begin{equation}\label{eq::xichi_qem_qem}
 %	\Xi :=U_{l,\ast}^{\V{h}\neq \vzero}-U_\ell^{\V{h}\neq \vzero},\quad\text{and}\quad
     \V{\chi}_{i} :=\vF_{l,i}^*-\vF_{l,i}=\grad_{\V{r}_i} U_{l,\ast}^{\V{h}\neq \vzero}-\grad_{\V{r}_i} U_{l}^{\V{h}\neq \vzero}\;.
 \end{equation}
-Proposition~\ref{prop:unbaised} is obtained directly by the definition of the importance sampling.
-\begin{prop}\label{prop:unbaised}
+Proposition~\ref{prop:unbiased_qem} is obtained directly by the definition of the importance sampling.
+\begin{prop}\label{prop:unbiased_qem_qem}
 	  $\vF_{l,i}^*$ is a  unbiased estimator, i.e.,  $\mathbb{E} \V{\chi}_{i} = \bm 0$, and its variance  can be expressed by
 % \begin{align*}
 % 		\mathbb{E}\Xi^2&=\frac{S}{P}\sum_{\bm{h}_1\in\fK^2, \bm{h}_1\neq \vzero}\exp\left(-\frac{\Norm{\V{h}_1}^2}{4\alpha}\right)\Abs{\phi(\V{h}_1)-\frac{1}{H} \sum_{\bm{h}_2\in\fK^2, \bm{h}_2\neq \vzero}\phi(\V{h}_2)\exp\left(-\frac{\Norm{\V{h}_2}^2}{4\alpha}\right)}^2\;,
@@ -748,8 +748,8 @@ Proposition~\ref{prop:unbaised} is obtained directly by the definition of the im
         &~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-\frac{1}{H} \sum_{\bm{h}_2\in\fK^2, \bm{h}_2\neq \vzero}\nabla_{\bm{r}_i}\phi(\V{h}_2)\exp\left(-\frac{\Norm{\V{h}_2}^2}{4\alpha}\right)\Bigg|\Bigg|^2\;.
 \end{align*}
 \end{prop}
-% Furthermore, under the Debye-H$\ddot{\text{u}}$ckel approximation~\cite{levin2002electrostatic}, we have  the following~Lemma~\ref{lem::upper_bound_phiRB}, whose proof can be found in Appendix G in~\cite{gan2024fast}.
-% \begin{lem} \label{lem::upper_bound_phiRB}
+% Furthermore, under the Debye-H$\ddot{\text{u}}$ckel approximation~\cite{levin2002electrostatic}, we have  the following~Lemma~\ref{lem::upper_bound_phiRB_qem}, whose proof can be found in Appendix G in~\cite{gan2024fast}.
+% \begin{lem} \label{lem::upper_bound_phiRB_qem}
 %   Under the assumption of the DH theory, given function of the form 
 %     \begin{equation}
 %        \mathscr{G}(\V{r}_i)=\sum_{j\neq i}q _i q_{j}\exp{(\mathrm{i} \V{h} \cdot \V{\rho}_{ij})}f(z_{ij}),
@@ -769,8 +769,8 @@ Proposition~\ref{prop:unbaised} is obtained directly by the definition of the im
 % \end{lem}
 
 
-Finally, we introduce the following Theorem~\ref{thm:unbaised} for the boundedness and convergence in the fluctuations originated from the random batch approximation.
-\begin{thm}\label{thm:unbaised}
+Finally, we introduce the following Theorem~\ref{thm:unbiased_qem} for the boundedness and convergence in the fluctuations originated from the random batch approximation.
+\begin{thm}\label{thm:unbiased_qem}
 	Under the assumption of the DH theory, the variance of the estimators of forces have closed upper bounds
 	\begin{equation}
 		  \mathbb{E}\Norm{\V{\chi}_{i}}^2\leq\frac{ S^2q_i^2\lambda_{D}^4}{2P ^2 L_x^2L_y^2}\left( \frac{1+\Abs{\gamma_{\mrm{u}}}+\Abs{\gamma_{\mrm{d}}}+\Abs{\gamma_{\mrm{u}}\gamma_{\mrm{d}}}}{1-\max\{0,\gamma_{\mrm{u}}\gamma_{\mrm{d}}\}}\right)^2\;,
@@ -810,7 +810,7 @@ where the estimates on $g(z_{ij})$ reads
 \begin{align*}
   \Abs{g(z_{ij})  }&\leq  \frac{1+\Abs{\gamma_{\mrm{u}}}+\Abs{\gamma_{\mrm{d}}}+\Abs{\gamma_{\mrm{u}}\gamma_{\mrm{d}}}}{4  L_xL_y h \left(1-\max\{0,\gamma_{\mrm{u}}\gamma_{\mrm{d}}\}\right)}\;,
 \end{align*}
-on the basis of Lemma \ref{lem::upper_bound_phiRB}, the upper bound of~$\abs{\grad_{\V{r}_i} \phi(\V{h})}$ can be estimated as follows 
+on the basis of Lemma \ref{lem::upper_bound_phiRB_qem}, the upper bound of~$\abs{\grad_{\V{r}_i} \phi(\V{h})}$ can be estimated as follows 
 \begin{equation}
   \Norm{\nabla_{\bm{r}_i}\phi(\V{h})}\leq \frac{q_i\lambda_{D}^2}{2  L_xL_y}    \frac{1+\Abs{\gamma_{\mrm{u}}}+\Abs{\gamma_{\mrm{d}}}+\Abs{\gamma_{\mrm{u}}\gamma_{\mrm{d}}}}{1-\max\{0,\gamma_{\mrm{u}}\gamma_{\mrm{d}}\}}\;.
 \end{equation}
@@ -822,7 +822,7 @@ Finally,  variance of force on the $i$-th particle is bounded above by
 \end{align*}
 \end{proof}
 We remark that $S \sim L_xL_y$, then $	\mathbb{E}\Norm{\V{\chi}_{i}}^2=\fO\left(\frac{1}{P}\right)$ and independent of the particle number $N$.
-Theorem~\ref{thm:unbaised} has demonstrated that the variance of force scales as $\fO\left(\frac{1}{P}\right)$, unaffected by the growth of the system size $N$, provided the same   Debye length $\lambda_{D}$. 
+Theorem~\ref{thm:unbiased_qem} has demonstrated that the variance of force scales as $\fO\left(\frac{1}{P}\right)$, unaffected by the growth of the system size $N$, provided the same   Debye length $\lambda_{D}$. 
 This is crucial for its practical usage in MD simulations, where the dynamical evolution typically relies on force calculations rather than energy. 
 % We proceed to demonstrate that random mini-batch methods can be valid for capturing the finite time dynamics (we take the Langevin thermostat for illustration).
 % Before that, we shall introduce  some additional notations.
@@ -928,12 +928,12 @@ so that the integral can be directly evaluated using the same method as in the p
 \begin{equation}
     \int_0^{\infty} \to \int_0^{k_f}\;,
 \end{equation}
-since we have shown that the integrand is rapidly decaying, the truncation error can be estimated by
+Since we have shown that the integrand is rapidly decaying, the truncation error can be estimated by
 \begin{equation}
     \delta I < \int_{k_f}^{\infty} \exp{(-a h)} dh < \frac{\exp{(-a h_f)}}{a}\;.
 \end{equation}
 
-Integral of the singular part can be calculated analytically, given by
+The integral of the singular part can be calculated analytically, given by
 \begin{equation}
     \begin{split}
         & \int_0^{\infty} \frac{J_0(bk_0) e^{- a k_0 - 2 H (h - k_0)}}{e^{- 2 H (h - k_0)} - 1} dh\\
@@ -947,26 +947,26 @@ To verify the method above, we compared the result by the new approach shown abo
 \begin{equation}
         I = \int_{0}^{2 k_0} \left[\frac{J_0(bh)e^{-ah}}{e^{-2H(h-k_0)} - 1} + \frac{J_0(bk_0)e^{-ak_0}}{2H(h - k_0)}\right] dh + \int_{2 k_0}^{\infty} \frac{J_0(bh)e^{-ah}}{e^{-2H(h-k_0)} - 1} dh\;.,\label{eq:direct}
 \end{equation}
-which directly subtracts the 1st order pole but take a high order of the Gaussian quadrature to reach high accuracy.
+which directly subtracts the 1st order pole but takes a high order of the Gaussian quadrature to reach high accuracy.
 
-It is also shown that the integral converge much faster to the order of the quadrature.
-We set~$a = b = k_0 = H = 1$, and $k_f = 10$,~$20$ and~$30$, the relative errors are shown in Fig.~\ref{fig:error} as functions of order of Gaussian quadrature, which shows that the error decay rapidly to desired accuracies.
+It is also shown that the integral converges much faster with the order of the quadrature.
+We set~$a = b = k_0 = H = 1$, and $k_f = 10$,~$20$ and~$30$, the relative errors are shown in Fig.~\ref{fig:error} as functions of the order of Gaussian quadrature, which show that the error decays rapidly to desired accuracies.
 
 \begin{figure}[htbp]
     \centering
     \includegraphics[width = 0.5\linewidth]{figs/int_convergence.pdf}
-    \caption{Relative error of the numiercal evaluating Eq.~\eqref{eq::int_I} with $a = b = H = k_0 = 1$, as a function of cutoff~$k_f$ and order of the quadrature~$n$.}
+    \caption{Relative error of the numerical evaluation of Eq.~\eqref{eq::int_I} with $a = b = H = k_0 = 1$, as a function of cutoff~$k_f$ and order of the quadrature~$n$.}
     \label{fig:error}
 \end{figure}
 
-In summary, the singularity substraction tenchnique introduced above provides an efficient method for handling the singularity in the short-range interaction by splitting the integrand into smooth and singular parts that can be evaluated separately with high accuracy.
-Thus, being combined with this technique, QEM enables the simulation of negatively confined Coulomb systems with high accuracy and efficiency.
+In summary, the singularity subtraction technique introduced above provides an efficient method for handling the singularity in the short-range interaction by splitting the integrand into smooth and singular parts that can be evaluated separately with high accuracy.
+Thus, when combined with this technique, QEM enables the simulation of negatively confined Coulomb systems with high accuracy and efficiency.
 
 \section{Numerical results}
 \label{sec:result}
 
-In this section, we validate the accuracy and efficiency of our proposed method by applying it to several typical scientific problems, some the results are compared with that of the previously proposed method, such as the Ewald2D method, the image charge method and the HSMA method.
-The runtime of QEM in one of the typical scenario is also tested.
+In this section, we validate the accuracy and efficiency of our proposed method by applying it to several typical scientific problems, some of the results are compared with those of previously proposed methods, such as the Ewald2D method, the image charge method, and the HSMA method.
+The runtime of QEM in one of the typical scenarios is also tested.
 These examples indicate that the proposed method is effective and efficient.
 % All calculations are performed in a Ubuntu system with AMD Ryzen Threadripper PRO 3995WX@2.2GHz, 1 CPU core.
 Our software~\cite{QuasiEwald} is developed based on the Julia Programming Language~\cite{Julia-2017} and the open-source package \emph{CellListMap.jl}~\cite{celllistmap}.
@@ -981,9 +981,9 @@ The figures are generated by the open-source package \emph{Makie.jl}~\cite{Danis
 In this subsection, we validate the accuracy and convergence of our method by calculating the electrostatic interaction energy and force between charged particles distributed in quasi-2D systems.
 It is remarked that the importance sampling technique is not applied here.
 
-We first consider the electrostatic interaction between a pair of charged particles, and the results are compared with that of the ICM-Ewald2D method.
-We focused on two simple situations,~$\gamma_{d} = \gamma_{u} = \gamma = \pm 0.95$.
-Size of the simulation box is set as~$(100, 100, 50)$, and the particle with charge~$+1$ is fixed at~$(50, 50, 1)$, while the other one with charge~$-1$ is moved along the $x$ axis or the $z$ axis.
+We first consider the electrostatic interaction between a pair of charged particles, and the results are compared with those of the ICM-Ewald2D method.
+We focus on two simple situations,~$\gamma_{d} = \gamma_{u} = \gamma = \pm 0.95$.
+The size of the simulation box is set as~$(100, 100, 50)$, and the particle with charge~$+1$ is fixed at~$(50, 50, 1)$, while the other one with charge~$-1$ is moved along the $x$ axis or the $z$ axis.
 For QEM, we set~$\alpha = 1.0$,~$n = 50$ and~$E = 4$.
 The results are shown in Fig.~\ref{fig:E_xyz}, which indicates that QEM can accurately calculate the effects of the dielectric interface.
 
@@ -991,22 +991,22 @@ The results are shown in Fig.~\ref{fig:E_xyz}, which indicates that QEM can accu
     \centering
     \includegraphics[width = \linewidth]{figs/E_xyz.pdf}
     \caption{
-        Electric field in (a) $x$ and (b) $z$ between a pair of negatively charged particles, which are confined in a box with size of $(100, 100, 50)$.
-        One of the particle is located at $(50, 50, 1)$, and the other one is located at (a) $(50 + \Delta x, 50, 1)$ and (b) $(50, 50, \Delta z)$.
+        Electric field in (a) $x$ and (b) $z$ between a pair of negatively charged particles, which are confined in a box of size $(100, 100, 50)$.
+        One of the particles is located at $(50, 50, 1)$, and the other one is located at (a) $(50 + \Delta x, 50, 1)$ and (b) $(50, 50, \Delta z)$.
         The lines are results by QEM and the dots are results by the ICM with direct lattice sum.
     }
     \label{fig:E_xyz}
 \end{figure}
 
 Then to validate the convergence of the QEM, we calculate the interaction energy of a system containing~$100$ randomly distributed particles using QEM, and the reference results are calculated by the ICM-Ewald2D method.
-In Fig.~\ref{fig:Error_E}, the relative error of the interaction energy is plotted as function of the parameter~$E$ and the reflection rate~$\gamma$.
+In Fig.~\ref{fig:Error_E}, the relative error of the interaction energy is plotted as a function of the parameter~$E$ and the reflection rate~$\gamma$.
 The results show that as $E$ increases, the relative error decreases rapidly, demonstrating the convergence of QEM.
 
 \begin{figure}[htb]
     \centering
     \includegraphics[width = 0.625\linewidth]{figs/e_total.pdf}
     \caption{
-        Relative error of the energy of $100$ charged particles randomly distributed in a box with size of~$(100, 100, 50)$, as functions of the parameter~$E$ and reflection rates~$\gamma$.
+        Relative error of the energy of $100$ charged particles randomly distributed in a box of size~$(100, 100, 50)$, as functions of the parameter~$E$ and reflection rates~$\gamma$.
     }
     \label{fig:Error_E}
 \end{figure}
@@ -1036,7 +1036,7 @@ We sample every 100 steps, which yields~$3 \times 10^{4}$ independent and equili
 We first study symmetric systems where the top and bottom substrates have the same permittivity, i.e.,~$\gamma_u = \gamma_d = \gamma = \pm 0.95$, and we take~$H = 50 \tau_0$.
 The system contains 218 cations and 218 anions carrying charge~$\pm e_0$, respectively.
 To validate, we compared the charged distribution of QEM with result of the HSMA~\cite{liang2020harmonic}.
-The ion density profiles by QEM and HSMA are shown in Fig.~\ref{fig:MD}, which shows that distributions obtained by QEM and HSMA overlap within statistical accuracy. 
+The ion density profiles by QEM and HSMA are shown in Fig.~\ref{fig:MD_qem}, which shows that distributions obtained by QEM and HSMA overlap within statistical accuracy. 
 The expected ion accumulation near high-permittivity surfaces and ion depletion near insulating interfaces are borne out by the simulations, which demonstrates that our method can accurately reproduce the characteristics of the system's equilibrium state.
 The mean square displacements (MSD) in $xy$ and in $z$ of the simulation processes are shown in Fig.~\ref{fig:msd}.
 The MSD in the periodic dimensions shown in Fig.~\ref{fig:msd}(a) is consistent with a normal diffusion process, where the~$O(t^2)$ and~$O(t)$ parts correspond to the short/long-time self diffusion, respectively.
@@ -1049,7 +1049,7 @@ The results here qualitatively agree well with that shown in previous experiment
     \caption{
         Distributions of ion density in~$z$ for symmetric electrolytes containing 218 cations and 218 anions and confined by neutral dielectric substrates with $\gamma_u = \gamma_d = \pm 0.95$ at~$z = 0$ and~$50\tau_0$, solid lines by QEM and dashed lines by HSMA.
     }
-    \label{fig:MD}
+    \label{fig:MD_qem}
 \end{figure}
 
 \begin{figure}[htbp]

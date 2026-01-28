@@ -74,7 +74,7 @@
 \section{Simulation details of RBE2D}
 
 The detailed parameters for simulations in Fig.~\ref{fig:den1} are listed in the following Table~\ref{Table::Dielec}.  {The log-log plots of the $W_2$ norm of difference on $\mathscr{P}(U)$ for simulations in Fig.~\ref{fig:3_1} and Figs.~\ref{fig:den1}(c-d) and~\ref{fig:den2} are shown in Figs.~\ref{fig:energy2d_3_1} and~\ref{fig:energy2d}, respectively.}
- {The time comparison between the RBE2D and PPPM methods are shown in Figs.~\ref{fig:timenondie} and~\ref{fig:timedie}, where the number of CPU cores is set to $64$ or $1024$ ($64$ cores per node) and the batch size is $P=200$.}
+ {The time comparisons between the RBE2D and PPPM methods are shown in Figs.~\ref{fig:timenondie} and~\ref{fig:timedie}, where the number of CPU cores is set to $64$ or $1024$ ($64$ cores per node) and the batch size is $P=200$.}
 
 \renewcommand\arraystretch{1.7}
 \begin{table}[h]
@@ -133,27 +133,27 @@ Similarly, the results clearly show the speedup of the RBE2D method over the ICM
 
 \section{Simulation details of QEM}
 
-In the main text, we have shown that the charge oscillation can lead to lattice-like structure formation in dielectric confined quasi-2D systems, and mainly focused on the tunable lattice parameter.
-Here we will discuss more about our results.
+In the main text, we have shown that the charge oscillation can lead to lattice-like structure formation in dielectric-confined quasi-2D systems, and we mainly focused on the tunable lattice parameter.
+Here, we discuss more about our results.
 
 \begin{figure}[htbp]
     \centering
     \includegraphics[width = \linewidth]{figs/MD_ball.pdf}
-    \caption{The lattice-like structure and the cluster for~$\gamma = \pm 10$ cases are shown in (a) and (b), respectively. Force in~$z$ direction on particles at different position are shown in (b).}
+    \caption{The lattice-like structure and the clusters for~$\gamma = \pm 10$ cases are shown in (a) and (b), respectively. Force in the $z$ direction on particles at different positions is shown in (b).}
     \label{fig:balls}
 \end{figure}
 
-The MD results for the systems which contain~$600$ particles is shown in Fig.~\ref{fig:balls} (a) and (b).
-For both simulations, it costs $2 \times 10^6$ time steps in total, and each step takes~$\Delta t = 0.005 t_0$, where~$t_0 = \tau_0 \sqrt{\frac{m_0}{k_B T}}$ is the reduced time scale.
-The first $1.5\times 10^6$ steps are performed using the simulated annealing technique to avoid trapping in a metastable state. We start with $T_r=10$ and slowly cooling down the system until it reaches equilibrium at $T_r=1$, after which we continue the simulation for $5 \times 10^5$ time steps for sampling.
+The MD results for the systems that contain~$600$ particles are shown in Fig.~\ref{fig:balls} (a) and (b).
+For both simulations, it takes $2 \times 10^6$ time steps in total, and each step takes~$\Delta t = 0.005 t_0$, where~$t_0 = \tau_0 \sqrt{\frac{m_0}{k_B T}}$ is the reduced time scale.
+The first $1.5\times 10^6$ steps are performed using the simulated annealing technique to avoid trapping in a metastable state. We start with $T_r=10$ and slowly cool down the system until it reaches equilibrium at $T_r=1$, after which we continue the simulation for $5 \times 10^5$ time steps for sampling.
 
-The ions distribute near the substrates and pair with other ions on the opposite side.
+The ions are distributed near the substrates and pair with other ions on the opposite side.
 For~$\gamma = 10$ and~$-10$ cases, the pairs are symmetric and anti-symmetric, respectively, as shown in the sub-figure.
-The difference come from the sign of the reflection rate, which determines whether the polarized charges at opposite positions are of the same sign or of different sign, thus determines the symmetry of the ions on the opposite sites.
+The difference comes from the sign of the reflection rate, which determines whether the polarized charges at opposite positions are of the same sign or of different sign, thus determining the symmetry of the ions on the opposite sites.
 
 Shapes of the clusters are also different.
-For both cases, we attribute the cluster formation to the strong polarization charge with different sign on the substrate as shown in Fig.~1~(a) of the main text, which form a deep potential well and trapped these ions inside.
-In the transverse direction, when~$\gamma = 10$, the ions forms ion liquid and separate from each other, and when~$\gamma = -10$, the ions are closely packed, because of the force in transverse direction between ions with the same sign are repulsive or attractive at short range, respectively.
+For both cases, we attribute the cluster formation to the strong polarization charge with different sign on the substrate as shown in Fig.~1~(a) of the main text, which forms a deep potential well and traps these ions inside.
+In the transverse direction, when~$\gamma = 10$, the ions form an ionic liquid and separate from each other, and when~$\gamma = -10$, the ions are closely packed, because the force in the transverse direction between ions with the same sign is repulsive or attractive at short range, respectively.
 In the vertical direction, we calculated forces in~$z$ to explain the distributions obtained, as shown in Fig.~\ref{fig:balls} (c) and (d).
-When~$\gamma = 10$, we found that the surface with opposite sign reverse the force in the middle region and pull the ions to the substrates, so that the ions are distributed near the substrates but not closely touching.
+When~$\gamma = 10$, we found that the surface with opposite sign reverses the force in the middle region and pulls the ions to the substrates, so that the ions are distributed near the substrates but not closely touching.
 When~$\gamma = -10$, the force is purely attractive and the ions are all closely attached to the substrates.

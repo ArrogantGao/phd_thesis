@@ -67,7 +67,7 @@ For quasi-2D systems, the RBE2D method offers a particular advantage: it is mesh
     \end{equation}
     and vanishes for $\bm{k}=\bm{0}$. 
     Further by the monotonicity of Gaussian on $[0, +\infty )$, it follows that
-    \begin{equation}\label{eq::32}
+    \begin{equation}\label{eq::32_rbe_rbe}
         \begin{split}
             \mathbb{E}|\V \Xi_{\V F,i}|^2\leq \frac{8 CSq_i^2}{PV}\int_{0}^{\infty}e^{-k^2/(4\alpha^2)}dk= \frac{8\sqrt{\pi}\alpha CSq_i^2}{PV}\;.%\mathbb{E}|\V \Xi_{\V F,i}|^2&\leq\frac{(4\pi q_i)^2CS}{PV^2}\sum_{\bm{k}\neq\bm{0}}\frac{e^{-k^2/(4\alpha^2)}}{k^2}\leq \frac{8 CSq_i^2}{PV}\int_{0}^{\infty}e^{-k^2/(4\alpha^2)}dk= \frac{8\sqrt{\pi}\alpha CSq_i^2}{PV}\;.
         \end{split}
@@ -78,7 +78,7 @@ For quasi-2D systems, the RBE2D method offers a particular advantage: it is mesh
             S\leq \frac{V}{(2\pi)^3}\int_{0}^{\infty}4\pi k^2e^{-k^2/(4\alpha^2)}dk=\frac{\alpha^3V}{\pi^{3/2}}.
         \end{split}
     \end{equation}
-    Substituting Eq.~\eqref{eq::Sa} into Eq.~\eqref{eq::32} yields
+    Substituting Eq.~\eqref{eq::Sa} into Eq.~\eqref{eq::32_rbe} yields
     \begin{equation}
         \mathbb{E}|\V \Xi_{\V F,i}|^2\leq\frac{8\alpha^4Cq_i^2}{\pi P}\sim O\left(\frac{1}{P}\right)
     \end{equation}
@@ -205,8 +205,8 @@ Notice that Eq.~\eqref{eq::rhorhoM} can be rewritten as
         Y_{\text{even}}(k_z) &= \sum_{\substack{l=1, \text{even}}}^{M}\left[\gamma_{+}^{(l)}e^{\i k_zl H}+\gamma_{-}^{(l)}e^{-\i k_z l H}\right].
     \end{split}
 \end{equation}
-This formulation enables the decoupling of the summation over particles index $j$ and their image index $l$. 
-In practical simulations, one shall first precompute $Y_{\text{odd}}(k_z)$ and $Y_{\text{even}}(k_z)$ for each $\bm{k} \in \{\bm{k}_{\eta}\}_{\eta=1}^{P}$, as these are configuration independent, with a computational cost of $O(PM)$. 
+This formulation enables the decoupling of the summation over particle index $j$ and their image index $l$. 
+In practical simulations, one shall first precompute $Y_{\text{odd}}(k_z)$ and $Y_{\text{even}}(k_z)$ for each $\bm{k} \in \{\bm{k}_{\eta}\}_{\eta=1}^{P}$, as these are configuration-independent, with a computational cost of $O(PM)$. 
 Subsequently, for a given particle configuration, one evaluates $\rho_{\bm{k}}$, along with the conjugates of $Y_{\text{odd}}$ and $Y_{\text{even}}$, and computes
 \begin{equation}
     \sum_{j=1}^{N}q_je^{\i\bm{k}\cdot\bm{r}_{j}}\left(1+e^{-2\i k_zz_j}Y_{\text{odd}}(k_z)+Y_{\text{even}}(k_z)\right)
@@ -225,12 +225,12 @@ The detailed algorithm for RBE2D accelerated MD in the presence of dielectric in
   \State Sample $P$ nonzero frequencies $\bm{k}\sim e^{-k^2/(4\alpha)}$ by the Metropolis procedure to form set $\mathcal{K}$.
   \State The real space component of force is computed via a neighbor list algorithm (for both actual charges and image charges within $r_c$).
   \State The Fourier space component of  {the} force is computed via the random batch approximation $\bm{F}_{\ell}^{\text{c},*}$, with $P$ frequencies from the set $\mathcal{K}$.
-  \State Integrate the equations of motions for time $\Delta t$ with  {an} appropriate integration scheme and some appropriate thermostat. 
+  \State Integrate the equations of motion for time $\Delta t$ with  {an} appropriate integration scheme and some appropriate thermostat. 
   \EndFor
  \end{algorithmic}
 \end{algorithm}
 
-Finally, consider the fluctuation of random batch approximation of the force, denoted as $\bm{\Xi}_{\bm{F},i}^{\text{c}}=\bm{F}_{\ell}^{\text{c},*}(\bm{r}_i)-\bm{F}_{\ell}^{\text{c}}(\bm{r}_i)$, one can still show that 1) the variance of the RBE2D method is controlled via $O(1/P)$ and is independent of $L_z$; 2) the RBE2D is capable to capture finite time structure and dynamic properties in MD simulations. 
+Finally, consider the fluctuation in the random batch approximation of the force, denoted as $\bm{\Xi}_{\bm{F},i}^{\text{c}}=\bm{F}_{\ell}^{\text{c},*}(\bm{r}_i)-\bm{F}_{\ell}^{\text{c}}(\bm{r}_i)$, one can still show that 1) the variance of the RBE2D method is controlled via $O(1/P)$ and is independent of $L_z$; 2) the RBE2D is capable of capturing finite time structure and dynamic properties in MD simulations. 
 The proof is similar to Theorems~\ref{Thm::1} and~\ref{thm::2}, and is thus omitted here.
 
 \section{Numerical results}\label{sec::numerical}
@@ -316,7 +316,7 @@ All simulations start with an equilibration period of $10^6$ time steps, followe
 \centering
 	\includegraphics[width=0.95\linewidth]{figs/DistributionDie.pdf}
 	\caption{Ionic distributions for [(a) $2:1$ electrolyte and (b) $3:1$ electrolyte] between neutral interfaces with symmetric dielectric contrast, and [(c) $2:1$ electrolyte and (d) $3:1$ electrolyte] confined between walls with asymmetric dielectric contrasts and non-neutral asymmetric surface charge densities. More details about the system settings are provided in Tab.~\ref{Table::Dielec}. 
-    Data   {is} shown for the RBE2D method with batch size $P=100$, and the HSMA and the ICM-PPPM methods with relative error threshold $10^{-4}$.} 
+    Data are shown for the RBE2D method with batch size $P=100$, and the HSMA and the ICM-PPPM methods with relative error threshold $10^{-4}$.} 
 	\label{fig:den1}
 \end{figure}
 
@@ -333,7 +333,7 @@ A convergence rate of $O(1/P)$ is again observed (see Fig.~\ref{fig:energy2d}).
 \subsection{CPU time performance}
 We now report the CPU time performance of the RBE2D method, compared to the PPPM method. 
 The SPC/E bulk water systems are simulated, where
-the system dimensions are set as $L_x=L_y=H$,  and the system size changes as one varies $N$ with the density of water being fixed at $1g/cm^3$. For a fair comparison, a cutoff of $10\mathring{A}$ and a relative error threshold of $10^{-4}$ are set for both methods.
+the system dimensions are set to $L_x=L_y=H$,  and the system size changes as one varies $N$ with the density of water being fixed at $1\,g/cm^3$. For a fair comparison, a cutoff of $10\mathring{A}$ and a relative error threshold of $10^{-4}$ are set for both methods.
 
 %To ensure a fair comparison, we adopt the parameter selection strategy used in the PPPM method, establishing a relative error threshold of $10^{-4}$. For the RBE2D method, we set the Ewald splitting parameter $\alpha$ and the real space cutoff distance $r_c$ to match those of the PPPM method. Additionally, we select batch sizes of $P=100$ and $P=200$ for the RBE2D method, which have been confirmed to provide sufficient accuracy in previous sections.}
 % For a fair comparison, a relative error threshold of $10^{-4}$ is set for both methods. 
@@ -343,15 +343,15 @@ the system dimensions are set as $L_x=L_y=H$,  and the system size changes as on
 	\caption{
      (a) CPU time per step for the RBE2D method  {and PPPM method} with increasing $N$ and (b) total CPU time for comparison between the RBE2D and the PPPM with the number of CPU cores $N_{\emph{core}}$ up to $1024$.  {The results in (a) are obtained} with $64$ cores and $P=100$, where  {the real space cost is identical for both methods by fixing the same Ewald splitting parameter $\alpha$ and real space cutoff $r_c$.}
      The solid lines indicate linear-scaling. 
-     In (b), data   {is} shown for the RBE2D with batch size $P=100$ and $P=200$ and the PPPM, where the light-colored parts stand for the range of error bar. The inset in (b) shows the   {strong parallel efficiency} $\eta(N_{\emph{core}})$.}
+     In (b), data are shown for the RBE2D with batch size $P=100$ and $P=200$ and the PPPM, where the light-colored parts stand for the range of error bars. The inset in (b) shows the   {strong parallel efficiency} $\eta(N_{\emph{core}})$.}
 	\label{fig:Time}
 \end{figure}
 
 We first investigate the time cost and complexity by varying particle number $N$. 
 In Fig.~\ref{fig:Time}(a), $64$ CPU cores are used, and the  CPU time per MD step for the RBE2D  {and the PPPM method} is documented with particle number $N$ up to $2\times 10^6$, where  {the real space CPU cost is identical for both methods by fixing the same Ewald splitting parameter $\alpha$ and real space cutoff $r_c$}.
- {It should be noted that the main goal of such parameter choice is for solely comparing the improvement of the RBE2D in Fourier space. We expect a fine tuning of $\alpha$ and other parameters to balance the cost of the RBE2D in real and Fourier spaces can further optimize its efficiency in practice.}
+ {It should be noted that the main goal of such parameter choice is solely for comparing the improvement of the RBE2D in Fourier space. We expect that fine-tuning $\alpha$ and other parameters to balance the cost of the RBE2D in real and Fourier spaces can further optimize its efficiency in practice.}
 The results clearly  {demonstrate} the $O(N)$ complexity of the RBE2D method  {and its significant advantage over the PPPM method in the Fourier space computation.}
- {A more detailed comparison is further provided in Fig.~\ref{fig:timenondie}, where we compared the performance of each components of the RBE2D and PPPM methods with CPU cores fixed to be both $64$ and $1024$. The results show the improvement of the RBE2D method in the Fourier component computation across the entire range of particle numbers $N$, especially when utilizing a larger number of CPU cores.} %For the PPPM method, the communication cost grows rapidly in $N_{\mathrm{cores}}$, so that the $O(N\log N)$ complexity is not observed when $N_{\mathrm{cores}}=1024$.} 
+ {A more detailed comparison is further provided in Fig.~\ref{fig:timenondie}, where we compared the performance of each component of the RBE2D and PPPM methods with CPU cores fixed to be both $64$ and $1024$. The results show the improvement of the RBE2D method in the Fourier component computation across the entire range of particle numbers $N$, especially when utilizing a larger number of CPU cores.} %For the PPPM method, the communication cost grows rapidly in $N_{\mathrm{cores}}$, so that the $O(N\log N)$ complexity is not observed when $N_{\mathrm{cores}}=1024$.} 
 %\todo{do we need a reference here}
 %For  {the PPPM method}, the CPU time of the real space and the Fourier space computations are balanced to  {achieve optimal efficiency.} 
 % {For the RBE2D method, in order to illustrate its advantage in reducing the Fourier space cost compared to the PPPM method, we use the same Ewald parameter $\alpha$ and real space cutoff $r_c$ as PPPM to make sure that the real space cost is identical.
@@ -368,10 +368,10 @@ Let  {$N_{\text{core}}$ be the number of cores utilized}, and $T(N_{\text{core}}
 \begin{equation}\label{eq::etau}
 \eta(N_{\text{core}})=\frac{N_{\text{min}}}{N_{\text{core}}}\frac{T_{\text{min}}}{T(N_{\text{core}})},
 \end{equation}
-where $T_{\text{min}}=T(N_{\text{min}})$ and $N_{\text{min}}$ is the minimal number of CPU used. 
+where $T_{\text{min}}=T(N_{\text{min}})$ and $N_{\text{min}}$ is the minimal number of CPUs used. 
 Fig.~\ref{fig:Time}(b) and its inset document the CPU time and strong scaling results by the RBE2D and PPPM methods, for a system comprising $139968$ atoms. Clearly,
-the two methods perform similarly when $N_{\text{core}}$ is small; and RBE2D outperforms PPPM as $N_{\text{core}}$ increases, the advantage becomes significant for $N_{\text{core}}>64$. Notably,
+the two methods perform similarly when $N_{\text{core}}$ is small; RBE2D outperforms PPPM as $N_{\text{core}}$ increases, and the advantage becomes significant for $N_{\text{core}}>64$. Notably,
 when $N_{\text{core}}\geq 1024$, RBE2D is approximately 10 times faster than PPPM. 
-Furthermore, the strong scaling of the RBE2D remains over $70\%$ when~$\sim 4000$ CPUs are employed, while that of the PPPM drops raplidly to $6\%$. 
+Furthermore, the strong scaling of the RBE2D remains over $70\%$ when~$\sim 4000$ CPUs are employed, while that of the PPPM drops rapidly to $6\%$. 
  {The main difference between these two methods lies in their communication cost. The RBE2D requires only a single global communication for the reduction of $P$ structure factors. In comparison, the PPPM method, due to its use of FFT, requires six sequential rounds of communication to perform both forward and backward Fourier transforms, leading to poor scalability~\cite{fftscalability,arnold2013comparison}.} This highlights the excellent parallel scalability of the RBE2D method. 
 %Due to its mesh-free nature, the RBE2D method is expected to exhibit even greater advantages when applied to systems with strong confinement, where $H\ll\min\{L_x,L_y\}$. In such cases, the PPPM method requires more meshes, leading to a loss in efficiency. 

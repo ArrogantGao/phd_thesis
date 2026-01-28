@@ -1,10 +1,10 @@
-In this chapter, applications of the proposed methods in simulating the quasi-2D systems are presented.
-We first present the applications in simulating the SPC/E bulk water systems with up to $10^6$ atoms, and then report a spontaneous symmetry breaking phenomenon in negatively confined charged systems for the first time.
+In this chapter, applications of the proposed methods in simulating quasi-2D systems are presented.
+We first present the applications to simulating the SPC/E bulk water systems with up to $10^6$ atoms, and then report a spontaneous symmetry breaking phenomenon in negatively confined charged systems for the first time.
 
 \section{All-atom SPC/E water systems}
 
-In this section we perform all-atom MD simulations of SPC/E bulk water systems~\cite{berendsen1987missing} confined by two slabs with and without dielectric jumps utilizing the RBE2D method introduced in Chapter~\ref{chp_rbe2d}.
-The parameter settings follow the same settings as in Section~\ref{sec::numerical}.
+In this section, we perform all-atom MD simulations of SPC/E bulk water systems~\cite{berendsen1987missing} confined by two slabs with and without dielectric jumps, utilizing the RBE2D method introduced in Chapter~\ref{chp_rbe2d}.
+The parameter settings are the same as in Section~\ref{sec::numerical}.
 
 \subsection{SPC/E bulk water system without dielectric jumps}
 \label{sec::waterhomo}
@@ -14,8 +14,8 @@ We perform MD simulations for the SPC/E bulk water system~\cite{berendsen1987mis
 The system has dimensions $L_x=L_y=H=55.9~\mathring{\text{A}}$ and consists of $17496$ atoms. 
 Two purely repulsive shifted-truncated LJ walls (with $\varepsilon_{\text{atom-wall}}= k_{\text{B}}T)$ are located at $z=0$ and $z=H$.  
 The simulations utilize a time step $\Delta t=1fs$, and $T$ is fixed at $298K$ by a NH thermostat with relaxation time $10fs$. 
-Equilibration proceeds for $10^5$ time steps, followed by a $10^6$ steps production period, with configurations sampled every $100$ time steps. 
-The cutoff is set as $r_c=10\mathring{A}$, and the ratio $H/H$ is fixed as $3$ to ensure that both the ELC and remainder error term are negligible.
+Equilibration proceeds for $10^5$ time steps, followed by a $10^6$-step production period, with configurations sampled every $100$ time steps. 
+The cutoff is set as $r_c=10\mathring{A}$, and the ratio $H/H$ is fixed at $3$ to ensure that both the ELC and remainder error term are negligible.
 
 \begin{figure}[ht!]
 \centering
@@ -42,21 +42,21 @@ The parameters of the ICM-PPPM method were automatically chosen~\cite{kolafa1992
 \begin{figure}[ht]
 \centering
 \includegraphics[width=1.0\linewidth]{figs/Dielectric.pdf}
-    \caption{Distribution of oxygen atom {s} in SPC/E bulk water system (a), the MSD (b), the VACF (c), and comparison of time performance between RBE2D (with different $P$) and ICM-PPPM (d) are studied. 
-    The inset in (d) shows  {the} corresponding strong parallel efficiency $\eta(N_{\text{core}})$ defined as Eq.~\eqref{eq::etau}. 
+    \caption{Distribution of oxygen atoms in SPC/E bulk water system (a), the MSD (b), the VACF (c), and comparison of time performance between RBE2D (with different $P$) and ICM-PPPM (d) are studied. 
+    The inset in (d) shows  {the} corresponding strong parallel efficiency $\eta(N_{\text{core}})$ defined in Eq.~\eqref{eq::etau}. 
     The results derived from the RBE2D   {are} almost identical to those from the ICM-PPPM. 
-     {The RBE2D based MD is about $1.5$ orders of magnitudes faster than the ICM-PPPM-based MD.}
+     {The RBE2D based MD is about $1.5$ orders of magnitude faster than the ICM-PPPM-based MD.}
     }
     \label{fig:den2}
 \end{figure}
 
-We first examine the concentration of oxygen along  {the} $z$-axis for a system comprising $53367$ atoms, the results are displayed in Fig.~\ref{fig:den2}(a). 
+We first examine the concentration of oxygen along  {the} $z$-axis for a system comprising $53367$ atoms, and the results are displayed in Fig.~\ref{fig:den2}(a). 
 We again find  excellent agreement between the RBE2D and the ICM-PPPM when $P\geq 200$, whereas some small discrepancy is observed if one chooses $P=100$. 
 The MSD and VACF are also calculated and shown in Figs.~\ref{fig:den2}(b-c).
-The results clearly indicate that for dynamic properties of the water molecules (such as MSD and VACF), the results obtained by RBE2D is consistent   {with} that of the ICM-PPPM  {across} multiple time scales ($fs$ to $ns$). 
+The results clearly indicate that for dynamic properties of the water molecules (such as MSD and VACF), the results obtained by RBE2D are consistent with those of the ICM-PPPM  {across} multiple time scales ($fs$ to $ns$). 
 
-Finally, the CPU time and scalability data of both the RBE2D and ICM-PPPM methods are documented in Fig.~\ref{fig:den2}(d), based on simulating a water system containing $139968$ atoms. It is observed that, the RBE2D is more than 10 times faster than the ICM-PPPM method. 
-Furthermore, the   {parallel efficiency} is shown in the inset of Fig.~\ref{fig:den2}(d), which indicates that RBE2D can remain a strong scaling of $60\%$ for up to $4000$ CPU cores, while that of ICM-PPPM drops to only about $5\%$, again demonstrating the strong   {parallel efficiency} of RBE2D method.  {We also provide a more detailed comparison between the RBE2D and ICM-PPPM methods in Fig.~\ref{fig:timedie} in the SM, using the same number of CPU cores (\( N_{\text{core}} = 64 \) and 1024) and a batch size of \( P = 200 \), with varying particle number $N$. 
+Finally, the CPU time and scalability data of both the RBE2D and ICM-PPPM methods are documented in Fig.~\ref{fig:den2}(d), based on simulating a water system containing $139968$ atoms. It is observed that the RBE2D is more than 10 times faster than the ICM-PPPM method. 
+Furthermore, the   {parallel efficiency} is shown in the inset of Fig.~\ref{fig:den2}(d), which indicates that RBE2D can maintain strong scaling of $60\%$ for up to $4000$ CPU cores, while that of ICM-PPPM drops to only about $5\%$, again demonstrating the strong parallel efficiency of the RBE2D method.  {We also provide a more detailed comparison between the RBE2D and ICM-PPPM methods in Fig.~\ref{fig:timedie} in the SM, using the same number of CPU cores (\( N_{\text{core}} = 64 \) and 1024) and a batch size of \( P = 200 \), with varying particle number $N$. 
 The results clearly demonstrate that the RBE2D outperforms the ICM-PPPM across the range of \( N \) up to \( 10^6 \).}
 
 \section{Broken symmetry in quasi-2D Coulomb systems}\label{sec::ssb}
@@ -93,20 +93,20 @@ The system contains~$300$ cations and~$300$ anions.
 To isolate electrostatic effect, the reduced temperature $T_r$ is defined as~$T_r =k_{\mathrm B}T/\varepsilon_{\mathrm{Coul}}$, where~$\varepsilon_{\mathrm{Coul}} = e_0^2/(4 \pi \eps (3.5 \tau_0))$ and we set~$\varepsilon_{\mathrm{LJ}} = k_B T$ for both particle-particle and particle-substrate interactions. 
 We integrate the temporal evolution using the Velocity-Verlet algorithm and control the temperature using the Anderson thermostat with stochastic collision frequency~$\omega = 0.1$ and reduced temperature~$T_r = 1$.
 
-In the $\abs{\gamma}\leq 1$ regime, extensive simulation works have been done recently~\cite{liang2020harmonic,yuan2021particle} and no SSB phenomenon has been found, i.e., the density distributions of cations $\rho_{+}(\V r)$ and anions $\rho_{-}(\V r)$  always maintain symmetries of the system, given by 1) \emph{cross symmetry} in the confined space: $\rho_{+}(\V r)=\rho_{-}(\V r)$, 2) \emph{longitudinal symmetry}: $\rho_{\pm}(x,y,z)=\rho_{\pm}(x,y,H-z)$, and 3) \emph{transverse symmetry}: $\rho_{\pm}(x,y,z)=\rho_{\pm}(x',y',z)$. 
-Our simulations give symmetric results for  $\abs{\gamma}\leq 1$, consistent as previous investigations.
+In the $\abs{\gamma}\leq 1$ regime, extensive simulation work has been done recently~\cite{liang2020harmonic,yuan2021particle} and no SSB phenomenon has been found, i.e., the density distributions of cations $\rho_{+}(\V r)$ and anions $\rho_{-}(\V r)$  always maintain symmetries of the system, given by 1) \emph{cross symmetry} in the confined space: $\rho_{+}(\V r)=\rho_{-}(\V r)$, 2) \emph{longitudinal symmetry}: $\rho_{\pm}(x,y,z)=\rho_{\pm}(x,y,H-z)$, and 3) \emph{transverse symmetry}: $\rho_{\pm}(x,y,z)=\rho_{\pm}(x',y',z)$. 
+Our simulations give symmetric results for  $\abs{\gamma}\leq 1$, consistent with previous investigations.
 In the following discussions we will focus on the strongly polarizable cases of $\abs{\gamma}>1$, where SSB phenomena arise.
 
-Fig.~\ref{fig:MD}(a) shows two snapshots for particle distributions near the lower substrate and the corresponding induced surface charge densities, for $\gamma=\pm10$ and $H=10$. It clearly shows, for the first time, SSB phenomena in such dielectric confined charged system: both the cross and transverse symmetries are broken when $\gamma=10$; and the remaining longitudinal symmetry is further broken when $\gamma=-10$ (as shown in Fig.~\ref{fig:MD}(b)).
+Fig.~\ref{fig:MD}(a) shows two snapshots for particle distributions near the lower substrate and the corresponding induced surface charge densities, for $\gamma=\pm10$ and $H=10$. This clearly shows, for the first time, SSB phenomena in such dielectric-confined charged systems: both the cross and transverse symmetries are broken when $\gamma=10$; and the remaining longitudinal symmetry is further broken when $\gamma=-10$ (as shown in Fig.~\ref{fig:MD}(b)).
 
 Globally, we observe charged particles spontaneously forming square lattice structures near the substrates for both~$\gamma > 1$ and~$\gamma < -1$ cases, which breaks the transverse symmetry. 
-We attribute this to the long-range single particle oscillatory field in the $xy$-plane, which directs particles self-organizing into a \emph{checkerboard} structure, so as to enhance the overall induced charge landscape, which helps confining particles in local potential wells.
-Locally within each lattice site, two different particle structures are observed: for~$\gamma >1$, interfacial liquid phase is formed, while for~$\gamma < -1$, likely-charged particles self-assemble into 2D clusters, both can be understood by the near field behaviors due to a single confined particle, as was discussed and illustrated in Fig.~\ref{fig:force_x} (a).
+We attribute this to the long-range single-particle oscillatory field in the $xy$-plane, which directs particles to self-organize into a \emph{checkerboard} structure, so as to enhance the overall induced charge landscape, which helps confining particles in local potential wells.
+Locally within each lattice site, two different particle structures are observed: for~$\gamma >1$, interfacial liquid phase is formed, while for~$\gamma < -1$, likely-charged particles self-assemble into 2D clusters, both can be understood by the near-field behavior due to a single confined particle, as was discussed and illustrated in Fig.~\ref{fig:force_x} (a).
 
-Interestingly, in the longitudinal direction, we find that the interfacial liquids/clusters on opposing substrates are strongly correlated, i.e., there is a one-to-one “pairing” between the opposing particle structures, as show in Fig.~\ref{fig:MD}(b).
-For $\gamma=10$, the longitudinal pairing is between symmetrically charged particles; while for $\gamma=-10$, the pairing becomes anti-symmetric, which further breaks the longitudinal symmetry. The symmetric/anti-symmetric longitudinal paring is due to the induced charge landscape on opposing substrates, it is clearly that for $\gamma=10$, the checkerboard structures would be matched symmetrically, while for $\gamma=-10$ a negative sign is added to the reflection rates, forming anti-symmetric pairs.
+Interestingly, in the longitudinal direction, we find that the interfacial liquids/clusters on opposing substrates are strongly correlated, i.e., there is a one-to-one “pairing” between the opposing particle structures, as shown in Fig.~\ref{fig:MD}(b).
+For $\gamma=10$, the longitudinal pairing is between symmetrically charged particles; while for $\gamma=-10$, the pairing becomes anti-symmetric, which further breaks the longitudinal symmetry. The symmetric/anti-symmetric longitudinal pairing is due to the induced charge landscape on opposing substrates; it is clear that for $\gamma=10$, the checkerboard structures would be matched symmetrically, while for $\gamma=-10$ a negative sign is added to the reflection rates, forming anti-symmetric pairs.
 
 Finally, it is worth noting that the formed square lattices can be well-controlled via the single parameter~$k_0$, consistent with our theoretical prediction.
-As shown in Figure \ref{fig:MD}(c), the lattice constant of the system is found to be proportional to $k_0^{-1}$, with various choice of $H$ and $\gamma$. 
+As shown in Figure \ref{fig:MD}(c), the lattice constant of the system is found to be proportional to $k_0^{-1}$, with various choices of $H$ and $\gamma$. 
 Two slightly different linear relationships are observed, with fitted ratio~$1.2 \pi$ and~$1.4 \pi$ for~$\gamma < -1$ and~$\gamma > 1$ cases, respectively. 
-The distance between neighboring clusters is found to be consistent with the second zero point of the induced surface charge density profile due to a single point charge (see subplots of Fig.~\ref{fig:force_x} (a)). The mechanism allows one to efficiently modulate the collective phase of dielectric confined systems.
+The distance between neighboring clusters is found to be consistent with the second zero point of the induced surface charge density profile due to a single point charge (see subplots of Fig.~\ref{fig:force_x} (a)). The mechanism allows one to efficiently modulate the collective phase of dielectric-confined systems.

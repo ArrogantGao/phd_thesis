@@ -1,37 +1,37 @@
 \section{Proof of Lemma~\ref{thm::SpectralExpansion}}\label{app::deriv}
 By applying the Fourier transform to Poisson's equation
-\begin{equation}\label{eq::B.1}
+\begin{equation}\label{eq::B.1_app}
 	-\Delta\phi_{\ell}(\bm{\rho},z)=4\pi g(\bm{\rho},z)\ast\tau(\bm{\rho},z),
 \end{equation}
 one obtains  
-\begin{equation}\label{eq::B2}
+\begin{equation}\label{eq::B2_app}
 	\widetilde{\phi}_{\ell}(\bm{h},\kappa)=\frac{4\pi}{h^2+\kappa^2}\widetilde{g}(\bm{h},\kappa)\widetilde{\tau}(\bm{h},\kappa)\quad\text{with}\quad \widetilde{g}(\bm{h},\kappa)=\sum_{j=1}^{N}q_{j} e^{-\m{i} \bm{h}\cdot\bm{\rho}_{j}}e^{-\m{i} \kappa z_{j}}
 \end{equation}
-via the convolution theorem and the Poisson summation formula (see Lemmas~\ref{lem::Convolution} and \ref{lem::Poisson}, respectively). Applying the inverse Fourier transform to Eq.~\eqref{eq::B2} yields
-\begin{equation}\label{eq::phil}
+via the convolution theorem and the Poisson summation formula (see Lemmas~\ref{lem::Convolution} and \ref{lem::Poisson}, respectively). Applying the inverse Fourier transform to Eq.~\eqref{eq::B2_app} yields
+\begin{equation}\label{eq::phil_app}
 	\phi_{\ell}(\bm{\rho},z)=\frac{2}{L_xL_y}\sum_{j=1}^{N}q_{j}\sum_{\bm{h}\neq\bm{0}}\int_{\mathbb{R}}\frac{e^{-(h^2+\kappa^2)/(4\alpha^2)}}{h^2+\kappa^2}e^{-\m{i} \bm{h}\cdot(\bm{\rho}-\bm{\rho}_{j})}e^{-\m{i} \kappa(z-z_{j})}d\kappa + \phi^{\bm{0}}_{\ell}(z),
 \end{equation}
 where $\phi^{\bm{0}}_{\ell}(z)$ is the contribution from zero mode. From \cite{oberhettinger2012tables}, one has 
-\begin{equation}\label{eq::integral}
+\begin{equation}\label{eq::integral_app}
 	\int_{\mathbb{R}} \frac{e^{-(h^2+\kappa^2)/(4\alpha^2)}}{h^2+\kappa^2} e^{-\m{i} \kappa z} d\kappa = \frac{\pi}{2h} \left[\xi^{+}(h,z)+\xi^{-}(h,z)\right]
 \end{equation}
-for $\bm{h}\neq\bm{0}$, where $\xi^{\pm}(h,z)$ are defined via Eq.~\eqref{eq::xi20}. Substituting Eq.~\eqref{eq::integral} into the first term of Eq.~\eqref{eq::phil} yields $\phi_{\ell}^{\bm{h}}(\bm{r})$ defined via Eq.~\eqref{eq:philk}.
+for $\bm{h}\neq\bm{0}$, where $\xi^{\pm}(h,z)$ are defined via Eq.~\eqref{eq::xi20}. Substituting Eq.~\eqref{eq::integral_app} into the first term of Eq.~\eqref{eq::phil_app} yields $\phi_{\ell}^{\bm{h}}(\bm{r})$ defined via Eq.~\eqref{eq:philk}.
 
-By Theorem~\ref{order}, the zero-frequency term $\phi^{\bm{0}}_{\ell}(z)$ always exists and its derivation is very subtle. Let us apply the 2D Fourier transform (see Lemma~\ref{lem::2dfourier}) to Poisson's equation Eq.~\eqref{eq::B.1} only on periodic dimensions, and then obtain
-\begin{equation}\label{eq::B.5}
+By Theorem~\ref{order}, the zero-frequency term $\phi^{\bm{0}}_{\ell}(z)$ always exists and its derivation is very subtle. Let us apply the 2D Fourier transform (see Lemma~\ref{lem::2dfourier}) to Poisson's equation Eq.~\eqref{eq::B.1_app} only on periodic dimensions, and then obtain
+\begin{equation}\label{eq::B.5_app}
 	(-\partial_z^2+h^2)\widehat{\phi}_{\ell}(\bm{h},z)=4\pi\widehat{g}(\bm{h},z)\ast_{z}\widehat{\tau}(\bm{h},z),
 \end{equation}
 where $\ast_z$ indicates the convolution operator along $z$ dimension. Simple calculations suggest
 \begin{equation}
 	\widehat{g}(\bm{h},z)=\sum_{j=1}^{N}q_{j} e^{-\m{i} \bm{h}\cdot\bm{\rho}_{j}}\delta(z-z_{j}),\quad\text{and}\quad \widehat{\tau}(\bm{h},z)=\frac{\alpha}{\sqrt{\pi}} e^{-h^2/(4\alpha^2)}e^{-\alpha^2z^2}.
 \end{equation}
-The solution of Eq.~\eqref{eq::B.5} for $\bm{k}=\bm{0}$ can be written as the form of double integral that is only correct up to a linear mode,
+The solution of Eq.~\eqref{eq::B.5_app} for $\bm{k}=\bm{0}$ can be written as the form of double integral that is only correct up to a linear mode,
 \begin{equation}\begin{split}
 		\phi_{\ell}^{\bm{0}}(z)&=-\frac{4\pi}{L_xL_y}\int_{-\infty}^{z}\int_{-\infty}^{z_1}\widehat{g}(\bm{0},z_2)\ast_{z_2}\widehat{\tau}(\bm{0},z_2)dz_2dz_1+A_0z+B_0\\
 		&=-\frac{2\pi}{L_xL_y}\sum_{j=1}^{N}q_{j}\left[z-z_{j}+(z-z_{j})\erf\left(\alpha(z-z_{j})\right)+\frac{e^{-\alpha^2(z-z_{j})^2}}{\sqrt{\pi}\alpha}\right]+A_0z+B_0.
 	\end{split}
 \end{equation}
-To analyze the short-range component $\phi_{s}(\bm{\rho},z)$ using a procedure similar to Eqs.~\eqref{eq::B.1}-\eqref{eq::integral}, one obtains
+To analyze the short-range component $\phi_{s}(\bm{\rho},z)$ using a procedure similar to Eqs.~\eqref{eq::B.1_app}-\eqref{eq::integral_app}, one obtains
 \begin{equation}\begin{split}
 		\phi_{s}^{\bm{0}}(z) =& \frac{\pi}{L_x L_y} \sum_{j=1}^{N} \lim_{\bm{h}\rightarrow\bm{0}} \frac{1}{h} \left[2e^{-h|z|}-\xi^{+}(\bm{h},z) - \xi^{-}(\bm{h},z)\right]\\
 		=& \frac{2\pi}{L_xL_y}\sum_{j=1}^{N}q_{j}\left[-|z-z_{j}|+(z-z_{j})\erf\left(\alpha(z-z_{j})\right)+\frac{e^{-\alpha^2(z-z_{j})^2}}{\sqrt{\pi}\alpha}\right].
@@ -49,7 +49,7 @@ This result finally gives
 %and can be written as 
 %\begin{equation}\phi^{\bm{0}}_{\ell}(\bm{\rho},z)=\frac{\pi}{L_x L_y}\sum_{j=1}^{N}q_{j}\lim_{\bm{k}\rightarrow \bm{0}}\frac{e^{\m{i} \bm{k}\cdot(\bm{\rho}-\bm{\rho}_{j})}}{k}\left[\xi^{+}(k,z)+\xi^{-}(k,z)\right].\end{equation} By Taylor expansion with respect to $\bm{k}$, one gets \begin{equation}\begin{split}\phi^{\bm{0}}_{\ell}(\bm{\rho},z)=&\frac{\pi}{L_x L_y}\sum_{j=1}^{N}q_{j}\lim_{\bm{k}\rightarrow \bm{0}}\frac{1+\m{i} \bm{k}\cdot(\bm{\rho}-\bm{\rho}_{j})+O(k^2)}{k}\Bigg[2-2k(z-z_{j})\erf(\alpha (z-z_{j}))\\&-\frac{2ke^{-\alpha^2(z-z_{j})^2}}{\sqrt{\pi}\alpha}+O(k^2)\Bigg]\\=&-\frac{2\pi}{L_xL_y}\sum_{j=1}^{N}q_{j}\left[(z-z_{j})\erf(\alpha (z-z_{j})-\frac{e^{-\alpha^2(z-z_{j})^2}}{\sqrt{\pi}\alpha}\right]\end{split}\end{equation}
 
-% \section{Systems with charged slabs}\label{sec::sysslabs}
+% \section{Systems with charged slabs}\label{sec::sysslabs_app}
 % In the presence of charged slabs, boundary layers naturally arise -- opposite ions accumulate near the interface, forming an electric double layer. The structure of electric double layers plays essential role for properties of interfaces and has caught much attention~\cite{messina2004effect,breitsprecher2014coarse,moreira2002simulations}. Since charges on the slabs are often represented as a continuous surface charge density, we present the Ewald2D formulation with such a situation can be well treated.
 
 % Without loss of generality, one assumes that the two charged slab walls are located at $z=0$ and $z=L_z$ and with smooth surface charge densities $\sigma_{\mathrm{bot}}(\bm{\rho})$ and $\sigma_{\mathrm{top}}(\bm{\rho})$, respectively. Note that both $\sigma_{\mathrm{bot}}(\bm{\rho})$ and $\sigma_{\mathrm{top}}(\bm{\rho})$ are doubly-periodic according to the quasi-2D geometry. 
@@ -58,38 +58,38 @@ This result finally gives
 % 	\phi(\bm{r})=\phi_{\text{p-p}}(\bm{r})+\phi_{\text{p-s}}(\bm{r}).
 % \end{align}
 % Here, $\phi_{\text{p-p}}$ satisfies Eq.~\eqref{eq::Poisson} associated with the boundary condition Eq.~\eqref{eq::boundary2}. Note that Eq.~\eqref{eq::boundary1} does not apply since the particles are overall non-neutral. $\phi_{\text{p-s}}$ satisfies 
-% \begin{equation}\label{eq::PoionWall}
+% \begin{equation}\label{eq::PoionWall_app}
 % 	-\Delta \phi_{\text{p-s}}(\bm{r}) = 4\pi h(\bm{r}), \quad \text{with}~ h(\bm{r}) =  \sigma_{\mathrm{bot}}(\bm{\rho}) \delta(z) + \sigma_{\mathrm{top}}(\bm{\rho}) \delta(z-L_z),
 % \end{equation}
 % with the boundary condition
-% \begin{equation}\label{eq::boundionwall}
+% \begin{equation}\label{eq::boundionwall_app}
 % 	\lim_{z\rightarrow\pm\infty}\phi_{\text{p-s}}(\bm{r})=\mp \frac{2\pi}{L_xL_y}\left(\int_{\mathcal{R}^2}\sigma_{\mathrm{bot}}(\bm{\rho})|z|d\bm{\rho}+\int_{\mathcal{R}^2}\sigma_{\mathrm{top}}(\bm{\rho})|z-L_z|d\bm{\rho}\right)
 % \end{equation}
 % which is simply the continuous analog of Eq.~\eqref{eq::boundary2}. 
 
 % % The charge neutrality condition of the system reads
-% % \begin{equation}\label{eq::chargeneu}
+% % \begin{equation}\label{eq::chargeneu_app}
 % 	% \sum_{i=1}^{N}q_{i}+\int_{\mathcal{R}^2}\left[\sigma_{\mathrm{top}}(\bm{\rho})+\sigma_{\mathrm{bot}}(\bm{\rho})\right]d\bm{\rho}=0,
 % 	% \end{equation}
 % % which leads to the well-definedness of potential $\phi$ together with the DPBCs imposed. 
 % The potential $\phi_{\text{p-p}}$ then follows immediately from Lemma~\ref{thm::SpectralExpansion}
-% \begin{equation}\label{eq::phiion-ion}
+% \begin{equation}\label{eq::phiion-ion_app}
 % 	\phi_{\text{p-p}}(\bm{r}_{i})=\phi_{s}(\bm{r}_{i}) + \sum_{\bm{k}\neq\bm{0}} \phi_{\ell}^{\V{k}}(\bm{r}_{i}) + \phi_{\ell}^{\V{0}}(\bm{r}_{i}) - \phi_{\text{self}}^{i},
 % \end{equation}
 % with each components given by Eqs.~\eqref{eq:phi_s}, \eqref{eq:philk}, \eqref{eq:phil0}, and \eqref{eq::self}, respectively. 
-% The 2D Fourier series expansion of~$\phi_{\text{p-s}}$ is provided in the following Theorem~\ref{thm::ionwall}, where its convergence rate is controlled by the smoothness of surface charge densities.
-% \begin{thm}\label{thm::ionwall}
+% The 2D Fourier series expansion of~$\phi_{\text{p-s}}$ is provided in the following Theorem~\ref{thm::ionwall_app}, where its convergence rate is controlled by the smoothness of surface charge densities.
+% \begin{thm}\label{thm::ionwall_app}
 % 	Suppose that $\widehat{\sigma}_{\mathrm{bot}}$ and $\widehat{\sigma}_{\mathrm{top}}$ are two-dimensional Fourier transform (see Lemma~\ref{lem::2dfourier}) of $\sigma_{\mathrm{bot}}$ and $\sigma_{\mathrm{top}}$, respectively. By Fourier analysis, the particle-slab component of the electric potential is given by
-% 	\begin{equation}\label{eq::phiionwall}
+% 	\begin{equation}\label{eq::phiionwall_app}
 % 		\phi_{\emph{p-s}}(\bm{r}_{i}) = \frac{2\pi}{L_xL_y}\sum_{\bm{k}\neq \bm{0}}\frac{e^{\m{i} \bm{k}\cdot\bm{\rho}_{i}}}{k}\left[\widehat{\sigma}_{\mathrm{bot}}(\bm{k})e^{-k|z_{i}|}+\widehat{\sigma}_{\mathrm{top}}(\bm{k})e^{-k|z_{i}-L_z|}\right]+\phi_{\emph{p-s}}^{\bm{0}}(\bm{r}_{i})\;,
 % 	\end{equation}
 % 	where the 0-th mode reads
-% 	\begin{equation}\label{eq::phionwallzero}
+% 	\begin{equation}\label{eq::phionwallzero_app}
 % 		\phi_{\emph{p-s}}^{\bm{0}}(\bm{r}_{i})=-\frac{2\pi}{L_xL_y}\Big[\widehat{\sigma}_{\mathrm{bot}}(\bm{0})|z_{i}|+\widehat{\sigma}_{\mathrm{top}}(\bm{0})|z_{i}-L_z|\Big]\;.
 % 	\end{equation}
 % \end{thm}
 % \begin{proof}
-% 	For $\bm{k}\neq\bm{0}$, applying the quasi-2D Fourier transform to both sides of Eq.~\eqref{eq::PoionWall} yields
+% 	For $\bm{k}\neq\bm{0}$, applying the quasi-2D Fourier transform to both sides of Eq.~\eqref{eq::PoionWall_app} yields
 % 	\begin{equation}
 % 		\widetilde{\phi}_{\text{p-s}}(\bm{k},\kappa)=\frac{4\pi}{k^2+\kappa^2}\left[\widehat{\sigma}_{\mathrm{bot}}(\bm{k})+\widehat{\sigma}_{\mathrm{top}}(\bm{k})e^{-\m{i} \kappa L_z}\right]\;.
 % 	\end{equation}
@@ -102,24 +102,24 @@ This result finally gives
 % 		\widehat{\phi}(\bm{0},z)=-2\pi\left[\widehat{\sigma}_{\mathrm{bot}}(\bm{0})|z|+\widehat{\sigma}_{\mathrm{top}}(\bm{0})|z-L_z|\right]+A_0z+B_0\;,
 % 	\end{equation}
 % 	where $A_0$ and $B_0$ are undetermined constants. 
-% 	Finally, applying the corresponding inverse transforms to $\widetilde{\phi}_{\text{p-s}}(\bm{k},\kappa)$ and $\widehat{\phi}(\bm{0},z)$ such that the boundary conditions Eq.~\eqref{eq::boundionwall} is matched, one has $A_0=B_0=0$. The proof of Eqs.~\eqref{eq::phiionwall}-\eqref{eq::phionwallzero} is then completed. 
+% 	Finally, applying the corresponding inverse transforms to $\widetilde{\phi}_{\text{p-s}}(\bm{k},\kappa)$ and $\widehat{\phi}(\bm{0},z)$ such that the boundary conditions Eq.~\eqref{eq::boundionwall_app} is matched, one has $A_0=B_0=0$. The proof of Eqs.~\eqref{eq::phiionwall_app}-\eqref{eq::phionwallzero_app} is then completed. 
 % \end{proof}
 
 
 % Consider the ideal case that both $\sigma_{\mathrm{bot}}$ and $\sigma_{\mathrm{top}}$ are uniformly distributed. This simple setup is widely used in many studies on interface properties. Since in this case all nonzero modes vanish, one has
-% \begin{equation}\label{eq:spectial}
+% \begin{equation}\label{eq:spectial_app}
 % 	\phi_{\text{p-s}}(\bm{r}_{i})=\phi_{\text{p-s}}^{\bm{0}}(\bm{r}_{i})=-2\pi\left[\sigma_{\mathrm{top}}(L_z - z_{i})+\sigma_{\mathrm{bot}}(z_{i} - 0))\right]\;,
 % \end{equation}
 % for all $z_{i}\in [0, L_z]$. 
 % Here zero is retained to indicate the location of bottom slab. 
 
-% For completeness, Proposition \ref{welldefinedness} provides the result of the well-definedness.
-% \begin{prop} \label{welldefinedness}
+% For completeness, Proposition \ref{welldefinedness_app} provides the result of the well-definedness.
+% \begin{prop} \label{welldefinedness_app}
 % 	The total electrostatic potential $\phi$ is well-defined. 
 % \end{prop}
 % \begin{proof}
 % 	For any finite $z$, $\phi$ is clearly well defined. Consider the case of $z\rightarrow \pm \infty$.
-% 	By boundary conditions ~\eqref{eq::boundary2} and \eqref{eq::boundionwall} and the charge neutrality condition Eq.~\eqref{eq::chargeneu}, one has
+% 	By boundary conditions ~\eqref{eq::boundary2} and \eqref{eq::boundionwall_app} and the charge neutrality condition Eq.~\eqref{eq::chargeneu_app}, one has
 % 	\begin{equation}
 % 		\begin{split}
 % 			\lim_{z\rightarrow \pm \infty}\phi(\bm{r})&=\lim_{z\rightarrow \pm \infty}\left[\phi_{\text{p-p}}(\bm{r})+\phi_{\text{p-s}}(\bm{r})\right]\\
@@ -129,17 +129,17 @@ This result finally gives
 % 	which is a finite constant. Thus the proof is completed.
 % \end{proof}
 
-% For the the particle-slab interaction formulation, we observe a constant discrepancy between Eq.~\eqref{eq:spectial} derived here and those in literature~\cite{dos2017simulations,yi2017note}. 
+% For the the particle-slab interaction formulation, we observe a constant discrepancy between Eq.~\eqref{eq:spectial_app} derived here and those in literature~\cite{dos2017simulations,yi2017note}. 
 % It is because here one starts with the precise Ewald2D summation approach, different from the approach of employing approximation techniques to transform the original doubly-periodic problem into a triply-periodic problem first, and subsequently introducing charged surfaces. 
 % This constant discrepancy makes no difference in force calculations for canonical ensembles. 
 % However, for simulations under isothermal-isobaric ensembles, this $L_z$-dependent value is important for the pressure calculations~\cite{li2024noteaccuratepressurecalculations}. 
-% And one should use Eq.~\eqref{eq:spectial} derived here for correct simulations.
+% And one should use Eq.~\eqref{eq:spectial_app} derived here for correct simulations.
 
 % Based on the expression of electrostatic potential $\phi$ derived above, the total electrostatic energy can be computed via the Ewald2D summation formula:  
-% \begin{align}\label{eq::34}
+% \begin{align}\label{eq::34_app}
 % 	U = U_{\text{p-p}} + U_{\text{p-s}}, \quad \text{with} \quad U_{\text{p-p}} := U_{s} + \sum_{\bm{k}\neq\bm{0}}U_{\ell}^{\bm{k}}+U_{\ell}^{\bm{0}}- U_{\text{self}}\;,
 % \end{align}
-% where $U_*=\sum_{i}\phi_*$ with $*$ representing any of the subscripts used in Eq.~\eqref{eq::34}.
+% where $U_*=\sum_{i}\phi_*$ with $*$ representing any of the subscripts used in Eq.~\eqref{eq::34_app}.
 
 \section{Proof of Theorem~\ref{thm:ewald2d_phi_error}}\label{app:phierr}
 We begin by considering the real space truncation error of electrostatic potential 
@@ -147,14 +147,14 @@ We begin by considering the real space truncation error of electrostatic potenti
 	\mathscr{E}_{\phi_{s}}(r_c,\alpha)(\bm{r}_{i}) = \sum_{|\bm{r}_{ij} + \V{\mathcal{M}}|>r_c}q_{j} \frac{\erfc(\alpha|\bm{r}_{ij} + \V{\mathcal{M}}|)}{|\bm{r}_{ij} + \V{\mathcal{M}}|}
 \end{equation}
 for $i$th particle, which involves neglecting interactions beyond $r_c$. By the analysis in \ref{app::ideal-gas}, this part of error can be approximated by $\delta\mathscr{E}_{\phi_{s}}$ with 
-\begin{equation}\label{eq::delta^2phi}
+\begin{equation}\label{eq::delta^2phi_app}
 	\delta^2\mathscr{E}_{\phi_{s}}=  \frac{1}{V}\sum_{j=1}^{N}q_{j}^2\int_{r_c}^{\infty}\frac{\erfc(\alpha r)^2}{r^2}4\pi r^2dr=\frac{4\pi Q}{V}\mathscr{Q}_{\emph{s}}(\alpha,r_c),
 \end{equation}
 where $\mathscr{Q}_{\emph{s}}(\alpha,r_c)$ is defined via Eq.~\eqref{eq::Qs2}. Note that the $\erfc(r)$ function satisfies (\cite{olver1997asymptotics}, pp. 109-112)
-\begin{equation}\label{eq::asyerfc}
+\begin{equation}\label{eq::asyerfc_app}
 	\erfc(r)=\frac{e^{-r^2}}{\sqrt{\pi}}\sum_{m=0}^{\infty}(-1)^{m}\left(\frac{1}{2}\right)_mz^{-(2m+1)}
 \end{equation}
-as $r\rightarrow \infty$, where $(x)_m=x(x-1)\cdots(x-m+1)=x!/(x-m)!$ denotes the Pochhammer's symbol. Substituting Eq.~\eqref{eq::asyerfc} into Eq.~\eqref{eq::delta^2phi} and truncating at $m=1$ yields Eq.~\eqref{eq::Qs}. 
+as $r\rightarrow \infty$, where $(x)_m=x(x-1)\cdots(x-m+1)=x!/(x-m)!$ denotes the Pochhammer's symbol. Substituting Eq.~\eqref{eq::asyerfc_app} into Eq.~\eqref{eq::delta^2phi_app} and truncating at $m=1$ yields Eq.~\eqref{eq::Qs}. 
 
 The Fourier space error, by~\ref{app::deriv}, is given by
 \begin{equation}

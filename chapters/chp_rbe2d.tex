@@ -46,7 +46,7 @@ In MD simulations, it is convenient to employ the Metropolis algorithm~\cite{met
 % {Additionally, the acceptance rate is very high (more than $80\%$), so that the computational cost for sampling is negligible.}
 %rev{An alternative, and presumably more efficient sampling approach is to directly sample from $\mathscr{P}(\bm{k})$, which requires truncating the series summation~Eq.~\eqref{eq:normalizingS} at certain $k_{\mathrm{max}}$.}
 
-For quasi-2D systems, the RBE2D method offers a particular advantage: it is mesh free, so that unlike existing grid-based fast algorithms, the computational cost is independent   {of the} added vacuum layer thickness. This statement is justified more rigorously in Theorem~\ref{Thm::1}. 
+For quasi-2D systems, the RBE2D method offers a particular advantage: it is mesh-free, so that unlike existing grid-based fast algorithms, the computational cost is independent   {of the} added vacuum layer thickness. This statement is justified more rigorously in Theorem~\ref{Thm::1}. 
  {In the theorem, one utilizes the Debye-H\"uckel (DH) assumption for non-ideal electrolytes~\cite{levin2002electrostatic} (also see Appendix F in \cite{gan2024fast}), where the ensemble-averaged charge distributions around a charged particle follow the Boltzmann distribution.
 }
 
@@ -97,7 +97,7 @@ This is further validated by numerical results in Section~\ref{subsec::electroly
 \subsection{Convergence and complexity of the RBE2D} \label{sec::convergence}
 
 In this section, we further examine the convergence and complexity of RBE2D accelerated MD simulations. 
-First, we revisit the the common purpose of MD simulations, which is to explore the configuration space and obtain static/dynamic ensemble-averaged properties by solving the equations of motion for $N$ interacting particles.
+First, we revisit the common purpose of MD simulations, which is to explore the configuration space and obtain static/dynamic ensemble-averaged properties by solving the equations of motion for $N$ interacting particles.
 For example, consider the widely used canonical ensemble, where the system has fixed particle number $N$, volume $V$ and temperature $T$, which can be simulated as solving the following equations, namely, MD with Langevin thermostat~\cite{frenkel2023understanding}:
 \begin{equation}\label{Langevin}
     \begin{aligned}
@@ -118,11 +118,11 @@ If the forces $\bm{F}_i$ are bounded and Lipschitz, and the fluctuation of stoch
  {Here, $\Lambda$ is an upper bound for $\mathbb{E}|\V \Xi_{\V F,i}|^2$, and one has $\Lambda\sim O(1/P)$ due to Theorem~\ref{Thm::1}.} 
 \end{thm}
 
-Theorem~\ref{thm::2} indicates that the RBE2D approximated dynamics is capable of capturing finite time structure and dynamic properties.
+Theorem~\ref{thm::2} indicates that the RBE2D approximated dynamics is capable of capturing finite-time structures and dynamic properties.
 For long-time simulations, additional assumptions are needed regarding force regularity~\cite{Jin2022MMS}. 
-It   {is worth} noting that, although the Coulomb potential is neither bounded nor Lipschitz at $r=0$, actual MD simulations will include the Lennard-Jones (LJ) potential, which provides a  {strong repulsive force at short inter-particle distance and prevents the particles from getting too close. As a result, the singularities in both the Coulomb and LJ potentials will not be reached in practice as long as the time step is properly chosen, allowing to satisfy the condition of Theorem~\ref{thm::2}  for MD simulations.}
+It   {is worth} noting that, although the Coulomb potential is neither bounded nor Lipschitz at $r=0$, actual MD simulations will include the Lennard-Jones (LJ) potential, which provides a  {strong repulsive force at short inter-particle distance and prevents the particles from getting too close. As a result, the singularities in both the Coulomb and LJ potentials will not be reached in practice as long as the time step is properly chosen, allowing us to satisfy the conditions of Theorem~\ref{thm::2}  for MD simulations.}
 
-Additionally, following Theorem \ref{thm::2}, the fluctuations introduced by random batch approximation, $\V \Xi_{\V F,i}$,  can be physically understood as heating effects, which will cause a temperature drift for the system and is unwanted. 
+Additionally, following Theorem \ref{thm::2}, the fluctuations introduced by random batch approximation, $\V \Xi_{\V F,i}$,  can be physically understood as heating effects, which will cause a temperature drift for the system and are unwanted. 
 For NVT and NPT ensembles, the heating effect can be eliminated by introducing appropriate thermostats such as the Langevin thermostat~\cite{feller1995constant}, the Nos\'e-Hoover (NH) thermostat~\cite{hoover1985canonical}, etc. With an additional weak-coupled bath on the Newtonian dynamics to avoid energy drift, the NVE ensemble can also be accurately simulated with random batch-type approximations~\cite{liang2024JCP}.
 
 Next, we analyze the computational complexity of the RBE2D accelerated MD simulations. The detailed algorithm is summarized in Fig.~\ref{Alg::1}.  
@@ -151,7 +151,7 @@ Besides its linear complexity, the RBE2D method offers two other significant adv
 \begin{itemize}
     \item  {Communication efficiency: The RBE2D method is embarrassingly parallel, requiring only a single global reduction of the structure factors for all $O(P)$ samples when calculating the force using Eq.~\eqref{eq:forceRBE}.} This streamlined communication facilitates high scalability. 
 
-    \item Vacuum layer flexibility: the RBE2D is mesh free, and choosing a larger vacuum layer thickness incurs no extra cost. This provides flexibility for one to always choose a proper $L_z$ to guarantee accuracy, without sacrificing efficiency.
+    \item Vacuum layer flexibility: the RBE2D is mesh-free, and choosing a larger vacuum layer thickness incurs no extra cost. This provides flexibility for one to always choose a proper $L_z$ to guarantee accuracy, without sacrificing efficiency.
 \end{itemize}
 
 \subsection{RBE2D method for dielectrically confined quasi-2D systems} \label{subsec::IBCELCDielectric}
@@ -181,7 +181,7 @@ We now again apply the importance sampling technique to approximate $\bm{F}_{\el
 where $\{\bm{k}_{\eta}\}_{\eta=1}^{P}$ are the $P$ batches of wave vectors sampled from $\mathscr{P}(\bm{k})$. 
 It is important to note that when surface charges are present at the interfaces~\cite{spohr1997effect,yi2017note,yuan2021particle}, a straightforward modification to Eq.~\eqref{eq::important} is required, which allows for the simultaneous treatment of discrete ions and continuous surface charges.
 Detailed information can be found in the SM, Section S1.
-And the real space component of force is given by Eq.~(SM1.3), which can still be evaluated by neighbor lists algorithms.
+And the real space component of force is given by Eq.~(SM1.3), which can still be evaluated by neighbor list algorithms.
 
 %The real space part of force, as given by Eq.~(SM1.3) in the SM, is computed via directly truncating at a cutoff radius $r_c$.
 %In contrast to the fully periodic case, the choice of $r_c$ does not need to satisfy the minimum image principle along the $z$-direction. 
@@ -230,7 +230,7 @@ The detailed algorithm for RBE2D accelerated MD in the presence of dielectric in
  \end{algorithmic}
 \end{algorithm}
 
-Finally, consider the fluctuation in the random batch approximation of the force, denoted as $\bm{\Xi}_{\bm{F},i}^{\text{c}}=\bm{F}_{\ell}^{\text{c},*}(\bm{r}_i)-\bm{F}_{\ell}^{\text{c}}(\bm{r}_i)$, one can still show that 1) the variance of the RBE2D method is controlled via $O(1/P)$ and is independent of $L_z$; 2) the RBE2D is capable of capturing finite time structure and dynamic properties in MD simulations. 
+Finally, consider the fluctuation in the random batch approximation of the force, denoted as $\bm{\Xi}_{\bm{F},i}^{\text{c}}=\bm{F}_{\ell}^{\text{c},*}(\bm{r}_i)-\bm{F}_{\ell}^{\text{c}}(\bm{r}_i)$, one can still show that 1) the variance of the RBE2D method is controlled via $O(1/P)$ and is independent of $L_z$; 2) the RBE2D is capable of capturing finite-time structures and dynamic properties in MD simulations. 
 The proof is similar to Theorems~\ref{Thm::1} and~\ref{thm::2}, and is thus omitted here.
 
 \section{Numerical results}\label{sec::numerical}

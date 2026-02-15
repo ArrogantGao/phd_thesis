@@ -769,9 +769,9 @@ Proposition~\ref{prop:unbiased_qem} is obtained directly by the definition of th
 % \end{lem}
 
 
-Finally, we introduce the following Theorem~\ref{thm:unbiased_qem} for the boundedness and convergence in the fluctuations originated from the random batch approximation.
+Finally, we introduce the following Theorem~\ref{thm:unbiased_qem} for the boundedness and convergence in the fluctuations originating from the random batch approximation.
 \begin{thm}\label{thm:unbiased_qem}
-	Under the assumption of the DH theory, the variance of the estimators of forces have closed upper bounds
+	Under the assumption of the DH theory, the variance of the force estimators has closed upper bounds
 	\begin{equation}
 		  \mathbb{E}\Norm{\V{\chi}_{i}}^2\leq\frac{ S^2q_i^2\lambda_{D}^4}{2P ^2 L_x^2L_y^2}\left( \frac{1+\Abs{\gamma_{\mrm{u}}}+\Abs{\gamma_{\mrm{d}}}+\Abs{\gamma_{\mrm{u}}\gamma_{\mrm{d}}}}{1-\max\{0,\gamma_{\mrm{u}}\gamma_{\mrm{d}}\}}\right)^2\;,
 	\end{equation}
@@ -822,7 +822,7 @@ Finally,  variance of force on the $i$-th particle is bounded above by
 \end{align*}
 \end{proof}
 We remark that $S \sim L_xL_y$, then $	\mathbb{E}\Norm{\V{\chi}_{i}}^2=\fO\left(\frac{1}{P}\right)$ and independent of the particle number $N$.
-Theorem~\ref{thm:unbiased_qem} has demonstrated that the variance of force scales as $\fO\left(\frac{1}{P}\right)$, unaffected by the growth of the system size $N$, provided the same   Debye length $\lambda_{D}$. 
+Theorem~\ref{thm:unbiased_qem} has demonstrated that the variance of force scales as $\fO\left(\frac{1}{P}\right)$, unaffected by the growth of the system size $N$, provided the same Debye length $\lambda_{D}$. 
 This is crucial for its practical usage in MD simulations, where the dynamical evolution typically relies on force calculations rather than energy. 
 % We proceed to demonstrate that random mini-batch methods can be valid for capturing the finite time dynamics (we take the Langevin thermostat for illustration).
 % Before that, we shall introduce  some additional notations.
@@ -1119,7 +1119,7 @@ The anions are influenced by the distribution of cations, exhibiting characteris
     \label{fig:salt3-1}
 \end{figure}
 
-These cases indicates that QEM can also provide significant advantages in handling systems with particle asymmetry, thinness, and strong polarization effects.
+These cases indicate that QEM can also provide significant advantages in handling systems with particle asymmetry, thinness, and strong polarization effects.
 
 
 \subsection{Oscillatory single particle field}
@@ -1130,7 +1130,7 @@ The field is defined as~$-\nu\ell_B\partial_x G(\mathbf{r}, \mathbf{r_0})$, and~
 For~$\vert\gamma\vert<1$ cases, as illustrated by the blue ($\gamma=-0.95$) and orange ($\gamma=0.95$) lines in Fig.~\ref{fig:force_x} (a), the polarization weakens or enhances the bare Coulomb field ($\gamma=0$), but with no qualitative difference. 
 The results obtained by our method are in good agreement with those obtained by ICM, shown in dots in Fig.~\ref{fig:force_x} (a). 
 However, for~$\vert\gamma\vert>1$, the results become non-trivial and qualitatively different. 
-At short distance ($\tau_0<\Delta x < 10\tau_0$), we observe from Fig.~\ref{fig:force_x}(a) a continuous transition in the the near field interaction from like-charge attraction (LCA) into repulsion as~$\gamma$ increases from $-10$ to $+10$,
+At short distance ($\tau_0<\Delta x < 10\tau_0$), we observe from Fig.~\ref{fig:force_x}(a) a continuous transition in the near-field interaction from like-charge attraction (LCA) into repulsion as~$\gamma$ increases from $-10$ to $+10$,
 which can be understood as a significant enhancement of the polarization effect for~$\abs{\gamma}<1$ cases.
 Even more interesting is the far field, it no longer decays monotonically but exhibits oscillatory behavior, which is rarely reported in previous studies.
 

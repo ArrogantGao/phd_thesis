@@ -152,7 +152,7 @@ In practice, a common choice is to choose the spherical/circular shape of summat
 As long as Eq.~\eqref{eq::pairssum} is well defined, Proposition~\ref{prop::boundary} establishes a precise relationship between Eq.~\eqref{eq::pairssum} and the solution to Poisson's equation Eq.~\eqref{eq::Poisson} given a properly chosen boundary condition as $z\to\infty$.
 
 \begin{prop}\label{prop::boundary}
-	If the the series summation of $\phi(\bm{r})$ in Eq.~\eqref{eq::pairssum} satisfies both conditions stated in Theorem~\ref{order}, then it is a unique solution to Poisson's equation Eq.~\eqref{eq::Poisson} given the far-field boundary condition
+	If the series summation of $\phi(\bm{r})$ in Eq.~\eqref{eq::pairssum} satisfies both conditions stated in Theorem~\ref{order}, then it is a unique solution to Poisson's equation Eq.~\eqref{eq::Poisson} given the far-field boundary condition
 	\begin{equation}\label{eq::boundary1}
 		\lim_{z \to \pm \infty} \phi(\bm{r}) = \pm \frac{2\pi}{L_x L_y} \sum_{j=1}^{N} q_{j} z_{j}\;.
 	\end{equation}
@@ -660,7 +660,7 @@ For completeness, Proposition \ref{welldefinedness} provides the result of the w
 	which is a finite constant. Thus the proof is completed.
 \end{proof}
 
-For the the particle-slab interaction formulation, we observe a constant discrepancy between Eq.~\eqref{eq:spectial} derived here and those in literature~\cite{dos2017simulations,yi2017note}. 
+For the particle-slab interaction formulation, we observe a constant discrepancy between Eq.~\eqref{eq:spectial} derived here and those in literature~\cite{dos2017simulations,yi2017note}. 
 It is because here one starts with the precise Ewald2D summation approach, different from the approach of employing approximation techniques to transform the original doubly-periodic problem into a triply-periodic problem first, and subsequently introducing charged surfaces. 
 This constant discrepancy makes no difference in force calculations for canonical ensembles. 
 However, for simulations under isothermal-isobaric ensembles, this $L_z$-dependent value is important for the pressure calculations~\cite{li2024noteaccuratepressurecalculations}. 

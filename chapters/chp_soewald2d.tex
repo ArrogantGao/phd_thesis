@@ -276,7 +276,7 @@ The remainder two terms are the error due to the SOE approximation for the Fouri
 \begin{equation}
 	\mathscr{E}_{U_{\ell},\text{SOE}}^{\bm{h}}:=U_{\ell}^{\bm{h}}-U_{\ell,\text{SOE}}^{\bm{h}},\quad \text{and}\quad \mathscr{E}_{U_{\ell},\text{SOE}}^{\bm{0}}:=U_{\ell}^{\bm{0}}- U_{\ell,\text{SOE}}^{\bm{0}}.
 \end{equation}
-Theorem~\ref{thm:SOE_error} provides  upper bound error estimates, when the Debye-H$\ddot{\text{u}}$ckel (DH) theory is assumed (see~\cite{levin2002electrostatic}, and also~\ref{app::Debye}) to approximate the charge distribution at equilibrium.
+Theorem~\ref{thm:SOE_error} provides upper bound error estimates, when the Debye-H$\ddot{\text{u}}$ckel (DH) theory is assumed (see~\cite{levin2002electrostatic}, and also~\ref{app::Debye}) to approximate the charge distribution at equilibrium.
 
 \begin{thm}
 	\label{thm:SOE_error}
@@ -562,7 +562,7 @@ Furthermore, under the Debye-H$\ddot{\text{u}}$ckel approximation, one has the f
 	\end{equation}
 \end{proof}
 
-Finally, by Lemma~\ref{lem::upper_bound_phiRB}, one has the following Theorem~\ref{thm:unbiased} for the boundedness and convergence in the fluctuations originated from the random batch approximation.
+Finally, by Lemma~\ref{lem::upper_bound_phiRB}, one has the following Theorem~\ref{thm:unbiased} for the boundedness and convergence in the fluctuations originating from the random batch approximation.
 \begin{thm}\label{thm:unbiased}
 	Under the assumption of the DH theory, further assume that the SOE approximation error $\varepsilon\ll 1$. 
 	Then the variances of the estimators of energy and forces have closed upper bounds
@@ -607,7 +607,7 @@ Finally, by Lemma~\ref{lem::upper_bound_phiRB}, one has the following Theorem~\r
 
 % Clearly, the variance of the random force scales as $O(1/P)$, which is independent of the number of particles $N$.
 
-Theorem~\ref{thm:unbiased} has demonstrated that the variance of force scales as $O(1/P)$, unaffected by the growth of the system size $N$, provided the same particle density $\rho_s$ or Debye length $\lambda_D$. 
+Theorem~\ref{thm:unbiased} has demonstrated that the variance of force scales as $O(1/P)$, unaffected by the growth of the system size $N$, provided the same particle density $\rho_s$ or the same Debye length $\lambda_D$. 
 This is crucial for its practical usage in MD simulations, where the dynamical evolution typically relies on force calculations rather than energy. 
 In the next section, analyses for the strong convergence of the random batch MD will be discussed, which further supports this observation.
 
@@ -656,7 +656,7 @@ We anticipate that this result will also apply to our RBSE2D method for the reas
 In this section, further discussions about using the RBSE2D method for MD simulations under other thermostats and ensembles are provided.
 
 In practice, the Nos{\'e}-Hoover (NH) thermostat~\cite{hoover1985canonical} is often adopted for the heat bath, instead of the Langevin thermostat. 
-The rigorous proof for the convergence of random batch approximated dynamics with the NH thermostat remains open, whereas we expect Theorem~\ref{thm:rbm_consist} still hold. 
+The rigorous proof for the convergence of random batch approximated dynamics with the NH thermostat remains open, whereas we expect Theorem~\ref{thm:rbm_consist} to still hold. 
 This is because the damping factor introduced in the NH allows adaptively dissipating artificial heat~\cite{jones2011adaptive}, while preserving ergodicity and maintaining the desired Gibbs distribution under the NVT ensemble~\cite{herzog2018exponential}.
 
 An interesting topic is whether the RBSE2D preserves the geometric ergodicity, which is crucial for assessing how quickly the distribution converges to the invariant distribution. 

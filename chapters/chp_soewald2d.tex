@@ -276,7 +276,7 @@ The remainder two terms are the error due to the SOE approximation for the Fouri
 \begin{equation}
 	\mathscr{E}_{U_{\ell},\text{SOE}}^{\bm{h}}:=U_{\ell}^{\bm{h}}-U_{\ell,\text{SOE}}^{\bm{h}},\quad \text{and}\quad \mathscr{E}_{U_{\ell},\text{SOE}}^{\bm{0}}:=U_{\ell}^{\bm{0}}- U_{\ell,\text{SOE}}^{\bm{0}}.
 \end{equation}
-Theorem~\ref{thm:SOE_error} provides upper bound error estimates, when the Debye-H$\ddot{\text{u}}$ckel (DH) theory is assumed (see~\cite{levin2002electrostatic}, and also Appendix~\ref{app::Debye}) to approximate the charge distribution at equilibrium.
+Theorem~\ref{thm:SOE_error} provides upper bound error estimates, when the Debye--H\"uckel (DH) theory is assumed (see~\cite{levin2002electrostatic}, and also Appendix~\ref{app::Debye}) to approximate the charge distribution at equilibrium.
 
 \begin{thm}
 	\label{thm:SOE_error}
@@ -509,7 +509,7 @@ Proposition~\ref{prop:unbiased} is obtained directly by the definition of the im
 % The unbiased property in Proposition~\ref{prop:unbiased} implies consistency of the random batch importance sampling. 
 % Eqs.\eqref{eq::Exi} and \eqref{eq::Echi} illustrates that the variance of $U_{\ell,*}^{\bm{k}\neq\bm{0}}$ and $\bm{F}_{\ell,*}^{\bm{k}\neq\bm{0},i}$ are bounded and scales as $O(1/P)$. 
 
-Furthermore, under the Debye-H$\ddot{\text{u}}$ckel approximation, one has the following~Lemma~\ref{lem::upper_bound_phiRB} for the upper bounds of random batch approximations.
+Furthermore, under the Debye--H\"uckel approximation, one has the following~Lemma~\ref{lem::upper_bound_phiRB} for the upper bounds of random batch approximations.
 
 \begin{lem} 
 	Under the assumption of the DH theory, $|\widetilde{\varphi}^{\emph{RB}}(\bm{h})|$ and $|\nabla_{\bm{r}_i}\widetilde{\varphi}^{\emph{RB}}(\bm{h})|$ have upper bounds
@@ -635,7 +635,7 @@ With these notations, the following theorem is introduced.
 	\begin{equation}\label{eq::bound}
 		\sup_{t\in[0,T]}\left( \mathbb{E} \left[ \frac{1}{N} \sum_{i = 1}^N \left(\abs{\V{r}_{i} - \V{r}_{i}^*}^2 + \abs{\V{p}_{i} - \V{p}_{i}^*}^2\right) \right] \right)^{1/2} \leq C(T) \sqrt{\Lambda(N) \Delta t}\;,
 	\end{equation}
-	where~$\Lambda(N)=\|\mathbb{E} \abs{\V{\chi}_{i}}^2\|_{\infty}$ is the upper bound for the variance in the random batch approximated force. In the Debye-H$\ddot{\text{u}}$ckel regime, $\Lambda(N)$ is independent of $N$ (see Theorem~\ref{thm:unbiased}).
+	where~$\Lambda(N)=\|\mathbb{E} \abs{\V{\chi}_{i}}^2\|_{\infty}$ is the upper bound for the variance in the random batch approximated force. In the Debye--H\"uckel regime, $\Lambda(N)$ is independent of $N$ (see Theorem~\ref{thm:unbiased}).
 	\label{thm:rbm_consist}
 \end{thm}
 
@@ -797,7 +797,7 @@ For the RBSE2D method, simulations with varying batch sizes $P$ are performed, w
 It is observed that the results for all choices of $P$ are in excellent agreement with those obtained using the accurate SOEwald2D method. 
 Furthermore, one evaluates the MSDs along both the periodic dimensions (Fig.~\ref{fig:norm}(a)) and the non-periodic dimension (Fig.~\ref{fig:norm}(b)), which describe the particles' anisotropic dynamic properties across a wide range of time scales. 
 The RBSE2D methods for all $P$ yield almost identical MSD results as the SOEwald2D method. 
-The confinement effect in $z$ leads to a $MSD_z$ profile that clearly indicates a subdiffusion, while $MSD_{xy}$ exhibits a normal diffusion process. 
+The confinement effect in $z$ leads to an $\mathrm{MSD}_z$ profile that clearly indicates a subdiffusion, while $\mathrm{MSD}_{xy}$ exhibits a normal diffusion process. 
 Clearly, the RBSE2D method successfully captures this anisotropic collective phenomenon.
 
 

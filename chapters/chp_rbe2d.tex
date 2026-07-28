@@ -47,7 +47,7 @@ In MD simulations, it is convenient to employ the Metropolis algorithm~\cite{met
 %rev{An alternative, and presumably more efficient sampling approach is to directly sample from $\mathscr{P}(\bm{k})$, which requires truncating the series summation~Eq.~\eqref{eq:normalizingS} at certain $k_{\mathrm{max}}$.}
 
 For quasi-2D systems, the RBE2D method offers a particular advantage: it is mesh-free, so that unlike existing grid-based fast algorithms, the computational cost is independent   {of the} added vacuum layer thickness. This statement is justified more rigorously in Theorem~\ref{Thm::1}. 
- {In the theorem, one utilizes the Debye-H\"uckel (DH) assumption for non-ideal electrolytes~\cite{levin2002electrostatic} (also see Appendix F in \cite{gan2024fast}), where the ensemble-averaged charge distributions around a charged particle follow the Boltzmann distribution.
+ {In the theorem, one utilizes the Debye--H\"uckel (DH) assumption for non-ideal electrolytes~\cite{levin2002electrostatic} (also see Appendix F in \cite{gan2024fast}), where the ensemble-averaged charge distributions around a charged particle follow the Boltzmann distribution.
 }
 
 \begin{thm}\label{Thm::1} 
@@ -105,7 +105,7 @@ For example, consider the widely used canonical ensemble, where the system has f
         & m_i d \bm{v}_i=\left[\bm{F}_i-\gamma \bm{v}_i\right] d t+\sqrt{2 \gamma k_{\mathrm{B}} T} d \bm{W}_i,
     \end{aligned}
 \end{equation}
-where $\bm{r}_i$, $m_i$, and $\bm{v}_i$ represent the position, mass, and velocity of the $i$-th particle, respectively. $\V{F}_i$ is the force exert {ed} on the $i$-th particle, $\{\bm{W}_i\}$ are i.i.d.~Wiener processes, and $\gamma$ is the reciprocal characteristic time scale associated with the thermostat.
+where $\bm{r}_i$, $m_i$, and $\bm{v}_i$ represent the position, mass, and velocity of the $i$-th particle, respectively. $\V{F}_i$ is the force exerted on the $i$-th particle, $\{\bm{W}_i\}$ are i.i.d.~Wiener processes, and $\gamma$ is the reciprocal characteristic time scale associated with the thermostat.
 In practice, the stochastic differential equations are discretized with proper numerical schemes and integrated with time step~$\Delta t$.
 Let~$(\V{r}_i, \V{v}_i)$ be the solution to Eq.~\eqref{Langevin} with~$\bm{F}_i = \bm{F}^{\text{exact}}_i$, where~$\bm{F}^{\text{exact}}_i$ is the exact force on the $i$-th particle; and let $(\widetilde{\bm{r}}_i,\widetilde{\bm{v}}_i)$ be the solution to the same set of equations but with RBE2D approximated force given by~$\bm{F}_i = \bm{F}^{\text{exact}}_i + \bm{\Xi}_{\bm{F},i}$.
 Then the relation between the two sets of solutions satisfies the following Theorem~\ref{thm::2}~\cite{jin2021convergence}.
@@ -272,7 +272,7 @@ and $r_c$ is set as $10\sigma$ for both the RBE2D and PPPM methods.
 \begin{figure}[!ht]
 	\centering
 \includegraphics[width=0.90\linewidth]{figs/3_1Elec.pdf}
-	\caption{MD results for $3:1$ electrolytes. (a-b):  Variance of force and the error on ensemble average of the potential energy as a function of the relative size of the extended system, $L_z/H$. (c):  Concentration of cations along $z$-dimension. (d):  Raincloud plots of the ensemble average distribution of the potential energy as well as a boxplot and raw data-points. In (a), (c) and (d), results are shown for the RBE2D with different batch size {s} $P$ and the PPPM. In (b), we use the $W_2$ norm defined in Eq.~\eqref{eq::W2} to measure the difference between two distributions. The inset in (d) shows the convergence on the $W_2$ norm with $O(1/P)$ rate.}
+	\caption{MD results for $3:1$ electrolytes. (a-b):  Variance of force and the error on ensemble average of the potential energy as a function of the relative size of the extended system, $L_z/H$. (c):  Concentration of cations along $z$-dimension. (d):  Raincloud plots of the ensemble average distribution of the potential energy as well as a boxplot and raw data-points. In (a), (c) and (d), results are shown for the RBE2D with different batch sizes $P$ and the PPPM. In (b), we use the $W_2$ norm defined in Eq.~\eqref{eq::W2} to measure the difference between two distributions. The inset in (d) shows the convergence on the $W_2$ norm with $O(1/P)$ rate.}
 	\label{fig:3_1}
 \end{figure}
 
@@ -333,7 +333,7 @@ A convergence rate of $O(1/P)$ is again observed (see Fig.~\ref{fig:energy2d}).
 \subsection{CPU time performance}
 We now report the CPU time performance of the RBE2D method, compared to the PPPM method. 
 The SPC/E bulk water systems are simulated, where
-the system dimensions are set to $L_x=L_y=H$,  and the system size changes as one varies $N$ with the density of water being fixed at $1\,g/cm^3$. For a fair comparison, a cutoff of $10\mathring{A}$ and a relative error threshold of $10^{-4}$ are set for both methods.
+the system dimensions are set to $L_x=L_y=H$,  and the system size changes as one varies $N$ with the density of water being fixed at $1\,\mathrm{g/cm^3}$. For a fair comparison, a cutoff of $10\,\mathrm{\AA}$ and a relative error threshold of $10^{-4}$ are set for both methods.
 
 %To ensure a fair comparison, we adopt the parameter selection strategy used in the PPPM method, establishing a relative error threshold of $10^{-4}$. For the RBE2D method, we set the Ewald splitting parameter $\alpha$ and the real space cutoff distance $r_c$ to match those of the PPPM method. Additionally, we select batch sizes of $P=100$ and $P=200$ for the RBE2D method, which have been confirmed to provide sufficient accuracy in previous sections.}
 % For a fair comparison, a relative error threshold of $10^{-4}$ is set for both methods. 

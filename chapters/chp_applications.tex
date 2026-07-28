@@ -11,11 +11,11 @@ The parameter settings are the same as in Section~\ref{sec::numerical}.
 
 %To further demonstrate the accuracy and efficiency of the proposed RBE2D method, 
 We perform MD simulations for the SPC/E bulk water system~\cite{berendsen1987missing}. 
-The system has dimensions $L_x=L_y=H=55.9~\mathring{\text{A}}$ and consists of $17496$ atoms. 
-Two purely repulsive shifted-truncated LJ walls (with $\varepsilon_{\text{atom-wall}}= k_{\text{B}}T)$ are located at $z=0$ and $z=H$.  
-The simulations utilize a time step $\Delta t=1fs$, and $T$ is fixed at $298K$ by a NH thermostat with relaxation time $10fs$. 
+The system has dimensions $L_x=L_y=H=55.9\,\mathrm{\AA}$ and consists of $17496$ atoms. 
+Two purely repulsive shifted-truncated LJ walls (with $\varepsilon_{\text{atom-wall}}= k_{\text{B}}T$) are located at $z=0$ and $z=H$.  
+The simulations utilize a time step $\Delta t=1\,\mathrm{fs}$, and $T$ is fixed at $298\,\mathrm{K}$ by a NH thermostat with relaxation time $10\,\mathrm{fs}$. 
 Equilibration proceeds for $10^5$ time steps, followed by a $10^6$-step production period, with configurations sampled every $100$ time steps. 
-The cutoff is set as $r_c=10\mathring{A}$, and the ratio $H/H$ is fixed at $3$ to ensure that both the ELC and remainder error term are negligible.
+The cutoff is set as $r_c=10\,\mathrm{\AA}$, and the ratio $H/H$ is fixed at $3$ to ensure that both the ELC and remainder error term are negligible.
 
 \begin{figure}[ht!]
 \centering
@@ -37,7 +37,7 @@ We conclude the numerical tests with simulations of dielectrically confined SPC/
 %The equilibration process was carried out for $50 ns$, followed by MD simulations on the NVT ensemble of $100ns$ for data collecting. 
 One can refer to Sec.~\ref{sec::waterhomo} for most of the system setups.
 Here the dielectric mismatches are introduced, set as $\gamma_{\text{top}}=\gamma_{\text{bot}}=-0.5$. 
-The parameters of the ICM-PPPM method were automatically chosen~\cite{kolafa1992cutoff} to achieve a relative error of $\Delta=10^{-4}$, and the real space cutoff distance $r_c$ was set to $12\mathring{A}$, which was selected to optimize the performance of the ICM-PPPM method. 
+The parameters of the ICM-PPPM method were automatically chosen~\cite{kolafa1992cutoff} to achieve a relative error of $\Delta=10^{-4}$, and the real space cutoff distance $r_c$ was set to $12\,\mathrm{\AA}$, which was selected to optimize the performance of the ICM-PPPM method. 
 
 \begin{figure}[ht]
 \centering
@@ -53,7 +53,7 @@ The parameters of the ICM-PPPM method were automatically chosen~\cite{kolafa1992
 We first examine the concentration of oxygen along  {the} $z$-axis for a system comprising $53367$ atoms, and the results are displayed in Fig.~\ref{fig:den2}(a). 
 We again find  excellent agreement between the RBE2D and the ICM-PPPM when $P\geq 200$, whereas some small discrepancy is observed if one chooses $P=100$. 
 The MSD and VACF are also calculated and shown in Figs.~\ref{fig:den2}(b-c).
-The results clearly indicate that for dynamic properties of the water molecules (such as MSD and VACF), the results obtained by RBE2D are consistent with those of the ICM-PPPM  {across} multiple time scales ($fs$ to $ns$). 
+The results clearly indicate that for dynamic properties of the water molecules (such as MSD and VACF), the results obtained by RBE2D are consistent with those of the ICM-PPPM  {across} multiple time scales (fs to ns). 
 
 Finally, the CPU time and scalability data of both the RBE2D and ICM-PPPM methods are documented in Fig.~\ref{fig:den2}(d), based on simulating a water system containing $139968$ atoms. It is observed that the RBE2D is more than 10 times faster than the ICM-PPPM method. 
 Furthermore, the   {parallel efficiency} is shown in the inset of Fig.~\ref{fig:den2}(d), which indicates that RBE2D can maintain strong scaling of $60\%$ for up to $4000$ CPU cores, while that of ICM-PPPM drops to only about $5\%$, again demonstrating the strong parallel efficiency of the RBE2D method.  {We also provide a more detailed comparison between the RBE2D and ICM-PPPM methods in Fig.~\ref{fig:timedie} in the SM, using the same number of CPU cores (\( N_{\text{core}} = 64 \) and 1024) and a batch size of \( P = 200 \), with varying particle number $N$. 
@@ -103,7 +103,7 @@ Globally, we observe charged particles spontaneously forming square lattice stru
 We attribute this to the long-range single-particle oscillatory field in the $xy$-plane, which directs particles to self-organize into a \emph{checkerboard} structure, so as to enhance the overall induced charge landscape, which helps confining particles in local potential wells.
 Locally within each lattice site, two different particle structures are observed: for~$\gamma >1$, interfacial liquid phase is formed, while for~$\gamma < -1$, likely-charged particles self-assemble into 2D clusters, both can be understood by the near-field behavior due to a single confined particle, as was discussed and illustrated in Fig.~\ref{fig:force_x} (a).
 
-Interestingly, in the longitudinal direction, we find that the interfacial liquids/clusters on opposing substrates are strongly correlated, i.e., there is a one-to-one “pairing” between the opposing particle structures, as shown in Fig.~\ref{fig:MD}(b).
+Interestingly, in the longitudinal direction, we find that the interfacial liquids/clusters on opposing substrates are strongly correlated, i.e., there is a one-to-one ``pairing'' between the opposing particle structures, as shown in Fig.~\ref{fig:MD}(b).
 For $\gamma=10$, the longitudinal pairing is between symmetrically charged particles; while for $\gamma=-10$, the pairing becomes anti-symmetric, which further breaks the longitudinal symmetry. The symmetric/anti-symmetric longitudinal pairing is due to the induced charge landscape on opposing substrates; it is clear that for $\gamma=10$, the checkerboard structures would be matched symmetrically, while for $\gamma=-10$ a negative sign is added to the reflection rates, forming anti-symmetric pairs.
 
 Finally, it is worth noting that the formed square lattices can be well-controlled via the single parameter~$k_0$, consistent with our theoretical prediction.

@@ -180,12 +180,12 @@ which finishes the proof.
 % \end{equation}
 
 
-Then by employing the Dirichlet to Neumann mapping technique to the Poisson's equation Eq.~\eqref{eq:Poisson_G}, we can derive the Green's function~$G(\V{r}, \V{r_0})$ in the reciprocal space. 
+Then by employing the Dirichlet to Neumann mapping technique to the Poisson's equation Eq.~\eqref{eq:Poisson_G}, we can derive the Green's function~$G(\V{r}, \V{r}_0)$ in the reciprocal space. 
 
 \begin{thm}\label{Proposition...GreensFunction}
     As we define
     \begin{equation}
-        \Hat{G}(\V{h}, z; z_0) = \int_{\mathbb{R}^2} G(\V{r}, \V{r_0}) \exp{(-\mathrm{i} \V{h} \cdot \V{\rho})} d \vrho\;,
+        \Hat{G}(\V{h}, z; z_0) = \int_{\mathbb{R}^2} G(\V{r}, \V{r}_0) \exp{(-\mathrm{i} \V{h} \cdot \V{\rho})} d \vrho\;,
     \end{equation}     
 then for $\V{h}=\vzero$,   
 \begin{equation}\label{eq...hat_G_solution...Zeroth}
@@ -282,11 +282,11 @@ Based on the decomposition relation Eq.~\eqref{eq...text...Quasi-EwaldMethod...Q
 \begin{equation}%\label{eq...text...Rewrite-in-kernels}
    \delta(\V{r}-\V{r}_0)=\sigma_s  (\V{r};\V{r}_0)+\sigma_\ell  (\V{r};\V{r}_0)\;,
 \end{equation}
-and we  shall decompose the Green's function  $ G(\V{r}, \V{r_0})$ correspondingly into
+and we  shall decompose the Green's function  $ G(\V{r}, \V{r}_0)$ correspondingly into
 \begin{equation}
-    G(\V{r}, \V{r_0})= G_s(\V{r}, \V{r_0})+  G_\ell(\V{r}, \V{r_0})\;,
+    G(\V{r}, \V{r}_0)= G_s(\V{r}, \V{r}_0)+  G_\ell(\V{r}, \V{r}_0)\;,
 \end{equation}
-where $ G_s(\V{r}, \V{r_0})$ and $  G_\ell(\V{r}, \V{r_0})$ are the solutions to the Poisson's equation Eq.~\eqref{eq:Poisson_G} except that $\delta(\V{r}-\V{r}_0)$ is replaced respectively by $\sigma_s  (\V{r};\V{r}_0)$ and $\sigma_\ell  (\V{r};\V{r}_0)$.
+where $ G_s(\V{r}, \V{r}_0)$ and $  G_\ell(\V{r}, \V{r}_0)$ are the solutions to the Poisson's equation Eq.~\eqref{eq:Poisson_G} except that $\delta(\V{r}-\V{r}_0)$ is replaced respectively by $\sigma_s  (\V{r};\V{r}_0)$ and $\sigma_\ell  (\V{r};\V{r}_0)$.
 \begin{corollary}
 For any $\V{h}\neq \vzero$, given     $\hat{G}(\V{h}, z; z_0)$, we obtain that  
     \begin{align*}
@@ -308,12 +308,12 @@ and
     -\frac{\exp{(-\mathrm{i} \V{h} \cdot \V{\rho}_0)}}{h }\exp\left(-\frac{h^2}{4\alpha}\right)\;,
 \end{equation*} 
 respectively.
-Consequently, the Green's function $ G_s(\V{r}, \V{r_0})$ and $  G_\ell(\V{r}, \V{r_0})$ can be recovered following the inverse Fourier transform of $  \hat{G}_s(\V{h}, z; z_0)$ and $  \hat{G}_\ell(\V{h}, z; z_0)$,
+Consequently, the Green's function $ G_s(\V{r}, \V{r}_0)$ and $  G_\ell(\V{r}, \V{r}_0)$ can be recovered following the inverse Fourier transform of $  \hat{G}_s(\V{h}, z; z_0)$ and $  \hat{G}_\ell(\V{h}, z; z_0)$,
 \begin{equation*}
 \begin{aligned}
- G_s(\V{r}, \V{r_0})&=   \frac{1}{4\pi^2}\int_{\sR^2} \hat{G}_s(\V{h}, z; z_0)\exp{(\mathrm{i} \V{h} \cdot \V{\rho})} d \V{h}\\
+ G_s(\V{r}, \V{r}_0)&=   \frac{1}{4\pi^2}\int_{\sR^2} \hat{G}_s(\V{h}, z; z_0)\exp{(\mathrm{i} \V{h} \cdot \V{\rho})} d \V{h}\\
  &= \frac{1}{4\pi^2}\int_{\sR^2} \hat{G}(\V{h}, z; z_0)\left[1-\exp\left(-\frac{h^2}{4\alpha}\right)\right]\exp{(\mathrm{i} \V{h} \cdot \V{\rho})} d \V{h}\;,\\
-  G_\ell(\V{r}, \V{r_0})&=   \frac{1}{4\pi^2}\int_{\sR^2} \hat{G}_\ell(\V{h}, z; z_0)\exp{(\mathrm{i} \V{h} \cdot \V{\rho})} d \V{h}\\
+  G_\ell(\V{r}, \V{r}_0)&=   \frac{1}{4\pi^2}\int_{\sR^2} \hat{G}_\ell(\V{h}, z; z_0)\exp{(\mathrm{i} \V{h} \cdot \V{\rho})} d \V{h}\\
  &= \frac{1}{4\pi^2}\int_{\sR^2} \hat{G}(\V{h}, z; z_0)\exp\left(-\frac{h^2}{4\alpha}\right)\exp{(\mathrm{i} \V{h} \cdot \V{\rho})} d \V{h}\;.
 \end{aligned}    
 \end{equation*}
@@ -945,7 +945,7 @@ which is a finite value that can be easily calculated.
 
 To verify the method above, we compared the result by the new approach shown above with a direct method given by
 \begin{equation}
-        I = \int_{0}^{2 k_0} \left[\frac{J_0(bh)e^{-ah}}{e^{-2H(h-k_0)} - 1} + \frac{J_0(bk_0)e^{-ak_0}}{2H(h - k_0)}\right] dh + \int_{2 k_0}^{\infty} \frac{J_0(bh)e^{-ah}}{e^{-2H(h-k_0)} - 1} dh\;.,\label{eq:direct}
+        I = \int_{0}^{2 k_0} \left[\frac{J_0(bh)e^{-ah}}{e^{-2H(h-k_0)} - 1} + \frac{J_0(bk_0)e^{-ak_0}}{2H(h - k_0)}\right] dh + \int_{2 k_0}^{\infty} \frac{J_0(bh)e^{-ah}}{e^{-2H(h-k_0)} - 1} dh\;.\label{eq:direct}
 \end{equation}
 which directly subtracts the 1st order pole but takes a high order of the Gaussian quadrature to reach high accuracy.
 
@@ -1145,7 +1145,7 @@ Even more interesting is the far field, it no longer decays monotonically but ex
 To understand the origin of field oscillations, the polarization charge density profile on the substrate at~$z=0$ is shown in the subplots of Fig.~\ref{fig:force_x} (a).
 The charge density is defined by 
 \begin{equation}
-    \sigma(\V{r}) = \lim_{z \to 0^+} \nu \ell_B \eps_0  \left( 1 - \frac{\eps}{\eps'} \right) \partial_z G(\V{r}, \V{r_0})\;,
+    \sigma(\V{r}) = \lim_{z \to 0^+} \nu \ell_B \eps_0  \left( 1 - \frac{\eps}{\eps'} \right) \partial_z G(\V{r}, \V{r}_0)\;,
 \end{equation}
 and the field lines generated by $\sigma(\V r)$ are sketched in Fig.~\ref{fig:force_x} (b). 
 The field oscillation is found to be generated by the strong transverse polarization charge density waves, influencing both the near and far fields. 

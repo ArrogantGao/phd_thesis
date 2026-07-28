@@ -1,13 +1,13 @@
 \section{Numerical validations for error estimations in energy}\label{sec:numeric_energy}
 
-In this section, we present supplementary results for the numerical validation of error estimates in electrostatic energy, complementing the main text. Figures~\ref{fig:icm_error} to~\ref{fig:error_icm_pad_gamma_1} correspond one-to-one with Figures 1 to 4 in the main text, maintaining the same systems and parameter settings as those used in the force calculation results. The dashed lines in these figures represent the fitted curves based on our theoretical estimation given in Eq.~(52) of the main text. The energy error results exhibit similar trends to the force errors and align well with our theoretical predictions.
+In this section, we present supplementary results for the numerical validation of error estimates in electrostatic energy, complementing the force results of Chapter~\ref{chp_icmewald2d}. Figures~\ref{fig:icm_error} to~\ref{fig:error_icm_pad_gamma_1} correspond one-to-one with Figs.~\ref{fig:icm_error_force}, \ref{fig:elc_error_force}, \ref{fig:error_icm_pad_gamma_0.6_force} and~\ref{fig:error_icm_pad_gamma_1_force}, maintaining the same systems and parameter settings as those used in the force calculation results. The dashed lines in these figures represent the fitted curves based on our theoretical estimation given in Eq.~\eqref{eq:Uerr}. The energy error results exhibit similar trends to the force errors and align well with our theoretical predictions.
 
 
 \begin{figure}[htbp]
     \centering
     \includegraphics[width=0.98\linewidth]{figs/icm_error.pdf}
     \caption{
-        Relative errors of energy due to truncation of image charges are presented. The dashed lines represent the fitted decay rate, as described in Eq. (54) in the main text. In panel (a) we set $\gamma_{\T u} = \gamma_{\T d} = 1$ and consider system heights of $H = 0.5, 1$ and $5$. In panel (b), we set $H = 1$ while varying $\gamma_{\T u} = \gamma_{\T d} = \gamma = 0.3, 0.6$ and $1$. 
+        Relative errors of energy due to truncation of image charges are presented. The dashed lines represent the fitted decay rate, as described in Eq.~\eqref{eq:Uerr}. In panel (a) we set $\gamma_{\T u} = \gamma_{\T d} = 1$ and consider system heights of $H = 0.5, 1$ and $5$. In panel (b), we set $H = 1$ while varying $\gamma_{\T u} = \gamma_{\T d} = \gamma = 0.3, 0.6$ and $1$. 
         %The scope of the fitted lines are fixed to be $\lg(\gamma e^{-2\pi H / L_x})$, which is the theoretical value.
     }
     \label{fig:icm_error}
@@ -41,7 +41,7 @@ Previous numerical studies have found that more image layers are needed to achie
 To further investigate the numerical properties of strongly-confined systems, we present the errors in force in Fig.~\ref{fig:icm_elc_error_force_app}, where we fix $L_x=L_y=10$, $R=(L_z-H)/L_x = 5$ and consider system heights $H = 0.5, 1, 5$ while varying the number of image charge layers $M$. 
 In Fig.~\ref{fig:icm_elc_error_force_app} (a), for $\gamma = 0.6$, we observe that the error decays exponentially as $M$ increases for $H = 0.5$ and $H = 1$. 
 However, for $H = 5$, where $|g_{\T u}g_{\T d}|>1$, the error becomes non-monotonic as $M$ increases, 
-which is consistent with our theoretical predictions as discussed in the main text.
+which is consistent with the theoretical predictions of Chapter~\ref{chp_icmewald2d}.
 In Fig.~\ref{fig:icm_elc_error_force_app} (b), with $\gamma = 1$, we observe a similar non-monotonic pattern for all aspect ratios. 
 It is important to note that the rate of error decrease/increase depends on the aspect ratio $L_x/H$. 
 A higher aspect ratio leads to a slower increase or decrease in errors, as $M$ is less or greater than the critical value that minimizes the error, respectively. 

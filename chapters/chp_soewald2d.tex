@@ -1,4 +1,4 @@
-In this chapter, we focus on the quasi-2D Coulomb systems in uniform dielectric media, and introduce a fast algorithm named the random batch sum-of-exponentials Ewald2D (RBSE2D) method, which reaches an optimal time complexity of $O(N)$ for the force calculation and can easily handle the systems with large aspect ratios.
+In this chapter, we focus on the quasi-2D Coulomb systems in uniform dielectric media, and introduce a fast algorithm named the sum-of-exponentials Ewald2D (SOEwald2D) method, together with its random batch accelerated variant (RBSE2D), which reaches an optimal time complexity of $O(N)$ for the force calculation and can easily handle the systems with large aspect ratios.
 
 \section{Sum-of-exponentials Ewald2D method} \label{sec:method}
 
@@ -31,7 +31,7 @@ When combining with the MR, convergence rates at $O(6^{-M}) \sim O(7^{-M})$ can 
 Additionally, kernel-independent SOE methods have been developed, such as the black-box method~\cite{greengard2018anisotropic} and Vall\'ee-Poussin model reduction (VPMR) method~\cite{gao2021kernelindependent}. 
 Specially, the VPMR method integrates the flexibility of Vall\'ee-Poussin sums into the MR technique, demonstrating the highest convergence rate of $O(9^{-M})$ in constructing SOE approximation for Gaussians. 
 This method is also bandwidth-controllable and uniformly convergent~\cite{AAMM-13-1126}. 
-Due to these advantages, we will utilize the VPMR as the SOE construction tool in all the numerical experiments throughout this paper.
+Due to these advantages, we will utilize the VPMR as the SOE construction tool in all the numerical experiments throughout this thesis.
 
 
 % Moreover, various efforts have been made in the literature to approximate different kernel functions using SOE, as documented in works such as~\cite{wiscombe1977exponential, evans1980least, jiang2008efficient, beylkin2005approximation, beylkin2010approximation}. We do not intend to present a comprehensive review of these algorithms here and refer the reader to these references for further details.
@@ -219,7 +219,7 @@ Clearly, $A_1(\beta)=0,$ $A_2(\beta)=q_1e^{-\m{i} \bm{h}\cdot\bm{\rho}_1}$, and 
 \end{equation}
 One can thus efficiently evaluate $S$ with another $O(N)$ operations by Eq.~\eqref{eq::S} and using the computed coefficients~$\V{A}(\beta) = (A_1(\beta), ..., A_N(\beta))$. 
 Consequently, the overall cost for evaluating the pairwise summation in forms of Eq.~\eqref{eq::33} is reduced to $O(N)$.
-Besides the iterative method discussed above, it is remarked that different fast algorithms based on SOE for 1D kernel summations have been developed~\cite{jiang2021approximating,GIMBUTAS2020815}, which can also be used under the framework described in this article for the summation in the non-periodic direction.
+Besides the iterative method discussed above, it is remarked that different fast algorithms based on SOE for 1D kernel summations have been developed~\cite{jiang2021approximating,GIMBUTAS2020815}, which can also be used under the framework described in this thesis for the summation in the non-periodic direction.
 % The key point lies in finding an SOE that provides accurate approximations for all Fourier modes, as demonstrated in Section~\ref{subsec::SOEapp} of this paper.
 
 \begin{rmk}
@@ -396,7 +396,7 @@ However, when formulating algorithms for quasi-2D systems, the direct applicatio
 The classical Ewald2D, either in the closed form (Eq.~\eqref{eq:philk}) or the integral form (Eq.~\eqref{eq::phil}), are unsuitable for random batch sampling:ee
 (1) the closed form demands $O(N^2)$ complexity even with batch size $P \sim O(1)$; 
 (2) the integral form is singular at $h = \kappa = 0$, giving rise to significant variance.
-In this section, we will show that the idea of random mini-batch can now be easily incorporated into the SOEwald2D algorithm based on the reformulation of Ewald2D proposed in Section~\ref{subsec::reforEwald2}, resulting in the Random Batch SOEwald2D~(RBSE2D) method, which can accurately satisfy the SPMF condition for quasi-2D geometry.
+In this section, we will show that the idea of random mini-batch can now be easily incorporated into the SOEwald2D algorithm based on the reformulation of Ewald2D proposed in Section~\ref{subsec::reforEwald2}, resulting in the random batch SOEwald2D (RBSE2D) method, which can accurately satisfy the SPMF condition for quasi-2D geometry.
 Detailed analyses will also be provided.
 
 % \subsection{Random batch importance sampling}\label{subsec::rbis}
@@ -825,7 +825,7 @@ These findings indicate that choosing a small batch size $P\sim O(1)$ is suffici
 \subsection{CPU performance}
 The CPU performance comparisons among the SOEwald2D, RBSE2D, and the original Ewald2D methods are conducted for MD simulations of $1:1$ electrolyte systems with varying system sizes. 
 All calculations are performed on a Linux system equipped with an Intel Xeon Platinum 8358 CPU (2.6 GHz, 1 single core); and by using a self-developed package developed in Julia language. 
-To ensure a fair comparison, we maintain the same accuracy across all methods. We fix $s=4$ and set $M=8$ for the SOE approximation, resulting in errors at~$\sim10^{-8}$ for both the Ewald2D and SoEwald2D methods. %as shown in Fig.~\ref{fig:error_fixn}(a).
+To ensure a fair comparison, we maintain the same accuracy across all methods. We fix $s=4$ and set $M=8$ for the SOE approximation, resulting in errors at~$\sim10^{-8}$ for both the Ewald2D and SOEwald2D methods. %as shown in Fig.~\ref{fig:error_fixn}(a).
 Subsequently, we set the batch size as $P=120$ for the RBSE2D method, with which the RBSE2D-based MD simulations achieve the same accuracy as the SOEwald2D method, as has been illustrated in the previous results.
 %It is remarked that the Ewald2D, SOEwald2D, and RBSE2D methods scale as $O(s^2)$, $O(s^2 M)$, and $O(s^2 M P)$, respectively.
 Finally, for each of the methods, the Ewald splitting parameter $\alpha$ is always adjusted to achieve optimal efficiency.
@@ -835,7 +835,7 @@ Remarkably, the RBSE2D method demonstrates a significant speedup of $3\times 10^
 
 An additional observation is regarding the memory consumption and data input/output (I/O) on the maximum system size that can be simulated using the same computational resources. 
 In Fig.~\ref{fig:times_compare}, it is demonstrated that when utilizing a single CPU core, the Ewald2D and SOEwald2D methods are limited to simulating system sizes of up to about $3 \times 10^4$ and $3 \times 10^5$ particles, respectively. 
-In contrast, the RBSOEwald method can handle systems containing about $5 \times 10^6$ particles. 
+In contrast, the RBSE2D method can handle systems containing about $5 \times 10^6$ particles. 
 This is attributed to the reduced number of interacting neighbors that need to be stored in the RBSE2D algorithm, allowing a much smaller real space cutoff $r_c$. 
 This significant saving in memory consumption is achieved by the algorithm developed in this study, highlighting its potential as an effective algorithm framework for large-scale simulations of quasi-2D Coulomb systems.
 

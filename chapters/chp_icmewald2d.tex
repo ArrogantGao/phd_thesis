@@ -94,7 +94,7 @@ Note that the ICM-YB correction term $U_{\T {YB}}^{M}$ can be directly computed 
 
 In this section, we present a comprehensive error analysis for both energy and force calculations, addressing the truncation error of the image charge series and the errors arising from the reformulation of the ICM-Ewald2D summation. 
 We also perform extensive numerical experiments to validate our error analysis.
-We will focus on force-related results in the main text, while energy-related findings are provided in Section~\ref{sec:numeric_energy}.
+We will focus on force-related results in this chapter, while energy-related findings are provided in Appendix~\ref{sec:numeric_energy}.
 It is also important to note that in practical computations, the use of FFT can introduce additional errors due to particle spreading onto the uniform grid and the finite resolution of the grid. 
 Since these error sources have been thoroughly analyzed in the literature~\cite{deserno1998mesh,wang2012numerical,liang2023error,wang2016multiple,barnett2019parallel,barnett2021aliasing} and are separable from the error discussed in this work, we refer interested readers to these works for more details.
 
@@ -383,7 +383,7 @@ This subtle phenomenon was not fully understood since its first observation in t
 Our analysis reveals it as the combined effect of image truncation and ELC errors: 
 initially, errors decrease due to the decay of image truncation errors; and once $M$ surpasses a certain $P$-dependent threshold, the error amplification mechanism predicted by Eq.~\eqref{eq::lhs_bigger1} becomes dominant, causing errors to grow exponentially.
 Finally, we note that in strongly-confined systems, the presence of dielectric interfaces would introduce additional computational challenges~\cite{dos2015electrolytes}. 
-Specifically, for systems with higher aspect ratios, a larger $M$ is required to achieve the same level of accuracy. The relevant numerical results are summarized in Section 2 of the SI. 
+Specifically, for systems with higher aspect ratios, a larger $M$ is required to achieve the same level of accuracy. The relevant numerical results are summarized in Appendix~\ref{chp_appendix_icm}. 
 \begin{figure}[htbp]
     \centering
     \includegraphics[width=0.98\linewidth]{figs/error_icm_pad_gamma_1_force.pdf}

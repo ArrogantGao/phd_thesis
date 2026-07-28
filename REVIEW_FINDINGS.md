@@ -2,9 +2,43 @@
 
 Full line-by-line pass over `main.tex`, `00II/00III`, `chapters/*.tex`, `appendix/*.tex`,
 `references.bib`. Equations were re-derived independently where possible; "verified" below means
-I reproduced the algebra. Line numbers refer to the files as of this review.
+I reproduced the algebra. Line numbers refer to the files **as of the original review**, before
+any fixes were applied — they will have shifted slightly in `chp_introduction.tex` and `main.tex`.
 
-Build state: 214 pages, compiles, **but** 4 undefined references + 2 amsmath warnings.
+## Status
+
+Branch `review-fixes`, five commits. Everything in sections **A, B (except the items listed as
+still open below), C, D-partial, E-partial and F has been applied**; the build now reports
+0 errors, 0 undefined references, 0 undefined citations, 0 amsmath warnings, 216 pages
+(214 before — the restored abstract adds two).
+
+**Still open — these change results or narrative, so they are yours to decide:**
+
+| Item | Why it was left |
+|---|---|
+| **B26** odd-`M` gap in `eq:beta_ij` | The bound needs restating or restricting to even `M`; either choice alters a lemma. |
+| **B28** the `\lfloor (M+1)/2\rfloor^{-1}` in `eq:U_gamma_bound` | Restoring it makes the energy and force rates equal, which contradicts the sentence at `chp_icmewald2d.tex:204` and the surrounding discussion. |
+| **B27** missing `L_xL_y/(2\pi)^2` in Ch. 3's lattice-sum→integral steps | Fixing it changes every explicit prefactor in `eq:U_gamma_bound` and the force bound. |
+| **B34** sign of the `4\pi H/\max\{L_x,L_y\}` term in `eq::38` | The printed form is one image level more conservative; may well be intended. |
+| **B36** `|g_{\rm u}g_{\rm d}|<1` claimed for `\gamma=0.6, H=1` (actually 1.265) | Correcting it flips which case of the parameter-selection strategy applies, and Table 3.1's `\gamma=0.6` column needs recomputing. |
+| **B37** trapezoidal remainder `e^{-\alpha^2(L_z-H)^2}` with images present | Should probably be `(L_z-(M+1)H)`; affects Eq. `eq:error_icmelc` and Step 3. |
+| **B48** the `\alpha^3` in Eq. (4.x) | I could not reproduce it; needs re-derivation, not a guess. |
+| **B49** dimensionally inconsistent `3+\alpha/\sqrt\pi` and `(1+2\alpha)L_z` | Needs the correct grouping, which follows from B89. |
+| **B50** Eq. `eq::estiZ` | The stated chain does not hold; the repair needs the intended argument. |
+| **B51 / B73** factor-2 and factor-2 questions in the variance proofs | Loose, not wrong; fixing changes theorem constants. |
+| **B87** self-energy treatment in Ch. 6 | Needs an explicit statement of what is kept, which only you can supply. |
+| **B89** the `\lambda_D^2` in `eq::E.4` | Load-bearing: every DH bound in Chs. 4 and 6 carries `\lambda_D^2`/`\lambda_D^4`. |
+| **B101** the `z_i` in the ion–wall force | Looks like the energy expression; please confirm before I touch it. |
+| **B104** non-neutral rows (C), (D) of `Table::Dielec` | The tabulated numbers need checking against the actual runs. |
+| **B66 / D** `\alpha` convention differs in Ch. 6; the rest of the symbol collisions | Unifying notation across chapters is an editorial decision with wide blast radius. |
+| **E** `chp_icmewald2d.tex:123` (`\bm h=\bm 0` mode claim), `chp_applications.tex:111` (`1.2\pi`/`1.4\pi` vs `2\pi`), `chp_applications.tex:58` vs caption (10x vs 1.5 orders), 4000-core vs 1024-core figure range, `app_softwares.tex` omits QuasiEwald.jl | All statements about results. |
+
+**Two remaining build warnings, both pre-existing and cosmetic:** 48 `destination with the same
+identifier (name{figure.N.M})` and 49 hyperref `Token not allowed in a PDF string`. The first comes
+from `ustthesis.cls`, which emits each float anchor twice; it does not affect links or output, and I
+did not patch the class. (My original note attributing this to the two stray minipage labels was
+wrong — those were unused labels, worth removing on their own, but not the cause.) The second comes
+from math in captions/headings flowing into PDF bookmarks; `\texorpdfstring` would silence it.
 
 ---
 

@@ -13,12 +13,12 @@ Finally, we extend the RBE2D method to dielectric-confined systems in Subsection
 
 \subsection{The algorithm}\label{subsec::RBE2D_algorithm}
 
-As been introduced in Section~\ref{sec::icm_ewald2d}, the Ewald2D summation can be reformulated as a 3D one, and here we apply the RBE method to accelerate the reciprocal-space sum.
+As introduced in Section~\ref{sec::icm_ewald2d}, the Ewald2D summation can be reformulated as a 3D one, and here we apply the RBE method to accelerate the reciprocal-space sum.
 Instead of deterministically computing the $\V k$-space sum in Eq.~\eqref{eq::U3D_Four} either directly or via FFT, we now evaluate it through a stochastic approximation, namely, the random ``mini-batch'' sampling~\cite{jin2020random}. 
 Notice that the low $\V k$ modes are more important due to the $e^{-k^2/(4\alpha^2)}$ factor, an importance sampling strategy was further developed for variance reduction.
 % The random batch Ewald (RBE) method has recently been developed for fully periodic systems~\cite{jin2021random,liang2022superscalability, liang2023random}, and here we extend it to quasi-2D systems.
 
-The long-range component of the electrostatic force exerts on $i$-th particle is given by $\V F_i^{\ell}=-\nabla_{\bm{r}_i}U_{\ell}$, its random batch approximation is denoted as
+The long-range component of the electrostatic force exerted on the $i$-th particle is given by $\V F_i^{\ell}=-\nabla_{\bm{r}_i}U_{\ell}$, its random batch approximation is denoted as
 \begin{equation}\label{eq:forceRBE}
 \begin{aligned}
     \V {\tilde{F}}_i^{\ell}=-\sum_{\eta=1}^P \frac{S}{P}\frac{4\pi q_i\V k_\eta}{Vk_{\eta}^2} \te{Im}\left(e^{-\i \V k_\eta\cdot \V r_i}\rho(\V k_\eta)\right)\;,
@@ -156,7 +156,7 @@ Besides its linear complexity, the RBE2D method offers two other significant adv
 \subsection{RBE2D method for dielectrically confined quasi-2D systems} \label{subsec::IBCELCDielectric}
 
 We now extend the RBE2D method for efficient MD simulations of dielectrically confined quasi-2D Coulomb systems. 
-First, given tolerance $\varepsilon$, one shall choose appropriate values for $M$ and $L_z$, such that the image series truncation error, the ELC term, and remainder error term can all be neglected. Then, let $\bm{F}_{\ell}^{\text{c}}$ denotes the $\V k$-space component of force acting on the $i$-th particle, it reads
+First, given tolerance $\varepsilon$, one shall choose appropriate values for $M$ and $L_z$, such that the image series truncation error, the ELC term, and remainder error term can all be neglected. Then, let $\bm{F}_{\ell}^{\text{c}}$ denote the $\V k$-space component of force acting on the $i$-th particle, it reads
 \begin{equation}\label{eq::52}
 \bm{F}_{\ell}^{\text{c}}(\bm{r}_i)=-\frac{2\pi}{L_xL_yL_z}\sum_{\bm{k}}{}^{\prime}\frac{e^{-\frac{k^2}{4\alpha^2}}}{k^2}\nabla_{\bm{r}_i}\left[\rho_{\bm{k}}\bar{\rho}_{\bm{k}}^{M}\right]+\bm{F}_{\text{IBC}}^{M}(\bm{r}_i)\;,%+\bm{F}_{\text{ELC}}^{M}(\bm{r}_i)+\bm{F}_{\text{err}}^{M}(\bm{r}_i)\;,
 \end{equation}
@@ -265,7 +265,7 @@ Following the primitive model, all the ions are represented as soft spheres of d
 where $r_{ij}$ is the distance between $i$-th and $j$-th particles, $r_{\text{LJ}}=2^{1/6}\sigma$ the LJ truncation distance, $\varepsilon_{\text{LJ}}=k_{\text{B}}T$ the coupling strength, $k_{\text{B}}$ is the Boltzmann constant, and $T$ the temperature. These ions are immersed in a continuum solvent, characterized by a Bjerrum length 
 $\ell_{\text{B}}=e^2/(4\pi \varepsilon_c k_{\text{B}}T)=3.5\sigma$. The system has dimensions $L_x=90\sigma$, $L_y=90\sigma$, and $H=30\sigma$, containing $750$ cations and $2250$ anions. The ions are confined in $z$ by purely repulsive LJ walls at $z=0$ and $z=30\sigma$, with parameters $\varepsilon_{\text{wall}}=\varepsilon_{\text{LJ}}$ and $\sigma_{i,\text{wall}}=0.5\sigma$. 
 The initial $10^6$ steps with $\Delta t=10^{-3}\tau$ are performed for equilibrium, where $\tau=\sqrt{m\sigma^2/\varepsilon_{\text{LJ}}}$ denotes the LJ unit of time. The production phase follows for another $10^7$ steps, and the configurations are sampled every $100$ time steps for statistics. 
-The temperature is maintained by using a Nos\'e-Hoover thermostat~\cite{hoover1985canonical} with relaxation times $0.01\tau$, %fluctuating near the reduce external temperature $T=1$. 
+The temperature is maintained by using a Nos\'e-Hoover thermostat~\cite{hoover1985canonical} with a relaxation time of $0.01\tau$, %fluctuating near the reduce external temperature $T=1$. 
 and $r_c$ is set as $10\sigma$ for both the RBE2D and PPPM methods.  
 
 \begin{figure}[!ht]
@@ -284,7 +284,7 @@ The Wasserstein-2 norm~\cite{santambrogio2015optimal, kolbe_2024_10912241} is us
 \end{equation}
 where $\Pi(\mathscr{P}_{\text{RBE}}, \mathscr{P}_{\text{PPPM}})$ represents the set of all joint distributions with marginal distributions $\mathscr{P}_{\text{RBE}}$ and $\mathscr{P}_{\text{PPPM}}$.
 The corresponding results are shown Fig.~\ref{fig:3_1}(b), where the~$W_2$ norms are   {plotted} as functions of~$L_z / H$ with   {varying} batch size~$P$.
-According to the error estimination in Section~\ref{sec:error_reform}, when $L_z\approx H$, the errors coming from the ELC and remainder error term are still large and can not be ignored;   {this} is consistent with the error decay observed here. 
+According to the error estimates in Section~\ref{sec:error_reform}, when $L_z\approx H$, the errors coming from the ELC and remainder error term are still large and can not be ignored;   {this} is consistent with the error decay observed here. 
 We also find that, as $L_z\geq 3H$, the error no longer decreases as $L_z/H$ increases (with $P$ fixed); indicating that
 both ELC and remainder error terms now indeed become negligible, and the error primarily comes from the random batch approximation. 
 %Therefore, when the batch size $P$ is fixed, the error no longer decreases as $L_z/H$ grows beyond a certain extent.

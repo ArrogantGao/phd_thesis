@@ -29,7 +29,7 @@ Since the Laplace transform of an SOE is a sum-of-poles expansion~\cite{greengar
 When combining with the MR, convergence rates at $O(6^{-M}) \sim O(7^{-M})$ can be achieved~\cite{jiang2021approximating}.
 
 Additionally, kernel-independent SOE methods have been developed, such as the black-box method~\cite{greengard2018anisotropic} and Vall\'ee-Poussin model reduction (VPMR) method~\cite{gao2021kernelindependent}. 
-Specially, the VPMR method integrates the flexibility of Vall\'ee-Poussin sums into the MR technique, demonstrating the highest convergence rate of $O(9^{-M})$ in constructing SOE approximation for Gaussians. 
+Specifically, the VPMR method integrates the flexibility of Vall\'ee-Poussin sums into the MR technique, demonstrating the highest convergence rate of $O(9^{-M})$ in constructing SOE approximation for Gaussians. 
 This method is also bandwidth-controllable and uniformly convergent~\cite{AAMM-13-1126}. 
 Due to these advantages, we will utilize the VPMR as the SOE construction tool in all the numerical experiments throughout this thesis.
 
@@ -136,7 +136,7 @@ where one assumes that $z\in[0, H]$, as for quasi-2D systems all particles are c
 
 The advantages and novelty of our SOE approach are summarized as follows.
 Firstly, Theorem~\ref{thm:error_xi} demonstrates that the approximation error of our SOE method is uniformly controlled in $z$ and decays exponentially in $k$. Secondly, the resulting approximation $\xi_{M}^{\pm}$ is well-conditioned, thus addressing the issue of catastrophic error cancellation when evaluating $\xi^{\pm}$. 
-Achieving these properties are crucial for the subsequent algorithm design.
+Achieving these properties is crucial for the subsequent algorithm design.
 
 \begin{rmk}
 	The choice of SOE approximation is not unique. Instead of approximating the Gaussian factor in the integrand with an SOE, a more straightforward approach might be approximating the complementary error function in~$\xi^{\pm}$ using an SOE. 
@@ -219,7 +219,7 @@ Clearly, $A_1(\beta)=0,$ $A_2(\beta)=q_1e^{-\m{i} \bm{h}\cdot\bm{\rho}_1}$, and 
 \end{equation}
 One can thus efficiently evaluate $S$ with another $O(N)$ operations by Eq.~\eqref{eq::S} and using the computed coefficients~$\V{A}(\beta) = (A_1(\beta), ..., A_N(\beta))$. 
 Consequently, the overall cost for evaluating the pairwise summation in forms of Eq.~\eqref{eq::33} is reduced to $O(N)$.
-Besides the iterative method discussed above, it is remarked that different fast algorithms based on SOE for 1D kernel summations have been developed~\cite{jiang2021approximating,GIMBUTAS2020815}, which can also be used under the framework described in this thesis for the summation in the non-periodic direction.
+Besides the iterative method discussed above, it is remarked that other fast algorithms based on SOE for 1D kernel summations have been developed~\cite{jiang2021approximating,GIMBUTAS2020815}, which can also be used under the framework described in this thesis for the summation in the non-periodic direction.
 % The key point lies in finding an SOE that provides accurate approximations for all Fourier modes, as demonstrated in Section~\ref{subsec::SOEapp} of this paper.
 
 \begin{rmk}
@@ -237,10 +237,10 @@ Finally, the long-range component of Coulomb interaction energy in Ewald2D summa
 	U_{\ell}\approx U_{\ell,\text{SOE}} := \sum_{\bm{h}\neq \bm{0}} U_{\ell,\text{SOE}}^{\bm{h}}+U_{\ell,\text{SOE}}^{\bm{0}},
 \end{equation}
 where both $U_{\ell,\text{SOE}}^{\bm{h}}$ and $U_{\ell,\text{SOE}}^{\bm{0}}$ can be evaluated efficiently and accurately with linear complexity.
-In MD simulations, the force exerts on the $i$-th particle, $\bm{F}_{i}$, plays a significant role in the numerical integration of Newton's equations.
+In MD simulations, the force exerted on the $i$-th particle, $\bm{F}_{i}$, plays a significant role in the numerical integration of Newton's equations.
 One can similarly develop fast recursive algorithms to evaluate the SOE-reformulated forces,
 the detailed expressions for $\bm{F}_{i}$ are summarized in Appendix~\ref{app::force}.
-We finally summarize the SOEwald2D  in Algorithm~\ref{alg:SOEwald2D}. Its error and complexity analysis will be discussed in the next sections.
+We finally summarize the SOEwald2D method in Algorithm~\ref{alg:SOEwald2D}. Its error and complexity analysis will be discussed in the next sections.
 
 \begin{algorithm}[ht] 
 	\caption{The sum-of-exponentials Ewald2D method}
@@ -272,7 +272,7 @@ The total error in the interaction energy $U$ consists of the truncation error a
 	\mathscr{E}_{U} := \mathscr{E}_{U_{s}}(r_c, \alpha) + \mathscr{E}_{U_{\ell}}(k_c, \alpha) + \sum_{\bm{h}\neq\bm{0}}\mathscr{E}_{U_{\ell},\text{SOE}}^{ \bm{h}} + \mathscr{E}_{U_{\ell},\text{SOE}}^{\bm{0}}\;,
 \end{equation}
 where the first two terms are the truncation error of Ewald2D summation and have already been provided in Proposition~\ref{prop::2.12}. 
-The remainder two terms are the error due to the SOE approximation for the Fourier space components, where
+The remaining two terms are the error due to the SOE approximation for the Fourier space components, where
 \begin{equation}
 	\mathscr{E}_{U_{\ell},\text{SOE}}^{\bm{h}}:=U_{\ell}^{\bm{h}}-U_{\ell,\text{SOE}}^{\bm{h}},\quad \text{and}\quad \mathscr{E}_{U_{\ell},\text{SOE}}^{\bm{0}}:=U_{\ell}^{\bm{0}}- U_{\ell,\text{SOE}}^{\bm{0}}.
 \end{equation}
@@ -327,7 +327,7 @@ Theorem~\ref{thm:SOE_error} provides upper bound error estimates, when the Debye
 	%When Eq.~\eqref{eq::integral2} is applied to a Fourier series (say Eq.~\eqref{eq::47}), one can choose a specific $(k,\theta)$ so that the coordinate along $\cos\theta$ of $\bm{k}$ is in the direction of a specific vector $\bm{\rho}$, and $\bm{k}\cdot\bm{\rho}=k\rho \cos\theta$. 
 \end{proof}
 
-Based on Proposition~\ref{prop::2.12} and Theorems~\ref{thm:SOE_error}, we conclude that the overall absolute error in $U$ scales as $\mathscr{E}_{U}\sim O(\varepsilon N)$. 
+Based on Proposition~\ref{prop::2.12} and Theorem~\ref{thm:SOE_error}, we conclude that the overall absolute error in $U$ scales as $\mathscr{E}_{U}\sim O(\varepsilon N)$. 
 Notably, for systems sharing the same charge distribution, the Coulomb interaction energy $U \sim O(N)$. 
 % Notably, while maintaining a constant particle density within the system, $U$ also exhibits an $O(N)$ scaling behavior. 
 Thus we anticipate that our method will maintain a fixed relative error in $U$. 
@@ -337,7 +337,7 @@ This will be verified through numerical tests in Section~\ref{subsec::errSOE}.
 
 Next we analyze the complexity of the SOEwald2D method summarized in Algorithm~\ref{alg:SOEwald2D}. 
 The main computational cost is contributed by the following steps: $N$ particle sorting in $z$, the real and reciprocal space summations.
-For sorting (Step 4 in Algorithm~\ref{alg:SOEwald2D}), taking advantage of the quasi-2D confinement, various sorting algorithm are suitable, for example, the bucket sorting algorithm~\cite{cormen2022introduction} results in an $O(N)$ complexity.
+For sorting (Step 4 in Algorithm~\ref{alg:SOEwald2D}), taking advantage of the quasi-2D confinement, various sorting algorithms are suitable, for example, the bucket sorting algorithm~\cite{cormen2022introduction} results in an $O(N)$ complexity.
 To achieve an optimal complexity, the cost of the real and reciprocal space summations (Steps 5 and 6) need to be balanced. 
 To analyze it, we first define $\rho_{s}$ and $\rho_{\ell}$ by the average densities in the real and Fourier spaces 
 \begin{equation}
@@ -393,7 +393,7 @@ where $\mathbb{E}_{\bm h \sim g(\bm{h})}$ denotes the expectation with $\bm{h}$ 
 Instead of calculating the summation directly or using FFT, a mini-batch of Fourier modes (with batch size $P$) sampled from $g(\bm{h})$ are employed to estimate the expectation, resulting in an efficient stochastic algorithm.
 
 However, when formulating algorithms for quasi-2D systems, the direct application of the random mini-batch idea introduces formidable challenges.
-The classical Ewald2D, either in the closed form (Eq.~\eqref{eq:philk}) or the integral form (Eq.~\eqref{eq::phil}), are unsuitable for random batch sampling:ee
+The classical Ewald2D, either in the closed form (Eq.~\eqref{eq:philk}) or the integral form (Eq.~\eqref{eq::phil}), are unsuitable for random batch sampling:
 (1) the closed form demands $O(N^2)$ complexity even with batch size $P \sim O(1)$; 
 (2) the integral form is singular at $h = \kappa = 0$, giving rise to significant variance.
 In this section, we will show that the idea of random mini-batch can now be easily incorporated into the SOEwald2D algorithm based on the reformulation of Ewald2D proposed in Section~\ref{subsec::reforEwald2}, resulting in the random batch SOEwald2D (RBSE2D) method, which can accurately satisfy the SPMF condition for quasi-2D geometry.
@@ -673,7 +673,7 @@ In line with discussions in~\cite{liang2022random}, the RBSE2D-accelerated Lange
 Here, $\Xi$ and $\bm{\chi}_i$ represent the fluctuations of energy and force, as defined in Eq.~\eqref{eq::xichi}. $K=\sum |\bm{p}_i|^2/2m_i$ denotes the instantaneous kinetic energy, and $\mathcal H_0$ and $\mathcal H$ represent the Hamiltonian at the initial and current time steps, respectively. The parameter $\beta$ represents the relaxation time, determining the interval between successive dissipations of artificial heat within the system. An optimal choice for $\beta$ typically falls in the range of $10\sim 100\Delta t$. It is worth noting that the distributions obtained using Eq.~\eqref{eq::NVE} have a small deviation of $O(\Delta t^2/P)$ compared to the correct NVE ensemble~\cite{liang2024JCP}.
 
 Finally, we discuss the parameter selection for the RBSE2D method. The accuracy is influenced by three key parameters: the parameter $s$, which controls the truncation error of the Ewald summation; the number of exponentials $M$ in the SOE, which governs the SOE approximation error; and the batch size $P$, which affects the variance of the random batch approximation. For a prescribed tolerance $\varepsilon$, $s$ and $M$ can be determined using Eq.~\eqref{eq:truncation_error} and the convergence rate of the SOE method~\cite{gao2021kernelindependent}, respectively. One can pick the proper $s$ and $M$ to ensure that errors from these two components are both at the $O(\varepsilon)$ level. 
-The determination of optimal batch size $P$ is system-dependent, relies on performing some numerical tests. Notably, it is empirically observed that a small $P$ is sufficient, thanks to the importance sampling strategy for variance reduction. Numerical results in Section~\ref{subsec::RBSE2D} show that choosing $P=120$ is adequate for coarse-grained electrolytes. 
+The determination of the optimal batch size $P$ is system-dependent and relies on numerical testing. Notably, it is empirically observed that a small $P$ is sufficient, thanks to the importance sampling strategy for variance reduction. Numerical results in Section~\ref{subsec::RBSE2D} show that choosing $P=120$ is adequate for coarse-grained electrolytes. 
 Regarding the computational complexity, by substituting Eq.~\eqref{eq::59} into Eqs.~\eqref{eq::cs} and \eqref{eq::cll}, one finds that the computational cost of the RBSE2D algorithm for the near-field grows cubically with $s$; while the cost for the far-field grows linearly with $M$ and $P$, and quadratically with $s$.
 
 %Finally, as mentioned above in Section~\ref{subsec::rbis},
@@ -732,15 +732,15 @@ A double-precision floating-point (FP64) arithmetic for both the Ewald2D and SOE
 The results presented in Fig.~\ref{fig:error_Lz} clearly illustrate that the error of the Ewald2D method increases rapidly with $H$.
 In contrast, the error of the SOEwald2D method remains independent of $H$ for various values of $s$ and $M$, thanks to its stable and well-conditioned summation procedure.
 
-For many existing methods, the accurate evaluation of the forces exert on particles can be strongly influenced by the particle's location in~$z$. 
+For many existing methods, the accurate evaluation of the forces exerted on particles can be strongly influenced by the particle's location in~$z$. 
 Due to the uniform convergence of SOE approximation, our method does not suffer from this issue, which is illustrated by two commonly employed examples that have been extensively studied in literature~\cite{lindbo2012fast,de2002electrostatics}. 
 In the first example, one considers a system consisting of $50$ anions and $50$ cations arranged in a cubic geometry with a side length of $100$, along with neutral slabs.  
 The pointwise error of the force, represented as $\sqrt{\mathscr{E}_{x}^2+\mathscr{E}_{y}^2+\mathscr{E}_{z}^2}$,  is calculated as a function of the particles' $z$-coordinates. 
 This evaluation is conducted for various $(s,M)$ pairs, with the Ewald splitting parameter $\alpha=0.1$. 
-Fig.~\ref{fig:error_ef}(a) clearly demonstrates that the pointwise error in force is independent with its relative position in $z$. 
+Fig.~\ref{fig:error_ef}(a) clearly demonstrates that the pointwise error in force is independent of the particle's position in $z$. 
 In the second example, one considers a system of the same size but with two non-neutral slabs. 
 The surface charge densities are set as $\sigma_{\mathrm{top}} = \sigma_{\mathrm{bot}} = -0.005$, and the system contains $100$ monovalent cations such that the neutrality condition Eq.~\eqref{eq::chargeneu} is satisfied. 
-Fig.~\ref{fig:error_ef}(b) indicates that for such non-neutral slabs case, the pointwise error in forces calculated by the SOEwald2D method remains independent with $z$.
+Fig.~\ref{fig:error_ef}(b) indicates that for such non-neutral slabs case, the pointwise error in forces calculated by the SOEwald2D method remains independent of $z$.
 
 \begin{figure}[ht]
 	\centering
@@ -775,7 +775,7 @@ Therefore, we conduct a series of MD simulations to validate the accuracy of the
 \end{figure}
 
 The first benchmark example is a coarse-grained MD simulation of  $1:1$ electrolytes in the NVT ensemble. 
-Following the primitive model~\cite{frenkel2023understanding}, ions are represented as soft spheres with diameter $\sigma$ and mass $m$, interacting through the Coulomb potential and a purely repulsive shifted-truncated Lennard Jones (LJ) potential. 
+Following the primitive model~\cite{frenkel2023understanding}, ions are represented as soft spheres with diameter $\sigma$ and mass $m$, interacting through the Coulomb potential and a purely repulsive shifted-truncated LJ potential. 
 The LJ potential is given by
 \begin{equation}
 	U_{\text{LJ}}(r) = 
@@ -785,10 +785,10 @@ The LJ potential is given by
 	\end{cases}
 \end{equation}
 where $r_{\text{LJ}} = 2^{1/6} \sigma$ is the LJ cutoff, $\epsilon = k_B T$ is the coupling strength, $k_B$ is the Boltzmann constant, and $T$ is the external temperature. 
-The simulation box has dimensions $L_x = L_y = 100 \sigma$ and $H = 30 \sigma$, where the ions confined within the central region by purely repulsive LJ walls located at $z = 0$ and $z = 30 \sigma$ with $\epsilon_{\text{wall}} = \epsilon_{\text{LJ}}$ and $\sigma_{\text{wall}} = 0.5 \sigma$. 
-The system contains $218$ cations and anions, and both two walls are neutral. 
-The simulation is performed with the time step~$\Delta=0.001\tau$, where~$\tau = \sqrt{m \sigma^2 / \eps_{\text{LJ}}}$ denotes the LJ unit of time. 
-The temperature is maintained by using a Nos\'e-Hoover thermostat~\cite{frenkel2023understanding} with relaxation times $0.1\tau$, fluctuating near the reduce external temperature $T=1$.
+The simulation box has dimensions $L_x = L_y = 100 \sigma$ and $H = 30 \sigma$, where the ions are confined within the central region by purely repulsive LJ walls located at $z = 0$ and $z = 30 \sigma$ with $\epsilon_{\text{wall}} = \epsilon_{\text{LJ}}$ and $\sigma_{\text{wall}} = 0.5 \sigma$. 
+The system contains $218$ cations and $218$ anions, and both walls are neutral. 
+The simulation is performed with the time step~$\Delta t=0.001\tau$, where~$\tau = \sqrt{m \sigma^2 / \eps_{\text{LJ}}}$ denotes the LJ unit of time. 
+The temperature is maintained by using a Nos\'e-Hoover thermostat~\cite{frenkel2023understanding} with a relaxation time of $0.1\tau$, fluctuating near the reduced external temperature $T=1$.
 The system is first equilibrated for~$5 \times 10^5$ steps, and the production phase lasts another~$1 \times 10^7$ steps. 
 The configurations are recorded every $100$ steps for statistics. Results produced by the SOEwald2D method with parameters $\alpha=0.1$, $s=4$, and $M=8$ serve as the reference solution, where $\varepsilon\sim 10^{-8}$.
 
@@ -824,7 +824,7 @@ These findings indicate that choosing a small batch size $P\sim O(1)$ is suffici
 
 \subsection{CPU performance}
 The CPU performance comparisons among the SOEwald2D, RBSE2D, and the original Ewald2D methods are conducted for MD simulations of $1:1$ electrolyte systems with varying system sizes. 
-All calculations are performed on a Linux system equipped with an Intel Xeon Platinum 8358 CPU (2.6 GHz, 1 single core); and by using a self-developed package developed in Julia language. 
+All calculations are performed on a Linux system equipped with an Intel Xeon Platinum 8358 CPU (2.6 GHz, 1 single core); and using a package we developed in the Julia language. 
 To ensure a fair comparison, we maintain the same accuracy across all methods. We fix $s=4$ and set $M=8$ for the SOE approximation, resulting in errors at~$\sim10^{-8}$ for both the Ewald2D and SOEwald2D methods. %as shown in Fig.~\ref{fig:error_fixn}(a).
 Subsequently, we set the batch size as $P=120$ for the RBSE2D method, with which the RBSE2D-based MD simulations achieve the same accuracy as the SOEwald2D method, as has been illustrated in the previous results.
 %It is remarked that the Ewald2D, SOEwald2D, and RBSE2D methods scale as $O(s^2)$, $O(s^2 M)$, and $O(s^2 M P)$, respectively.

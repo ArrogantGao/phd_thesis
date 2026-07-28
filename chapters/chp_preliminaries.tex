@@ -21,7 +21,7 @@ The total charge neutrality condition is assumed, i.e., $\sum_{i=1}^{N}q_i=0$. T
         \epsilon_{\mrm{d}}, & \,{\V{r} \in \Omega_{\mrm{d}}},
     \end{array} \right.
 \end{equation}
-where~$\eps_{\T u}$,~$\eps_{\T c}$ and~$\eps_{\T d}$ are all positive constants, whose specific values depend on materials properties inside each layer. 
+where~$\eps_{\T u}$,~$\eps_{\T c}$ and~$\eps_{\T d}$ are all positive constants, whose specific values depend on material properties inside each layer. 
 Without loss of generality, we set~$\eps_{\T c} = 1$ in this thesis if not specified.
 An illustration of the quasi-2D charged system is shown in Fig.~\ref{fig:box}.
 
@@ -126,11 +126,11 @@ We construct copies $\Omega(\bm{m})$ of the simulation domain by $\Omega(\bm{m})
 % Next, we define a summation shape $\mathcal{S}$ which contains the origin $\bm{m}=\bm{0}$ and has surface $f_{\mathcal{S}}=0$. 
 Next, we define a summation shape $\mathcal{S} \subset \mathbb{R}^2$ which contains the origin.
 % and has surface $f_{\mathcal{S}}(\V{r}) = 0$.
-We consider a lattice $\Lambda(\mathcal{S},R)=\{\Omega(\bm{m})|\bm{m}/R\in\mathcal{S}\}$ with $R\in\mathbb{R}$ be a truncation parameter. 
+We consider a lattice $\Lambda(\mathcal{S},R)=\{\Omega(\bm{m})|\bm{m}/R\in\mathcal{S}\}$ with $R\in\mathbb{R}$ being a truncation parameter. 
 Given these notations, Theorem \ref{order} clarifies the necessary conditions to guarantee absolute convergence of the series.
 
 \begin{thm} \label{order}
-    The summation in Eq.~\eqref{eq::pairssum} truncated within region $\Lambda(\mathcal{S},R)$ is absolutely convergent as~$R \to \infty$ if (1) the shape $\mathcal{S}$ is symmetric around the origin (meaning that if $\bm{m} / R \in \mathcal{S}$, then $- \bm{m}/ R \in \mathcal{S}$);and (2) the system within the central box is charge neutral, i.e.,~$\sum_{j = 1}^N q_j = 0$.
+    The summation in Eq.~\eqref{eq::pairssum} truncated within region $\Lambda(\mathcal{S},R)$ is absolutely convergent as~$R \to \infty$ if (1) the shape $\mathcal{S}$ is symmetric around the origin (meaning that if $\bm{m} / R \in \mathcal{S}$, then $- \bm{m}/ R \in \mathcal{S}$); and (2) the system within the central box is charge neutral, i.e.,~$\sum_{j = 1}^N q_j = 0$.
 \end{thm}
 
 \begin{proof}
@@ -148,7 +148,7 @@ Given these notations, Theorem \ref{order} clarifies the necessary conditions to
 \end{proof}
 %It is remarked that, for fully-periodic systems, the pairwise Coulomb summation is conditionally convergent\cite{de1980simulation}, meaning that the series summation result depends on the specific shape of summation region.
 
-In practice, a common choice is to choose the spherical/circular shape of summation region centered at the origin with unit radius; i.e., the sum is taken over $\abs{\V m}=0, 1, 2\ldots, R$ in ascending order, where $R$ is the truncation parameter.
+In practice, a common choice is to choose the spherical/circular shape of summation region centered at the origin with unit radius; i.e., the sum is taken over $\abs{\V m}=0, 1, 2, \ldots, R$ in ascending order, where $R$ is the truncation parameter.
 As long as Eq.~\eqref{eq::pairssum} is well defined, Proposition~\ref{prop::boundary} establishes a precise relationship between Eq.~\eqref{eq::pairssum} and the solution to Poisson's equation Eq.~\eqref{eq::Poisson} given a properly chosen boundary condition as $z\to\infty$.
 
 \begin{prop}\label{prop::boundary}
@@ -190,7 +190,7 @@ As long as Eq.~\eqref{eq::pairssum} is well defined, Proposition~\ref{prop::boun
 	Finally, the charge neutrality condition results in Eq.~\eqref{eq::boundary1}. 
  
 Eq.~\eqref{eq::boundary1} indicates that $\lim\limits_{z \to \pm \infty} \phi(\bm{r})$ is a finite constant, and thus can be regarded as a properly chosen Dirichlet-type boundary condition at $z\rightarrow\pm\infty$~\cite{lindbo2012fast}. 
-Next, we study the uniqueness of the solution of Poisson's equation under DPBCs and Eq.~\eqref{eq::boundary1}. Suppose there exists two solutions $\phi_1(\bm{r})$ and $\phi_2(\bm{r})$,
+Next, we study the uniqueness of the solution of Poisson's equation under DPBCs and Eq.~\eqref{eq::boundary1}. Suppose there exist two solutions $\phi_1(\bm{r})$ and $\phi_2(\bm{r})$,
 let $u(\bm{r}):=\phi_1(\bm{r})-\phi_2(\bm{r})$ be the difference between two solutions, and $\mathcal{B}=\mathcal{R}^2\times\mathbb{R}$ be a tubular cell that extends to infinity in the $z$-direction. By Green's first identity, we have 
 \begin{equation}
 0=\int_{\mathcal{B}}u\Delta ud\bm{r}=\int_{\mathcal{B}}\nabla\cdot(u\nabla u)-(\nabla u)^2d\bm{r}=\int_{\partial\mathcal{B}}u\nabla u\cdot d\bm{S}-\int_{\mathcal{B}}\left(\nabla u\right)^2d\bm{r}.
@@ -262,11 +262,11 @@ Finally, the detailed positions of the $l$-th level images along $z$-axis are gi
 Assuming all dielectric constants are positive, it follows that $\abs{\gamma_{\mrm{u}}},\abs{\gamma_{\T d}}< 1$. 
 This implies that the infinite image charge series converges and can be truncated at the~$M$-th level. 
 Consequently, the original dielectric-confined system can be approximated by a homogeneous system augmented with $M$ additional levels of image charges in $z$, which can be readily solved using standard methods for homogeneous quasi-2D systems.
-However, as have been mentioned in the Chapter~\ref{chp_intro}, recent studies have shown that special materials~\cite{Kornyshev1996Static, Schlaich2016Water, Kornyshev2021Nonlocal} can have negative dielectric constants, which may lead to the divergence of the image charge series.
+However, as mentioned in Chapter~\ref{chp_intro}, recent studies have shown that special materials~\cite{Kornyshev1996Static, Schlaich2016Water, Kornyshev2021Nonlocal} can have negative dielectric constants, which may lead to the divergence of the image charge series.
 
 \section{Ewald summation methods}
 
-In this section, we first revisit the widely used ``Ewald splitting'' technique~\cite{Ewald1921AnnPhys}. which is the most widely used method for evaluating the long-range interactions in periodic systems.
+In this section, we first revisit the widely used ``Ewald splitting'' technique~\cite{Ewald1921AnnPhys}, which is the most widely used method for evaluating the long-range interactions in periodic systems.
 We then introduce \rev{its} applications to both fully and doubly periodic systems, i.e. the Ewald3D and Ewald2D summation, respectively.
 Finally, we will briefly introduce the random batch Ewald (RBE) method~\cite{jin2021random}, which is a powerful method to accelerate the computation of the electrostatic energy in fully periodic systems.
 
@@ -310,7 +310,7 @@ the averaged integration for the computed potential over certain directions shou
 For fully-periodic systems, by carefully imposing the SPMF in the random batch approximation, it has been shown that the long-range electrostatic correlations can be accurately captured~\cite{gao2023JCTC}.
 
 Among these methods, the random batch Ewald (RBE) method was originally proposed to accelerate the Ewald3D summation~\cite{jin2021random}.
-As have been introduced in Sec.~\ref{sec::ewald_splitting}, the Ewald3D summation can be decomposed into short-range and long-range components: the short-range component is computed in real space, while the long-range component is computed in reciprocal space, and a direct computation of the long-range component leads to a time complexity of $O(N^{1.5})$.
+As introduced in Sec.~\ref{sec::ewald_splitting}, the Ewald3D summation can be decomposed into short-range and long-range components: the short-range component is computed in real space, while the long-range component is computed in reciprocal space, and a direct computation of the long-range component leads to a time complexity of $O(N^{1.5})$.
 Instead of computing the long-range component directly, the RBE method approximates the long-range component via random batch importance sampling.
 Compared to the widely used FFT-based methods such as the particle-particle particle-mesh (PPPM) method~\cite{hockney2021computer,darden1993particle,essmann1995smooth}, RBE reduces the time complexity from $O(N\log N)$ to $O(N)$, and its simplicity makes it suitable for parallelization compared to the FMM based methods~\cite{greengard1987fast,cheng1999fast,ying2004kernel}.
 
@@ -334,12 +334,12 @@ Thus in RBE, the long-range component is approximated as follows:
 \end{equation}
 where $\{\V{k}_{\eta}\}_{\eta=1}^{P}$ are $P$ random vectors sampled from the discrete Gaussian distribution~$\mathcal{P}_{\V{k}}$, thus $U_{\ell, *}$ is an unbiased estimator of $U_{\ell}$.
 The same procedure is also valid for the force calculation.
-It has been proved that the batch size $P$ is an $O(1)$ constant irrelevant to the system size $N$, so that the time complexity of RBE is always $O(N)$.
+It has been proved that the batch size $P$ is an $O(1)$ constant independent of the system size $N$, so that the time complexity of RBE is always $O(N)$.
 
 
 \subsection{Ewald2D summation} \label{sec::ewald2d}
 
-Throughout the remainder sections, we will extensively use Fourier transforms for the DPBCs, which leads to the well-known Ewald2D~\cite{parry1975electrostatic, heyes1977molecular, de1979electrostatic} formula for quasi-2D Coulomb systems.
+Throughout the remaining sections, we will extensively use Fourier transforms for the DPBCs, which leads to the well-known Ewald2D~\cite{parry1975electrostatic, heyes1977molecular, de1979electrostatic} formula for quasi-2D Coulomb systems.
 For ease of discussion, the mathematical notations and definitions are first provided.
 
 \begin{defn}\label{Def::Fourier}(Quasi-2D Fourier transform) 
@@ -473,7 +473,7 @@ and the function $\mathcal{G}_{\alpha}$ and~$\mathcal{G}_{\alpha}^0$ are defined
     \mathcal{G}_{\alpha}(h,z) = \xi^{+}(h, z)+\xi^{-}(h, z),~\mathcal{G}_{\alpha}^0(z) = {z} \erf(\alpha {z}) + \frac{e^{-(\alpha z)^2}}{\alpha \sqrt{\pi}}.
 \end{equation}
 
-In practice, truncation in real and Fourier spaces are performed simultaneously, and the truncation error is clearly configuration dependent.
+In practice, truncation in real and Fourier spaces is performed simultaneously, and the truncation error is clearly configuration dependent.
 Here the estimation is analyzed based on the \emph{ideal-gas assumption}~\cite{hansen2013theory}, which was used by Kolafa and Perram~\cite{kolafa1992cutoff} in analyzing the Ewald3D case. 
 Details of the ideal-gas assumption are summarized in Appendix~\ref{app::ideal-gas}.
 The root mean square (RMS) error is used to measure the truncation error in a given physical quantity, which is defined as
@@ -482,7 +482,7 @@ The root mean square (RMS) error is used to measure the truncation error in a gi
 \end{equation}
 where $\mathscr{E}_i$ is the absolute error in the physical quantity due to $i$th particle, and $N$ is the total number of particles.
 
-In the following analysis, we denote the cutoff radii in real and Fourier spaces as $r_c$ and $k_c$, i.e., one only calculate the terms satisfying $\abs{\bm{r}_{ij} + \mathcal{M}} \leq r_c$ and 
+In the following analysis, we denote the cutoff radii in real and Fourier spaces as $r_c$ and $k_c$, i.e., one only calculates the terms satisfying $\abs{\bm{r}_{ij} + \mathcal{M}} \leq r_c$ and 
 $|\bm{h }|\leq k_c$ in real and Fourier spaces, respectively.
 Our main findings are summarized as follows. 
 
@@ -570,20 +570,20 @@ Based on Theorem~\ref{thm:ewald2d_phi_error}, one can further obtain the error e
 \end{rmk}
 
 It should be noticed that, since the real space interaction is short-ranged, it only requires computation of neighboring pairs within the cutoff radius $r_c$. 
-Many powerful techniques have been developed to reduce the cost for such short-range interactions into $O(N)$ complexity, including the Verlet list~\cite{verlet1967computer}, the linked cell list~\cite{allen2017computer} and more recently the random batch list~\cite{liang2021random} algorithms. 
+Many powerful techniques have been developed to reduce the cost for such short-range interactions into $O(N)$ complexity, including the Verlet list~\cite{verlet1967computer}, the linked cell list~\cite{allen2017computer} and, more recently, the random batch list~\cite{liang2021random} algorithms. 
 Consequently, the main challenge lies in the long-range component calculation, which will be discussed in the following chapters.
 
 In summary, the Ewald2D summation is the exact solution and does not involve any uncontrolled approximation. 
 However, two significant drawbacks limit its application for large-scale simulations:
 \begin{itemize}
 	\item Even with optimal choice of parameter $\alpha$, computing the interaction energy $U$ for an $N$-particle system through Eqs.~\eqref{eq:phi_s}, \eqref{eq::self} and \eqref{eq::7} takes $O(N^2)$ complexity, which is worse than $O(N^{3/2})$ for that of the Ewald3D, the fully-periodic case.
-	\item The function $\xi^{\pm}(h, z_{ij})$ is ill-conditioned: It grows exponentially as $h z_{ij}$ grows, leading to catastrophic error cancellation in actual computations with prescribed machine precision.
+	\item The function $\xi^{\pm}(h, z_{ij})$ is ill-conditioned: It grows exponentially as $h z_{ij}$ grows, leading to catastrophic cancellation in actual computations with prescribed machine precision.
 \end{itemize}
 
 % \subsection{Extension to systems with charged slabs}\label{sec::sysslabs}
 
 We now extend the Ewald2D summation to systems with charged slabs, which widely exist in many applications.
-In the presence of charged slabs, boundary layers naturally arise -- opposite ions accumulate near the interface, forming an electric double layer. The structure of electric double layers plays essential role for properties of interfaces and has caught much attention~\cite{messina2004effect,breitsprecher2014coarse,moreira2002simulations}. Since charges on the slabs are often represented as a continuous surface charge density, we present the Ewald2D formulation with such a situation can be well treated.
+In the presence of charged slabs, boundary layers naturally arise -- opposite ions accumulate near the interface, forming an electric double layer. The structure of electric double layers plays an essential role in the properties of interfaces and has attracted much attention~\cite{messina2004effect,breitsprecher2014coarse,moreira2002simulations}. Since charges on the slabs are often represented as a continuous surface charge density, we present the Ewald2D formulation with which such a situation can be well treated.
 
 Without loss of generality, one assumes that the two charged slab walls are located at $z=0$ and $z=L_z$ and with smooth surface charge densities $\sigma_{\mathrm{bot}}(\bm{\rho})$ and $\sigma_{\mathrm{top}}(\bm{\rho})$, respectively. Note that both $\sigma_{\mathrm{bot}}(\bm{\rho})$ and $\sigma_{\mathrm{top}}(\bm{\rho})$ are doubly-periodic according to the quasi-2D geometry. In such cases, the charge neutrality condition of the system reads
 \begin{equation}\label{eq::chargeneu}
@@ -607,7 +607,7 @@ The potential $\phi_{\text{p-p}}$ then follows immediately from Lemma~\ref{thm::
 \begin{equation}\label{eq::phiion-ion}
 	\phi_{\text{p-p}}(\bm{r}_{i})=\phi_{s}(\bm{r}_{i}) + \sum_{\bm{k}\neq\bm{0}} \phi_{\ell}^{\V{k}}(\bm{r}_{i}) + \phi_{\ell}^{\V{0}}(\bm{r}_{i}) - \phi_{\text{self}}^{i},
 \end{equation}
-with each components given by Eqs.~\eqref{eq:phi_s}, \eqref{eq:philk}, \eqref{eq:phil0}, and \eqref{eq::self}, respectively. 
+with each component given by Eqs.~\eqref{eq:phi_s}, \eqref{eq:philk}, \eqref{eq:phil0}, and \eqref{eq::self}, respectively. 
 The 2D Fourier series expansion of~$\phi_{\text{p-s}}$ is provided in the following Theorem~\ref{thm::ionwall}, where its convergence rate is controlled by the smoothness of surface charge densities.
 \begin{thm}\label{thm::ionwall}
 	Suppose that $\widehat{\sigma}_{\mathrm{bot}}$ and $\widehat{\sigma}_{\mathrm{top}}$ are two-dimensional Fourier transform (see Lemma~\ref{lem::2dfourier}) of $\sigma_{\mathrm{bot}}$ and $\sigma_{\mathrm{top}}$, respectively. By Fourier analysis, the particle-slab component of the electric potential is given by
@@ -642,7 +642,7 @@ Consider the ideal case that both $\sigma_{\mathrm{bot}}$ and $\sigma_{\mathrm{t
 	\phi_{\text{p-s}}(\bm{r}_{i})=\phi_{\text{p-s}}^{\bm{0}}(\bm{r}_{i})=-2\pi\left[\sigma_{\mathrm{top}}(L_z - z_{i})+\sigma_{\mathrm{bot}}(z_{i} - 0)\right]\;,
 \end{equation}
 for all $z_{i}\in [0, L_z]$. 
-Here zero is retained to indicate the location of bottom slab. 
+Here zero is retained to indicate the location of the bottom slab. 
 
 For completeness, Proposition \ref{welldefinedness} provides the result of the well-definedness.
 \begin{prop} \label{welldefinedness}

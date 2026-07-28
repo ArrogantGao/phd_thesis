@@ -339,7 +339,7 @@ moreover, if further given $\V{r}_i:=(\vrho_i, z_i)$, we obtain that
    =& \frac{1}{8\pi^2 }\int_{\sR^2} \frac{ \exp{(\mathrm{i} \V{h} \cdot \V{\rho}_{ij})}}{h\left(1-\gamma_{\mrm{u}}\gamma_{\mrm{d}}\exp(-2hH)\right)} \left[1-\exp\left(-\frac{h^2}{4\alpha}\right)\right]\left[\sum_{p=1}^4\Gamma_p\exp(-ha_p(z_i;z_j))\right]d \V{h}\;,
 \end{align*}
 where $\V{\rho}_{ij}:=\vrho_i-\vrho_j$. 
-In actually calculations, due to the short range nature of~$G_s(\cdot, \V{r}_j)$, the infinite sum in Eq.~\eqref{eq::U_s} is truncated to a finite sum in real space with a cutoff $r_c$, given by
+In actual calculations, due to the short range nature of~$G_s(\cdot, \V{r}_j)$, the infinite sum in Eq.~\eqref{eq::U_s} is truncated to a finite sum in real space with a cutoff $r_c$, given by
 \begin{equation}\label{eq::U_s_truncated}
     U_s \approx U_{s, *} = \frac{1}{2}\sum_{\abs{\bm{\rho}_{ij, m}} \leq r_c} q_i q_j G_s(\V{r}_i+\vL_m, \V{r}_j)\;,
 \end{equation}
@@ -866,16 +866,15 @@ Since the decaying rate of the energy is given by~$\Delta U_s \propto (\alpha r_
     r_c = (10^{-E} \alpha)^{-\frac{1}{3}}\;,
 \end{equation}
 where~$E$ represents the upper bound of the truncation error of the pairwise short range interaction.
-Then by taking
+We then take
 \begin{equation}\label{eq:alphs-select}
     \alpha = \left(\frac{N}{L_x L_y} \right)^{1.5} = {\varrho}^{1.5}\;,
 \end{equation}
-where~$\varrho$ represents the surface density.
-The cost of the short range interaction is given by
+where~$\varrho$ represents the surface density, so that the cost of the short-range interaction becomes
 \begin{equation}
     C_s \propto  N\;.
 \end{equation}
-In this way, total cost of the QEM will be of~$O(N)$.
+In this way, the total cost of the QEM is $O(N)$.
 
 % \begin{rmk}
 %     With the~$\alpha$ selected according to Eq.~\eqref{eq:alphs-select}, the variance of force can be estimated as
@@ -898,7 +897,7 @@ According to Eq.~\eqref{eq::int_Gs}, the integral to be evaluated numerically ca
 \end{equation}
 where~$a$,~$H$ and~$b$ are positive constants, $J_0$ is the zeroth order Bessel function of the first kind and~$k_0 = {\ln{(\gamma_u \gamma_d)}} / {2H}$ is a 1st order pole.
 
-To avoid the divergence, we calculate the principle value by splitting the integrand into two parts, given by
+To avoid the divergence, we calculate the principal value by splitting the integrand into two parts, given by
 \begin{equation}\label{eq::split}
     \begin{split}
         f_{1} &=  \frac{J_0(b h) e^{- a h} - J_0(b k_0) e^{- a k_0}}{e^{- 2 H (h - k_0)} - 1} - J_0(b k_0) e^{- a k_0} \;, \\
@@ -1017,17 +1016,17 @@ The results show that as $E$ increases, the relative error decreases rapidly, de
 % To demonstrate the accuracy of the QEM for planar dielectric interfaces in a MD simulation, we study a few electrolytes modeled as the restricted primitive model, confined between two dielectric interfaces.
 % In all simulations, the box size is set as $(100 \tau_0, 100\tau_0, H)$, and consists of 436 particles immersed in continuum solvent characterized by a Bjerrum length $\ell_{\mathrm B} = e_0^2/(4 \pi \eps_c k_B T) = 3.5 \tau_0$, where~$e_0$ is the unit of smallest charge.
 % The ions are modeled as soft spheres of diameter~$\tau_0$ that have an excluded-volume interaction represented by a purely repulsive shifted-truncated Lennard-Jones (LJ) potential with energy scale~$\eps_{LJ} = k_B T$, where~$k_B$ is the Boltzmann constant and~$T$ is the absolute temperature.
-% The ions are confined by purely repulsive shifted-trunacted LJ walls ($\eps_\text{ion-wall} = k_B T$; $\tau_\text{ion-wall} = 0.5 \tau_0$) at $z = 0$ and $z = H$. 
+% The ions are confined by purely repulsive shifted-truncated LJ walls ($\eps_\text{ion-wall} = k_B T$; $\tau_\text{ion-wall} = 0.5 \tau_0$) at $z = 0$ and $z = H$. 
 % The MD simulations is utilize a time step $0.001 t_0$, where $t_0 = \tau_0 m_0 / k_B T$ is the unit of time with $m_0 = 1$~(LJ unit), the ion mass, and temperature is controlled via Nosé–Hoover thermostat.
 % When evaluating the electrostatic interaction using the QEM, we set~$E = 4$,~$p = 30$ and~$n = 40$.
 % In all simulations, it takes~$2 \times 10^6$ time steps to reach equilibrium, after which we continue the simulation for $3 \times 10^6$ time steps for sampling.
 % We sample every 100 steps, which yields~$3 \times 10^{4}$ independent and equilibrated configurations.
 
 A few dielectrically confined electrolytes are studied to validate the accuracy of the QEM.
-In all simluations, we use the reduced unit and set~$L_x = L_y = 100 \tau_0$, and~$H = 50 \tau_0$.
+In all simulations, we use the reduced unit and set~$L_x = L_y = 100 \tau_0$, and~$H = 50 \tau_0$.
 The system contains 218 cations and 218 anions carrying charge~$\pm e_0$, respectively.
 The charges are immersed in continuum solvent characterized by a Bjerrum length $\ell_{\mathrm B} = 3.5 \tau_0$.
-The walls are purely repulsive shifted-trunacted LJ walls ($\eps_\text{ion-wall} = k_B T$; $\tau_\text{ion-wall} = 0.5 \tau_0$) at $z = 0$ and $z = H$.
+The walls are purely repulsive shifted-truncated LJ walls ($\eps_\text{ion-wall} = k_B T$; $\tau_\text{ion-wall} = 0.5 \tau_0$) at $z = 0$ and $z = H$.
 In all simulations, it takes~$2 \times 10^6$ time steps ($\Delta t = 0.001$) to reach equilibrium, after which we continue the simulation for $3 \times 10^6$ time steps for sampling.
 We sample every 100 steps, which yields~$3 \times 10^{4}$ independent and equilibrated configurations.
 
@@ -1035,12 +1034,12 @@ We sample every 100 steps, which yields~$3 \times 10^{4}$ independent and equili
 
 We first study symmetric systems where the top and bottom substrates have the same permittivity, i.e.,~$\gamma_u = \gamma_d = \gamma = \pm 0.95$, and we take~$H = 50 \tau_0$.
 The system contains 218 cations and 218 anions carrying charge~$\pm e_0$, respectively.
-To validate, we compared the charged distribution of QEM with result of the HSMA~\cite{liang2020harmonic}.
+To validate, we compare the charge distribution obtained by QEM with the result of the HSMA~\cite{liang2020harmonic}.
 The ion density profiles by QEM and HSMA are shown in Fig.~\ref{fig:MD_qem}, which shows that distributions obtained by QEM and HSMA overlap within statistical accuracy. 
 The expected ion accumulation near high-permittivity surfaces and ion depletion near insulating interfaces are borne out by the simulations, which demonstrates that our method can accurately reproduce the characteristics of the system's equilibrium state.
 The mean square displacements (MSD) in $xy$ and in $z$ of the simulation processes are shown in Fig.~\ref{fig:msd}.
 The MSD in the periodic dimensions shown in Fig.~\ref{fig:msd}(a) is consistent with a normal diffusion process, where the~$O(t^2)$ and~$O(t)$ parts correspond to the short/long-time self diffusion, respectively.
-Due to the confinements in~$z$, the MSD in the non-periodic dimension shown in Fig.~\ref{fig:msd}(b) behaves differently as a sub-diffusion process, where the MSD stop growing at long time, indicating the ions are confined by the dielectric interfaces.
+Due to the confinements in~$z$, the MSD in the non-periodic dimension shown in Fig.~\ref{fig:msd}(b) behaves differently as a sub-diffusion process, where the MSD stops growing at long times, indicating the ions are confined by the dielectric interfaces.
 The results here qualitatively agree well with that shown in previous experiments and simulations~\cite{das2010single, neusius2009subdiffusion}.
 
 \begin{figure}[htbp]
@@ -1056,7 +1055,7 @@ The results here qualitatively agree well with that shown in previous experiment
     \centering
     \includegraphics[width = 1.0 \linewidth]{figs/msd.pdf}
     \caption{
-        The MSD of the ions in (a)~$xy$ and (b)~$z$, respectively, as functions of simulations time and reflection rates.
+        The MSD of the ions in (a)~$xy$ and (b)~$z$, respectively, as functions of simulation time and reflection rates.
     }
     \label{fig:msd}
 \end{figure}
@@ -1064,7 +1063,7 @@ The results here qualitatively agree well with that shown in previous experiment
 Then CPU time for the QEM to compute the interactions between~$N$ particles is shown in Fig.~\ref{fig:timecost}, where cost of the Ewald2D method is also shown as reference.
 The particle number surface density is fixed as~$4.36 \times 10^{-2} \tau_0^{-2}$ and thickness of the system is fixed to be~$50 \tau_0$, which are the same to the simulations above.
 The number of charged particles is increased from~$10^2$ to~$10^5$.
-For QEM, the same parameter as the previous simulations are applied; for Ewald2D method, parameter are selected so that the results are of 4-digit precision.
+For QEM, the same parameters as in the previous simulations are applied; for the Ewald2D method, the parameters are selected so that the results are of 4-digit precision.
 The results are shown in Fig.~\ref{fig:timecost}, which indicate that complexity of QEM is of~$O(N)$.
 
 \begin{figure}[htb]
@@ -1072,13 +1071,13 @@ The results are shown in Fig.~\ref{fig:timecost}, which indicate that complexity
     \includegraphics[width = 0.625\linewidth]{figs/runtime.pdf}
     \caption{
     CPU time of computing the interactions between all particles for different particle quantities under the condition of the same particle number surface density.
-    The blue and red dots corresponding CPU time of Ewald2D method and QEM, and the dashed lines are fitted with slopes of~$2$ and~$1$, respectively.
+    The blue and red dots correspond to the CPU time of the Ewald2D method and QEM, and the dashed lines are fitted with slopes of~$2$ and~$1$, respectively.
     }
     \label{fig:timecost}
 \end{figure}
 
 \subsubsection{MD simulations of asymmetric systems}
-As been mentioned above, QEM can be used to simulate asymmetric thin systems.
+As mentioned above, QEM can be used to simulate asymmetric thin systems.
 We consider two cases with asymmetry in dielectric mismatches and cation/anion valences.
 In both cases, the thickness of the system is set as~$H = 10 \tau_0$, so that ~$L_{x/y} / H = 10$.
 
@@ -1087,8 +1086,8 @@ In this case, we study the effect of the asymmetric dielectric mismatches.
 The dielectric confinements are set as $\gamma_d = -0.95$ and~$\gamma_u = 0.95$, and the system contains 218 cations and 218 anions carrying charge~$\pm e_0$, respectively.
 We keep other parameters the same as that of the previous example.
 
-The spatial distribution of ions in~$z$ as shown in Fig.~\ref{fig:non_sym}.
-Both cations and anions are attracted towards the lower dielectric plate with a negative reflection coefficient, while being repelled by the upper dielectric plate with a positive dielectric coefficient, thereby forming an strongly asymmetric spatial distribution as illustrated in Fig.~\ref{fig:non_sym}.
+The spatial distribution of ions in~$z$ is shown in Fig.~\ref{fig:non_sym}.
+Both cations and anions are attracted towards the lower dielectric plate with a negative reflection coefficient, while being repelled by the upper dielectric plate with a positive dielectric coefficient, thereby forming a strongly asymmetric spatial distribution as illustrated in Fig.~\ref{fig:non_sym}.
 
 \begin{figure}[htbp]
     \centering
@@ -1101,11 +1100,11 @@ Both cations and anions are attracted towards the lower dielectric plate with a 
 
 \textbf{Case II: Asymmetry in cation/anion valences.}
 Another application is the simulation of charge asymmetric systems.
-In that simulation, we keep~$\gamma_u$ and $\gamma_d$ the same and equals to~$\gamma = \pm 0.95$, but simulate a $3:1$ salt with $109$ trivalent cations and $327$ monovalent anions. 
+In that simulation, we keep~$\gamma_u$ and $\gamma_d$ equal to~$\gamma = \pm 0.95$, but simulate a $3:1$ salt with $109$ trivalent cations and $327$ monovalent anions. 
 The other parameters are kept the same as above.
 
 The results are shown in Fig.~\ref{fig:salt3-1}, which shows that the ion distributions are highly concentrated around the center or near the substrates.
-For cations, due to the increase in the charge of the cations, the repulsive/attractive effects on both sides of the medium are significantly enhanced when~$\gamma$ greater or smaller than~$0$, respectively.
+For cations, due to the increase in the charge of the cations, the repulsive/attractive effects on both sides of the medium are significantly enhanced when~$\gamma$ is greater or smaller than~$0$, respectively.
 The anions are influenced by the distribution of cations, exhibiting characteristics of aggregation towards the center/sides, which are consistent with expectations.
 
 \begin{figure}[htbp]
@@ -1149,14 +1148,14 @@ The charge density is defined by
 \end{equation}
 and the field lines generated by $\sigma(\V r)$ are sketched in Fig.~\ref{fig:force_x} (b). 
 The field oscillation is found to be generated by the strong transverse polarization charge density waves, influencing both the near and far fields. 
-The oscillatory field lines has a very similar structure to that of a surface plasmonic resonance wave~\cite{willets2007localized}, but the physical origin is different. 
+The oscillatory field lines have a very similar structure to that of a surface plasmonic resonance wave~\cite{willets2007localized}, but the physical origin is different. 
 The oscillation is due to the reflected polarization enhanced by the dielectric confinement, characterized by parameters~$\gamma_{\mrm{u}}$,~$\gamma_{\mrm{d}}$, and~$H$.
 We observe that the wavelength of the oscillation, defined as two times the distance between nearby zeros, satisfies 
 \begin{equation}\label{eq:wavelength}
     \lambda \cdot k_0 = 2 \pi \;,
 \end{equation}
 where~$k_0 = \frac{\ln{(\gamma_{\mrm{u}} \gamma_{\mrm{d}})}}{2 H}$ is the first-order pole in the Sommerfeld integral representation of the Green's function.
-Numerical validation shows that Eq.~\eqref{eq:wavelength} is highly robust under different choices of~$\V{r}$,~$\V{r}_0$,~$\gamma$, or~$H$, as shown in Fig.~\ref{fig:k_wavelegth}.
+Numerical validation shows that Eq.~\eqref{eq:wavelength} is highly robust under different choices of~$\V{r}$,~$\V{r}_0$,~$\gamma$, or~$H$, as shown in Fig.~\ref{fig:k_wavelength}.
 Importantly, the oscillation fields can be accurately predicted and controlled by adjusting~$k_0$. 
 
 \begin{figure}[htbp]
@@ -1165,5 +1164,5 @@ Importantly, the oscillation fields can be accurately predicted and controlled b
     \caption{
         Numerical validations for the relationship between~$k_0$ and~$\lambda$ under various system parameter settings of~$\gamma$ and~$H$. For each case, $\lambda$ is approximated by averaging distances between nearby zeros of~$E_x$, and with different (randomly generated) locations in~$z$. 
     }
-    \label{fig:k_wavelegth}
+    \label{fig:k_wavelength}
 \end{figure}

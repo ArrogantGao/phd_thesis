@@ -9,7 +9,7 @@ Then, we introduce the Random Batch Ewald2D (RBE2D) method, which is a fast and 
 In this section, we introduce the random batch Ewald2D (RBE2D) method, which is a mesh-free fast algorithm for computing the electrostatic force in quasi-2D systems.
 After reformulating the Ewald2D summation as a 3D one, we can directly apply the RBE method to accelerate the reciprocal-space sum and reaching an optimal $O(N)$ scaling.
 The detailed algorithm is presented in Subsection~\ref{subsec::RBE2D_algorithm}.
-We then prove the unbiasedness and variance of the RBE2D method in Subsection~\ref{subsec::convergence}.
+We then prove the unbiasedness and variance of the RBE2D method in Subsection~\ref{sec::convergence}.
 Finally, we extend the RBE2D method to dielectric-confined systems in Subsection~\ref{subsec::IBCELCDielectric}.
 
 \subsection{The algorithm}\label{subsec::RBE2D_algorithm}
@@ -67,7 +67,7 @@ For quasi-2D systems, the RBE2D method offers a particular advantage: it is mesh
     \end{equation}
     and vanishes for $\bm{k}=\bm{0}$. 
     Further by the monotonicity of Gaussian on $[0, +\infty )$, it follows that
-    \begin{equation}\label{eq::32_rbe_rbe}
+    \begin{equation}\label{eq::32_rbe}
         \begin{split}
             \mathbb{E}|\V \Xi_{\V F,i}|^2\leq \frac{8 CSq_i^2}{PV}\int_{0}^{\infty}e^{-k^2/(4\alpha^2)}dk= \frac{8\sqrt{\pi}\alpha CSq_i^2}{PV}\;.%\mathbb{E}|\V \Xi_{\V F,i}|^2&\leq\frac{(4\pi q_i)^2CS}{PV^2}\sum_{\bm{k}\neq\bm{0}}\frac{e^{-k^2/(4\alpha^2)}}{k^2}\leq \frac{8 CSq_i^2}{PV}\int_{0}^{\infty}e^{-k^2/(4\alpha^2)}dk= \frac{8\sqrt{\pi}\alpha CSq_i^2}{PV}\;.
         \end{split}
@@ -125,7 +125,7 @@ It   {is worth} noting that, although the Coulomb potential is neither bounded n
 Additionally, following Theorem \ref{thm::2}, the fluctuations introduced by random batch approximation, $\V \Xi_{\V F,i}$,  can be physically understood as heating effects, which will cause a temperature drift for the system and are unwanted. 
 For NVT and NPT ensembles, the heating effect can be eliminated by introducing appropriate thermostats such as the Langevin thermostat~\cite{feller1995constant}, the Nos\'e-Hoover (NH) thermostat~\cite{hoover1985canonical}, etc. With an additional weak-coupled bath on the Newtonian dynamics to avoid energy drift, the NVE ensemble can also be accurately simulated with random batch-type approximations~\cite{liang2024JCP}.
 
-Next, we analyze the computational complexity of the RBE2D accelerated MD simulations. The detailed algorithm is summarized in Fig.~\ref{Alg::1}.  
+Next, we analyze the computational complexity of the RBE2D accelerated MD simulations. The detailed algorithm is summarized in Algorithm~\ref{Alg::1}.  
 In the RBE2D, the random batch importance sampling in Eq.~\eqref{eq:forceRBE} approximates the Fourier space force by summing over $P$ Fourier modes. 
 At each step, $P$ structure factors, $\{\rho(\bm{k}_{\eta})\}_{\eta=1}^{P}$, are computed for all particles, resulting in a Fourier part complexity of $O(PN)$. Furthermore, as shown in Theorems~\ref{Thm::1} and \ref{thm::2} and the analysis at the end of Section~\ref{subsec::RBE2D_algorithm}, the RBE2D error does not grow as $N$ or $L_z$ increases when the batch size $P=O(1)$ and $\alpha\sim N^{1/3}/(L_xL_yH)^{1/3}$ are provided. 
 The real space part of the RBE2D is short-ranged due to the rapid decay of factor $\erfc(\alpha r)$ and can be directly truncated by introducing a cutoff $r_c$. 

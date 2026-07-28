@@ -114,7 +114,7 @@ f_{\mathcal M} (\bm r)=\frac{1}{2 \pi L_x L_y} \sum_{\bm{k}_{\bm{\rho}}} \int_{\
 \end{equation}
 where $\bm{r}=(\bm{\rho},z)$ with $\bm{\rho}:=(x,y)$, and $\bm{k}_{\bm{\rho}}=2\pi(n_x/L_x,n_y/L_y)$ with $n_x,n_y\in\mathbb{Z}$. 
 Applying the Poisson summation formula Eq.~\eqref{eq:poissonsum} to Eq.~\eqref{eq:U_direct} yields 
-\begin{equation}\label{eq::33_icm_icm}
+\begin{equation}\label{eq::33_icm}
     \begin{split}
         U = & \frac{1}{2}\sum_{i,j=1}^{N}q_iq_j\sum_{\bm{m}}{}^\prime\frac{1}{\left|\bm{r}_{ij}+\V{L}_{\bm{m}}\right|} \\
         & + \frac{\pi}{L_xL_y}\sum_{i,j=1}^{N}q_iq_j\sum_{\bm{h}\neq \bm{0}}\frac{e^{-\i \bm{h}\cdot\bm{r}_{ij}}}{h}  \sum\limits_{l=1}^{\infty}\left[\gamma_+^{(l)}e^{-h\left|z_i-z_{j+}^{(l)}\right|}+\gamma_-^{(l)}e^{-h\left|z_i-z_{j-}^{(l)}\right|}\right] \;,
@@ -266,11 +266,11 @@ Substituting Eqs.~\eqref{eq::bpud1} and \eqref{eq::bpud2} into Eq.~\eqref{eq::UE
 
 \begin{equation}
 \resizebox{.98\hsize}{!}{$
-\begin{split}
+\begin{aligned}
 \left|U_{\text{ELC}}^{M}\right|&\leq \frac{2\pi}{L_xL_y}\sum_{\bm{h}\neq \bm{0}} \frac{C_q\left[e^{-h(L_z-H)}+\frac{1}{2}\sum\limits_{l=1}^{M}C^{(l)}_{\gamma}e^{-h(L_z-(l+1)H)}+\frac{(|\gamma_{\T u}|+|\gamma_{\T d}| + 2|\gamma_{\T u}\gamma_{\T d}|)e^{-hL_z}}{1-|\gamma_{\T u}\gamma_{\T d}|e^{-\frac{4\pi H}{\max\{L_x,L_y\}}}}\right]}{h(1-e^{-\frac{2\pi L_z}{\max\{L_x,L_y\}}})}\\
 &\leq \frac{4\pi^2 C_q}{L_xL_y(1-e^{-\frac{2\pi L_z}{\max\{L_x,L_y\}}})}\int^{\infty}_{\frac{2\pi}{\max\{L_x,L_y\}}} \left[e^{-h(L_z-H)}+\sum\limits_{l=1}^{M}\frac{C^{(l)}_{\gamma}}{2}e^{-h(L_z-(l+1)H)}+\frac{4e^{-hL_z}}{1-e^{-\frac{4\pi H}{\max\{L_x,L_y\}}}}\right]dh\\
 &=\frac{4\pi^2 C_q}{L_xL_y(1-e^{-\frac{2\pi L_z}{\max\{L_x,L_y\}}})}\left[\frac{e^{-\frac{2\pi(L_z-H)}{\max\{L_x,L_y\}}}}{L_z-H}+\sum_{l=1}^{M}\frac{C_{\gamma}^{(l)}e^{-\frac{2\pi(L_z-(l+1)H)}{\max\{L_x,L_y\}}}}{2(L_z-(l+1)H)}+\frac{4e^{-\frac{2\pi L_z}{\max\{L_x,L_y\}}}}{L_z(1-e^{-\frac{4\pi H}{\max\{L_x,L_y\}}})} \right],
-\end{split}
+\end{aligned}
 $}
 \end{equation}
 where we recall $C_q$ is the bound of $|\sum_{i,j=1}^{N}q_iq_je^{\i \bm{h}\cdot\bm{r}_{ij}}|$, $\left|\gamma_{\T u}\right|\leq 1$, and $\left|\gamma_{\T d}\right|\leq 1$. 
@@ -289,11 +289,11 @@ Further applying the inequalities Eqs.~\eqref{eq::bpud1} and \eqref{eq::bpud2}, 
 
 \begin{equation}
 \resizebox{0.98\hsize}{!}{$
-\begin{split}
+\begin{aligned}
 \left|\bm{F}_{\text{ELC}}^{M,i}\right|\leq &\frac{4\sqrt{3}\pi}{L_xL_y}\sum_{\bm{h}\neq \bm{0}} \frac{C_Q\left[e^{-h(L_z-H)}+\frac{1}{2}\sum\limits_{l=1}^{M}C^{(l)}_{\gamma}e^{-h(L_z-(l+1)H)}+\frac{(|\gamma_{\T u}|+|\gamma_{\T d}| + 2|\gamma_{\T u}\gamma_{\T d}|)e^{-hL_z}}{1-|\gamma_{\T u}\gamma_{\T d}|e^{-\frac{4\pi H}{\max\{L_x,L_y\}}}}\right]}{1-e^{-\frac{2\pi L_z}{\max\{L_x,L_y\}}}}\\
 \leq& \frac{8\sqrt{3}\pi^2 C_Q}{L_xL_y(1-e^{-\frac{2\pi L_z}{\max\{L_x,L_y\}}})}\int_{\frac{2\pi}{\max\{L_x,L_y\}}}^{\infty}h\left[e^{-h(L_z-H)}+\frac{1}{2}\sum\limits_{l=1}^{M}C^{(l)}_{\gamma}e^{-h(L_z-(l+1)H)}+\frac{4e^{-hL_z}}{1-e^{-\frac{4\pi H}{\max\{L_x,L_y\}}}}\right]dh\\
 =&\frac{8\sqrt{3}\pi^2 C_Q}{L_xL_y(1-J_3)}\left[\frac{1+J_1}{(L_z-H)^2}e^{-J_1}+\sum_{l=1}^{M}\frac{C_{\gamma}^{(l)}(1+J_2^{(l)})}{2(L_z-(l+1)H)^2}e^{-J_2^{(l)}}+\frac{4(1+J_3)}{L_z^2(1-e^{-\frac{4\pi H}{\max\{L_x,L_y\}}})}e^{-J_3}\right]
-\end{split}
+\end{aligned}
 $}
 \end{equation}
 where $C_Q$ is the bound of $|q_i\sum_{j=1}^{N}q_je^{-\i \bm{h}\cdot\bm{r}_{ij}}|$ and the coefficients $J_1$, $J_2^{(l)}$ and $J_3$ are defined via
@@ -479,7 +479,7 @@ We finally validate the proposed parameter selection strategy through numerical 
 The system dimensions are fixed at $L_x=L_y=10$ and $H = 1$. 
 Note that for the system with $\gamma=0.6$, we have $|g_{\T u}g_{\T d}|<1$, while for the system with $\gamma=1$, $|g_{\T u}g_{\T d}|>1$.
 For each system, the error tolerance $\varepsilon$ is set to $\epsilon = 10^{-4}$, $10^{-8}$, and $10^{-12}$. 
-By applying the parameter selection strategy discussed earlier, we are able to select the optimized parameters and the results are summarized in Fig.~\ref{tab:parameter_selection_results}. 
+By applying the parameter selection strategy discussed earlier, we are able to select the optimized parameters and the results are summarized in Table~\ref{tab:parameter_selection_results}. 
 Detailed error curves as functions of $M$ and $L_z$ are plotted in Fig.~\ref{fig:error_parameter_selection_force}, where the solid markers denote the specific parameter chosen via the proposed strategy.
 \begin{table}[htbp]
     \centering
@@ -505,7 +505,7 @@ Detailed error curves as functions of $M$ and $L_z$ are plotted in Fig.~\ref{fig
         Relative errors in force ($\mathcal{E}_r$) for two prototypical dielectric-confined systems with $\gamma=0.6$ (panels (a-b)) and $\gamma = 1$ (panels (c-d)), respectively.
         For both systems, we fix $L_x=L_y=10$ and $H = 1$. 
         Within each panel, the dashed lines correspond to the numerical errors obtained according to tolerance values $\epsilon = 10^{-4}$, $10^{-8}$, and $10^{-12}$, and the solid markers indicate the specific choice of $M$ or $L_z$ selected via the proposed strategy.
-        Note that in panels (a) and (c), $s$ and $L_z$ are fixed according to Fig.~\ref{tab:parameter_selection_results}, whereas in panels (b) and (d), we fix $s$ and $M$.
+        Note that in panels (a) and (c), $s$ and $L_z$ are fixed according to Table~\ref{tab:parameter_selection_results}, whereas in panels (b) and (d), we fix $s$ and $M$.
     }
     \label{fig:error_parameter_selection_force}
 \end{figure}

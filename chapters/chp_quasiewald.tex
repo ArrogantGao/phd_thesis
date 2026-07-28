@@ -666,7 +666,7 @@ $ U_\ell^{\vzero}$
 can be computed with linear complexity, we focus on the efficient evaluation of 
 $U_\ell^{\V{h}\neq \vzero}$, for which the idea of random batch is employed.
 Based on the above expression, we find a Gaussian decay factor in $U_\ell^{\V{h}\neq \vzero}$ explicitly, which can be normalized for the  purpose of importance sampling, so that again we apply the idea of random batch sampling taking
-\begin{equation}\label{eq::hk_qem_qem}
+\begin{equation}\label{eq::hk_qem}
 	g(\bm{h}) := \frac{1}{S} \exp\left(-\frac{h^2}{4\alpha}\right)\;, %\quad H := \sum_{\bm{h}\neq\bm{0}}e^{-h^2/(4\alpha^2)},
 \end{equation}
 where \[S:= \sum_{\V{h}\in\fK^2,\V{h}\neq\vzero}\exp\left(-\frac{h^2}{4\alpha}\right)\;,\] serves as a normalization factor.
@@ -684,7 +684,7 @@ where \[S:= \sum_{\V{h}\in\fK^2,\V{h}\neq\vzero}\exp\left(-\frac{h^2}{4\alpha}\r
 % \end{equation}
 %
 Using the Metropolis algorithm~\cite{metropolis1953equation}, a random mini-batch of frequencies $\{\bm{h}_{\eta}\}_{\eta=1}^P$ is sampled, where~$P$ is the batch size, and $U_\ell$ can be approximated as 
-\begin{equation}\label{eq::RBapp_qem_qem}
+\begin{equation}\label{eq::RBapp_qem}
  U_\ell^{\V{h}\neq \vzero} \approx U_{l,\ast}^{\V{h}\neq \vzero}  :=   \frac{S}{P}\sum_{\eta=1}^P \phi(\V{h}_{\eta})=  \frac{S}{P}\sum_{\eta=1}^P \sum_{q=1}^4S_q(\V{h}_{\eta})h_q(\V{h}_{\eta})\;,
 \end{equation} 
 and the corresponding estimator of the force in Fourier space is given by
@@ -729,12 +729,12 @@ Finally, combining all these strategies, we state our Quasi-Ewald method for cal
 \subsection{Consistency and variance analysis}
 In this section, we provide theoretical analysis for the Quasi-Ewald method. We start with considering the fluctuations, i.e., the stochastic error introduced by the importance sampling at each time step.
 The fluctuations for the Fourier space components of   the force acting on the $i$th particle are defined as follows 
-\begin{equation}\label{eq::xichi_qem_qem}
+\begin{equation}\label{eq::xichi_qem}
 %	\Xi :=U_{l,\ast}^{\V{h}\neq \vzero}-U_\ell^{\V{h}\neq \vzero},\quad\text{and}\quad
     \V{\chi}_{i} :=\vF_{l,i}^*-\vF_{l,i}=\grad_{\V{r}_i} U_{l,\ast}^{\V{h}\neq \vzero}-\grad_{\V{r}_i} U_{l}^{\V{h}\neq \vzero}\;.
 \end{equation}
 Proposition~\ref{prop:unbiased_qem} is obtained directly by the definition of the importance sampling.
-\begin{prop}\label{prop:unbiased_qem_qem}
+\begin{prop}\label{prop:unbiased_qem}
 	  $\vF_{l,i}^*$ is a  unbiased estimator, i.e.,  $\mathbb{E} \V{\chi}_{i} = \bm 0$, and its variance  can be expressed by
 % \begin{align*}
 % 		\mathbb{E}\Xi^2&=\frac{S}{P}\sum_{\bm{h}_1\in\fK^2, \bm{h}_1\neq \vzero}\exp\left(-\frac{\Norm{\V{h}_1}^2}{4\alpha}\right)\Abs{\phi(\V{h}_1)-\frac{1}{H} \sum_{\bm{h}_2\in\fK^2, \bm{h}_2\neq \vzero}\phi(\V{h}_2)\exp\left(-\frac{\Norm{\V{h}_2}^2}{4\alpha}\right)}^2\;,
@@ -810,7 +810,7 @@ where the estimates on $g(z_{ij})$ reads
 \begin{align*}
   \Abs{g(z_{ij})  }&\leq  \frac{1+\Abs{\gamma_{\mrm{u}}}+\Abs{\gamma_{\mrm{d}}}+\Abs{\gamma_{\mrm{u}}\gamma_{\mrm{d}}}}{4  L_xL_y h \left(1-\max\{0,\gamma_{\mrm{u}}\gamma_{\mrm{d}}\}\right)}\;,
 \end{align*}
-on the basis of Lemma \ref{lem::upper_bound_phiRB_qem}, the upper bound of~$\abs{\grad_{\V{r}_i} \phi(\V{h})}$ can be estimated as follows 
+on the basis of the Debye--H\"uckel estimate (see Appendix~\ref{app::Debye}), the upper bound of~$\abs{\grad_{\V{r}_i} \phi(\V{h})}$ can be estimated as follows 
 \begin{equation}
   \Norm{\nabla_{\bm{r}_i}\phi(\V{h})}\leq \frac{q_i\lambda_{D}^2}{2  L_xL_y}    \frac{1+\Abs{\gamma_{\mrm{u}}}+\Abs{\gamma_{\mrm{d}}}+\Abs{\gamma_{\mrm{u}}\gamma_{\mrm{d}}}}{1-\max\{0,\gamma_{\mrm{u}}\gamma_{\mrm{d}}\}}\;.
 \end{equation}

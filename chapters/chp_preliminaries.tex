@@ -163,7 +163,7 @@ As long as Eq.~\eqref{eq::pairssum} is well defined, Proposition~\ref{prop::boun
 	\begin{equation}
 		\mathcal{R}^2:=\{\bm{\rho}\in[0,L_x]\times [0,L_y]\},\quad \text{and}\quad \mathcal{K}^2:=\left\{\bm{k}\in\frac{2\pi}{L_x}\mathbb{Z}\times \frac{2\pi}{L_y}\mathbb{Z}\right\}\;.
 	\end{equation} 
-	The Poisson's summation formula~(see~\ref{app::Fourier}) indicates 
+	Poisson's summation formula (see Appendix~\ref{app::Fourier}) indicates 
 	\begin{equation}\label{eq::poisson_sum}
 		% \sum_{\V{m}} \frac{q_{0}}{|\bm{r}-\bm{r}_{0} + \bm{\mathcal{M}}|} = \frac{2 \pi}{L_x L_y} q_0 \sum_{\bm{k}} \frac{e^{-k \abs{z - z_0}}}{k} e^{- \m{i} \bm{k} \cdot (\bm{\rho} - \bm{\rho_0})}\;,
 		\sum_{\V{m}} \sum_{j = 1}^N \frac{q_{j}}{|\bm{r}-\bm{r}_{j} + \bm{\mathcal{M}}|} =  \sum_{j = 1}^N q_j \left[ \frac{2 \pi}{L_x L_y} \sum_{\bm{k} \neq \bm{0}} \frac{e^{-k \abs{z - z_j}}}{k} e^{- \m{i} \bm{k} \cdot (\bm{\rho} - \bm{\rho_j})} + \phi_{\bm{0}}(z-z_j)\right]\;,
@@ -423,7 +423,7 @@ The detailed formulation for the 2D Fourier expansion of $\phi_{\ell}$ is provid
 	\begin{equation}\label{eq::integral}
 		\int_{\mathbb{R}} \frac{e^{-(h^2+\kappa^2)/(4\alpha^2)}}{h^2+\kappa^2} e^{-\m{i} \kappa z} d\kappa = \frac{\pi}{2h} \left[\xi^{+}(h,z)+\xi^{-}(h,z)\right]
 	\end{equation}
-	for $\bm{h}\neq\bm{0}$, where $\xi^{\pm}(h,z)$ are defined via Eq.~\eqref{eq::xi20}. Substituting Eq.~\eqref{eq::integral} into the first term of Eq.~\eqref{eq::phil} yields $\phi_{\ell}^{\bm{h}}(\bm{r})$ defined via Eq.~\eqref{eq:philk}.
+	for $\bm{h}\neq\bm{0}$, where $\xi^{\pm}(h,z)$ are defined via Eq.~\eqref{eq::xi_def}. Substituting Eq.~\eqref{eq::integral} into the first term of Eq.~\eqref{eq::phil} yields $\phi_{\ell}^{\bm{h}}(\bm{r})$ defined via Eq.~\eqref{eq:philk}.
 
 	By Theorem~\ref{order}, the zero-frequency term $\phi^{\bm{0}}_{\ell}(z)$ always exists and its derivation is very subtle. Let us apply the 2D Fourier transform (see Lemma~\ref{lem::2dfourier}) to Poisson's equation Eq.~\eqref{eq::B.1} only on periodic dimensions, and then obtain
 	\begin{equation}\label{eq::B.5}
@@ -475,7 +475,7 @@ and the function $\mathcal{G}_{\alpha}$ and~$\mathcal{G}_{\alpha}^0$ are defined
 
 In practice, truncation in real and Fourier spaces are performed simultaneously, and the truncation error is clearly configuration dependent.
 Here the estimation is analyzed based on the \emph{ideal-gas assumption}~\cite{hansen2013theory}, which was used by Kolafa and Perram~\cite{kolafa1992cutoff} in analyzing the Ewald3D case. 
-Details of the ideal-gas assumption are summarized in \ref{app::ideal-gas}.
+Details of the ideal-gas assumption are summarized in Appendix~\ref{app::ideal-gas}.
 The root mean square (RMS) error is used to measure the truncation error in a given physical quantity, which is defined as
 \begin{equation}\label{RMS}
 	\mathscr{E}_{\text{RMS}} := \sqrt{\frac{1}{N}\sum_{i=1}^{N}\left|\mathscr{E}_i\right|^2},
@@ -507,7 +507,7 @@ Our main findings are summarized as follows.
 	\begin{equation}
 		\mathscr{E}_{\phi_{s}}(r_c,\alpha)(\bm{r}_{i}) = \sum_{|\bm{r}_{ij} + \V{\mathcal{M}}|>r_c}q_{j} \frac{\erfc(\alpha|\bm{r}_{ij} + \V{\mathcal{M}}|)}{|\bm{r}_{ij} + \V{\mathcal{M}}|}
 	\end{equation}
-	for $i$th particle, which involves neglecting interactions beyond $r_c$. By the analysis in \ref{app::ideal-gas}, this part of error can be approximated by $\delta\mathscr{E}_{\phi_{s}}$ with 
+	for $i$th particle, which involves neglecting interactions beyond $r_c$. By the analysis in Appendix~\ref{app::ideal-gas}, this part of error can be approximated by $\delta\mathscr{E}_{\phi_{s}}$ with 
 	\begin{equation}\label{eq::delta^2phi}
 		\delta^2\mathscr{E}_{\phi_{s}}=  \frac{1}{V}\sum_{j=1}^{N}q_{j}^2\int_{r_c}^{\infty}\frac{\erfc(\alpha r)^2}{r^2}4\pi r^2dr=\frac{4\pi Q}{V}\mathscr{Q}_{\emph{s}}(\alpha,r_c),
 	\end{equation}
@@ -528,7 +528,7 @@ Our main findings are summarized as follows.
 			&=\frac{2}{\pi}\int_{k_c}^{\infty}\sum_{j=1}^{N}q_{j}\frac{\sin(h r_{ij})}{h r_{ij}}e^{-h^2/(4\alpha^2)}dh.
 		\end{split}
 	\end{equation}
-	Here, the summation over Fourier modes is approximated using an integral similar to Eq.~\eqref{eq::integral2}, and one chooses a specific $(h,\theta,\varphi)$ so that the coordinate along $\cos\theta$ of $\bm{h}$ is in the direction of a specific vector $\bm{r}$, and $\bm{h}\cdot\bm{r}=h r \cos\varphi$.
+	Here, the summation over Fourier modes is approximated by an integral over the reciprocal space, and one chooses a specific $(h,\theta,\varphi)$ so that the coordinate along $\cos\theta$ of $\bm{h}$ is in the direction of a specific vector $\bm{r}$, and $\bm{h}\cdot\bm{r}=h r \cos\varphi$.
 	The resulting formula is identical to Eq.~(21) in \cite{kolafa1992cutoff} for the fully-periodic case, and $\delta \mathscr{E}_{\phi_{\ell}}$ can be derived following the approach in \cite{kolafa1992cutoff}. 
 \end{proof}
 

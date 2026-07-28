@@ -239,7 +239,7 @@ Finally, the long-range component of Coulomb interaction energy in Ewald2D summa
 where both $U_{\ell,\text{SOE}}^{\bm{h}}$ and $U_{\ell,\text{SOE}}^{\bm{0}}$ can be evaluated efficiently and accurately with linear complexity.
 In MD simulations, the force exerts on the $i$-th particle, $\bm{F}_{i}$, plays a significant role in the numerical integration of Newton's equations.
 One can similarly develop fast recursive algorithms to evaluate the SOE-reformulated forces,
-the detailed expressions for $\bm{F}_{i}$ is summarized in \ref{app::force}.
+the detailed expressions for $\bm{F}_{i}$ are summarized in Appendix~\ref{app::force}.
 We finally summarize the SOEwald2D  in Algorithm~\ref{alg:SOEwald2D}. Its error and complexity analysis will be discussed in the next sections.
 
 \begin{algorithm}[ht] 
@@ -276,7 +276,7 @@ The remainder two terms are the error due to the SOE approximation for the Fouri
 \begin{equation}
 	\mathscr{E}_{U_{\ell},\text{SOE}}^{\bm{h}}:=U_{\ell}^{\bm{h}}-U_{\ell,\text{SOE}}^{\bm{h}},\quad \text{and}\quad \mathscr{E}_{U_{\ell},\text{SOE}}^{\bm{0}}:=U_{\ell}^{\bm{0}}- U_{\ell,\text{SOE}}^{\bm{0}}.
 \end{equation}
-Theorem~\ref{thm:SOE_error} provides upper bound error estimates, when the Debye-H$\ddot{\text{u}}$ckel (DH) theory is assumed (see~\cite{levin2002electrostatic}, and also~\ref{app::Debye}) to approximate the charge distribution at equilibrium.
+Theorem~\ref{thm:SOE_error} provides upper bound error estimates, when the Debye-H$\ddot{\text{u}}$ckel (DH) theory is assumed (see~\cite{levin2002electrostatic}, and also Appendix~\ref{app::Debye}) to approximate the charge distribution at equilibrium.
 
 \begin{thm}
 	\label{thm:SOE_error}
@@ -425,7 +425,7 @@ By the Poisson summation formula (see Lemma~\ref{lem::Poisson}), one has
 where $m_{\xi}=L_{\xi}k_{\xi}/2\pi$ with $\xi\in\{x,y\}$. 
 The computation of $S$ is cheap, since Eq.~\eqref{eq::Happ} can be simply truncated to obtain a good approximation. 
 Generally speaking, $m_{\xi}=\pm 2$ is enough since $\alpha L_{\xi}\gg 1$.
-Then using the Metropolis algorithm~\cite{metropolis1953equation, hastings1970monte} (see~\ref{app::Metropolis}), a random mini-batch of frequencies $\{\bm{h}_{\eta}\}_{\eta=1}^P$ is sampled, and the Fourier component of energy can be approximated as:
+Then using the Metropolis algorithm~\cite{metropolis1953equation, hastings1970monte} (see Appendix~\ref{app::Metropolis}), a random mini-batch of frequencies $\{\bm{h}_{\eta}\}_{\eta=1}^P$ is sampled, and the Fourier component of energy can be approximated as:
 \begin{equation}\label{eq::RBapp}
 	\sum_{\bm{h}\neq\bm{0}} U_{\ell,\text{SOE}}^{\bm{h}} \approx U_{\ell,*}^{\bm{h}\neq\bm{0}} := \frac{S}{P}\sum_{\eta=1}^{P}\widetilde{\varphi}^{\text{RB}}(\bm{h}_{\eta})
 \end{equation}
@@ -596,7 +596,7 @@ Finally, by Lemma~\ref{lem::upper_bound_phiRB}, one has the following Theorem~\r
 		\end{split}
 	\end{equation}
 	
-	Finally, by definition Eq.~\ref{eq::hk}, $S$ has the following estimate:
+	Finally, by definition Eq.~\eqref{eq::hk}, $S$ has the following estimate:
 	\begin{equation}\label{eq::happrx}
 		\begin{split}
 			S &= \sum_{\bm{h}\neq\bm{0}}e^{-h^2/(4\alpha^2)}\leq \frac{L_xL_y}{(2\pi)^2}\int_{\frac{2\pi}{L}}^{\infty} e^{-h^2/(4\alpha^2)}4\pi h^2dh\leq \frac{2\alpha^2L_xL_y}{\sqrt{\pi}}.
@@ -698,11 +698,11 @@ The original Ewald2D summation (outlined in Section~\ref{sec::ewald2d}) serves a
 The Ewald splitting parameter $\alpha$ is fixed as $0.1$ for both the SOEwald2D and Ewald2D, and the cutoffs $r_c$ and $k_c$ are determined by Eq.~\eqref{eq::rckc}. 
 
 The absolute error in electrostatic energy as a function of $s$ is calculated. 
-The results are presented in Figure~\ref{fig:error_fixn}(a) for different number of exponentials in the SOE. 
+The results are presented in Fig.~\ref{fig:error_fixn}(a) for different number of exponentials in the SOE. 
 Specifically, $M=4$, $8$ and $16$ correspond to SOE approximation errors $\varepsilon =10^{-4}$, $10^{-8}$, and $10^{-14}$, respectively. 
-The convergence behavior depicted in Figure~\ref{fig:error_fixn}(a) is consistent with our theoretical findings, demonstrating both a decaying rate of $O(e^{-s^2}/s^2)$ and a saturated precision of $O(\varepsilon)$ for the SOEwald2D method. 
+The convergence behavior depicted in Fig.~\ref{fig:error_fixn}(a) is consistent with our theoretical findings, demonstrating both a decaying rate of $O(e^{-s^2}/s^2)$ and a saturated precision of $O(\varepsilon)$ for the SOEwald2D method. 
 We also investigate how the relative error in energy varies as the system size scales, while keeping the density $\rho_{s}$ constant. 
-The results presented in Figure~\ref{fig:error_fixn}(b) reveal that the error is nearly unaffected by the size of the system, which aligns with the analysis presented in Section~\ref{sec::ewald2d}.
+The results presented in Fig.~\ref{fig:error_fixn}(b) reveal that the error is nearly unaffected by the size of the system, which aligns with the analysis presented in Section~\ref{sec::ewald2d}.
 
 \begin{figure}[ht]
 	\centering
@@ -726,10 +726,10 @@ The results presented in Figure~\ref{fig:error_fixn}(b) reveal that the error is
 
 As discussed at the end of Section~\ref{sec::ewald2d}, one notable drawback of the original Ewald2D method is the occurrence of catastrophic error cancellation when the size of the non-periodic dimension increases. 
 To quantify this effect, one shall study the absolute error in electrostatic energy as a function of $H$. 
-The Ewald2D truncation parameter~$s= 3, 4, 5$ are chosen for~$M = 4, 8, 16$, respectively, to obtain optimal accuracy as is guided by Figure~\ref{fig:error_fixn} (a).
+The Ewald2D truncation parameter~$s= 3, 4, 5$ are chosen for~$M = 4, 8, 16$, respectively, to obtain optimal accuracy as is guided by Fig.~\ref{fig:error_fixn} (a).
 The system consists of $100$ uniformly distributed particles, with dimensions $L_x = L_y = 100$ along the periodic dimensions, and the Ewald parameter is set to be $\alpha = 0.1$.
 A double-precision floating-point (FP64) arithmetic for both the Ewald2D and SOEwald2D methods is employed, while the reference solution is obtained using the Ewald2D with a quadruple-precision floating-point (FP128) arithmetic, ensuring a sufficient number of significant digits. 
-The results presented in Figure~\ref{fig:error_Lz} clearly illustrate that the error of the Ewald2D method increases rapidly with $H$.
+The results presented in Fig.~\ref{fig:error_Lz} clearly illustrate that the error of the Ewald2D method increases rapidly with $H$.
 In contrast, the error of the SOEwald2D method remains independent of $H$ for various values of $s$ and $M$, thanks to its stable and well-conditioned summation procedure.
 
 For many existing methods, the accurate evaluation of the forces exert on particles can be strongly influenced by the particle's location in~$z$. 
@@ -737,10 +737,10 @@ Due to the uniform convergence of SOE approximation, our method does not suffer 
 In the first example, one considers a system consisting of $50$ anions and $50$ cations arranged in a cubic geometry with a side length of $100$, along with neutral slabs.  
 The pointwise error of the force, represented as $\sqrt{\mathscr{E}_{x}^2+\mathscr{E}_{y}^2+\mathscr{E}_{z}^2}$,  is calculated as a function of the particles' $z$-coordinates. 
 This evaluation is conducted for various $(s,M)$ pairs, with the Ewald splitting parameter $\alpha=0.1$. 
-Figure~\ref{fig:error_ef}(a) clearly demonstrates that the pointwise error in force is independent with its relative position in $z$. 
+Fig.~\ref{fig:error_ef}(a) clearly demonstrates that the pointwise error in force is independent with its relative position in $z$. 
 In the second example, one considers a system of the same size but with two non-neutral slabs. 
 The surface charge densities are set as $\sigma_{\mathrm{top}} = \sigma_{\mathrm{bot}} = -0.005$, and the system contains $100$ monovalent cations such that the neutrality condition Eq.~\eqref{eq::chargeneu} is satisfied. 
-Figure~\ref{fig:error_ef}(b) indicates that for such non-neutral slabs case, the pointwise error in forces calculated by the SOEwald2D method remains independent with $z$.
+Fig.~\ref{fig:error_ef}(b) indicates that for such non-neutral slabs case, the pointwise error in forces calculated by the SOEwald2D method remains independent with $z$.
 
 \begin{figure}[ht]
 	\centering
@@ -762,12 +762,10 @@ Therefore, we conduct a series of MD simulations to validate the accuracy of the
 	\begin{minipage}[c]{\textwidth}
 		\centering
 		\includegraphics[width=0.6\textwidth]{figs/hist_norm_unit.pdf}
-		\label{fig:compare}
 	\end{minipage} \\
 	\begin{minipage}[c]{\textwidth}
 		\centering
 		\includegraphics[width=\textwidth]{figs/msd_norm.pdf} 
-		\label{fig:msd_norm}
 	\end{minipage} 
 	\caption{
 		(a) The concentration of cations along $z$, with subplot indicating the convergence in the relative error of the average electrostatic energy as a function of batch size~$P$; (b) and (c) the MSD profiles in~$xy$ and~$z$ against time for a $1:1$ electrolyte confined by neutral slabs. 
@@ -794,10 +792,10 @@ The temperature is maintained by using a Nos\'e-Hoover thermostat~\cite{frenkel2
 The system is first equilibrated for~$5 \times 10^5$ steps, and the production phase lasts another~$1 \times 10^7$ steps. 
 The configurations are recorded every $100$ steps for statistics. Results produced by the SOEwald2D method with parameters $\alpha=0.1$, $s=4$, and $M=8$ serve as the reference solution, where $\varepsilon\sim 10^{-8}$.
 
-The ion concentration along the $z$-direction is measured, and presented in Figure~\ref{fig:norm}. 
+The ion concentration along the $z$-direction is measured, and presented in Fig.~\ref{fig:norm}. 
 For the RBSE2D method, simulations with varying batch sizes $P$ are performed, while keeping other parameters fixed at $\alpha = 0.3$, $s=4$, and $M=8$. 
 It is observed that the results for all choices of $P$ are in excellent agreement with those obtained using the accurate SOEwald2D method. 
-Furthermore, one evaluates the MSDs along both the periodic dimensions (Figure~\ref{fig:norm}(a)) and the non-periodic dimension (Figure~\ref{fig:norm}(b)), which describe the particles' anisotropic dynamic properties across a wide range of time scales. 
+Furthermore, one evaluates the MSDs along both the periodic dimensions (Fig.~\ref{fig:norm}(a)) and the non-periodic dimension (Fig.~\ref{fig:norm}(b)), which describe the particles' anisotropic dynamic properties across a wide range of time scales. 
 The RBSE2D methods for all $P$ yield almost identical MSD results as the SOEwald2D method. 
 The confinement effect in $z$ leads to a $MSD_z$ profile that clearly indicates a subdiffusion, while $MSD_{xy}$ exhibits a normal diffusion process. 
 Clearly, the RBSE2D method successfully captures this anisotropic collective phenomenon.
@@ -816,27 +814,27 @@ Clearly, the RBSE2D method successfully captures this anisotropic collective phe
 
 To assess the performance of our RBSE2D method for systems with non-neutral slabs, one studies
 a $1:1$ electrolyte containing~$218$ anions and~$218$ cations with~$q = \pm 1$, and with surface charge densities $\sigma_{\mathrm{bot}}=0.0218$ and~$\sigma_{\mathrm{top}}=-0.0218$. The simulation box is set to be $L_x = L_y = 100 \sigma$ and $H = 30 \sigma$.
-The resulting equilibrium concentration of cations is shown in Figure~\ref{fig:Ez_density}(a), indicating that results of RBSE2D method with different batch sizes are in good agreement with that of the reference SOEwald2D method. 
-% The subplot of Figure~\ref{fig:Ez_density}(a) also depicts the convergence as the batch size $P$ increases, which is consistent with our analysis.
+The resulting equilibrium concentration of cations is shown in Fig.~\ref{fig:Ez_density}(a), indicating that results of RBSE2D method with different batch sizes are in good agreement with that of the reference SOEwald2D method. 
+% The subplot of Fig.~\ref{fig:Ez_density}(a) also depicts the convergence as the batch size $P$ increases, which is consistent with our analysis.
 
 We further investigate the most challenging scenario for a system with free cations only, which are confined by non-neutral slabs, so that boundary layers can form at the vicinity of the slabs. 
-In particular, the system consists of $436$ monovalent cations and is confined by slabs with surface charge densities $\sigma_{\mathrm{bot}}=0$ and $\sigma_{\mathrm{top}}=-0.0436$ to ensure overall charge neutrality. The concentration of free ions is depicted in Figure~\ref{fig:Ez_density}(b), exhibiting excellent agreement with the results obtained using the SOEwald2D method. 
-% The subplot in Figure~\ref{fig:Ez_density}(b) also demonstrates the expected convergence of the RBSE2D method as the batch size increases. 
+In particular, the system consists of $436$ monovalent cations and is confined by slabs with surface charge densities $\sigma_{\mathrm{bot}}=0$ and $\sigma_{\mathrm{top}}=-0.0436$ to ensure overall charge neutrality. The concentration of free ions is depicted in Fig.~\ref{fig:Ez_density}(b), exhibiting excellent agreement with the results obtained using the SOEwald2D method. 
+% The subplot in Fig.~\ref{fig:Ez_density}(b) also demonstrates the expected convergence of the RBSE2D method as the batch size increases. 
 These findings indicate that choosing a small batch size $P\sim O(1)$ is sufficient for generating accurate MD results by using the RBSE2D method.
 
 \subsection{CPU performance}
 The CPU performance comparisons among the SOEwald2D, RBSE2D, and the original Ewald2D methods are conducted for MD simulations of $1:1$ electrolyte systems with varying system sizes. 
 All calculations are performed on a Linux system equipped with an Intel Xeon Platinum 8358 CPU (2.6 GHz, 1 single core); and by using a self-developed package developed in Julia language. 
-To ensure a fair comparison, we maintain the same accuracy across all methods. We fix $s=4$ and set $M=8$ for the SOE approximation, resulting in errors at~$\sim10^{-8}$ for both the Ewald2D and SoEwald2D methods. %as shown in Figure~\ref{fig:error_fixn}(a).
+To ensure a fair comparison, we maintain the same accuracy across all methods. We fix $s=4$ and set $M=8$ for the SOE approximation, resulting in errors at~$\sim10^{-8}$ for both the Ewald2D and SoEwald2D methods. %as shown in Fig.~\ref{fig:error_fixn}(a).
 Subsequently, we set the batch size as $P=120$ for the RBSE2D method, with which the RBSE2D-based MD simulations achieve the same accuracy as the SOEwald2D method, as has been illustrated in the previous results.
 %It is remarked that the Ewald2D, SOEwald2D, and RBSE2D methods scale as $O(s^2)$, $O(s^2 M)$, and $O(s^2 M P)$, respectively.
 Finally, for each of the methods, the Ewald splitting parameter $\alpha$ is always adjusted to achieve optimal efficiency.
-The CPU time comparison results are summarized in Figure~\ref{fig:times_compare}. 
+The CPU time comparison results are summarized in Fig.~\ref{fig:times_compare}. 
 It is evident that the CPU cost of the Ewald2D, SOEwald2D, and RBSE2D methods scale as $O(N^2)$, $O(N^{7/5})$, and $O(N)$, respectively, which is consistent with our complexity analysis. 
 Remarkably, the RBSE2D method demonstrates a significant speedup of $3\times 10^3$-fold compared to the Ewald2D for a system with $N=10^{4}$ particles, enabling large-scale MD simulations on a single core.
 
 An additional observation is regarding the memory consumption and data input/output (I/O) on the maximum system size that can be simulated using the same computational resources. 
-In Figure~\ref{fig:times_compare}, it is demonstrated that when utilizing a single CPU core, the Ewald2D and SOEwald2D methods are limited to simulating system sizes of up to about $3 \times 10^4$ and $3 \times 10^5$ particles, respectively. 
+In Fig.~\ref{fig:times_compare}, it is demonstrated that when utilizing a single CPU core, the Ewald2D and SOEwald2D methods are limited to simulating system sizes of up to about $3 \times 10^4$ and $3 \times 10^5$ particles, respectively. 
 In contrast, the RBSOEwald method can handle systems containing about $5 \times 10^6$ particles. 
 This is attributed to the reduced number of interacting neighbors that need to be stored in the RBSE2D algorithm, allowing a much smaller real space cutoff $r_c$. 
 This significant saving in memory consumption is achieved by the algorithm developed in this study, highlighting its potential as an effective algorithm framework for large-scale simulations of quasi-2D Coulomb systems.

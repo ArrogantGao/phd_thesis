@@ -1,8 +1,7 @@
 In Chapter~\ref{chp_soewald2d}, we introduced an efficient algorithm, the SOEwald2D method, to compute the electrostatic energy and force of a quasi-2D system in a homogeneous dielectric medium.
 However, in most of the practical applications, the system is confined by dielectric interfaces, which is a more challenging problem.
 In this chapter, we focus on the case of dielectrically confined Coulomb systems.
-First, we derive the accurate error estimates for the Ewald summation for dielectrically confined Coulomb systems.
-Then, we introduce the Random Batch Ewald2D (RBE2D) method, which is a fast and accurate method for computing the electrostatic energy and force of dielectrically confined Coulomb systems.
+Building on the error estimates of Chapter~\ref{chp_icmewald2d}, we introduce the Random Batch Ewald2D (RBE2D) method, which is a fast and accurate method for computing the electrostatic energy and force of dielectrically confined Coulomb systems.
 
 \section{Random batch Ewald2D method}\label{sec::RBE2D}
 
@@ -22,7 +21,7 @@ Notice that the low $\V k$ modes are more important due to the $e^{-k^2/(4\alpha
 The long-range component of the electrostatic force exerts on $i$-th particle is given by $\V F_i^{\ell}=-\nabla_{\bm{r}_i}U_{\ell}$, its random batch approximation is denoted as
 \begin{equation}\label{eq:forceRBE}
 \begin{aligned}
-    \V {\tilde{F}}_i^{\ell}=-\sum_{\eta=1}^P \frac{S}{P}\frac{4\pi q_i\V k_\eta}{Vk_\ell^2} \te{Im}\left(e^{-\i \V k_\eta\cdot \V r_i}\rho(\V k_\eta)\right)\;,
+    \V {\tilde{F}}_i^{\ell}=-\sum_{\eta=1}^P \frac{S}{P}\frac{4\pi q_i\V k_\eta}{Vk_{\eta}^2} \te{Im}\left(e^{-\i \V k_\eta\cdot \V r_i}\rho(\V k_\eta)\right)\;,
 \end{aligned}
 \end{equation}
 where $P$ is the batch size, $V=L_xL_yL_z$ is the volume of the extended simulation domain $\Omega_{\text{3D}}$, 
@@ -129,7 +128,7 @@ Next, we analyze the computational complexity of the RBE2D accelerated MD simula
 In the RBE2D, the random batch importance sampling in Eq.~\eqref{eq:forceRBE} approximates the Fourier space force by summing over $P$ Fourier modes. 
 At each step, $P$ structure factors, $\{\rho(\bm{k}_{\eta})\}_{\eta=1}^{P}$, are computed for all particles, resulting in a Fourier part complexity of $O(PN)$. Furthermore, as shown in Theorems~\ref{Thm::1} and \ref{thm::2} and the analysis at the end of Section~\ref{subsec::RBE2D_algorithm}, the RBE2D error does not grow as $N$ or $L_z$ increases when the batch size $P=O(1)$ and $\alpha\sim N^{1/3}/(L_xL_yH)^{1/3}$ are provided. 
 The real space part of the RBE2D is short-ranged due to the rapid decay of factor $\erfc(\alpha r)$ and can be directly truncated by introducing a cutoff $r_c$. 
-As a result, the real space complexity is proportional to the product of $N$ and the average number of neighbors within a volume of $4\pi r_c^3$ per particle. 
+As a result, the real space complexity is proportional to the product of $N$ and the average number of neighbors within a volume of $\frac{4\pi}{3} r_c^3$ per particle. 
 For a given truncation error tolerance, $r_c\sim \alpha^{-1}$, yielding a real space complexity $\sim \alpha^{-3}N/(L_xL_yH)=O(1)$ per particle. 
 As such, the total computational complexity is of $O(N)$. 
 
@@ -138,7 +137,7 @@ As such, the total computational complexity is of $O(N)$.
  \begin{algorithmic}[1]
   \State Choose $\alpha$, $r_c$ (the cutoff in real space), $\Delta t$, the vacuum layer parameter $L_z$, and batch size $P$. Initialize the positions and velocities of ions as well as surface charge densities. Set $N_T$ as the total MD time steps.
   \For {$n \text{ in } 1: N_T$}
-  \State Sample $P$ nonzero frequencies $\bm{k}\sim e^{-k^2/(4\alpha)}$ by the Metropolis procedure to form  set $\mathcal{K}$.
+  \State Sample $P$ nonzero frequencies $\bm{k}\sim e^{-k^2/(4\alpha^2)}$ by the Metropolis procedure to form a set $\mathcal{K}$.
   \State The $\V k$-space component of the force, $\bm{F}_i^{\ell}$, is computed using the random batch approximation $\widetilde{\V F}_i^{\ell}$ with the $P$ frequencies from the set $\mathcal{K}$.
   \State The real space component of the force, $\bm{F}_i^{s}$, is computed by the neighbor list method. %The rest force terms, including the YB correction $\V F_{i}^{\te{YB}}$, the renormalization term $\V F_{i}^{\te{renorm}}$, and the ion-wall force $\V F_{i}^{\te{wall}}$, can be directly computed.
   \State Integrate the equations of motion for time step $\Delta t$ with an appropriate thermostat and its corresponding integration scheme. %the total force
@@ -161,11 +160,11 @@ First, given tolerance $\varepsilon$, one shall choose appropriate values for $M
 \begin{equation}\label{eq::52}
 \bm{F}_{\ell}^{\text{c}}(\bm{r}_i)=-\frac{2\pi}{L_xL_yL_z}\sum_{\bm{k}}{}^{\prime}\frac{e^{-\frac{k^2}{4\alpha^2}}}{k^2}\nabla_{\bm{r}_i}\left[\rho_{\bm{k}}\bar{\rho}_{\bm{k}}^{M}\right]+\bm{F}_{\text{IBC}}^{M}(\bm{r}_i)\;,%+\bm{F}_{\text{ELC}}^{M}(\bm{r}_i)+\bm{F}_{\text{err}}^{M}(\bm{r}_i)\;,
 \end{equation}
-where 
+where $\bm{F}_{\text{IBC}}^{M}$ denotes the infinite boundary correction (IBC) term, given in Appendix~\ref{app::surfacecharge}, and
 \begin{equation}\label{eq::rhorhoM}
 \begin{split}
-\nabla_{\bm{r}_i}\left[\rho_{\bm{k}}\bar{\rho}_{\bm{k}}^{M}\right]=&q_i\bm{k}\text{Im}\left[e^{-\i\bm{k}\cdot\bm{r}_i}\left(\rho_{\bm{k}}+\rho_{\bm{k}}^{M}\right)+\sum_{\substack{l=1\\ \text{even}}}^{M}\left(\gamma_{+}^{(l)}e^{-\i\bm{k}\cdot\bm{r}_{i+}^{(l)}}+\gamma_{-}^{(l)}e^{-\i\bm{k}\cdot\bm{r}_{i-}^{(l)}}\right)\rho_{\bm{k}}\right]\\
-+&q_i\widehat{\bm{k}}\text{Im}\left[\sum_{\substack{l=1\\ \text{odd}}}^{M}\left(\gamma_{+}^{(l)}e^{-\i\bm{k}\cdot\bm{r}_{i+}^{(l)}}+\gamma_{-}^{(l)}e^{-\i\bm{k}\cdot\bm{r}_{i-}^{(l)}}\right)\rho_{\bm{k}}\right]
+\nabla_{\bm{r}_i}\left[\rho_{\bm{k}}\bar{\rho}_{\bm{k}}^{M}\right]=&q_i\bm{k}\text{Im}\left[e^{-\i\bm{k}\cdot\bm{r}_i}\left(\rho_{\bm{k}}+\rho_{\bm{k}}^{M}\right)+\sum_{\substack{l=2\\ l\ \text{even}}}^{M}\left(\gamma_{+}^{(l)}e^{-\i\bm{k}\cdot\bm{r}_{i+}^{(l)}}+\gamma_{-}^{(l)}e^{-\i\bm{k}\cdot\bm{r}_{i-}^{(l)}}\right)\rho_{\bm{k}}\right]\\
++&q_i\widehat{\bm{k}}\text{Im}\left[\sum_{\substack{l=1\\ l\ \text{odd}}}^{M}\left(\gamma_{+}^{(l)}e^{-\i\bm{k}\cdot\bm{r}_{i+}^{(l)}}+\gamma_{-}^{(l)}e^{-\i\bm{k}\cdot\bm{r}_{i-}^{(l)}}\right)\rho_{\bm{k}}\right]
 \end{split}
 \end{equation}
 with $\rho_{\bm{k}}^{M}$ the conjugate of $\bar{\rho}_{\bm{k}}^{M}$ and $\widehat{\bm{k}}=(k_x,k_y,-k_z)$. The calculation of Eq.~\eqref{eq::52} can also be accelerated via FFT, namely, the ICM-PPPM method~\cite{yuan2021particle}. 
@@ -176,7 +175,7 @@ If the image reflection level is truncated at $M$, the computational cost of ICM
 We now again apply the importance sampling technique to approximate $\bm{F}_{\ell}^{\text{c}}$, yielding the following stochastic estimator as 
 %More precisely, we regard the factor $e^{-\frac{k^{2}}{4\alpha^2}}$ as a discrete Gaussian distribution, and denote the resulting estimator of force as
 \begin{equation}\label{eq::important}
-\bm{F}_{\ell}^{\text{c}}(\bm{r}_i)\approx \bm{F}_{\ell}^{\text{c},*}(\bm{r}_i)=-\frac{2\pi }{L_xL_yL_z}\sum_{\eta=1}^{P}\frac{S}{P}\frac{\nabla_{\bm{r}_i}\left[\rho_{\bm{k}_{\eta}}\bar{\rho}_{\bm{k}_{\eta}}^{M}\right]}{k_{\ell}^2}+\bm{F}_{\text{IBC}}^{M}(\bm{r}_i),
+\bm{F}_{\ell}^{\text{c}}(\bm{r}_i)\approx \bm{F}_{\ell}^{\text{c},*}(\bm{r}_i)=-\frac{2\pi }{L_xL_yL_z}\sum_{\eta=1}^{P}\frac{S}{P}\frac{\nabla_{\bm{r}_i}\left[\rho_{\bm{k}_{\eta}}\bar{\rho}_{\bm{k}_{\eta}}^{M}\right]}{k_{\eta}^2}+\bm{F}_{\text{IBC}}^{M}(\bm{r}_i),
 \end{equation}
 where $\{\bm{k}_{\eta}\}_{\eta=1}^{P}$ are the $P$ batches of wave vectors sampled from $\mathscr{P}(\bm{k})$. 
 It is important to note that when surface charges are present at the interfaces~\cite{spohr1997effect,yi2017note,yuan2021particle}, a straightforward modification to Eq.~\eqref{eq::important} is required, which allows for the simultaneous treatment of discrete ions and continuous surface charges.
@@ -201,8 +200,8 @@ Notice that Eq.~\eqref{eq::rhorhoM} can be rewritten as
  {where the coefficients $Y_{\text{odd}}$ and $Y_{\text{even}}$ are defined as follows: 
 \begin{equation}
     \begin{split}
-        Y_{\text{odd}}(k_z) &= \sum_{\substack{l=1, \text{odd}}}^{M}\left[\gamma_{+}^{(l)}e^{\i k_z(l+1) H}+\gamma_{-}^{(l)}e^{-\i k_z (l-1)H}\right], \\ 
-        Y_{\text{even}}(k_z) &= \sum_{\substack{l=1, \text{even}}}^{M}\left[\gamma_{+}^{(l)}e^{\i k_zl H}+\gamma_{-}^{(l)}e^{-\i k_z l H}\right].
+        Y_{\text{odd}}(k_z) &= \sum_{\substack{l=1,\ l\ \text{odd}}}^{M}\left[\gamma_{+}^{(l)}e^{\i k_z(l+1) H}+\gamma_{-}^{(l)}e^{-\i k_z (l-1)H}\right], \\ 
+        Y_{\text{even}}(k_z) &= \sum_{\substack{l=2,\ l\ \text{even}}}^{M}\left[\gamma_{+}^{(l)}e^{\i k_zl H}+\gamma_{-}^{(l)}e^{-\i k_z l H}\right].
     \end{split}
 \end{equation}
 This formulation enables the decoupling of the summation over particle index $j$ and their image index $l$. 
@@ -222,7 +221,7 @@ The detailed algorithm for RBE2D accelerated MD in the presence of dielectric in
   \State Choose $\alpha$, $r_c$ (the cutoff in real space), $\Delta t$, batch size $P$, image reflection level of truncation $M$, and the vacuum layer parameter $L_z$. Initialize the coefficients of dielectric jumps ($\varepsilon_{\rm{top}}$, $\varepsilon_{\rm{c}}$, $\varepsilon_{\rm{bot}}$) and the positions and velocities of charges $\bm{r}^0_i, \bm{v}^0_i$ for $1\le i\le N$. Set $N_T$ as the total MD time steps.
   %\State Sample sufficient number of nonzero $\bm{k}\sim e^{-k^2/(4\alpha)}$ by the MH procedure to form a set $\mathcal{K}$.
   \For {$n \text{ in } 1: N_T$}
-  \State Sample $P$ nonzero frequencies $\bm{k}\sim e^{-k^2/(4\alpha)}$ by the Metropolis procedure to form set $\mathcal{K}$.
+  \State Sample $P$ nonzero frequencies $\bm{k}\sim e^{-k^2/(4\alpha^2)}$ by the Metropolis procedure to form a set $\mathcal{K}$.
   \State The real space component of force is computed via a neighbor list algorithm (for both actual charges and image charges within $r_c$).
   \State The Fourier space component of  {the} force is computed via the random batch approximation $\bm{F}_{\ell}^{\text{c},*}$, with $P$ frequencies from the set $\mathcal{K}$.
   \State Integrate the equations of motion for time $\Delta t$ with  {an} appropriate integration scheme and some appropriate thermostat. 

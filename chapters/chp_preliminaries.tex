@@ -11,7 +11,7 @@ In what follows, we present the mathematical formulation of the model.
 
 Consider two parallel dielectric interfaces positioned at $z=0$ and $z=H$, dividing the entire 3D space $\mathbb{R}^3$ into three distinct layers. 
 From top to bottom, these layers are denoted as $\Omega_{\text{u}}$, $\Omega_{\text{c}}$ and $\Omega_{\text{d}}$, respectively. 
-The central simulation cell $\Omega\in\Omega_{\text{c}}$ has side lengths~$\bm{L}=(L_x, L_y, H)$ and contains $N$ particles located at $\{\V{r}_i\}_{i=1}^{N}$ with charges $\{q_i\}_{i=1}^{N}$. 
+The central simulation cell $\Omega\subset\Omega_{\text{c}}$ has side lengths~$\bm{L}=(L_x, L_y, H)$ and contains $N$ particles located at $\{\V{r}_i\}_{i=1}^{N}$ with charges $\{q_i\}_{i=1}^{N}$. 
 The total charge neutrality condition is assumed, i.e., $\sum_{i=1}^{N}q_i=0$. The dielectric permittivity is a piecewise constant function, defined as:
 \begin{equation}\label{eq:sandwich}
     \eps(\V{r})=\left\{
@@ -226,11 +226,11 @@ where the Green's function $G(\V{r},~\V{r}^\prime)$, which describes the electro
 \begin{equation}
     \left\{
     \begin{array}{ll}
-        - \grad_{\V{r}} \left[ \eps(\V{r}) \grad_{\V{r}} G(\V{r},~\V{r}^\prime) \right] = \d (\V{r} - \V{r}^\prime) & r \in \mathbb{R}^3 \;, \\
+        - \grad_{\V{r}} \left[ \eps(\V{r}) \grad_{\V{r}} G(\V{r},~\V{r}^\prime) \right] = \d (\V{r} - \V{r}^\prime) & \V{r} \in \mathbb{R}^3 \;, \\
         G(\V{r},~\V{r}^\prime) |_{-} = G(\V{r},~\V{r}^\prime) |_{+} & \text{on}~\partial\Omega_{\T c}\;, \\
         \eps_{\T c} G_{\bm{n}}(\V{r},~\V{r}^\prime) |_{-} = \eps_{\T u}  G_{\bm{n}}(\V{r},~\V{r}^\prime) |_{+} & \text{on}~\partial \Omega_{\T c} \cap \partial \Omega_{\T u}\;, \\
-        \eps_{\T c} G_{\bm{n}}(\V{r},~\V{r}^\prime) |_{+} = \eps_{\T {d}} G_{\bm{n}}(\V{r},~\V{r}^\prime) |_{-} & \text{on}~\partial \Omega_{\T c} \cap \partial \Omega_{\T d}\;, \\
-        G(\V{r},~\V{r}^\prime) \to 0 & \text{as}~r \to \infty\;,
+        \eps_{\T c} G_{\bm{n}}(\V{r},~\V{r}^\prime) |_{-} = \eps_{\T {d}} G_{\bm{n}}(\V{r},~\V{r}^\prime) |_{+} & \text{on}~\partial \Omega_{\T c} \cap \partial \Omega_{\T d}\;, \\
+        G(\V{r},~\V{r}^\prime) \to 0 & \text{as}~\abs{\V{r}} \to \infty\;,
     \end{array}
     \right.
     \label{eq:Poisson_G}
@@ -249,7 +249,7 @@ Among existing methodologies, the ICM is frequently used to represent $G$. Speci
     G(\V r,\V r')=\frac{1}{4 \pi \eps_{\mrm{c}}} \left[ \frac{1}{\abs{\V{r} - \V{r}^\prime}} + \sum_{l = 1}^\infty \left( \frac{\gamma_{+}^{(l)}}{\abs{\V{r} - \V{r}_{+}^{\prime(l)}}} + \frac{\gamma_{-}^{(l)}}{\abs{\V{r} - \V{r}_{-}^{\prime (l)}}} \right) \right]\;,
 \end{equation}
 where~%$\mathds{1}_{\V{r} = \V{r}^\prime}$ is the indicator function ($\mathds{1}_{\V{r} = \V{r}^\prime}=1$ if $\V{r} = \V{r}^\prime$, and $\mathds{1}_{\V{r} = \V{r}^\prime}=0$ otherwise),
-$\gamma_{+}^{(l)} = \gamma_{\T d}^{\lceil l/2 \rceil} \gamma_{\T u}^{\lfloor l/2 \rfloor}$, $\gamma_{-}^{(l)} = \gamma_{\T d}^{\lfloor l/2 \rfloor} \gamma_{\T u}^{\lceil l/2 \rceil}$, $\V{r}_{+}^{(l)} = (x, y, z_{+}^{(l)})$, and $\V{r}_{-}^{(l)} = (x, y, z_{-}^{(l)})$ are the scaling factors and positions of the $l$-th level image charges.
+$\gamma_{+}^{(l)} = \gamma_{\T u}^{\lceil l/2 \rceil} \gamma_{\T d}^{\lfloor l/2 \rfloor}$, $\gamma_{-}^{(l)} = \gamma_{\T d}^{\lceil l/2 \rceil} \gamma_{\T u}^{\lfloor l/2 \rfloor}$, $\V{r}_{+}^{\prime(l)} = (x^\prime, y^\prime, z_{+}^{(l)})$, and $\V{r}_{-}^{\prime(l)} = (x^\prime, y^\prime, z_{-}^{(l)})$ are the scaling factors and positions of the $l$-th level image charges.
 Here, the notation $\lceil x\rceil$ $(\lfloor x\rfloor)$ represents the ``ceil'' (``floor'') function. ``$+$'' and ``$-$'' indicate that the images are located in~$\Omega_{\mrm{u}}$ and~$\Omega_{\mrm{d}}$, respectively. $\gamma_{\T u}$ and $\gamma_{\T d}$ are reflection factors for the upper and lower dielectric interfaces, defined as:
 \begin{equation}
     \gamma_{\mrm{u}} = \frac{\eps_{\mrm{c}} - \eps_{\mrm{u}}}{\eps_{\mrm{c}} + \eps_{\mrm{u}}}~\quad\text{and}\quad
@@ -257,9 +257,9 @@ Here, the notation $\lceil x\rceil$ $(\lfloor x\rfloor)$ represents the ``ceil''
 \end{equation}
 Finally, the detailed positions of the $l$-th level images along $z$-axis are given by 
 \begin{equation}\label{eq:z_l}
-    z_{+}^{(l)} = (-1)^l z + 2\lceil l/2\rceil H \;,\quad z_{-}^{(l)} = (-1)^l z - 2\lfloor l/2\rfloor H \;.
+    z_{+}^{(l)} = (-1)^l z^\prime + 2\lceil l/2\rceil H \;,\quad z_{-}^{(l)} = (-1)^l z^\prime - 2\lfloor l/2\rfloor H \;.
 \end{equation}
-Assuming all dielectric constants are positive, it follows that $\abs{\gamma_{\mrm{u}}},\abs{\gamma_{\T d}}\leq 1$. 
+Assuming all dielectric constants are positive, it follows that $\abs{\gamma_{\mrm{u}}},\abs{\gamma_{\T d}}< 1$. 
 This implies that the infinite image charge series converges and can be truncated at the~$M$-th level. 
 Consequently, the original dielectric-confined system can be approximated by a homogeneous system augmented with $M$ additional levels of image charges in $z$, which can be readily solved using standard methods for homogeneous quasi-2D systems.
 However, as have been mentioned in the Chapter~\ref{chp_intro}, recent studies have shown that special materials~\cite{Kornyshev1996Static, Schlaich2016Water, Kornyshev2021Nonlocal} can have negative dielectric constants, which may lead to the divergence of the image charge series.
@@ -288,7 +288,7 @@ For a triply-periodic system, such decomposition leads to the well-known Ewald3D
 For a charge neutral triply-periodic system, the electrostatic energy can be decomposed as short-range and long-range components:
 \begin{align}
 	U_{s} & = \frac{1}{2} \sum_{i, j=1}^N \sum_{\V{n}}{}^\prime q_iq_j\frac{\mathrm{erfc}(\alpha\abs{\V r_{ij}+\V{L}_{\bm{n}} })}{\abs{\V r_{ij}+ \V{L}_{\bm{n}}}} \;, \\
-	U_{\ell} & = \frac{2 \pi}{L_x L_y L_z} \sum_{\V{k} \neq \V{0}} \frac{1}{k^2} \abs{\rho(\V{k})}^2 e^{-\frac{k^2}{4\alpha^2}} - \sqrt{\frac{\alpha}{\pi}}\sum_{i=1}^{N}q_i^2\;,
+	U_{\ell} & = \frac{2 \pi}{L_x L_y L_z} \sum_{\V{k} \neq \V{0}} \frac{1}{k^2} \abs{\rho(\V{k})}^2 e^{-\frac{k^2}{4\alpha^2}} - \frac{\alpha}{\sqrt{\pi}}\sum_{i=1}^{N}q_i^2\;,
 \end{align}
 where~$(L_x, L_y, L_z)$ is the size of the simulation box, $\V{n} = (n_x, n_y, n_z) \in \mathbb{Z}^3$ is the integer vector, $\V{L}_{\V{n}} = (n_x L_x, n_y L_y, n_z L_z)$ and $\V{k} = 2\pi (n_x /L_x, n_y /L_y, n_z /L_z)$ are the lattice vectors in real and reciprocal spaces, respectively, and $\rho(\V{k})$ is the structure factor defined as
 \begin{equation}
@@ -318,21 +318,21 @@ Compared to the widely used FFT-based methods such as the particle-particle part
 
 Recall that the long-range component of Ewald3D summation is given by:
 \begin{equation}
-	U_{\ell}^{\V{k}} = \frac{2 \pi}{L_xL_yL_z} \sum_{\V{k} \neq \V{0}} \frac{1}{k^2} \abs{\rho_{\V{k}}}^2 e^{-\frac{\V{k}^2}{4\alpha^2}}\;.
+	U_{\ell}^{\V{k}} = \frac{2 \pi}{L_xL_yL_z} \sum_{\V{k} \neq \V{0}} \frac{1}{k^2} \abs{\rho(\V{k})}^2 e^{-\frac{k^2}{4\alpha^2}}\;.
 \end{equation}
 Due to the rapid decay of the Gaussian function, RBE interprets the $U_{\ell}^{\V{k}}$ term as an expectation with respect to a discrete Gaussian distribution~$\mathcal{P}_{\V{k}}$:
 \begin{equation}
-	\mathcal{P}_{\V{k}} = \frac{e^{-\frac{\V{k}^2}{4\alpha^2}}}{S},~~\V{k} \neq \V{0} \;,
+	\mathcal{P}_{\V{k}} = \frac{e^{-\frac{k^2}{4\alpha^2}}}{S},~~\V{k} \neq \V{0} \;,
 \end{equation}
 where $S$ is the normalization constant:
 \begin{equation}
-	S = \sum_{\V{k} \neq \V{0}} e^{-\frac{\V{k}^2}{4\alpha^2}} - 1\;.
+	S = \sum_{\V{k} \neq \V{0}} e^{-\frac{k^2}{4\alpha^2}}\;.
 \end{equation}
 Thus in RBE, the long-range component is approximated as follows:
 \begin{equation}
-	U_{\ell} \approx U_{\ell, *} =  \frac{2 \pi}{L_xL_yL_z} \sum_{\V{k} \in \V{k}_p} \frac{1}{k^2} \abs{\rho_{\V{k}}}^2 - \frac{\alpha}{\sqrt{\pi}}\sum_{i=1}^{N}q_i^2\;,
+	U_{\ell} \approx U_{\ell, *} =  \frac{2 \pi S}{L_xL_yL_z\,P} \sum_{\eta = 1}^{P} \frac{1}{k_{\eta}^2} \abs{\rho(\V{k}_{\eta})}^2 - \frac{\alpha}{\sqrt{\pi}}\sum_{i=1}^{N}q_i^2\;,
 \end{equation}
-where $\V{k}_p$ is a set of $P$ random vectors sampled from the discrete Gaussian distribution~$\mathcal{P}_{\V{k}}$, thus $U_{\ell, *}$ is an unbiased estimator of $U_{\ell}$.
+where $\{\V{k}_{\eta}\}_{\eta=1}^{P}$ are $P$ random vectors sampled from the discrete Gaussian distribution~$\mathcal{P}_{\V{k}}$, thus $U_{\ell, *}$ is an unbiased estimator of $U_{\ell}$.
 The same procedure is also valid for the force calculation.
 It has been proved that the batch size $P$ is an $O(1)$ constant irrelevant to the system size $N$, so that the time complexity of RBE is always $O(N)$.
 
@@ -441,13 +441,13 @@ The detailed formulation for the 2D Fourier expansion of $\phi_{\ell}$ is provid
 	\end{equation}
 	To analyze the short-range component $\phi_{s}(\bm{\rho},z)$ using a procedure similar to Eqs.~\eqref{eq::B.1}-\eqref{eq::integral}, one obtains
 	\begin{equation}\begin{split}
-			\phi_{s}^{\bm{0}}(z) =& \frac{\pi}{L_x L_y} \sum_{j=1}^{N} \lim_{\bm{h}\rightarrow\bm{0}} \frac{1}{h} \left[2e^{-h|z|}-\xi^{+}(\bm{h},z) - \xi^{-}(\bm{h},z)\right]\\
+			\phi_{s}^{\bm{0}}(z) =& \frac{\pi}{L_x L_y} \sum_{j=1}^{N} q_{j} \lim_{h\rightarrow 0} \frac{1}{h} \left[2e^{-h|z-z_{j}|}-\xi^{+}(h,z-z_{j}) - \xi^{-}(h,z-z_{j})\right]\\
 			=& \frac{2\pi}{L_xL_y}\sum_{j=1}^{N}q_{j}\left[-|z-z_{j}|+(z-z_{j})\erf\left(\alpha(z-z_{j})\right)+\frac{e^{-\alpha^2(z-z_{j})^2}}{\sqrt{\pi}\alpha}\right].
 		\end{split}
 	\end{equation}
 	Since $\phi_{s}^{\bm{0}}(z)+\phi_{\ell}^{\bm{0}}(z)$ matches the boundary condition Eq.~\eqref{eq::boundary1} as $z\rightarrow \pm\infty$ and by the charge neutrality condition, one solves 
 	\begin{equation}
-		A_0 = \frac{2\pi}{L_xL_y}\sum_{j=1}^{N}q_{j}z \equiv 0,\quad \text{and}\quad B_0=-\frac{2\pi}{L_xL_y}\sum_{j=1}^{N}q_{j}z_{j}.
+		A_0 = \frac{2\pi}{L_xL_y}\sum_{j=1}^{N}q_{j} \equiv 0,\quad \text{and}\quad B_0=-\frac{2\pi}{L_xL_y}\sum_{j=1}^{N}q_{j}z_{j}.
 	\end{equation}
 	This result finally gives 
 	\begin{equation}
@@ -462,7 +462,7 @@ The total interaction energy can be computed as
     U_{s} =  \frac{1}{2} \sum_{i,j=1}^N \sum_{\bm{m}}{}^\prime q_i q_{j} \frac{\te{erfc}\left(\alpha \left|\bm{r}_i - \bm{r}_{j} + \V{\mathcal{M}}\right|\right)}{\left|\bm{r}_i-\bm{r}_{j} + \V{\mathcal{M}}\right|}\;,
 \end{equation}
 \begin{equation}\label{eq::Ul_Ewald2D}
-    U_{\ell} =  \frac{\pi}{2L_xL_y}\sum_{i, j=1}^N  q_iq_{j} \sum_{\V h\neq \V 0}\frac{e^{\i \V h\cdot \V r_{ij}}}{h}\mathcal{G}_{\alpha}(h,z_i - z_{j})  - \frac{\alpha}{\sqrt{\pi}}\sum_{i=1}^{N}q_i^2+\mathcal{J}_0\;.
+    U_{\ell} =  \frac{\pi}{2L_xL_y}\sum_{i, j=1}^N  q_iq_{j} \sum_{\V h\neq \V 0}\frac{e^{\i \V h\cdot \V \rho_{ij}}}{h}\mathcal{G}_{\alpha}(h,z_i - z_{j})  - \frac{\alpha}{\sqrt{\pi}}\sum_{i=1}^{N}q_i^2+\mathcal{J}_0\;.
 \end{equation}
 where the 0-th mode correction term is given by
 \begin{equation}\label{eq::J0_Ewald2D}
@@ -511,24 +511,24 @@ Our main findings are summarized as follows.
 	\begin{equation}\label{eq::delta^2phi}
 		\delta^2\mathscr{E}_{\phi_{s}}=  \frac{1}{V}\sum_{j=1}^{N}q_{j}^2\int_{r_c}^{\infty}\frac{\erfc(\alpha r)^2}{r^2}4\pi r^2dr=\frac{4\pi Q}{V}\mathscr{Q}_{\emph{s}}(\alpha,r_c),
 	\end{equation}
-	where $\mathscr{Q}_{\emph{s}}(\alpha,r_c)$ is defined via Eq.~\eqref{eq::Qs2}. Note that the $\erfc(r)$ function satisfies (\cite{olver1997asymptotics}, pp. 109-112)
+	where $\mathscr{Q}_{\emph{s}}(\alpha,r_c)$ is defined via Eq.~\eqref{eq::Qs2}. Note that the $\erfc(r)$ function satisfies \cite[pp.~109--112]{olver1997asymptotics}
 	\begin{equation}\label{eq::asyerfc}
-		\erfc(r)=\frac{e^{-r^2}}{\sqrt{\pi}}\sum_{m=0}^{\infty}(-1)^{m}\left(\frac{1}{2}\right)_mz^{-(2m+1)}
+		\erfc(r)\sim\frac{e^{-r^2}}{\sqrt{\pi}}\sum_{m=0}^{\infty}(-1)^{m}\left(\frac{1}{2}\right)_m r^{-(2m+1)}
 	\end{equation}
-	as $r\rightarrow \infty$, where $(x)_m=x(x-1)\cdots(x-m+1)=x!/(x-m)!$ denotes the Pochhammer's symbol. Substituting Eq.~\eqref{eq::asyerfc} into Eq.~\eqref{eq::delta^2phi} and truncating at $m=1$ yields Eq.~\eqref{eq::Qs}. 
+	as $r\rightarrow \infty$, where $(x)_m=x(x+1)\cdots(x+m-1)=\Gamma(x+m)/\Gamma(x)$ denotes the Pochhammer symbol. Substituting Eq.~\eqref{eq::asyerfc} into Eq.~\eqref{eq::delta^2phi} and truncating at $m=1$ yields Eq.~\eqref{eq::Qs}. 
 
 	The Fourier space error is given by
 	\begin{equation}
 		\mathscr{E}_{\phi_{\ell}}(k_c,\alpha)(\bm{r}_{i})=\frac{2}{L_xL_y}\sum_{j=1}^{N}q_{j}\sum_{|\bm{h}|>k_c}\int_{\mathbb{R}}\frac{e^{-(h^2+\kappa^2)/(4\alpha^2)}}{h^2+\kappa^2}e^{-\m{i} \bm{h}\cdot(\bm{\rho}-\bm{\rho}_{j})}e^{-\m{i} \kappa(z-z_{j})}d\kappa.
 	\end{equation}
-	For a large $k_c$, one can safely replace the truncation condition with $|\bm{h}+\kappa|>k_c$, resulting in
+	For a large $k_c$, one can safely replace the truncation condition with $\sqrt{h^2+\kappa^2}>k_c$, resulting in
 	\begin{equation}
 		\begin{split}
 			\mathscr{E}_{\phi_{\ell}}(k_c,\alpha)(\bm{r}_{i})&\approx \frac{1}{2\pi^2}\sum_{j=1}^{N}q_{j} \int_{k_c}^{\infty}\int_{-1}^{1}\int_{0}^{2\pi}e^{-h^2/(4\alpha^2)}e^{-i h r_{ij}\cos\varphi}d\theta d\cos\varphi dh\\
 			&=\frac{2}{\pi}\int_{k_c}^{\infty}\sum_{j=1}^{N}q_{j}\frac{\sin(h r_{ij})}{h r_{ij}}e^{-h^2/(4\alpha^2)}dh.
 		\end{split}
 	\end{equation}
-	Here, the summation over Fourier modes is approximated by an integral over the reciprocal space, and one chooses a specific $(h,\theta,\varphi)$ so that the coordinate along $\cos\theta$ of $\bm{h}$ is in the direction of a specific vector $\bm{r}$, and $\bm{h}\cdot\bm{r}=h r \cos\varphi$.
+	Here, the summation over Fourier modes is approximated by an integral over the reciprocal space, and one chooses a specific $(h,\theta,\varphi)$ so that the coordinate along $\cos\varphi$ of $\bm{h}$ is in the direction of a specific vector $\bm{r}$, and $\bm{h}\cdot\bm{r}=h r \cos\varphi$.
 	The resulting formula is identical to Eq.~(21) in \cite{kolafa1992cutoff} for the fully-periodic case, and $\delta \mathscr{E}_{\phi_{\ell}}$ can be derived following the approach in \cite{kolafa1992cutoff}. 
 \end{proof}
 
@@ -562,7 +562,7 @@ Based on Theorem~\ref{thm:ewald2d_phi_error}, one can further obtain the error e
 	\end{equation}
 	such that both truncation errors decay as 
 	\begin{equation}\label{eq:truncation_error}
-		\mathscr{E}_{\phi_s}(r_c, \alpha)\approx \mathscr{E}_{\phi_\ell}(k_c, \alpha) \sim Q 
+		\mathscr{E}_{\phi_s}(r_c, \alpha)\approx \mathscr{E}_{\phi_\ell}(k_c, \alpha) \sim \sqrt{Q} 
 		\sqrt{\frac{s}{\alpha V}} \frac{e^{-s^2}}{s^2}\;.
 	\end{equation}
 	This indicates that the truncation error can be well controlled by the prescribed parameter $s$. 
@@ -599,7 +599,7 @@ Here, $\phi_{\text{p-p}}$ satisfies Eq.~\eqref{eq::Poisson} associated with the 
 \end{equation}
 with the boundary condition
 \begin{equation}\label{eq::boundionwall}
-	\lim_{z\rightarrow\pm\infty}\phi_{\text{p-s}}(\bm{r})=\mp \frac{2\pi}{L_xL_y}\left(\int_{\mathcal{R}^2}\sigma_{\mathrm{bot}}(\bm{\rho})|z|d\bm{\rho}+\int_{\mathcal{R}^2}\sigma_{\mathrm{top}}(\bm{\rho})|z-L_z|d\bm{\rho}\right)
+	\lim_{z\rightarrow\pm\infty}\phi_{\text{p-s}}(\bm{r})=-\lim_{z\rightarrow\pm\infty} \frac{2\pi}{L_xL_y}\left(\int_{\mathcal{R}^2}\sigma_{\mathrm{bot}}(\bm{\rho})|z|d\bm{\rho}+\int_{\mathcal{R}^2}\sigma_{\mathrm{top}}(\bm{\rho})|z-L_z|d\bm{\rho}\right)
 \end{equation}
 which is simply the continuous analog of Eq.~\eqref{eq::boundary2}. 
 
@@ -670,4 +670,4 @@ Based on the expression of electrostatic potential $\phi$ derived above, the tot
 \begin{align}\label{eq::34}
 	U = U_{\text{p-p}} + U_{\text{p-s}}, \quad \text{with} \quad U_{\text{p-p}} := U_{s} + \sum_{\bm{k}\neq\bm{0}}U_{\ell}^{\bm{k}}+U_{\ell}^{\bm{0}}- U_{\text{self}}\;,
 \end{align}
-where $U_*=\sum_{i}\phi_*$ with $*$ representing any of the subscripts used in Eq.~\eqref{eq::34}.
+where $U_*=\frac{1}{2}\sum_{i}q_{i}\phi_*$ with $*$ representing any of the subscripts used in Eq.~\eqref{eq::34}.

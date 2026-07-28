@@ -14,14 +14,14 @@ In this appendix, we state several fundamental results from Fourier analysis for
 \begin{lem}\label{lem::Poisson}
 	(Poisson summation formula) Let $f(\bm{\rho},z)$ be a function that is periodic in $\bm{\rho}$ and non-periodic in $z$. Suppose that $f$ has Fourier transform $\widetilde{f}$ and $\bm{r}=(\bm{\rho},z)$. Then one has
 	\begin{equation}
-		\sum_{\bm{m}\in \mathbb{Z}^2} f(\bm{r} + \V{\mathcal{M}}) = \frac{1}{2\pi L_x L_y}\sum_{\bm{h}\in \mathcal{H}^2}\int_{\mathbb{R}}\widetilde{f}(\bm{h},\kappa)e^{\m{i} \bm{h}\cdot\bm{\rho}}e^{\m{i} \kappa z}d\kappa.
+		\sum_{\bm{m}\in \mathbb{Z}^2} f(\bm{r} + \V{\mathcal{M}}) = \frac{1}{2\pi L_x L_y}\sum_{\bm{h}\in \mathcal{K}^2}\int_{\mathbb{R}}\widetilde{f}(\bm{h},\kappa)e^{\m{i} \bm{h}\cdot\bm{\rho}}e^{\m{i} \kappa z}d\kappa.
 	\end{equation}
 \end{lem}
 \begin{lem}\label{lem::2dfourier}
 	(Radially symmetric functions) 
 	Suppose that $f(\rho,z)$ is periodic and radially symmetric in $\bm{\rho}$, i.e., $f(\bm{\rho},z)=f(\rho,z)$. Then its Fourier transform $\widetilde{f}$ is also radially symmetric. Indeed, one has
 	\begin{equation}
-		\widetilde{f}(\rho,z)=2\pi\int_{0}^{\infty}J_0(h \rho)f(\rho,z)\rho d\rho.
+		\widetilde{f}(h,z)=2\pi\int_{0}^{\infty}J_0(h \rho)f(\rho,z)\rho \,d\rho.
 	\end{equation}
 \end{lem}
 
@@ -62,7 +62,7 @@ and its solution is given by
 		\dfrac{qe^{\kappa a}e^{-\kappa r}}{4\pi r(1+\kappa a)},&r\geq r_{a},
 	\end{cases}
 \end{equation}
-where $\kappa=\sqrt{\beta q^2\rho}$ denotes the inverse of Debye length $\lambda_{\text{D}}$. By this definition, the net charge density for $r>r_{a}$ is $\rho_>(\bm{r})=-\kappa^2\phi(\bm{r})$. Let us fix $\bm{r}_i$ at the origin. Given these considerations, for $r\geq r_a$, one obtains the following estimate:
+where $\kappa=\sqrt{4\pi\beta q^2\rho_r}$ denotes the inverse Debye length $\lambda_{\text{D}}$. By this definition, the net charge density for $r>r_{a}$ is $\rho_>(\bm{r})=-\kappa^2\phi(\bm{r})$. Let us fix $\bm{r}_i$ at the origin. Given these considerations, for $r\geq r_a$, one obtains the following estimate:
 \begin{equation}\label{eq::E.4}
 	\begin{split}
 		|\mathscr{G}(\bm{r}_i)|&\approx \left|\int_{\mathbb{R}^3\backslash B(\bm{r}_{i}, r_a)}\rho_>(\bm{r})e^{-\m{i} \bm{k}\cdot\bm{\rho}}f(z)d\bm{r}\right|\\
@@ -107,11 +107,11 @@ To calculate the average concentration of the system along the $z$-direction, we
 \end{equation}
 with the bracket representing the ensemble average over $t_0$. The VACF along the $z$-direction, $\eta_{\text{vacf},z}(t)$ at time $t$ is defined as
 \begin{equation}
-\eta_{\text {vacf},z}(t)=\left\langle v_z\left(t_0\right) v_z(t)\right\rangle,
+\eta_{\text {vacf},z}(t)=\left\langle v_z\left(t_0\right) v_z(t+t_0)\right\rangle,
 \end{equation}
 with the bracket representing the ensemble average over $t_0$. The total energy is defined as the sum of potential energy and kinetic energy. The potential energy is the sum of bond, angle, Coulomb, LJ and  {constraint} components, where the first two and the last one are not required for electrolyte solutions. 
 
-Let $N$ be the number of particles, $\bm{r}_i=(r_{i,x},r_{i,y},r_{i,z})$, $\bm{v}_i=(v_{i,x},v_{i,y},v_{i,z})$ and $\bm{f}_i=(f_{i,x},f_{i,y},f_{i,z})$ represent the position, velocity and force of the $i$th particle along each of three dimensions, respectively. The $z$-$z$ component subtracted from the pressure tensor is computed by the formula
+Let $N$ be the number of particles, $\bm{r}_i=(r_{i,x},r_{i,y},r_{i,z})$, $\bm{v}_i=(v_{i,x},v_{i,y},v_{i,z})$ and $\bm{f}_i=(f_{i,x},f_{i,y},f_{i,z})$ represent the position, velocity and force of the $i$th particle along each of three dimensions, respectively. The $z$-$z$ component of the pressure tensor is computed by the formula
 \begin{equation}
 P_{zz}=\frac{1}{V} \sum_{i=1}^N\left(m_i v_{i,z} v_{i, z}+r_{i,z} f_{i,z}\right),
 \end{equation}

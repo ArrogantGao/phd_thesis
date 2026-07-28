@@ -23,7 +23,7 @@ For numerical simulations of quasi-2D Coulomb systems, it is of great importance
 \begin{equation}\label{eq::phi12}
 	\phi(\V x) = \sum_{\V{m}} \sum_{j = 1}^{N} \rho_j K(\V{x} - \V{y}_j + \V{m} \circ \V{L})\;,
 \end{equation}
-where~$\V{x}, \V{y}_j \in \mathbb{R}^3$ are $3$-dimensional vectors in a rectangular box $\Omega$ with $\V{L}$ the vector of its edge lengths, $\rho_j$ refers to the density or weight, $\V{m} \in \mathbb{Z}^2 \otimes \{0\}$ exerts periodicity in the first $2$ directions, ``$\circ$'' represents the Hadamard product, and~$K(\V{x})$ is the kernel function whose form depends on the physical problem of interest. 
+where~$\V{x}, \V{y}_j \in \mathbb{R}^3$ are $3$-dimensional vectors in a rectangular box $\Omega$ with $\V{L}$ the vector of its edge lengths, $\rho_j$ refers to the density or weight, $\V{m} \in \mathbb{Z}^2 \times \{0\}$ exerts periodicity in the first $2$ directions, ``$\circ$'' represents the Hadamard product, and~$K(\V{x})$ is the kernel function whose form depends on the physical problem of interest. 
 For homogeneous systems without dielectric confinement, the kernel function is given by $K(\V{x}) = \abs{\V{x}}^{-1}$.
 For such long-range interactions, the computational cost scales as $O(N^2)$ in the naive pair-wise implementation, which greatly limits the size of the system that can be studied.
 

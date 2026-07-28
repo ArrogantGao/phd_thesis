@@ -6,7 +6,7 @@ The Fourier component of force acting on the $i$th particle can be evaluated by 
 \end{equation}
 where
 \begin{align}    
-	\grad_{\V{r}_{i}}U_{\ell,\text{SOE}}^{\V{h}} &= - \frac{\pi q_{i}}{L_x L_y} \left[ \sum_{1 \leq j < i} q_{j} \grad_{\V{r}_{i}} \varphi_{\text{SOE}}^{\V{h}}(\V{r}_{i}, \V{r}_{j}) +  \sum_{i < j \leq N} q_{j} \grad_{\V{r}_{i}} \varphi_{\text{SOE}}^{\V{h}}(\V{r}_{j}, \V{r}_{i}) \right]\;,\\
+	\grad_{\V{r}_{i}}U_{\ell,\text{SOE}}^{\V{h}} &= \frac{\pi q_{i}}{L_x L_y} \left[ \sum_{1 \leq j < i} q_{j} \grad_{\V{r}_{i}} \varphi_{\text{SOE}}^{\V{h}}(\V{r}_{i}, \V{r}_{j}) +  \sum_{i < j \leq N} q_{j} \grad_{\V{r}_{i}} \varphi_{\text{SOE}}^{\V{h}}(\V{r}_{j}, \V{r}_{i}) \right]\;,\\
 	\grad_{\V{r}_{i}} U_{\ell,\text{SOE}}^{\V{0}} &= - \frac{2 \pi q_{i}}{L_x L_y} \left[ \sum_{1 \leq j < i} q_{j} \grad_{\V{r}_{i}} \varphi^{\bm{0}}_{\text{SOE}}(\bm{r}_{i}, \bm{r}_{j}) + \sum_{i < j \leq N} q_{j} \grad_{\V{r}_{i}} \varphi^{\bm{0}}_{\text{SOE}}(\bm{r}_{j}, \bm{r}_{i})\right]\;.
 \end{align}
 Using the approximation Eqs.~\eqref{eq::SOEphi},~\eqref{eq::dz_plus} and~\eqref{eq::dz_minus}, one can write the derivative in periodic directions as
@@ -100,10 +100,10 @@ where $\bm{r}_{i,\bm{n}}=\bm{r}_{i}+\bm{\ell}$, and $K(r):=\text{erfc}(\alpha r)
 \end{equation}
 where the $z$-direction dipole moments are defined via
 \begin{equation}
-\mathcal{M}_{z}:=\sum_{i=1}^{N}q_iz_i\quad\text{and}\quad \mathcal{M}_{z}^{M}:=\sum_{i=1}^{N}q_i\left[z_{j}+\sum_{l=1}^{M}\left(\gamma_{+}^{(l)}z_{j+}^{(l)}+\gamma_{-}^{(l)}z_{j-}^{(l)}\right)\right].
+\mathcal{M}_{z}:=\sum_{i=1}^{N}q_iz_i\quad\text{and}\quad \mathcal{M}_{z}^{M}:=\sum_{i=1}^{N}q_i\left[z_{i}+\sum_{l=1}^{M}\left(\gamma_{+}^{(l)}z_{i+}^{(l)}+\gamma_{-}^{(l)}z_{i-}^{(l)}\right)\right].
 \end{equation}
 It is important to highlight that if the free ions in the solution continue to fulfill the charge neutrality condition Eq.~\eqref{eq::chargeneutrality}, the last two terms in Eq.~\eqref{eq::IBC} vanish. 
 The ion-wall component represents the force exerted on the mobile ions due to the charged walls, and is given by
 \begin{equation}
-\bm{F}_{\text{wall}}^{\te{c}}:=-2\pi z_{i}q_{i}\left[\sigma_u-\sigma_d+\frac{(\sigma_u+\sigma_d)(\gamma_{\text{top}}-\gamma_{d})\left(1-\gamma_{\text{top}}^{\lceil M/2 \rceil}\gamma_{d}^{\lceil M/2 \rceil}\right)}{1-\gamma_{\text{top}}\gamma_{d}}\right]\V{\hat e_z}.
+\bm{F}_{\text{wall}}^{\te{c}}:=-2\pi z_{i}q_{i}\left[\sigma_u-\sigma_d+\frac{(\sigma_u+\sigma_d)(\gamma_{\mrm{u}}-\gamma_{\mrm{d}})\left(1-\gamma_{\mrm{u}}^{\lceil M/2 \rceil}\gamma_{\mrm{d}}^{\lceil M/2 \rceil}\right)}{1-\gamma_{\mrm{u}}\gamma_{\mrm{d}}}\right]\V{\hat e_z}.
 \end{equation}

@@ -189,7 +189,7 @@ Then by employing the Dirichlet to Neumann mapping technique to the Poisson's eq
     \end{equation}     
 then for $\V{h}=\vzero$,   
 \begin{equation}\label{eq...hat_G_solution...Zeroth}
-        \hat{G}(\vzero, z; z_0) = \frac{\abs{z-z_0}}{2}\;,
+        \hat{G}(\vzero, z; z_0) = -\frac{\abs{z-z_0}}{2}\;,
 \end{equation}        
 and for $\V{h}\neq \vzero$,     
     \begin{equation}\label{eq...hat_G_solution...Non-zero}
@@ -206,7 +206,7 @@ where
 \end{align*}
 \end{thm}
 \begin{proof}
-    By applying Fourier transform on both sides of Eq.~\eqref{eq:Poisson_G}, then for $\V{h}\neq \vzero$, i.e., $k>0$, we obtain that
+    By applying Fourier transform on both sides of Eq.~\eqref{eq:Poisson_G}, then for $\V{h}\neq \vzero$, i.e., $h>0$, we obtain that
     \begin{equation*} 
         \begin{split}
             \frac{\partial^2 \Hat{G}_{\mrm{c}}(\V{h}, z; z_0)}{{\partial z}^2} - h^2 \Hat{G}_{\mrm{c}}(\V{h}, z; z_0) = - \exp{(-\mathrm{i} \V{h} \cdot \V{\rho}_0)}\delta (z- z_0)&,~z \in [0, H],\\
@@ -231,15 +231,15 @@ based on the infinite boundary condition,  $\Hat{G}_{\mrm{u}}(\V{h}, z; z_0)$ an
 \end{align*}
 therefore, we have 
 \begin{align*}
-    \partial_z\Hat{G}_{\mrm{u}}(\V{h}, z; z_0)&=-k\Hat{G}_{\mrm{u}}(\V{h}, z; z_0),~z > H\;,\\
-     \partial_z\Hat{G}_{\mrm{d}}(\V{h}, z; z_0)&=k\Hat{G}_{\mrm{d}}(\V{h}, z; z_0),~z < 0\;,
+    \partial_z\Hat{G}_{\mrm{u}}(\V{h}, z; z_0)&=-h\Hat{G}_{\mrm{u}}(\V{h}, z; z_0),~z > H\;,\\
+     \partial_z\Hat{G}_{\mrm{d}}(\V{h}, z; z_0)&=h\Hat{G}_{\mrm{d}}(\V{h}, z; z_0),~z < 0\;,
 \end{align*}
 hence the boundary condition can be  simplified into
 \begin{align*}
   \partial_z\Hat{G}_{\mrm{c}}(\V{h}, 0; z_0)&=\epsilon_{\mrm{d}} \partial_z\Hat{G}_{\mrm{d}}(\V{h}, 0; z_0)= h \epsilon_{\mrm{d}} \Hat{G}_{\mrm{d}}(\V{h}, 0; z_0)= h\epsilon_{\mrm{d}} \Hat{G}_{\mrm{c}}(\V{h}, 0; z_0)\;,\\
    \partial_z\Hat{G}_{\mrm{c}}(\V{h}, H; z_0)&=\epsilon_{\mrm{u}} \partial_z\Hat{G}_{\mrm{u}}(\V{h}, H; z_0)=- h \epsilon_{\mrm{u}} \Hat{G}_{\mrm{u}}(\V{h}, H; z_0)=-h\epsilon_{\mrm{u}} \Hat{G}_{\mrm{c}}(\V{h}, H; z_0)\;.
 \end{align*} 
-Finally, for $z\in[0, z_0]$, $\Hat{G}_{\mrm{c}}(\V{h}, z; z_0)$ takes the form
+Finally, for $z\in[0, H]$, $\Hat{G}_{\mrm{c}}(\V{h}, z; z_0)$ takes the form
 \begin{equation*}
     \Hat{G}_{\mrm{c}}(\V{h}, z; z_0)=\left \{
             \begin{array}{cc}
@@ -273,7 +273,7 @@ F&=\frac{\exp{(-\mathrm{i} \V{h} \cdot \V{\rho}_0)}}{2h }\frac{\gamma_{\mrm{u}}\
 
 \begin{rmk}\label{Remark...Nonzero+larger}
     If $\gamma_u \gamma_d < 1$, the determinant of the Eq.~\eqref{proof...Matrix} is non-zero on the positive real axis.
-    However, for negatively confined systems with $\gamma_u \gamma_d > 1$, a first order pole exists at $k_0 = \ln(\gamma_u \gamma_d)/2H$ and the Green's function diverges.
+    However, for negatively confined systems with $\gamma_u \gamma_d > 1$, a first-order pole exists at $h_0 = \ln(\gamma_{\mrm{u}} \gamma_{\mrm{d}})/(2H)$ and the Green's function diverges.
     Moreover, it is noteworthy that all the components in $a_{1:4}(z;z_0)$ take positive values. 
 \end{rmk}
 
@@ -336,12 +336,12 @@ Given $\vr_j:=(\vrho_j, z_j)$, then for the short range kernel $G_s(\cdot, \V{r}
 moreover, if further given $\V{r}_i:=(\vrho_i, z_i)$, we obtain that 
 \begin{align*}
    &G_s(\V{r}_i, \V{r}_j)\\
-   =& \frac{1}{8\pi^2 }\int_{\sR^2} \frac{ \exp{(\mathrm{i} \V{h} \cdot \V{\rho}_{ij})}}{k\left(1-\gamma_{\mrm{u}}\gamma_{\mrm{d}}\exp(-2hH)\right)} \left[1-\exp\left(-\frac{h^2}{4\alpha}\right)\right]\left[\sum_{p=1}^4\Gamma_p\exp(-ha_p(z_i;z_j))\right]d \V{h}\;,
+   =& \frac{1}{8\pi^2 }\int_{\sR^2} \frac{ \exp{(\mathrm{i} \V{h} \cdot \V{\rho}_{ij})}}{h\left(1-\gamma_{\mrm{u}}\gamma_{\mrm{d}}\exp(-2hH)\right)} \left[1-\exp\left(-\frac{h^2}{4\alpha}\right)\right]\left[\sum_{p=1}^4\Gamma_p\exp(-ha_p(z_i;z_j))\right]d \V{h}\;,
 \end{align*}
 where $\V{\rho}_{ij}:=\vrho_i-\vrho_j$. 
 In actually calculations, due to the short range nature of~$G_s(\cdot, \V{r}_j)$, the infinite sum in Eq.~\eqref{eq::U_s} is truncated to a finite sum in real space with a cutoff $r_c$, given by
 \begin{equation}\label{eq::U_s_truncated}
-    U_s \approx U_{s, *} = \sum_{\abs{\bm{\rho}_{ij, m}} \leq r_c} q_i q_j G_s(\V{r}_i+\vL_m, \V{r}_j)\;,
+    U_s \approx U_{s, *} = \frac{1}{2}\sum_{\abs{\bm{\rho}_{ij, m}} \leq r_c} q_i q_j G_s(\V{r}_i+\vL_m, \V{r}_j)\;,
 \end{equation}
 where $\bm{\rho}_{ij, m}:=\vrho_i-\vrho_j+ (L_x m_x, L_y m_y)$, and the summation indicates that among all possible pairs of particles, only the terms with $\abs{\bm{\rho}_{ij, m}} \leq r_c$ are considered.
 
@@ -435,7 +435,7 @@ It is observed that Term $\mathrm{I(b)}$ and Term $\mathrm{II}$  comprise infini
 For any given 
 $M>0$, as the infinite integral can be decomposed into
 \begin{equation*}
- \int_0^{+\infty} F(k)d  k=  \int_0^{M} F(k)d  k+\int_M^{+\infty} F(k)d  k\;,
+ \int_0^{+\infty} F(h)d  h=  \int_0^{h_c} F(h)d  h+\int_{h_c}^{+\infty} F(h)d  h\;,
 \end{equation*} 
 then the first part of the integral can be efficiently evaluated  using  Gauss-Legendre quadrature, while the second integral can be neglected for sufficiently large $M$. To ensure   validity of such truncation, it is necessary to provide some  estimates on the associated truncation error as a function of $M$.
 % For the Term $\mathrm{I(b)}$, its truncation error reads
@@ -578,8 +578,8 @@ Since for all  $i$, $z_i \in (0, H)$ is uniformly bounded, hence  the strategies
 Once all $N$ particles are sorted according to their positions along the $z$-axis, we observe that $S_0$ can be written into
 \begin{align*}
     S_0 
-    & = \sum_{i = 1}^N q_i \left( \sum_{j = 1}^{i }{q_j (z_i - z_j)} \right) \\
-    & = 2 \sum_{i = 1}^N q_i \left( z_i \sum_{j = 1}^{i }q_j - \sum_{j = 1}^{i }z_j q_j  \right) \;.
+    & = \frac{1}{2 L_xL_y} \sum_{i = 1}^N q_i \left( \sum_{j = 1}^{i }{q_j (z_i - z_j)} \right) \\
+    & = \frac{1}{2 L_xL_y} \sum_{i = 1}^N q_i \left( z_i \sum_{j = 1}^{i }q_j - \sum_{j = 1}^{i }z_j q_j  \right) \;.
 \end{align*}
 To efficiently compute this summation, we introduce two auxiliary sequences  $\left\{T_1(i)\right\}_{i=1}^N$ and $\left\{T_2(i)\right\}_{i=1}^N$, both of which  can be iteratively updated as follows:
 \begin{align*}
@@ -589,7 +589,7 @@ To efficiently compute this summation, we introduce two auxiliary sequences  $\l
 Using these auxiliary sequences, 
 $S_0$ can be efficiently calculated as
 \[
-S_0= 2 \sum_{i = 1}^N q_i \left( z_iT_1(i)-T_2(i)\right)\;,
+S_0= \frac{1}{2 L_xL_y} \sum_{i = 1}^N q_i \left( z_iT_1(i)-T_2(i)\right)\;,
 \]
 which requires only 
 $4N$ operations, significantly reducing computational complexity in comparison with the naive summation.
@@ -617,7 +617,7 @@ S_1(\V{h})= -\sum_{i=1}^Nq_i^2+ \sum_{i=1}^N q_i\exp{(\mathrm{i} \V{h} \cdot \V{
 \]
 As for $S_4(\V{h})$, we shall follow the same routine:
 \begin{align*}
-S_4(\V{h})&=\sum_{i,j=1}^Nq_iq_j  \exp{(\mathrm{i} \V{h} \cdot \V{\rho}_{ij})}\exp(-h\Abs{z_i-z_j})\\
+S_4(\V{h})&=\sum_{i,j=1}^Nq_iq_j  \exp{(\mathrm{i} \V{h} \cdot \V{\rho}_{ij})}\exp(h\Abs{z_i-z_j})\\
 &=-\sum_{i=1}^Nq_i^2+\sum_{i=1}^N \sum_{j=1}^iq_iq_j  \exp{(\mathrm{i} \V{h} \cdot \V{\rho}_{ij})}\exp(h(z_i-z_j))\\
 &~~+\sum_{i=1}^N \sum_{j=i}^Nq_iq_j  \exp{(\mathrm{i} \V{h} \cdot \V{\rho}_{ij})}\exp(h(z_j-z_i))\\
 &= -\sum_{i=1}^Nq_i^2+\sum_{i=1}^N q_i\exp{(\mathrm{i} \V{h} \cdot \V{\rho}_{i})}\exp(hz_i)\sum_{j=1}^iq_j\exp{(-\mathrm{i} \V{h} \cdot \V{\rho}_{j})}\exp(-hz_j)\\
@@ -685,7 +685,7 @@ where \[S:= \sum_{\V{h}\in\fK^2,\V{h}\neq\vzero}\exp\left(-\frac{h^2}{4\alpha}\r
 %
 Using the Metropolis algorithm~\cite{metropolis1953equation}, a random mini-batch of frequencies $\{\bm{h}_{\eta}\}_{\eta=1}^P$ is sampled, where~$P$ is the batch size, and $U_\ell$ can be approximated as 
 \begin{equation}\label{eq::RBapp_qem}
- U_\ell^{\V{h}\neq \vzero} \approx U_{l,\ast}^{\V{h}\neq \vzero}  :=   \frac{S}{P}\sum_{\eta=1}^P \phi(\V{h}_{\eta})=  \frac{S}{P}\sum_{\eta=1}^P \sum_{q=1}^4S_q(\V{h}_{\eta})h_q(\V{h}_{\eta})\;,
+ U_\ell^{\V{h}\neq \vzero} \approx U_{l,\ast}^{\V{h}\neq \vzero}  :=   \frac{S}{P}\sum_{\eta=1}^P \phi(\V{h}_{\eta})=  \frac{S}{P}\sum_{\eta=1}^P \sum_{q=1}^4S_q(\V{h}_{\eta})\beta_q(\V{h}_{\eta})\;,
 \end{equation} 
 and the corresponding estimator of the force in Fourier space is given by
 \begin{equation}
@@ -745,7 +745,7 @@ Proposition~\ref{prop:unbiased_qem} is obtained directly by the definition of th
 % 	and
 \begin{align*}
 		\mathbb{E}\Norm{\V{\chi}_{i}}^2&=\frac{S}{P}\sum_{\bm{h}_1\in\fK^2, \bm{h}_1\neq \vzero}\exp\left(-\frac{\Norm{\V{h}_1}^2}{4\alpha}\right)\Bigg|\Bigg|\nabla_{\bm{r}_i}\phi(\V{h}_1)\\
-        &~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-\frac{1}{H} \sum_{\bm{h}_2\in\fK^2, \bm{h}_2\neq \vzero}\nabla_{\bm{r}_i}\phi(\V{h}_2)\exp\left(-\frac{\Norm{\V{h}_2}^2}{4\alpha}\right)\Bigg|\Bigg|^2\;.
+        &~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-\frac{1}{S} \sum_{\bm{h}_2\in\fK^2, \bm{h}_2\neq \vzero}\nabla_{\bm{r}_i}\phi(\V{h}_2)\exp\left(-\frac{\Norm{\V{h}_2}^2}{4\alpha}\right)\Bigg|\Bigg|^2\;.
 \end{align*}
 \end{prop}
 % Furthermore, under the Debye-H$\ddot{\text{u}}$ckel approximation~\cite{levin2002electrostatic}, we have  the following~Lemma~\ref{lem::upper_bound_phiRB_qem}, whose proof can be found in Appendix G in~\cite{gan2024fast}.
@@ -773,14 +773,14 @@ Finally, we introduce the following Theorem~\ref{thm:unbiased_qem} for the bound
 \begin{thm}\label{thm:unbiased_qem}
 	Under the assumption of the DH theory, the variance of the force estimators has closed upper bounds
 	\begin{equation}
-		  \mathbb{E}\Norm{\V{\chi}_{i}}^2\leq\frac{ S^2q_i^2\lambda_{D}^4}{2P ^2 L_x^2L_y^2}\left( \frac{1+\Abs{\gamma_{\mrm{u}}}+\Abs{\gamma_{\mrm{d}}}+\Abs{\gamma_{\mrm{u}}\gamma_{\mrm{d}}}}{1-\max\{0,\gamma_{\mrm{u}}\gamma_{\mrm{d}}\}}\right)^2\;,
+		  \mathbb{E}\Norm{\V{\chi}_{i}}^2\leq\frac{ S^2q_i^2\lambda_{D}^4}{2P L_x^2L_y^2}\left( \frac{1+\Abs{\gamma_{\mrm{u}}}+\Abs{\gamma_{\mrm{d}}}+\Abs{\gamma_{\mrm{u}}\gamma_{\mrm{d}}}}{1-\max\{0,\gamma_{\mrm{u}}\gamma_{\mrm{d}}\}}\right)^2\;,
 	\end{equation}
      where~$\lambda_{D}$  represents the Debye length.
 \end{thm}
 \begin{proof}
 We observe that 
 \begin{align*}
- \nabla_{\bm{r}_i}\phi(\V{h})&=   \sum_{q=1}^4 \nabla_{\bm{r}_i}\left\{S_q(\V{h})\right\}h_q(\V{h})\;,
+ \nabla_{\bm{r}_i}\phi(\V{h})&=   \sum_{q=1}^4 \nabla_{\bm{r}_i}\left\{S_q(\V{h})\right\}\beta_q(\V{h})\;,
 \end{align*}
 thus we have,
 %
@@ -818,7 +818,7 @@ Finally,  variance of force on the $i$-th particle is bounded above by
 \begin{align*}
    	\mathbb{E}\Norm{\V{\chi}_{i}}^2&\leq   \frac{2S}{P}\sum_{\bm{h}_1\in\fK^2, \bm{h}_1\neq \vzero}\exp\left(-\frac{\Norm{\V{h}_1}^2}{4\alpha}\right)\Norm{\nabla_{\bm{r}_i}\phi(\V{h}_1)}^2\\
     &\leq  \frac{2S^2}{P}\left(\frac{q_i\lambda_{D}^2}{2  L_xL_y}    \frac{1+\Abs{\gamma_{\mrm{u}}}+\Abs{\gamma_{\mrm{d}}}+\Abs{\gamma_{\mrm{u}}\gamma_{\mrm{d}}}}{1-\max\{0,\gamma_{\mrm{u}}\gamma_{\mrm{d}}\}}\right)^2\\
-    &= \frac{ S^2q_i^2\lambda_{D}^4}{2P ^2 L_x^2L_y^2}\left( \frac{1+\Abs{\gamma_{\mrm{u}}}+\Abs{\gamma_{\mrm{d}}}+\Abs{\gamma_{\mrm{u}}\gamma_{\mrm{d}}}}{1-\max\{0,\gamma_{\mrm{u}}\gamma_{\mrm{d}}\}}\right)^2\;.
+    &= \frac{ S^2q_i^2\lambda_{D}^4}{2P L_x^2L_y^2}\left( \frac{1+\Abs{\gamma_{\mrm{u}}}+\Abs{\gamma_{\mrm{d}}}+\Abs{\gamma_{\mrm{u}}\gamma_{\mrm{d}}}}{1-\max\{0,\gamma_{\mrm{u}}\gamma_{\mrm{d}}\}}\right)^2\;.
 \end{align*}
 \end{proof}
 We remark that $S \sim L_xL_y$, then $	\mathbb{E}\Norm{\V{\chi}_{i}}^2=\fO\left(\frac{1}{P}\right)$ and independent of the particle number $N$.
@@ -894,7 +894,7 @@ Here, we demonstrate singularity subtraction techniques can effectively handle t
 
 According to Eq.~\eqref{eq::int_Gs}, the integral to be evaluated numerically can be simplified as
 \begin{equation}\label{eq::int_I}
-    I = \int_0^{\infty} \frac{J_0(b h) \exp{(- a h)}}{\exp{( - 2 H (h - k_0))} - 1} \mathrm{d}h\;,
+    I = -\int_0^{\infty} \frac{J_0(b h) \exp{(- a h)}}{\exp{( - 2 H (h - k_0))} - 1} \mathrm{d}h\;,
 \end{equation}
 where~$a$,~$H$ and~$b$ are positive constants, $J_0$ is the zeroth order Bessel function of the first kind and~$k_0 = {\ln{(\gamma_u \gamma_d)}} / {2H}$ is a 1st order pole.
 
@@ -922,7 +922,7 @@ For the smooth part, when~$k \to k_0$, both the numerator and denominator tends 
 which is a finite value, and the integrand is a smooth function at~$h = k_0$.
 When~$h \gg 1$, the smooth part is rapidly decaying, 
 \begin{equation}
-    \abs{\frac{J_0(bh) e^{- a h} - J_0(bk_0) e^{- a k_0}}{e^{- 2 H (h - k_0)} - 1} + J_0(bk_0) e^{- a k_0} } \to \abs{J_0(bh) e^{- a h}}\;,
+    \abs{\frac{J_0(bh) e^{- a h} - J_0(bk_0) e^{- a k_0}}{e^{- 2 H (h - k_0)} - 1} - J_0(bk_0) e^{- a k_0} } \to \abs{J_0(bh) e^{- a h}}\;,
 \end{equation}
 so that the integral can be directly evaluated using the same method as in the previous section, given by
 \begin{equation}
@@ -930,7 +930,7 @@ so that the integral can be directly evaluated using the same method as in the p
 \end{equation}
 Since we have shown that the integrand is rapidly decaying, the truncation error can be estimated by
 \begin{equation}
-    \delta I < \int_{k_f}^{\infty} \exp{(-a h)} dh < \frac{\exp{(-a h_f)}}{a}\;.
+    \delta I < \int_{k_f}^{\infty} \exp{(-a h)} dh = \frac{\exp{(-a k_f)}}{a}\;.
 \end{equation}
 
 The integral of the singular part can be calculated analytically, given by
@@ -991,7 +991,7 @@ The results are shown in Fig.~\ref{fig:E_xyz}, which indicates that QEM can accu
     \centering
     \includegraphics[width = \linewidth]{figs/E_xyz.pdf}
     \caption{
-        Electric field in (a) $x$ and (b) $z$ between a pair of negatively charged particles, which are confined in a box of size $(100, 100, 50)$.
+        Electric field in (a) $x$ and (b) $z$ between a pair of oppositely charged particles, which are confined in a box of size $(100, 100, 50)$.
         One of the particles is located at $(50, 50, 1)$, and the other one is located at (a) $(50 + \Delta x, 50, 1)$ and (b) $(50, 50, \Delta z)$.
         The lines are results by QEM and the dots are results by the ICM with direct lattice sum.
     }
@@ -1094,7 +1094,7 @@ Both cations and anions are attracted towards the lower dielectric plate with a 
     \centering
     \includegraphics[width = 0.50\linewidth]{figs/non_symm.pdf}
     \caption{
-        Ion density in~$z$ for symmetric electrolytes containing 218 cations and 218 anions and confined by neutral dielectric substrates with $\gamma_u = 0.95$,~$\gamma_d = -0.95$ at~$z = 0$ and~$10\tau_0$.
+        Ion density in~$z$ for electrolytes containing 218 cations and 218 anions, confined by neutral dielectric substrates with asymmetric dielectric mismatch $\gamma_u = 0.95$,~$\gamma_d = -0.95$ at~$z = 0$ and~$10\tau_0$.
     }
     \label{fig:non_sym}
 \end{figure}
@@ -1131,7 +1131,7 @@ For~$\vert\gamma\vert<1$ cases, as illustrated by the blue ($\gamma=-0.95$) and 
 The results obtained by our method are in good agreement with those obtained by ICM, shown in dots in Fig.~\ref{fig:force_x} (a). 
 However, for~$\vert\gamma\vert>1$, the results become non-trivial and qualitatively different. 
 At short distance ($\tau_0<\Delta x < 10\tau_0$), we observe from Fig.~\ref{fig:force_x}(a) a continuous transition in the near-field interaction from like-charge attraction (LCA) into repulsion as~$\gamma$ increases from $-10$ to $+10$,
-which can be understood as a significant enhancement of the polarization effect for~$\abs{\gamma}<1$ cases.
+which can be understood as a significant enhancement of the polarization effect for~$\abs{\gamma}>1$ cases.
 Even more interesting is the far field, it no longer decays monotonically but exhibits oscillatory behavior, which is rarely reported in previous studies.
 
 \begin{figure}[htbp]
@@ -1150,20 +1150,20 @@ The charge density is defined by
 and the field lines generated by $\sigma(\V r)$ are sketched in Fig.~\ref{fig:force_x} (b). 
 The field oscillation is found to be generated by the strong transverse polarization charge density waves, influencing both the near and far fields. 
 The oscillatory field lines has a very similar structure to that of a surface plasmonic resonance wave~\cite{willets2007localized}, but the physical origin is different. 
-The oscillation is due to the reflected polarization enhanced by the dielectric confinement, characterized by parameters~$\gamma_1$,~$\gamma_2$, and~$L_z$.
+The oscillation is due to the reflected polarization enhanced by the dielectric confinement, characterized by parameters~$\gamma_{\mrm{u}}$,~$\gamma_{\mrm{d}}$, and~$H$.
 We observe that the wavelength of the oscillation, defined as two times the distance between nearby zeros, satisfies 
 \begin{equation}\label{eq:wavelength}
     \lambda \cdot k_0 = 2 \pi \;,
 \end{equation}
-where~$k_0 = \frac{\ln{\gamma_1 \gamma_2}}{2 L_z}$ is the first-order pole in the Sommerfeld integral representation of the Green's function.
-Numerical validation shows that Eq.~\eqref{eq:wavelength} is highly robust under different choices of~$\V{r}$,~$\V{r}_0$,~$\gamma$, or~$L_z$, as shown in Fig.~\ref{fig:k_wavelegth}.
+where~$k_0 = \frac{\ln{(\gamma_{\mrm{u}} \gamma_{\mrm{d}})}}{2 H}$ is the first-order pole in the Sommerfeld integral representation of the Green's function.
+Numerical validation shows that Eq.~\eqref{eq:wavelength} is highly robust under different choices of~$\V{r}$,~$\V{r}_0$,~$\gamma$, or~$H$, as shown in Fig.~\ref{fig:k_wavelegth}.
 Importantly, the oscillation fields can be accurately predicted and controlled by adjusting~$k_0$. 
 
 \begin{figure}[htbp]
     \centering
     \includegraphics[width=0.6\textwidth]{figs/fig3.pdf}
     \caption{
-        Numerical validations for the relationship between~$k_0$ and~$\lambda$ under various system parameter settings of~$\gamma$ and~$L_z$. For each case, $\lambda$ is approximated by averaging distances between nearby zeros of~$E_x$, and with different (randomly generated) locations in~$z$. 
+        Numerical validations for the relationship between~$k_0$ and~$\lambda$ under various system parameter settings of~$\gamma$ and~$H$. For each case, $\lambda$ is approximated by averaging distances between nearby zeros of~$E_x$, and with different (randomly generated) locations in~$z$. 
     }
     \label{fig:k_wavelegth}
 \end{figure}
